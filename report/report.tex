@@ -1,0 +1,151 @@
+%
+% $Id$
+% $Author$
+% $Date$
+% $Rev: 34 $
+%
+
+%\documentclass[10pt,a4paper,twoside,openright]{scrartcl}
+\documentclass[10pt,a4paper]{scrartcl}
+\usepackage{extsizes}
+\usepackage[utf8]{inputenc}
+\usepackage[english,ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{fix-cm}
+\usepackage{lmodern}
+\usepackage{lipsum}
+
+\usepackage{commath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\usepackage{caption}
+\usepackage{ragged2e}
+
+%\usepackage[left=3.1cm, right=3.1cm]{geometry}
+\usepackage{graphicx}
+%\usepackage[export]{adjustbox}
+
+\usepackage{epstopdf}
+\epstopdfDeclareGraphicsRule{.tif}{png}{.png}{convert #1 \OutputFile}
+\AppendGraphicsExtensions{.tif}
+
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{sidecap}
+\usepackage[bottom]{footmisc}
+
+\usepackage{color}
+\definecolor{codeblue}{rgb}{0,0,0.3}
+\definecolor{codegreen}{rgb}{0,0.3,0}
+\definecolor{codered}{rgb}{0.3,0,0}
+\definecolor{Gray}{gray}{0.9}
+\usepackage[scaled]{beramono}
+\usepackage{listings}
+\usepackage{needspace}
+\lstset{%
+  basicstyle=\footnotesize\ttfamily,
+  frame=single, %line/leftline/single
+  aboveskip=\topsep,
+  belowskip=\topsep,
+  breakatwhitespace=true,
+  showstringspaces=false,
+  breaklines=true,
+  commentstyle=\itshape\color{codegreen},
+  keywordstyle=\bfseries\color{codeblue},
+  stringstyle=\color{codered},
+  captionpos=t\/
+}
+\captionsetup[lstlisting]{font=footnotesize}
+\newcommand{\mylisting}[2][]{%
+  \lstinputlisting[caption={\texttt{\detokenize{#2}}},#1]{#2}%
+}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{color, colortbl}
+\usepackage{multirow}
+\usepackage{varwidth}
+\usepackage{pgfplotstable}
+
+\definecolor{blue}{rgb}{0,0,0.32}
+\usepackage[pdfauthor={M. Deineko},
+            pdfproducer={pdflatex},
+            pdfcreator={LaTeX},
+            colorlinks=true,
+            linkcolor=blue,
+            urlcolor=blue,
+            linktoc=section,
+            unicode=true
+            ]{hyperref}
+\hypersetup{pdftitle=TSP on Relaxed SUpnick Matrices}
+
+\usepackage[title,page,toc]{appendix}
+\newcommand*{\Appendixautorefname}{Appendix}
+\usepackage{cleveref}
+
+\usepackage{verbatim}
+\usepackage{cprotect}
+
+\usepackage{afterpage}
+%\makeatletter
+%\def\verbatim@font{\normalfont\itshape}
+%\makeatother
+\newcommand\blankpage{%
+  \null%
+  \thispagestyle{empty}%
+  %\addtocounter{page}{-1}%
+  \vspace*{\fill}
+  \centering
+  {\em {\small
+  This page would have been intentionally left blank had we not chosen to
+  \href{https://en.wikipedia.org/wiki/Recursion}{mention it}.
+  }}%
+  %\verbatiminput{|"/usr/games/fortune"}
+  \vspace{\fill}%
+  \newpage
+}
+
+%\usepackage[toc]{multitoc}
+\usepackage[subfigure]{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\begin{document}
+
+\selectlanguage{english}
+
+\title{TSP on Relaxed Supnick Matrices}
+\subtitle{Implementation}
+\input{authors.tex}
+\date{\today}
+\maketitle
+\thispagestyle{empty}
+
+%\setlength{\cftbeforetoctitleskip}{-2em}
+\tocloftpagestyle{empty}
+\tableofcontents
+\afterpage{\blankpage}
+
+%\setlength{\parindent}{0cm}
+
+\clearpage
+\section{Sample Chapter}
+%\input{problem1.tex}
+
+\clearpage
+\begin{appendices}
+%\section{Code Index}
+%\lstlistoflistings%
+\section{Some Code}
+%\label{app:p1code}
+%\input{problem1app.tex}
+%\clearpage
+\end{appendices}
+
+\end{document}
+

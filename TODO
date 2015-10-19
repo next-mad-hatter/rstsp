@@ -1,0 +1,21 @@
+repo:
+  - structure & merge
+  - structure -> readme
+  - setup bb issue tracker
+  - setup bb wiki
+ml:
+  - i/o
+  - bal search
+  - dyn pr
+  - rs dyn
+  - local search
+  - concurrent version
+benchmarks:
+  - tsplib
+  - dyn vs rs dyn vs local search vs relaxed
+clojure:
+  - clojure port
+report:
+  - structure
+  - writeup
+

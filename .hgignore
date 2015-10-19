@@ -1,0 +1,15 @@
+syntax: glob
+
+papers
+tags
+
+*~
+*.swp
+
+*.aux
+*.dvi
+*.log
+*.out
+*.toc
+*.lol
+
