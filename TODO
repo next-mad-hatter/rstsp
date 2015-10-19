@@ -9,13 +9,18 @@ ml:
   - dyn pr
   - rs dyn
   - local search
-  - concurrent version
+  - mingw and shared builds
 benchmarks:
   - tsplib
   - dyn vs rs dyn vs local search vs relaxed
+CML:
+  - concurrent version
 clojure:
   - clojure port
+RS:
+  - 3d euclidean applies?
+  - relaxations
+  - generator sandbox
 report:
-  - structure
   - writeup
 

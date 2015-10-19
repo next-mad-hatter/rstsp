@@ -108,6 +108,11 @@
   \newpage
 }
 
+\usepackage[backend=biber]{biblatex}
+%\usepackage[fixlanguage]{babelbib}
+\addbibresource{references.bib}
+\usepackage[nottoc]{tocbibind}
+
 %\usepackage[toc]{multitoc}
 \usepackage[subfigure]{tocloft}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
@@ -120,7 +125,7 @@
 \selectlanguage{english}
 
 \title{TSP on Relaxed Supnick Matrices}
-\subtitle{Implementation}
+\subtitle{Theory and Implementation}
 \input{authors.tex}
 \date{\today}
 \maketitle
@@ -134,18 +139,38 @@
 %\setlength{\parindent}{0cm}
 
 \clearpage
-\section{Sample Chapter}
+\section{Theory}
+\subsection{Relaxed Supnick matrices}
+\subsection{Strongly balanced tours}
+\subsection{Dynamic programming and polynomial runtime}
+\section{Implementation}
+\subsection{Dynamic programming --- a functional approach}
+\subsection{Local search extention}
+\subsection{Implementation details}
+\section{Benchmarks}
+\subsection{Synthetic tests}
+\subsection{TSPLib}
+\subsection{TSP Challenge}
+\section{Applicability}
+\subsection{Local search results}
+\subsection{Relaxed Instances}
+\section{Concurrency}
+\subsection{Concurrent ML}
+\subsection{Clojure}
+\section{Areas for Further Research}
 %\input{problem1.tex}
 
 \clearpage
 \begin{appendices}
 %\section{Code Index}
 %\lstlistoflistings%
-\section{Some Code}
+%\section{Some Code}
 %\label{app:p1code}
 %\input{problem1app.tex}
 %\clearpage
 \end{appendices}
+
+\printbibliography%
 
 \end{document}
 

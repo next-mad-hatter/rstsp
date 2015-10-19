@@ -22,5 +22,7 @@ ctags -Ra .
 #
 cd "${REPORT_DIR}"
 pdflatex -shell-escape "${SUBMISSION}".tex || exit 1
+biber "${SUBMISSION}".bcf
+pdflatex "${SUBMISSION}".tex
 exec pdflatex "${SUBMISSION}".tex
 

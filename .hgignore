@@ -1,6 +1,8 @@
 syntax: glob
 
 papers
+report/report.pdf
+
 tags
 
 *~
@@ -12,4 +14,8 @@ tags
 *.out
 *.toc
 *.lol
+*.bbl
+*.blg
+*.bcf
+*.run.xml
 
