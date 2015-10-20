@@ -17,5 +17,7 @@ in
   utils.sml
   distmat.sig
   distmat.sml
+  sbtour.sig
+  sbtour.sml
   rstsp.sml
 end
