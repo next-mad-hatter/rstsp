@@ -4,6 +4,7 @@ papers
 report/report.pdf
 
 tags
+src/rstsp/build/*
 
 *~
 *.swp

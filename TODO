@@ -6,12 +6,11 @@
 #
 
 repo:
-  - structure & merge
+  - bits merge
   - structure -> readme
   - setup bb issue tracker
   - setup bb wiki
 ml:
-  - i/o
   - bal search
   - dyn pr
   - rs dyn
