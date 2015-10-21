@@ -6,6 +6,7 @@ report/report.pdf
 tags
 src/rstsp/build/*
 src/rstsp/win32/*
+tmp/*
 
 *~
 *.swp

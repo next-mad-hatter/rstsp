@@ -56,8 +56,8 @@ fun removeSnippetFrom (t,m) = let
   val v = (valOf o WordMap.find) (getMap t, m)
   val bs = snippetBorders v
   val s' = WordVectorSet.delete (getSnippets t, v)
-  val k' = WordSet.delete (getKeys t, m)
-  val m' = (#1 o WordMap.remove) (getMap t, m)
+  val k' = foldl (WordSet.delete o swap) (getKeys t) bs
+  val m' = foldl (#1 o WordMap.remove o swap) (getMap t) bs
 in
   (SBTOUR (s', k', m'), v)
 end
