@@ -19,4 +19,10 @@ signature UTILS = sig
 
   val wordFromString: String.string -> Word.word option
 
+  val wordSqrt: Word.word -> Word.word
+
+  val revVector: 'a vector -> 'a vector
+
+  val swap: 'a * 'b -> 'b * 'a
+
 end

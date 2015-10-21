@@ -12,25 +12,31 @@ signature SB_TOUR = sig
   structure WordMap: ORD_MAP
 
   type sbtour
+
   (*
+   * FIXME: hide unnecessary things
+   *)
+
   val getSnippets: sbtour -> WordVectorSet.set
   val getKeys: sbtour -> WordSet.set
   val getMap: sbtour -> word vector WordMap.map
-  *)
 
   val empty: sbtour
-  val connected: sbtour -> bool
+  val isConnected: sbtour -> bool
 
   (* No sanity checks here *)
   val insertSnippet: sbtour * word vector -> sbtour
   val insertSnippet': word vector * sbtour -> sbtour
+  val removeSnippetFrom: sbtour * word -> sbtour * word vector
+  val removeSnippetFrom': word * sbtour -> sbtour * word vector
+  val snippetToString: word vector -> string
 
-  val fromILL: int list list -> sbtour
+  val tourFromILL: int list list -> sbtour
+  val tourToString: sbtour -> string
   val tourLength: DistMat.t -> sbtour -> word
 
-  (* TODO:
-  val tourToString: sbtour -> string
-  *)
+  val balancedOptions: sbtour -> word -> sbtour list
+  val balancedSearch: DistMat.t -> sbtour
 
 end
 

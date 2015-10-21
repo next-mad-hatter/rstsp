@@ -8,19 +8,30 @@
 open Utils
 
 fun main file = let
-  val _ = (print "Reading "; print file; print ": ")
+  val _ = print ("Processing " ^ file ^ ": \n")
   val d = DistMat.readDistFile file
-  val _ = print "done.\n"
 in
-  if isSome d then
-    (*
-    (Vector.app (fn x => (print (wordToString x); print " ")) (valOf d); print "\n";
-     print "Processed.\n")
-    *)
-    print "Processed.\n"
-  else print "Empty.\n"
+  if isSome d andalso (Vector.length o valOf) d > 1 then
+    let
+      val timer = Timer.totalCPUTimer ()
+      val t = SBTour.balancedSearch (valOf d)
+      val stop = Timer.checkCPUTimer timer
+      val sys = (IntInf.toString o Time.toMilliseconds o #sys) stop
+      val usr = (IntInf.toString o Time.toMilliseconds o #usr) stop
+    in
+      print ("  Sys: " ^ sys ^ "ms\n");
+      print ("  Usr: " ^ usr ^ "ms\n");
+      print ("  Tour: " ^ (SBTour.tourToString t) ^ "\n");
+      print ("  Length: " ^ (wordToString (SBTour.tourLength (valOf d) t)) ^ "\n")
+    end
+  else print "  Empty.\n"
 end
 
-val _ = List.app main (SMLofNJ.getArgs ())
+val _ = let
+  val files = SMLofNJ.getArgs ()
+in
+  if files = [] then print "No input files given.\n"
+  else List.app main (SMLofNJ.getArgs ())
+end
 handle Fail msg => print ("Input Error: " ^ msg ^ "\n")
 

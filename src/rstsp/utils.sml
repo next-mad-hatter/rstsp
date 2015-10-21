@@ -23,4 +23,10 @@ val wordToString = Word.fmt StringCvt.DEC
 
 val wordFromString = (StringCvt.scanString (Word.scan StringCvt.DEC))
 
+val wordSqrt = Word.fromInt o Real.floor o Math.sqrt o Real.fromInt o Word.toInt
+
+fun revVector v = Vector.mapi (fn (i,_) => (Vector.sub (v,Vector.length v-i-1))) v
+
+fun swap (a,b) = (b,a)
+
 end
