@@ -182,6 +182,14 @@ local
     *)
     type ord_key = word vector list
     val compare = List.collate (Vector.collate Word.compare)
+    (* WRONG :)
+    type ord_key = word * word list list
+    val comp = List.collate (List.collate Word.compare)
+    fun compare ((w,l),(w',l')) =
+      case Word.compare (w,w') of
+           EQUAL => comp (l,l')
+         | c => c
+    *)
   end
 in
   structure MemMap: ORD_MAP = SplayMapFn(MapKey)
@@ -189,8 +197,12 @@ end
 
 local
   (* Should we call this insert/add? *)
-  fun search mem d t m len = let
-    val res = MemMap.find (!mem,WordVectorSet.listItems (getSnippets t))
+  fun search mem d t m len max = let
+    (* WRONG :)
+    val res = MemMap.find (!mem,
+      (m,((List.filter (fn l => length l > 1)) o (map snippetBorders) o WordVectorSet.listItems o getSnippets) t))
+    *)
+    val res = if isSome max then MemMap.find (!mem,WordVectorSet.listItems (getSnippets t)) else NONE
     (*
     val res = MemMap.find (!mem,(Vector.fromList o WordVectorSet.listItems o getSnippets) t)
     val res = MemMap.find (!mem,getSnippets t)
@@ -199,18 +211,24 @@ local
     (*
     val res = (SOME (HashTable.lookup mem (getSnippets t))) handle Fail msg => NONE
     *)
+    val lent = (Word.fromInt o WordVectorSet.numItems o getSnippets) t
   in case res of
           SOME r => r
         | NONE =>
     if m >= len then if isConnected t then SOME t else NONE else
-    if len-m+0w1 < (Word.fromInt o WordVectorSet.numItems o getSnippets) t then NONE else
+    if len-m+0w1 < lent orelse isSome max andalso lent > valOf max then NONE else
     let
-      val ts = map (fn t => search mem d t (m+0w1) len) (balancedOptions t m)
+      val ts = map (fn t => search mem d t (m+0w1) len max) (balancedOptions t m)
       val ps = ((map (fn t => (tourLength d t, t)) o (map valOf) o (List.filter isSome))) ts
       val sol = #2 (foldl (fn ((l,t),(min,sol)) => if (not o isSome) min orelse valOf min > l then (SOME l,SOME t) else (min,sol)) (NONE,NONE) ps)
     in
+      (* WRONG :)
+      mem := MemMap.insert (!mem,
+        (m,((List.filter (fn l => length l > 1)) o (map snippetBorders) o WordVectorSet.listItems o getSnippets) t), sol);
+      *)
+      if isSome max then
+        mem := MemMap.insert (!mem,WordVectorSet.listItems (getSnippets t),sol)
       (*
-      mem := MemMap.insert (!mem,WordVectorSet.listItems (getSnippets t),sol);
       mem := MemMap.insert (!mem,(Vector.fromList o WordVectorSet.listItems o getSnippets) t,sol);
       mem := MemMap.insert (!mem,getSnippets t,sol);
       mem := MemMap.insert (!mem,(m,getSnippets t),sol);
@@ -218,12 +236,13 @@ local
       (*
       HashTable.insert mem (getSnippets t, sol);
       *)
+      else ();
       sol
     end
   end
 
 in
-  fun balancedSearch d = let
+  fun balancedSearch d max = let
     val len = Word.div(wordSqrt(0w1+0w8*(Word.fromInt (Vector.length d)))-0w1,0w2)
     val mem = ref MemMap.empty
     (*
@@ -232,7 +251,7 @@ in
       (0, Fail "not found")
     *)
   in
-    valOf (search mem d empty 0w0 len)
+    valOf (search mem d empty 0w0 len max)
   end
 end
 

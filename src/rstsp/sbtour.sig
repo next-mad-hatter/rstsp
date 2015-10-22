@@ -41,7 +41,7 @@ signature SB_TOUR = sig
   (*
   val balancedOptions: sbtour -> word -> sbtour list
   *)
-  val balancedSearch: DistMat.t -> sbtour
+  val balancedSearch: DistMat.t -> word option -> sbtour
 
 end
 
