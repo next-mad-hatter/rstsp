@@ -17,7 +17,11 @@ in
                        (* (" \t\r\n" ^ str #"\000") *)
 end
 
-val splitString = String.tokens (fn c => c = #" " orelse c = #"\t" orelse c = #",");
+val splitString = String.tokens
+  (fn c =>
+    c = #" " orelse c = #"\t" orelse
+    c = #"," orelse c = #"\n" orelse
+    c = #"\r");
 
 val wordToString = Word.fmt StringCvt.DEC
 
