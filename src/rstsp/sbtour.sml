@@ -160,23 +160,30 @@ in
 end
 
 local
-  structure WordSetKey =
+  structure MapKey =
   struct
+    (*
     type ord_key = word * WordVectorSet.set
     fun compare ((w,s),(w',s')) = let
       val comp = Word.compare (w,w')
     in
       if comp = EQUAL then WordVectorSet.compare (s,s') else comp
     end
+    *)
+    type ord_key = WordVectorSet.set
+    val compare = WordVectorSet.compare
   end
 in
-  structure MemMap: ORD_MAP = SplayMapFn(WordSetKey)
+  structure MemMap: ORD_MAP = SplayMapFn(MapKey)
 end
 
 local
   (* Should we call this insert/add? *)
   fun search mem d t m len = let
-    val res = MemMap.find (mem,(m,getSnippets t))
+    val res = MemMap.find (!mem,getSnippets t)
+    (*
+    val res = MemMap.find (!mem,(m,getSnippets t))
+    *)
   in case res of
           SOME r => r
         | NONE =>
@@ -185,17 +192,22 @@ local
     let
       val ts = map (fn t => search mem d t (m+0w1) len) (balancedOptions t m)
       val ps = ((map (fn t => (tourLength d t, t)) o (map valOf) o (List.filter isSome))) ts
-      val sol = foldl (fn ((l,t),(min,sol)) => if (not o isSome) min orelse valOf min > l then (SOME l,SOME t) else (min,sol)) (NONE,NONE) ps
+      val sol = #2 (foldl (fn ((l,t),(min,sol)) => if (not o isSome) min orelse valOf min > l then (SOME l,SOME t) else (min,sol)) (NONE,NONE) ps)
     in
-      #2 sol
+      mem := MemMap.insert (!mem,getSnippets t,sol);
+      (*
+      mem := MemMap.insert (!mem,(m,getSnippets t),sol);
+      *)
+      sol
     end
   end
 
 in
   fun balancedSearch d = let
     val len = Word.div(wordSqrt(0w1+0w8*(Word.fromInt (Vector.length d)))-0w1,0w2)
+    val mem = ref MemMap.empty
   in
-    valOf (search MemMap.empty d empty 0w0 len)
+    valOf (search mem d empty 0w0 len)
   end
 end
 
