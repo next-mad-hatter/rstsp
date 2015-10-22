@@ -7,7 +7,7 @@
 
 use "rstsp_smlnj.sml";
 
-val d = (valOf o DistMat.readDistFile) "../../test/data/small.0"
+val d = (valOf o DistMat.readDistFile) "../../test/data/small/small.1"
 (*
 val t1:SBTour.sbtour = SBTour.tourFromILL [[1,2,5]]
 val t2:SBTour.sbtour = SBTour.tourFromILL [[1,2,5],[4,3]]

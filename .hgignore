@@ -5,6 +5,7 @@ report/report.pdf
 
 tags
 src/rstsp/build
+src/rstsp/lib
 src/rstsp/win32
 test/data/misc
 test/data/tsplib

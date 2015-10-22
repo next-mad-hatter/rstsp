@@ -74,8 +74,10 @@ fun tourFromILL l =
 fun snippetToString v =
   Vector.foldl (fn (x,s) => s ^ (if s = "" then "" else " ") ^ wordToString (x+0w1)) "" v
 
-fun tourToString t = String.concatWith "; "
-  (((map snippetToString) o WordVectorSet.listItems o getSnippets) t)
+fun snippetsToString t = String.concatWith "; "
+  (((map snippetToString) o WordVectorSet.listItems) t)
+
+val tourToString = snippetsToString o getSnippets
 
 local
   fun ellen d v =
@@ -170,8 +172,16 @@ local
       if comp = EQUAL then WordVectorSet.compare (s,s') else comp
     end
     *)
+    (*
     type ord_key = WordVectorSet.set
     val compare = WordVectorSet.compare
+    *)
+    (*
+    type ord_key = word vector vector
+    val compare = Vector.collate (Vector.collate Word.compare)
+    *)
+    type ord_key = word vector list
+    val compare = List.collate (Vector.collate Word.compare)
   end
 in
   structure MemMap: ORD_MAP = SplayMapFn(MapKey)
@@ -180,9 +190,14 @@ end
 local
   (* Should we call this insert/add? *)
   fun search mem d t m len = let
-    val res = MemMap.find (!mem,getSnippets t)
+    val res = MemMap.find (!mem,WordVectorSet.listItems (getSnippets t))
     (*
+    val res = MemMap.find (!mem,(Vector.fromList o WordVectorSet.listItems o getSnippets) t)
+    val res = MemMap.find (!mem,getSnippets t)
     val res = MemMap.find (!mem,(m,getSnippets t))
+    *)
+    (*
+    val res = (SOME (HashTable.lookup mem (getSnippets t))) handle Fail msg => NONE
     *)
   in case res of
           SOME r => r
@@ -194,9 +209,14 @@ local
       val ps = ((map (fn t => (tourLength d t, t)) o (map valOf) o (List.filter isSome))) ts
       val sol = #2 (foldl (fn ((l,t),(min,sol)) => if (not o isSome) min orelse valOf min > l then (SOME l,SOME t) else (min,sol)) (NONE,NONE) ps)
     in
-      mem := MemMap.insert (!mem,getSnippets t,sol);
       (*
+      mem := MemMap.insert (!mem,WordVectorSet.listItems (getSnippets t),sol);
+      mem := MemMap.insert (!mem,(Vector.fromList o WordVectorSet.listItems o getSnippets) t,sol);
+      mem := MemMap.insert (!mem,getSnippets t,sol);
       mem := MemMap.insert (!mem,(m,getSnippets t),sol);
+      *)
+      (*
+      HashTable.insert mem (getSnippets t, sol);
       *)
       sol
     end
@@ -206,6 +226,11 @@ in
   fun balancedSearch d = let
     val len = Word.div(wordSqrt(0w1+0w8*(Word.fromInt (Vector.length d)))-0w1,0w2)
     val mem = ref MemMap.empty
+    (*
+    val mem = HashTable.mkTable
+      (HashString.hashString o snippetsToString,op=)
+      (0, Fail "not found")
+    *)
   in
     valOf (search mem d empty 0w0 len)
   end

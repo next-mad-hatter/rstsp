@@ -12,6 +12,7 @@
  *)
 (*
 CM.autoload "$/regexp-lib.cm";
+CM.autoload "$MLTON_LIB/com/ssh/generic/unstable/lib.cm";
 *)
 
 use "utils.sig";
