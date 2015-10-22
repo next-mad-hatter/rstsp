@@ -70,8 +70,9 @@ fun tourFromILL l =
     List.foldl insertSnippet' empty vs
   end
 
+(* NB: do we want zero-bazed here? *)
 fun snippetToString v =
-  Vector.foldl (fn (x,s) => s ^ (if s = "" then "" else " ") ^ Word.toString x) "" v
+  Vector.foldl (fn (x,s) => s ^ (if s = "" then "" else " ") ^ wordToString (x+0w1)) "" v
 
 fun tourToString t = String.concatWith "; "
   (((map snippetToString) o WordVectorSet.listItems o getSnippets) t)
@@ -111,59 +112,32 @@ local
 
   (* FIXME: rewrite with removesnippetfrom? *)
   fun opt2 t min1 m = let
-        (*
-        val _ = print "opt2\n"
-        val _ = (print "tour: "; print (tourToString t); print "\n")
-        *)
     val v = (valOf o WordMap.find) (getMap t, min1)
-        (*
-        val _ = (print "v: "; print (snippetToString v); print "\n")
-        *)
     val mv = Vector.fromList [m]
-    val v' = Vector.concat (if Vector.sub (v,0) = min1 then [mv,v] else [v,mv])
+    val v' = Vector.concat [revVector v,mv]
     val s' = WordVectorSet.add (WordVectorSet.delete (getSnippets t, v), v')
     val k' = if Vector.length v' > 2 then WordSet.delete (getKeys t, min1) else getKeys t
     val k'' = WordSet.add (k', m)
     val m' = (#1 o WordMap.remove) (getMap t, min1)
     val m'' = foldl (fn (b,m) => WordMap.insert (m,b,v')) m' (snippetBorders v')
-        (*
-        val _ = print "ok.\n"
-        *)
   in
-        (*
-        print "new tour: "; print (tourToString (SBTOUR (s',k'',m''))); print "\n";
-        print "new keys: "; print (String.concatWith " " (map wordToString (WordSet.listItems k''))); print "\n";
-       print "new map: "; print (String.concatWith "; " (((map snippetToString) o WordMap.listItems) m'')); print "\n";
-       *)
     SBTOUR (s',k'',m'')
   end
 
-  (* FIXME: speedup *)
   fun glue v1 (m:word) v2 = let
-    val v1' = let val b = snippetBorders v1 in
-      if length b > 1 andalso hd b < (hd o tl) b then revVector v1 else v1
-    end
-    val v2' = let val b = snippetBorders v2 in
-      if length b > 1 andalso hd b > (hd o tl) b then revVector v2 else v2
-    end
+    val b1 = Vector.sub (v1,Vector.length v1 - 1)
+    val b2 = Vector.sub (v2,Vector.length v2 - 1)
+    val (v1',v2') = if b1 < b2 then (v1,v2) else (v2,v1)
   in
-    Vector.concat [v1', (Vector.fromList [m]), v2']
+    Vector.concat [revVector v1', (Vector.fromList [m]), v2']
   end
 
-  (* FIXME: rewrite with removesnippetfrom? *)
   fun opt3 t min1 min2 m = let
-    val v1 = (valOf o WordMap.find) (getMap t, min1)
-    val v2 = (valOf o WordMap.find) (getMap t, min2)
+    val (t',v1) = removeSnippetFrom (t, min1)
+    val (t'',v2) = removeSnippetFrom (t', min2)
     val v' = glue v1 m v2
-    val bs = snippetBorders v'
-    val s' = foldl (WordVectorSet.delete o swap) (getSnippets t) [v1, v2]
-    val s'' = WordVectorSet.add (s', v')
-    val k' = foldl (WordSet.delete o swap) (getKeys t) [min1, min2]
-    val k'' = foldl WordSet.add' k' bs
-    val m' = foldl (#1 o WordMap.remove o swap) (getMap t) [min1, min2]
-    val m'' = foldl (fn (b,m) => WordMap.insert (m,b,v')) m' bs
   in
-    SBTOUR (s'', k'', m'')
+    insertSnippet (t'',v')
   end
 
 in
@@ -186,22 +160,42 @@ in
 end
 
 local
-  fun search d t m len =
-  if m >= len then if isConnected t then SOME t else NONE else
-  if len-m+0w1 < (Word.fromInt o WordVectorSet.numItems o getSnippets) t then NONE else
-  let
-    val ts = map (fn t => search d t (m+0w1) len) (balancedOptions t m)
-    val ps = ((map (fn t => (tourLength d t, t)) o (map valOf) o (List.filter isSome))) ts
-    val sol = foldl (fn ((l,t),(min,sol)) => if (not o isSome) min orelse valOf min > l then (SOME l,SOME t) else (min,sol)) (NONE,NONE) ps
-  in
-    #2 sol
+  structure WordSetKey =
+  struct
+    type ord_key = word * WordVectorSet.set
+    fun compare ((w,s),(w',s')) = let
+      val comp = Word.compare (w,w')
+    in
+      if comp = EQUAL then WordVectorSet.compare (s,s') else comp
+    end
+  end
+in
+  structure MemMap: ORD_MAP = SplayMapFn(WordSetKey)
+end
+
+local
+  (* Should we call this insert/add? *)
+  fun search mem d t m len = let
+    val res = MemMap.find (mem,(m,getSnippets t))
+  in case res of
+          SOME r => r
+        | NONE =>
+    if m >= len then if isConnected t then SOME t else NONE else
+    if len-m+0w1 < (Word.fromInt o WordVectorSet.numItems o getSnippets) t then NONE else
+    let
+      val ts = map (fn t => search mem d t (m+0w1) len) (balancedOptions t m)
+      val ps = ((map (fn t => (tourLength d t, t)) o (map valOf) o (List.filter isSome))) ts
+      val sol = foldl (fn ((l,t),(min,sol)) => if (not o isSome) min orelse valOf min > l then (SOME l,SOME t) else (min,sol)) (NONE,NONE) ps
+    in
+      #2 sol
+    end
   end
 
 in
   fun balancedSearch d = let
     val len = Word.div(wordSqrt(0w1+0w8*(Word.fromInt (Vector.length d)))-0w1,0w2)
   in
-    valOf (search d empty 0w0 len)
+    valOf (search MemMap.empty d empty 0w0 len)
   end
 end
 

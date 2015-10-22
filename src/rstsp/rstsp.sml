@@ -7,9 +7,13 @@
 
 open Utils
 
+fun read file =
+  (DistMat.readDistFile file)
+    handle Fail msg => (print ("  Input Error: " ^ msg ^ "\n"); NONE)
+
 fun main file = let
   val _ = print ("Processing " ^ file ^ ": \n")
-  val d = DistMat.readDistFile file
+  val d = read file
 in
   if isSome d andalso (Vector.length o valOf) d > 1 then
     let
@@ -24,7 +28,7 @@ in
       print ("  Tour: " ^ (SBTour.tourToString t) ^ "\n");
       print ("  Length: " ^ (wordToString (SBTour.tourLength (valOf d) t)) ^ "\n")
     end
-  else print "  Empty.\n"
+  else print "  Empty problem.\n"
 end
 
 val _ = let
@@ -33,5 +37,4 @@ in
   if files = [] then print "No input files given.\n"
   else List.app main (SMLofNJ.getArgs ())
 end
-handle Fail msg => print ("Input Error: " ^ msg ^ "\n")
 

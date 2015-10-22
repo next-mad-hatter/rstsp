@@ -6,16 +6,16 @@
 #
 
 repo:
-  - bits merge
   - structure -> readme
-  - setup bb issue tracker
-  - setup bb wiki
+  - ? bb issue tracker
+  - ? bb wiki
 ml:
-  - dyn pr
   - rs dyn
   - local search
-  - mingw and shared builds
+  - so interface
 benchmarks:
+  - tsp i/o/conversion
+  - data licensing
   - tsplib
   - dyn vs rs dyn vs local search vs relaxed
 CML:
