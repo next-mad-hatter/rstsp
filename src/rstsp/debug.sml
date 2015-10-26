@@ -16,10 +16,13 @@ val s1 = SBTour.tourToString t1
 val s2 = SBTour.tourToString t2
 val o1 = map SBTour.tourToString (SBTour.balancedOptions t2 0w6)
 *)
+structure TT = SBTour
+val search = SBTour.balancedSearch (SOME 0w4)
+
 val timer = Timer.startCPUTimer ()
-val s3:SBTour.sbtour = SBTour.balancedSearch d (SOME 0w4)
+val s3 = search d
 val ts = (#sys o Timer.checkCPUTimer) timer
 val tu = (#usr o Timer.checkCPUTimer) timer
-val sol = SBTour.tourToString s3
-val len = SBTour.tourLength d s3
+val sol = TT.tourToString s3
+val len = TT.tourLength d s3
 

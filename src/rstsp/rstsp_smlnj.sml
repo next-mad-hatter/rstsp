@@ -21,5 +21,7 @@ use "distmat.sig";
 use "distmat.sml";
 use "sbtour.sig";
 use "sbtour.sml";
+use "pyrtour.sig";
+use "pyrtour.sml";
 
 val _ = TextIO.print;

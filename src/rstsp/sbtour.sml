@@ -242,7 +242,7 @@ local
   end
 
 in
-  fun balancedSearch d max = let
+  fun balancedSearch max d = let
     val len = Word.div(wordSqrt(0w1+0w8*(Word.fromInt (Vector.length d)))-0w1,0w2)
     val mem = ref MemMap.empty
     (*

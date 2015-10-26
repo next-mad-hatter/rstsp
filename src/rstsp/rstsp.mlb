@@ -19,5 +19,7 @@ in
   distmat.sml
   sbtour.sig
   sbtour.sml
+  pyrtour.sig
+  pyrtour.sml
   rstsp.sml
 end
