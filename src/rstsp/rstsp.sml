@@ -36,7 +36,7 @@ val _ = let
 in
   case args of
        [] => print "Expected arguments: max_width|\"p\" file(s)\n"
-     | [x] => print "No input files given.\n"
+     | _::[] => print "No input files given.\n"
      | mstr::files =>
   (* case CommandLine.name () *)
     case (mstr, wordFromString mstr) of
