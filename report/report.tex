@@ -142,6 +142,105 @@
 \section{Theory}
 \subsection{Relaxed Supnick matrices}
 \subsection{Strongly balanced tours}
+
+Let
+\[ \Phi_k\left(\big\{ \{a_1,b_1\}, \ldots ,\{a_p,b_p\} \big\} \right) \]
+denote shortest (in total length) balanced paths set containing points $1 \ldots k$
+with $a_i, b_i$ being the paths' endpoints
+and
+\[ B\left(\big\{ \{a_1,b_1\}, \ldots ,\{a_p,b_p\} \big\}\right) = \bigcup_i\{a_i,b_i\}.\]
+Then following holds:
+\begin{enumerate}
+  \item
+\[
+  \Phi_k\left(\big\{ \{a_1\}, \ldots , \{a_k\} \big\} \right) =
+  \left\{ \left< a_1 \right> , \ldots , \left< a_k \right> \right\}
+\]
+  \item
+\[
+  \Phi_k\left(\big\{ s_1, \ldots , s_p, \{k\} \big\} \right) =
+  \Phi_{k-1}\left(\big\{ s_1, \ldots , s_p \big\}\right) \cup
+  \left\{\left<k\right>\right\}
+\]
+  \item
+\[
+  \Phi_k\left(\big\{ s_1, \ldots , s_p, \{r,k\} \big\} \right) =
+  append\left(\Phi^{*},z^{\ast},k\right)
+\]
+where
+\[
+  \Phi^{*} = \Phi_{k-1}\left(\big\{ s_1, \ldots , s_p, \{r,z^{*}\} \big\} \right)
+\]
+\[
+  z^{*} = \argmin_{z \in [1,\ldots,m]}{
+    \left(
+      length \;
+      \Phi_{k-1}\left(\big\{ s_1, \ldots , s_p, \{r,z\} \big\} \right)
+      + d(z,k)
+    \right)
+  }
+\]
+\[
+  m = \min B\left(\{s_1, \ldots ,s_p\}\right) \cup \{k\} - 1
+\]
+  \item
+\[
+  \Phi_k\left(\left\{ s_1, \ldots , s_p \right\} \right) =
+  \;\text{with}\;
+  k \notin B\left({s_1,\ldots,s_p}\right)
+\]
+is then chosen from two possible solutions:
+\begin{enumerate}
+  \item
+\[
+  merge\left(\Phi_{q^{*}},z^{*},z^{**},k\right)
+\]
+where
+\[
+  \Phi_{q^{*}} = \Phi_{k-1}\left(\big\{ s_1, \ldots , s_{q^{*}-1},
+  \{z^{*},a^{*}\}, \{b^{*},z^{**}\}, s_{q^{*}+1}, \ldots, s_p \big\} \right)
+\]
+\[
+  s_{q^{*}} = \{a^{*},b^{*}\}
+\]
+\[
+  (q^{*}, z^{*},z^{**}) = \argmin_{
+    \substack{q \in [1,p] \\\
+              z^\prime \in [1,\ldots,m-1] \\\
+              z^{\prime\prime} \in [z^\prime+1, m-1]}}{
+    \mkern-18mu \Phi_{k-1}\left(\big\{ s_1, \ldots , s_{q-1},
+    \{z^{\prime},a\}, \{b,z^{\prime\prime}\},
+    s_{q+1}, \ldots ,s_p \big\} \right)
+    \! + \! d(z^\prime,a) \! + \! d(z^{\prime\prime},b)
+  }
+\]
+\[
+  m = \min B\left(\{s_1,\ldots,s_p\}\right)
+\]
+  \item
+\[
+  merge\left(\Phi^{*},z^{*},z^{**},k\right)
+\]
+for
+\[
+  s_p = \{m,r\}, m = \min B\left(\{s_1,\ldots,s_p\}\right), m \neq r
+\]
+where
+\[
+  \Phi^{*} = \Phi_{k-1}\left(\big\{ s_1, \ldots , s_{p-1}, \{z^{*},m\}, \{r,z^{**}\} \big\} \right)
+\]
+\[
+  (z^{*},z^{**}) = \argmin_{\substack{z^\prime \in [1,\ldots,m-1] \\\
+  z^{\prime\prime} \in [m+1, \min B\left(\{s_1,\ldots,s_{p-1}\}\right)-1]}}{
+    \mkern-28mu \mkern-18mu
+    \Phi_{k-1}\left(\big\{ s_1, \ldots , s_{p-1},
+    \{z^{\prime},m\}, \{r,z^{\prime\prime}\} \big\} \right)
+    + d(z^\prime,m) + d(z^{\prime\prime},r)
+  }
+\]
+\end{enumerate}
+\end{enumerate}
+
 \subsection{Dynamic programming and polynomial runtime}
 \section{Implementation}
 \subsection{Dynamic programming --- a functional approach}
