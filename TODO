@@ -10,8 +10,8 @@ repo:
   - ? bb issue tracker
   - ? bb wiki
 ml:
-  - sensible memoization
   - rs dyn
+  - ordered snippets path
   - local search
   - so interface
 benchmarks:

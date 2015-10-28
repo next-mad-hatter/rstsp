@@ -16,6 +16,11 @@ val s1 = SBTour.tourToString t1
 val s2 = SBTour.tourToString t2
 val o1 = map SBTour.tourToString (SBTour.balancedOptions t2 0w6)
 *)
+
+(*
+structure TT = PyrTour
+val search = PyrTour.pyrSearch
+*)
 structure TT = SBTour
 val search = SBTour.balancedSearch (SOME 0w4)
 
