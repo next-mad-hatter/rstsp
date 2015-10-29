@@ -11,6 +11,7 @@ repo:
   - ? bb wiki
 ml:
   - rs testing & cleanup
+  - transparent dot log & pyrtour dot log
   - ordered snippets path
   - local search
   - robust input handling / exception per file + options parsing

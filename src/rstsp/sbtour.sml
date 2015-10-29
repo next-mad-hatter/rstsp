@@ -115,7 +115,16 @@ fun isComplete t = (WordVectorSet.numItems o getItems) t = 1 andalso let
     a = b
   end
 
-(* NB: do we want zero-bazed here? *)
+fun nodeToString base level node = let
+  fun compact (a,b) = if a = b then [a] else [a,b]
+  fun int2str i = "(" ^
+                  ((String.concatWith ",") o (map (fn x => wordToString (x+base))) o compact) i
+                  ^ ")"
+in
+  wordToString (level+base-0w1) ^ ": " ^
+  ((String.concatWith " ") o (map int2str) o WordPairSet.listItems o getItems) node
+end
+
 fun pathToString base v =
   "<" ^
   Vector.foldl (fn (x,s) => s ^ (if s = "" then "" else " ") ^ wordToString (x+base)) "" v
@@ -124,7 +133,7 @@ fun pathToString base v =
 fun pathsToString base p = String.concatWith " + "
   (((map (pathToString base)) o WordVectorSet.listItems) p)
 
-fun tourToString' t = "[" ^ (((pathsToString 0w0) o getItems) t) ^ "]"
+fun tourToString' t = (((pathsToString 0w0) o getItems) t)
 val tourToString : sbtour -> string = (pathsToString 0w1) o getItems
 
 (* TODO: implement oriented snippets path *)
@@ -140,24 +149,24 @@ fun mergePaths (v,w) = let
                    | _ => raise Fail "Merging incompatible paths."
   (*
   val r = VectorSlice.concat [VectorSlice.full v', VectorSlice.slice (w',1,NONE)]
-  val _ = print "  << "
-  val _ = print (pathToString 0w0 v)
-  val _ = print " + "
-  val _ = print (pathToString 0w0 w)
-  val _ = print " = "
-  val _ = print (pathToString 0w0 r)
-  val _ = print " >>\n"
+  val _ = printErr "  << "
+  val _ = printErr (pathToString 0w0 v)
+  val _ = printErr " + "
+  val _ = printErr (pathToString 0w0 w)
+  val _ = printErr " = "
+  val _ = printErr (pathToString 0w0 r)
+  val _ = printErr " >>\n"
   *)
 in
   VectorSlice.concat [VectorSlice.full v', VectorSlice.slice (w',1,NONE)]
 end
 
 fun singlePath (a,b) = let
-  val _ = print "Terminal path: <"
-  val _ = print (wordToString a)
-  val _ = print ","
-  val _ = print (wordToString b)
-  val _ = print ">\n"
+  val _ = printErr "Terminal path: <"
+  val _ = printErr (wordToString a)
+  val _ = printErr ","
+  val _ = printErr (wordToString b)
+  val _ = printErr ">\n"
   val v = Vector.fromList [a,b]
   val items' = WordVectorSet.add (WordVectorSet.empty, v)
   val keys' = List.foldl WordSet.add' WordSet.empty [a,b]
@@ -167,11 +176,11 @@ in
 end
 
 fun insertPath paths v = let
-  val _ = print "Insert path: "
-  val _ = print (pathToString 0w0 v)
-  val _ = print " into "
-  val _ = print (tourToString' paths)
-  val _ = print "\n"
+  val _ = printErr "Insert path: "
+  val _ = printErr (pathToString 0w0 v)
+  val _ = printErr " into {"
+  val _ = printErr (tourToString' paths)
+  val _ = printErr "}\n"
   val compact = fn l => if length l = 2 andalso hd l = hd (tl l) then tl l else l
   val unique = WordSet.listItems o (foldl WordSet.add' WordSet.empty)
   val stale_paths = ((map valOf) o compact o (List.filter isSome) o
@@ -179,15 +188,15 @@ fun insertPath paths v = let
   val stale_keys = (unique o (foldl op@ []) o (map pathEnds')) stale_paths
   val v' = foldl mergePaths v stale_paths
   (*
-  val _ = print "  deleting: "
-  val _ = print (((String.concatWith ", ") o (map (pathToString 0w0))) stale_paths)
-  val _ = print "\n"
-  val _ = print "  stale keys: "
-  val _ = print (pathToString 0w0 (Vector.fromList stale_keys))
-  val _ = print "\n"
-  val _ = print "  adding: "
-  val _ = print (pathToString 0w0 v')
-  val _ = print "\n"
+  val _ = printErr "  deleting: "
+  val _ = printErr (((String.concatWith ", ") o (map (pathToString 0w0))) stale_paths)
+  val _ = printErr "\n"
+  val _ = printErr "  stale keys: "
+  val _ = printErr (pathToString 0w0 (Vector.fromList stale_keys))
+  val _ = printErr "\n"
+  val _ = printErr "  adding: "
+  val _ = printErr (pathToString 0w0 v')
+  val _ = printErr "\n"
   *)
   val items = foldl (WordVectorSet.delete o swap) (getItems paths) stale_paths
   val items' = WordVectorSet.add (items, v')
@@ -226,13 +235,13 @@ local
     val n = Int.min (length ks, 3)
     val res = List.tabulate (3, fn i => if n > i then SOME (List.nth (ks, i)) else NONE)
     (*
-    val _ = print "[ Three mins of "
-    val _ = print (((String.concatWith " ") o
+    val _ = printErr "[ Three mins of "
+    val _ = printErr (((String.concatWith " ") o
                     (map (fn (x,y) => "(" ^ wordToString x ^ "," ^ wordToString y ^ ")" )) o
                    WordPairSet.listItems o getItems) node)
-    val _ = print " : "
-    val _ = print (String.concatWith ", " (map (fn x => if isSome x then wordToString (valOf x) else "none") res))
-    val _ = print " ]\n"
+    val _ = printErr " : "
+    val _ = printErr (String.concatWith ", " (map (fn x => if isSome x then wordToString (valOf x) else "none") res))
+    val _ = printErr " ]\n"
     *)
   in
     (List.nth (res, 0), List.nth (res, 1), List.nth (res, 2))
@@ -313,40 +322,49 @@ in
   structure MemMap: ORD_MAP = SplayMapFn(MapKey)
 end
 
-(* TODO: make pretty *)
+(* TODO: make pretty +  transparent logdot *)
 local
   fun select (a':word,b') (a'':word,b'') = if a' <= a'' then (a',b') else (a'',b'')
 
-  fun search mem (dist: word * word -> word) node m size max_ints = let
-    val _ = print "Search: ["
-    val _ = print (wordToString m)
-    val _ = print ": "
-    val _ = print (((String.concatWith "") o
-                    (map (fn (x,y) => "(" ^ wordToString x ^ "," ^ wordToString y ^ ")" )) o
-                   WordPairSet.listItems o getItems) node)
-    val _ = print "]\n"
+  fun search logdot mem (dist: word * word -> word) node m size max_ints = let
+    val _ = printErr "Search: ["
+    val _ = printErr (nodeToString 0w0 m node)
+    val _ = printErr "]\n"
     val memres = MemMap.find (!mem, (m, getItems node))
     (*
     val memres = (SOME (HashTable.lookup mem (getSnippets t))) handle Fail msg => NONE
     *)
   in case memres of
-          SOME r => (print "Returning from memo.\n"; r)
+          SOME r => (printErr "Return from memo.\n"; r)
         | NONE => let
+      val node_name = "\"" ^ (nodeToString 0w1 m node) ^ "\""
       val node_len = (Word.fromInt o WordPairSet.numItems o getItems) node
     in
       if m >= size then
         if node_len = 0w1 then let
             val p = (hd o WordPairSet.listItems o getItems) node
+            val _ = logdot (node_name ^ " [xlabel = \"" ^ ((tourToString o singlePath) p) ^ "\"]; \n")
           in
             SOME (dist p, singlePath p)
           end
-        else NONE else
+          else let
+            val _ = logdot (node_name ^ " [xlabel = <<font point-size=\"10\">{}</font>>]; \n")
+            in
+              NONE
+            end
+      else
       if size-m+0w1 < node_len orelse
-         isSome max_ints andalso node_len > valOf max_ints then NONE else
+         isSome max_ints andalso node_len > valOf max_ints then let
+           val _ = logdot (node_name ^ " [xlabel = <<font point-size=\"10\">{}</font>>]; \n")
+         in
+           NONE
+         end
+      else
       let
         val opts = descentOpts dist node m
+        val _ = app (fn node' => logdot (node_name ^ " -> \"" ^ (nodeToString 0w1 (m+0w1) node')  ^ "\";\n")) (map #1 opts)
         val sol = foldl (fn ((d_node,d_dist,d_path), old_sol) => let
-              val new_sol = search mem dist d_node (m+0w1) size max_ints
+              val new_sol = search logdot mem dist d_node (m+0w1) size max_ints
             in
               case new_sol of
                    NONE => old_sol
@@ -358,15 +376,14 @@ local
                    end
             end
           ) NONE opts
-        val _ = print "Return: ["
-        val _ = print (wordToString m)
-        val _ = print ": "
-        val _ = print (((String.concatWith "") o
-                        (map (fn (x,y) => "(" ^ wordToString x ^ "," ^ wordToString y ^ ")" )) o
-                       WordPairSet.listItems o getItems) node)
-        val _ = print "] => "
-        val _ = print (if isSome sol then (tourToString' (#2 (valOf sol))) else "[]")
-        val _ = print "\n"
+        val _ = printErr "Return: ["
+        val _ = printErr (nodeToString 0w0 m node)
+        val _ = printErr "] => {"
+        val _ = printErr (if isSome sol then (tourToString' (#2 (valOf sol))) else "")
+        val _ = printErr "}\n"
+        val _ = logdot (node_name ^ " [xlabel = \"" ^
+                        (if isSome sol then (tourToString (#2 (valOf sol))) else "{}")
+                        ^ "\"]; \n")
       in
         mem := MemMap.insert (!mem, (m, getItems node), sol);
         (*
@@ -381,13 +398,20 @@ in
   fun balancedSearch max_ints d = let
     val size = Word.div(wordSqrt(0w1+0w8*(Word.fromInt (Vector.length d)))-0w1,0w2)
     val mem = ref MemMap.empty
+    val dotfile = TextIO.openOut "log.dot"
+    val logdot: string -> unit = fn s => TextIO.outputSubstr (dotfile, Substring.full s)
+    val _ = logdot "digraph Log {\n"
+    val _ = logdot "node[shape=box];\n"
     (*
     val mem = HashTable.mkTable
       (HashString.hashString o snippetsToString,op=)
       (0, Fail "not found")
     *)
+    val res = (#2 o valOf) (search logdot mem (DistMat.getDist d) empty_node 0w0 size max_ints)
+    val _ = logdot "}\n"
+    val _ = TextIO.closeOut dotfile;
   in
-    (#2 o valOf) (search mem (DistMat.getDist d) empty_node 0w0 size max_ints)
+    res
   end
 end
 
