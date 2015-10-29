@@ -343,7 +343,7 @@ local
       if m >= size then
         if node_len = 0w1 then let
             val p = (hd o WordPairSet.listItems o getItems) node
-            val _ = logdot (node_name ^ " [xlabel = \"" ^ ((tourToString o singlePath) p) ^ "\"]; \n")
+            val _ = logdot (node_name ^ " [xlabel = \"{" ^ ((tourToString o singlePath) p) ^ "}\"]; \n")
           in
             SOME (dist p, singlePath p)
           end
@@ -393,7 +393,7 @@ local
         val _ = printErr (if isSome sol then (tourToString' (#2 (valOf sol))) else "")
         val _ = printErr "}\n"
         val _ = logdot (node_name ^ " [xlabel = \"" ^
-                        (if isSome sol then (tourToString (#2 (valOf sol)))
+                        (if isSome sol then "{" ^ (tourToString (#2 (valOf sol))) ^ "}"
                                        else "<<font color=\"red\">{}</font>>")
                         ^ "\"]; \n")
       in
