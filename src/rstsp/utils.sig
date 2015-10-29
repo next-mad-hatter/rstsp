@@ -13,6 +13,9 @@ signature UTILS = sig
   val curry: ('a * 'b -> 'c) -> 'a -> 'b -> 'c
   val uncurry: ('a -> 'b -> 'c) -> 'a * 'b -> 'c
 
+  (* prints to stderr *)
+  val printErr: string -> unit
+
   (* deletes all whitespace from string *)
   val stripWS: String.string -> String.string
 

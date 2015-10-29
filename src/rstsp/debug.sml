@@ -10,7 +10,13 @@ SMLofNJ.Internals.TDP.mode := true;
 
 use "rstsp_smlnj.sml";
 
-val d = (valOf o DistMat.readDistFile) "../../test/data/small/small.2"
+(*
+val max_int = NONE
+val d = (valOf o DistMat.readDistFile) "../../test/data/small/small.0"
+*)
+val max_int = SOME 0w2
+val d = (valOf o DistMat.readDistFile) "../../test/data/small/small.1"
+
 (*
 val t1:SBTour.sbtour = SBTour.tourFromILL [[1,2,5]]
 val t2:SBTour.sbtour = SBTour.tourFromILL [[1,2,5],[4,3]]
@@ -25,7 +31,7 @@ structure TT = PyrTour
 val search = PyrTour.pyrSearch
 *)
 structure TT = SBTour
-val search = SBTour.balancedSearch (SOME 0w4)
+val search = SBTour.balancedSearch max_int
 
 val timer = Timer.startCPUTimer ()
 val s3 = search d
