@@ -10,6 +10,9 @@
  *)
 signature UTILS = sig
 
+  val curry: ('a * 'b -> 'c) -> 'a -> 'b -> 'c
+  val uncurry: ('a -> 'b -> 'c) -> 'a * 'b -> 'c
+
   (* deletes all whitespace from string *)
   val stripWS: String.string -> String.string
 

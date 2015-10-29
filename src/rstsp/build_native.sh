@@ -13,3 +13,5 @@ BUILD_DIR="${SRC_DIR}/build"
 
 mlton -output "${BUILD_DIR}"/rstsp \
       "${SRC_DIR}"/rstsp.mlb || exit 1
+## For exception stack traces:
+#      -const 'Exn.keepHistory true' \
