@@ -368,8 +368,8 @@ local
       let
         val opts = descentOpts dist node m
         val _ = app (fn node' =>
-          if max_int = NONE orelse
-             (Word.fromInt o WordPairSet.numItems o getItems) node' <= valOf max_int
+          if max_ints = NONE orelse
+             (Word.fromInt o WordPairSet.numItems o getItems) node' <= valOf max_ints
           then
             logdot (node_name ^ " -> \"" ^
                     (nodeToString 0w1 (m+0w1) node')
