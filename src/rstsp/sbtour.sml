@@ -348,21 +348,32 @@ local
             SOME (dist p, singlePath p)
           end
           else let
-            val _ = logdot (node_name ^ " [xlabel = <<font point-size=\"10\">{}</font>>]; \n")
+            val _ = if max_ints = NONE orelse node_len <= valOf max_ints then
+                logdot (node_name ^ " [xlabel = <<font point-size=\"10\">{}</font>>]; \n")
+              else ()
             in
               NONE
             end
       else
       if size-m+0w1 < node_len orelse
          isSome max_ints andalso node_len > valOf max_ints then let
+           val _ = ()
+           (*
            val _ = logdot (node_name ^ " [xlabel = <<font point-size=\"10\">{}</font>>]; \n")
+           *)
          in
            NONE
          end
       else
       let
         val opts = descentOpts dist node m
-        val _ = app (fn node' => logdot (node_name ^ " -> \"" ^ (nodeToString 0w1 (m+0w1) node')  ^ "\";\n")) (map #1 opts)
+        val _ = app (fn node' =>
+          if max_int = NONE orelse
+             (Word.fromInt o WordPairSet.numItems o getItems) node' <= valOf max_int
+          then
+            logdot (node_name ^ " -> \"" ^
+                    (nodeToString 0w1 (m+0w1) node')
+                    ^ "\";\n") else ()) (map #1 opts)
         val sol = foldl (fn ((d_node,d_dist,d_path), old_sol) => let
               val new_sol = search logdot mem dist d_node (m+0w1) size max_ints
             in
@@ -382,7 +393,8 @@ local
         val _ = printErr (if isSome sol then (tourToString' (#2 (valOf sol))) else "")
         val _ = printErr "}\n"
         val _ = logdot (node_name ^ " [xlabel = \"" ^
-                        (if isSome sol then (tourToString (#2 (valOf sol))) else "{}")
+                        (if isSome sol then (tourToString (#2 (valOf sol)))
+                                       else "<<font color=\"red\">{}</font>>")
                         ^ "\"]; \n")
       in
         mem := MemMap.insert (!mem, (m, getItems node), sol);

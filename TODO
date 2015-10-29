@@ -10,11 +10,12 @@ repo:
   - ? bb issue tracker
   - ? bb wiki
 ml:
+  - ? Terminal doubles
   - rs testing & cleanup
   - transparent dot log & pyrtour dot log
-  - ordered snippets path
+  - robust input handling / exception per file + options parsing + dotfile name
+  - ordered snippets path ?
   - local search
-  - robust input handling / exception per file + options parsing
   - so interface
 benchmarks:
   - tsp i/o/conversion
