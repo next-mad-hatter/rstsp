@@ -5,9 +5,12 @@
  * $Revision$
  *)
 
+CM.make "$smlnj-tdp/back-trace.cm";
+SMLofNJ.Internals.TDP.mode := true;
+
 use "rstsp_smlnj.sml";
 
-val d = (valOf o DistMat.readDistFile) "../../test/data/small/small.1"
+val d = (valOf o DistMat.readDistFile) "../../test/data/small/small.2"
 (*
 val t1:SBTour.sbtour = SBTour.tourFromILL [[1,2,5]]
 val t2:SBTour.sbtour = SBTour.tourFromILL [[1,2,5],[4,3]]

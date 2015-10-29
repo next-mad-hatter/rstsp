@@ -11,8 +11,11 @@ open Utils
 
 type pyrtour = word vector
 
-val tourToString=
-  (Vector.foldl (fn (x,s) => s ^ (if s = "" then "" else " ") ^ wordToString (x+0w1)) "")
+fun tourToString t =
+  "<" ^
+  (Vector.foldl (fn (x,s) => s ^ (if s = "" then "" else " ") ^ wordToString (x+0w1)) "") t
+  ^
+  ">"
 
 fun pathLength dist v =
   #2 (Vector.foldl

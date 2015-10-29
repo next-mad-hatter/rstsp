@@ -10,9 +10,10 @@ repo:
   - ? bb issue tracker
   - ? bb wiki
 ml:
-  - rs dyn
+  - rs testing & cleanup
   - ordered snippets path
   - local search
+  - robust input handling / exception per file + options parsing
   - so interface
 benchmarks:
   - tsp i/o/conversion

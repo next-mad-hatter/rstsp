@@ -12,7 +12,9 @@ fun read file =
     handle Fail msg => (print ("  Input Error: " ^ msg ^ "\n"); NONE)
 
 fun main (tourToString,tourLength,search) file = let
+  val _ = print ("===================================================\n")
   val _ = print ("Processing " ^ file ^ ": \n")
+  val _ = print ("===================================================\n")
   val d = read file
 in
   if isSome d andalso (Vector.length o valOf) d > 1 then

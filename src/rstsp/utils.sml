@@ -7,6 +7,9 @@
 
 structure Utils: UTILS = struct
 
+val curry = fn f => fn x => fn y => f(x, y);
+val uncurry = fn f => fn (x, y) => f x y;
+
 local
   fun stripChars chars string =
     String.concat (String.tokens
