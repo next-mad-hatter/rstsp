@@ -10,7 +10,7 @@ repo:
   - ? bb issue tracker
   - ? bb wiki
 ml:
-  - ? Terminal doubles
+  - merge when only two mins?
   - rs testing & cleanup
   - transparent dot log & pyrtour dot log
   - robust input handling / exception per file + options parsing + dotfile name
