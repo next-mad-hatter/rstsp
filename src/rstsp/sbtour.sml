@@ -121,7 +121,7 @@ fun nodeToString base level node = let
                   ((String.concatWith ",") o (map (fn x => wordToString (x+base))) o compact) i
                   ^ ")"
 in
-  wordToString (level+base-0w1) ^ ": " ^
+  wordToString level ^ ": " ^
   ((String.concatWith " ") o (map int2str) o WordPairSet.listItems o getItems) node
 end
 
