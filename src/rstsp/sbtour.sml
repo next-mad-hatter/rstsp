@@ -367,7 +367,9 @@ local
       if size-m+0w1 < node_len orelse
          isSome max_ints andalso node_len > valOf max_ints then let
            val _ = ()
+           (*
            val _ = logdot (node_name ^ " [xlabel = <<font point-size=\"10\">{}</font>>]; \n")
+           *)
          in
            NONE
          end
