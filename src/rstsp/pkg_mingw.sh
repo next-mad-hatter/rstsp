@@ -14,7 +14,7 @@ BUILD_DIR="${SRC_DIR}/build"
 DATE=`date -u +%F_%H%M`
 #DATE=`date -u +%Y%m%d`
 #DATE=`date -u +%F`
-ARCHIVE=${BUILD_DIR}/../../../tmp/rstsp-win32_${DATE}.tar.xz
+ARCHIVE=${BUILD_DIR}/../../../tmp/rstsp-win32-${DATE}.tar.xz
 
 if [ -f "${ARCHIVE}" ]; then
   echo "Refusing to overwrite existing snapshot."
