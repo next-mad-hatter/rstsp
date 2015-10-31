@@ -17,9 +17,10 @@ in
   utils.sml
   distmat.sig
   distmat.sml
-  sbtour.sig
-  sbtour.sml
-  pyrtour.sig
-  pyrtour.sml
+  tspgraph.sig
+  pyrgraph.sml
+  tspsearch.sig
+  tspsearch.sml
+  tsputils.sml
   rstsp.sml
 end

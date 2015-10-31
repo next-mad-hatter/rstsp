@@ -314,7 +314,6 @@ in
   end
 end
 
-(* TODO: not working? *)
 local
   structure MapKey =
   struct

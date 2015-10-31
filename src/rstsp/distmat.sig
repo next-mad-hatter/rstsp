@@ -5,7 +5,8 @@
  * $Revision$
  *)
 
-signature DIST_MAT = sig
+signature DIST_MAT =
+sig
 
   type t
 

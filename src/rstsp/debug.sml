@@ -5,38 +5,25 @@
  * $Revision$
  *)
 
-CM.make "$smlnj-tdp/back-trace.cm";
-SMLofNJ.Internals.TDP.mode := true;
+use "rstsp-smlnj.sml";
 
-use "rstsp_smlnj.sml";
+open Utils
 
 val max_int = NONE
 val d = (valOf o DistMat.readDistFile) "../../test/data/small/small.0"
-(*
-val max_int = SOME 0w2
-val d = (valOf o DistMat.readDistFile) "../../test/data/small/small.1"
-*)
+val size = Word.div(wordSqrt(0w1+0w8*(Word.fromInt (Vector.length d)))-0w1,0w2)
+val dist = DistMat.getDist d
 
-(*
-val t1:SBTour.sbtour = SBTour.tourFromILL [[1,2,5]]
-val t2:SBTour.sbtour = SBTour.tourFromILL [[1,2,5],[4,3]]
-val x = SBTour.tourLength d t1
-val s1 = SBTour.tourToString t1
-val s2 = SBTour.tourToString t2
-val o1 = map SBTour.tourToString (SBTour.balancedOptions t2 0w6)
-*)
+structure Search : TSP_SEARCH = TSPSearchFn(PyrGraph)
 
-(*
-structure TT = PyrTour
-val search = PyrTour.pyrSearch
-*)
-structure TT = SBTour
-val search = SBTour.balancedSearch max_int
+val search = Search.search size dist
 
 val timer = Timer.startCPUTimer ()
-val s3 = search d
-val ts = (#sys o Timer.checkCPUTimer) timer
-val tu = (#usr o Timer.checkCPUTimer) timer
-val sol = TT.tourToString s3
-val len = TT.tourLength d s3
+val sol = valOf (search ())
+val time_sys = (#sys o Timer.checkCPUTimer) timer
+val time_user = (#usr o Timer.checkCPUTimer) timer
+val sol_vec = Search.Tour.toVector sol
+val sol_str = Search.Tour.toString sol
+val sol_len = tourLength dist sol_vec
+val sol_val = validTour size sol_vec
 

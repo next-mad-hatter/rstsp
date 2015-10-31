@@ -16,6 +16,7 @@ ml:
   - ordered snippets path ?
   - local search
   - so interface
+  - vim sml indent mode
 benchmarks:
   - tsp i/o/conversion
   - data licensing
