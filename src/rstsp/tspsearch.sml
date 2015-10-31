@@ -21,6 +21,9 @@ struct
   end
 
   (* no recursion here yet *)
+  (*
+   * TODO: FIXME :)
+   *
   fun memoize memo f =
     fn node =>
     let
@@ -36,6 +39,7 @@ struct
             sol
           end
     end
+   *)
 
   (*
    * TODO: FIXME :)
@@ -52,41 +56,51 @@ struct
       fn () => (log "}\n"; TextIO.closeOut dotfile)
     )
   end
-  *)
+   *)
 
-  fun traverse size dist patch node =
+  fun traverse size dist memo node =
   let
-    val collect =
-      fn ((new_node, dist_fn, tour_fn), old_sol) =>
-      let
-        val new_sol = (patch (traverse size dist patch)) new_node
-      in
-        case new_sol of
-          NONE => old_sol
-        | SOME (d, t) =>
-          case old_sol of
-               NONE => SOME (dist_fn d, tour_fn t)
-             | SOME (d', t') =>
-                 let
-                   val d'' = dist_fn d
-                 in
-                   case d' <= d'' of
-                     true => SOME (d', t')
-                   | _ => SOME (d'', tour_fn t)
-                 end
-      end
-    val desc = descend size dist node
+    val res = MemMap.find (!memo, node)
   in
-    case desc of
-      DESC opts => foldl collect NONE opts
-    | TERM r => r
+    case res of SOME r => r
+    | NONE =>
+        let val result =
+          let
+            val collect =
+              fn ((new_node, dist_fn, tour_fn), old_sol) =>
+              let
+                val new_sol = traverse size dist memo new_node
+              in
+                case new_sol of
+                  NONE => old_sol
+                | SOME (d, t) =>
+                  case old_sol of
+                       NONE => SOME (dist_fn d, tour_fn t)
+                     | SOME (d', t') =>
+                         let
+                           val d'' = dist_fn d
+                         in
+                           case d' <= d'' of
+                             true => SOME (d', t')
+                           | _ => SOME (d'', tour_fn t)
+                         end
+              end
+            val desc = descend size dist node
+          in
+            case desc of
+              DESC opts => foldl collect NONE opts
+            | TERM r => r
+          end
+        in
+          memo := MemMap.insert (!memo, node, result);
+          result
+        end
   end
 
   fun search size dist =
   let
     val memo = ref MemMap.empty
-    val patch = memoize memo
-    val tr = patch (traverse size dist patch)
+    val tr = traverse size dist memo
   in
     fn () =>
     let
