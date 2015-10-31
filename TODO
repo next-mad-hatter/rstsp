@@ -10,14 +10,14 @@ repo:
   - ? bb issue tracker
   - ? bb wiki
 ml:
-  - rs testing & cleanup (refactor)
-  - transparent dot log & pyrtour dot log
+  - refactor: sb search, dotlog + memoization
   - robust input handling / exception per file + options parsing + dotfile name
-  - ordered snippets path ?
+  - concurrent search: spawn & sync vs tuple space
   - local search
   - so interface
   - vim sml indent mode
 benchmarks:
+  - implement correctness tests
   - tsp i/o/conversion
   - data licensing
   - tsplib
