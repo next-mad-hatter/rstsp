@@ -10,8 +10,7 @@ repo:
   - ? bb issue tracker
   - ? bb wiki
 ml:
-  - ? Terminal doubles
-  - rs testing & cleanup
+  - rs testing & cleanup (refactor)
   - transparent dot log & pyrtour dot log
   - robust input handling / exception per file + options parsing + dotfile name
   - ordered snippets path ?
@@ -24,8 +23,8 @@ benchmarks:
   - dyn vs rs dyn vs local search vs relaxed
 CML:
   - concurrent version
-clojure:
-  - clojure port
+Other:
+  - aliceml + clojure port
 RS:
   - 3d euclidean applies?
   - relaxations

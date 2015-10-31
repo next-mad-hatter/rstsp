@@ -273,7 +273,12 @@ local
     val ab = map #2 old
     val a = hd ab
     val b = (hd o tl) ab
-    val node' = insertInterval (foldl removeInterval' node old, (a,b))
+    val _ = printErr "AB: "
+    val _ = printErr (wordToString a)
+    val _ = printErr ","
+    val _ = printErr (wordToString b)
+    val _ = printErr "\n"
+    val node' = insertInterval (foldl removeInterval' node old, orderInterval (a,b))
   in (
     node',
     dist (min1, m) + dist (m, min2): word,
@@ -290,6 +295,9 @@ in
                 | _ => []
     val o3 = case (m1, m2, m3) of
                   (SOME m1', SOME m2', NONE) =>
+                    (*
+                    []
+                    *)
                     if (valOf o WordMap.find) (getMap node, m1') =
                        (valOf o WordMap.find) (getMap node, m2') then [] else
                          [optMerge dist node m1' m2' m]
@@ -343,9 +351,10 @@ local
       if m >= size then
         if node_len = 0w1 then let
             val p = (hd o WordPairSet.listItems o getItems) node
-            val _ = logdot (node_name ^ " [xlabel = \"" ^ ((tourToString o singlePath) p) ^ "\"]; \n")
+            val q = singlePath p
+            val _ = logdot (node_name ^ " [xlabel = \"{" ^ tourToString q ^ "}\"]; \n")
           in
-            SOME (dist p, singlePath p)
+            SOME (dist p, q)
           end
           else let
             val _ = if max_ints = NONE orelse node_len <= valOf max_ints then
@@ -393,7 +402,7 @@ local
         val _ = printErr (if isSome sol then (tourToString' (#2 (valOf sol))) else "")
         val _ = printErr "}\n"
         val _ = logdot (node_name ^ " [xlabel = \"" ^
-                        (if isSome sol then (tourToString (#2 (valOf sol)))
+                        (if isSome sol then "{" ^ (tourToString (#2 (valOf sol))) ^ "}"
                                        else "<<font color=\"red\">{}</font>>")
                         ^ "\"]; \n")
       in
