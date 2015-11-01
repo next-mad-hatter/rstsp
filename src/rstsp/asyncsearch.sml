@@ -59,6 +59,9 @@ struct
   let
 
     val storage = mVarInit MemMap.empty
+    (*
+    val storage = Vector.tabulate size (fn _ => mVarInit MemMap.empty)
+    *)
 
     fun compute node =
     let

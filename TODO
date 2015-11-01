@@ -10,8 +10,10 @@ Repo:
   - bb wiki
   - bb issue tracker
 Source:
-  - concurrent vs normal search: benchmarking & quantum tests
+  - cml + multimlton/polyml at all possible (native/mingw) ?
+  - concurrent hashing: distinct map/lock per level
   - concurrent traversal: document
+  - concurrent vs normal search: benchmarking & quantum tests
   - packaging: add version option and prepend to dirname
   - packaging & build: normal and debug versions
   - local search
