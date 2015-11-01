@@ -10,8 +10,10 @@ Repo:
   - bb wiki
   - bb issue tracker
 Source:
+  - concurrent vs normal search: benchmarking & quantum tests
+  - concurrent traversal: document
   - packaging: add version option and prepend to dirname
-  - concurrent search with CML: spawn & sync vs tuple space
+  - packaging & build: normal and debug versions
   - local search
   - options parser
 
