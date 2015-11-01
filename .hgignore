@@ -4,12 +4,19 @@ papers
 report/report.pdf
 
 tags
+
+doc/sketches
+doc/log
+doc/ext
+
 src/rstsp/build
 src/rstsp/win32
+
 test/data/misc
 test/data/tsplib
-test/norm
-tmp/*
+test/ext
+
+tmp
 
 *~
 *.swp
