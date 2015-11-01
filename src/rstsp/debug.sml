@@ -15,11 +15,11 @@ val dist = DistMat.getDist d
 
 (*
 structure Search : TSP_SEARCH = TSPSearchFn(PyrGraph)
-val search = Search.search size dist ()
+val search = Search.search size dist NONE ()
 *)
 val max_int = SOME 0w2
 structure Search : TSP_SEARCH = TSPSearchFn(SBGraph)
-val search = Search.search size dist max_int
+val search = Search.search size dist NONE max_int
 
 val timer = Timer.startCPUTimer ()
 val sol = valOf (search ())

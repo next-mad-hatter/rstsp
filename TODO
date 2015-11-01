@@ -10,11 +10,13 @@ Repo:
   - bb wiki
   - bb issue tracker
 Source:
-  - doublekeymap -> sbgraph cleanup
-  - transparent dotlog + memoization
-  - options parsing + dotfile name
+  - packaging: add version option and prepend to dirname
   - concurrent search with CML: spawn & sync vs tuple space
   - local search
+  - options parser
+
+  - plan/call for 0.1.0rc1
+  - doublekeymap -> sbgraph cleanup
   - so interface
   - vim sml indent mode
 Testing:

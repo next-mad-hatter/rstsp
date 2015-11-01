@@ -12,7 +12,6 @@ SRC_DIR=`realpath ${0%/*}/`
 BUILD_DIR="${SRC_DIR}/build"
 
 mlton -output "${BUILD_DIR}"/rstsp \
-      -const 'Exn.keepHistory true' \
       "${SRC_DIR}"/rstsp.mlb || exit 1
 ## For exception stack traces:
 #      -const 'Exn.keepHistory true' \

@@ -52,12 +52,14 @@ in
      | mstr::files =>
          case (mstr, wordFromString mstr) of
            ("p",_) => List.app (main
-               (fn (size,dist) => PyrSearch.search size dist (),
+               (fn (size,dist) => PyrSearch.search size dist
+                                    (SOME "log.dot") (),
                 PyrSearch.Tour.toVector,
                 PyrSearch.Tour.toString))
              files
          | (_, SOME m) => List.app (main
-               (fn (size,dist) => SBSearch.search size dist (if m = 0w0 then NONE else SOME m),
+               (fn (size,dist) => SBSearch.search size dist
+                                    (SOME "log.dot") (if m = 0w0 then NONE else SOME m),
                 SBSearch.Tour.toVector,
                 SBSearch.Tour.toString))
              files

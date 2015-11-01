@@ -8,7 +8,7 @@
 (*
  * Search tree node:
  *
- * depth & set of ordered intervals, i.e. (a,b) where a <= b
+ * depth & set of intervals, i.e. (a,b) where a <= b
  *)
 structure SBNode = struct
 
@@ -71,7 +71,7 @@ end
 (*
  * Search tree traversal result:
  *
- * set of unordered paths, i.e. [a,...,b] of length >= 2 where a <> b and length > 2 if a = b
+ * set of paths, i.e. [a,...,b] of length >= 2 where a <> b and length > 2 if a = b
  *)
 structure SBTour = struct
 
@@ -163,7 +163,7 @@ structure SBGraph : TSP_GRAPH = struct
   fun optAppend dist (level, ints) min1 = let
     val old = (valOf o WordMap.find) (getMap ints, min1)
   in (
-    (* NB: intervals are ordered *)
+    (* NB: intervals are sorted *)
     (level+0w1, Node.insertInterval (Node.removeInterval (ints, old), (#2 old, level))),
     fn (d:word) => d + dist (min1, level),
     Tour.insertPath (Vector.fromList [min1,level])
@@ -225,37 +225,10 @@ structure SBGraph : TSP_GRAPH = struct
         let
           val p = (hd o WordPairSet.listItems o getItems) ints
           val q = Tour.singlePath p
-          (* FIXME: remove *)
-          (* val _ = logdot (node_name ^ " [xlabel = \"{" ^ tourToString q ^ "}\"]; \n") *)
         in
           TERM (SOME (dist p, q))
         end
-    | _ =>
-        let
-          val opts = descentOpts dist node
-
-          (*
-           * FIXME: remove
-           *)
-          (*
-          val _ = app (fn node' =>
-            if max_ints = NONE orelse
-               (Word.fromInt o WordPairSet.numItems o getItems) node' <= valOf max_ints
-            then
-            logdot (node_name ^ " -> \"" ^
-                    (nodeToString 0w1 (m+0w1) node')
-                    ^ "\";\n") else ()) (map #1 opts)
-          *)
-          (*
-          val _ = logdot (node_name ^ " [xlabel = \"" ^
-                          (if isSome sol then "{" ^ (tourToString (#2 (valOf sol))) ^ "}"
-                                         else "<<font color=\"red\">{}</font>>")
-                          ^ "\"]; \n")
-          *)
-
-        in
-          DESC opts
-        end
+    | _ => DESC (descentOpts dist node)
   end
 
 end
