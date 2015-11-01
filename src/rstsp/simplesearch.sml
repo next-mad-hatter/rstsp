@@ -5,7 +5,7 @@
  * $Revision$
  *)
 
-functor TSPSearchFn (G: TSP_GRAPH) : TSP_SEARCH =
+functor TSPSimpleSearchFn (G: TSP_GRAPH) : TSP_SEARCH =
 struct
 
   open G
@@ -21,7 +21,7 @@ struct
   end
 
   (*
-   * (log vertice, log value, close file) functions tuple
+   * (log vertex, log value, close file) functions tuple
    *)
   fun dotlogs filename =
   let
@@ -40,7 +40,7 @@ struct
     )
   end
 
-  fun traverse size dist (log_vertice, log_value) options =
+  fun traverse size dist (log_vertex, log_value) options =
   let
     val memo = ref MemMap.empty
 
@@ -56,7 +56,7 @@ struct
                   fn ((new_node, dist_fn, tour_fn), old_sol) =>
                   let
                     val new_sol = trav new_node
-                    val _ = log_vertice (node, new_node)
+                    val _ = log_vertex (node, new_node)
                   in
                     case new_sol of
                       NONE => old_sol
@@ -90,11 +90,11 @@ struct
 
   fun search size dist dotfilename options =
   let
-    val (log_vertice, log_value, close_log) =
+    val (log_vertex, log_value, close_log) =
       case dotfilename of
         SOME filename => dotlogs filename
       | NONE => (fn _ => (), fn _ => (), fn _ => ())
-    val trav = traverse size dist (log_vertice, log_value) options
+    val trav = traverse size dist (log_vertex, log_value) options
   in
     fn () =>
     (

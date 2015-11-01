@@ -10,6 +10,8 @@ $(SML_LIB)/basis/basis.mlb
 $(SML_LIB)/basis/mlton.mlb
 $(SML_LIB)/basis/sml-nj.mlb
 $(SML_LIB)/smlnj-lib/Util/smlnj-lib.mlb
+$(SML_LIB)/cml/cml.mlb
+
 ann
   "warnUnused true"
 in
@@ -22,7 +24,8 @@ in
   sbutils.sml
   sbgraph.sml
   tspsearch.sig
-  tspsearch.sml
+  simplesearch.sml
+  asyncsearch.sml
   tsputils.sml
   rstsp.sml
 end
