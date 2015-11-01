@@ -9,14 +9,17 @@ use "rstsp-smlnj.sml";
 
 open Utils
 
-val max_int = NONE
 val d = (valOf o DistMat.readDistFile) "../../test/data/small/small.0"
 val size = Word.div(wordSqrt(0w1+0w8*(Word.fromInt (Vector.length d)))-0w1,0w2)
 val dist = DistMat.getDist d
 
+(*
 structure Search : TSP_SEARCH = TSPSearchFn(PyrGraph)
-
-val search = Search.search size dist
+val search = Search.search size dist ()
+*)
+val max_int = SOME 0w2
+structure Search : TSP_SEARCH = TSPSearchFn(SBGraph)
+val search = Search.search size dist max_int
 
 val timer = Timer.startCPUTimer ()
 val sol = valOf (search ())

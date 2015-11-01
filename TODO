@@ -5,31 +5,29 @@
 # $Rev: 34 $
 #
 
-repo:
-  - structure -> readme
-  - ? bb issue tracker
-  - ? bb wiki
-ml:
-  - refactor: sb search, dotlog + memoization
-  - robust input handling / exception per file + options parsing + dotfile name
-  - concurrent search: spawn & sync vs tuple space
+Repo:
+  - readme + pkg readmes + license files
+  - bb wiki
+  - bb issue tracker
+Source:
+  - doublekeymap -> sbgraph cleanup
+  - transparent dotlog + memoization
+  - options parsing + dotfile name
+  - concurrent search with CML: spawn & sync vs tuple space
   - local search
   - so interface
   - vim sml indent mode
-benchmarks:
-  - implement correctness tests
-  - tsp i/o/conversion
-  - data licensing
-  - tsplib
+Testing:
+  - correctness tests
+  - tsplib i/o/conversion & benchmarks
+  - check data licenses
   - dyn vs rs dyn vs local search vs relaxed
-CML:
-  - concurrent version
 Other:
   - aliceml + clojure port
 RS:
   - 3d euclidean applies?
   - relaxations
   - generator sandbox
-report:
+Report:
+  - outline
   - writeup
-

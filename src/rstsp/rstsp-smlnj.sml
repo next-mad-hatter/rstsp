@@ -24,6 +24,8 @@ use "distmat.sig";
 use "distmat.sml";
 use "tspgraph.sig";
 use "pyrgraph.sml";
+use "sbutils.sml";
+use "sbgraph.sml";
 use "tspsearch.sig";
 use "tspsearch.sml";
 use "tsputils.sml";

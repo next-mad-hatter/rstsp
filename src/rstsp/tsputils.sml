@@ -17,8 +17,8 @@ fun validTour size v =
 let
   val vectorToList = Vector.foldl (op::) []
   val gt = fn (x: word, y) => x > y
-  val st = ((ListMergeSort.sort gt) o vectorToList) v
-  val l = 0w0::(List.tabulate (Word.toInt size, fn i => Word.fromInt i))
+  val l = List.tabulate (Word.toInt size, fn i => Word.fromInt i)
 in
-  st = l
+  Vector.length v > 1 andalso Vector.sub (v,0) = Vector.sub (v, (Vector.length v) - 1) andalso
+  l = ((ListMergeSort.sort gt) o vectorToList) (VectorSlice.concat [VectorSlice.slice (v, 1, NONE)])
 end

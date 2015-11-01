@@ -23,9 +23,11 @@ structure DistMat: DIST_MAT = struct
 
   local
     fun insert v (row,col) d =
-      if row <= col then Vector.update (v, flatCoor (row,col), d)
-                    else if getDist v (row,col) = d then v
-                    else raise Fail "Only symmetric matrices are supported."
+      (if row <= col then Vector.update (v, flatCoor (row,col), d)
+       else if getDist v (row,col) = d then v
+       else raise Fail "Only symmetric matrices are supported."
+       )
+         handle Subscript => raise Fail "Too many rows."
 
     fun addrow v row ds = let
       fun addr v _ _ [] = v

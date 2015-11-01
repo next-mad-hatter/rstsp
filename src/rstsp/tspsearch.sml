@@ -5,7 +5,7 @@
  * $Revision$
  *)
 
-functor TSPSearchFn (G: TSP_GRAPH) :> TSP_SEARCH =
+functor TSPSearchFn (G: TSP_GRAPH) : TSP_SEARCH =
 struct
 
   open G
@@ -13,7 +13,7 @@ struct
   local
     structure MemKey =
     struct
-      type ord_key = node
+      type ord_key = Node.hash
       val compare = Node.compare
     end
   in
@@ -58,18 +58,22 @@ struct
   end
    *)
 
-  fun traverse size dist memo node =
+  fun traverse size dist options memo node =
   let
-    val res = MemMap.find (!memo, node)
+    val res = MemMap.find (!memo, Node.toHash node)
   in
-    case res of SOME r => r
+    case res of SOME r => (
+      (*
+      Utils.printErr "FOUND\n";
+      *)
+      r)
     | NONE =>
         let val result =
           let
             val collect =
               fn ((new_node, dist_fn, tour_fn), old_sol) =>
               let
-                val new_sol = traverse size dist memo new_node
+                val new_sol = traverse size dist options memo new_node
               in
                 case new_sol of
                   NONE => old_sol
@@ -85,22 +89,25 @@ struct
                            | _ => SOME (d'', tour_fn t)
                          end
               end
-            val desc = descend size dist node
+            val desc = descend size dist options node
           in
             case desc of
               DESC opts => foldl collect NONE opts
             | TERM r => r
           end
         in
-          memo := MemMap.insert (!memo, node, result);
+          (*
+          Utils.printErr "Insert\n";
+          *)
+          memo := MemMap.insert (!memo, Node.toHash node, result);
           result
         end
   end
 
-  fun search size dist =
+  fun search size dist options =
   let
     val memo = ref MemMap.empty
-    val tr = traverse size dist memo
+    val tr = traverse size dist options memo
   in
     fn () =>
     let

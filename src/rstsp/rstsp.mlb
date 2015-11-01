@@ -19,6 +19,8 @@ in
   distmat.sml
   tspgraph.sig
   pyrgraph.sml
+  sbutils.sml
+  sbgraph.sml
   tspsearch.sig
   tspsearch.sml
   tsputils.sml

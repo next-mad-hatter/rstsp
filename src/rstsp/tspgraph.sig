@@ -7,9 +7,12 @@
 
 signature TSP_NODE = sig
 
-  (* we require equality type for memoizatione *)
-  eqtype node
-  val compare: node * node -> order
+  type node
+
+  (* these will be used for memoizatione *)
+  eqtype hash
+  val compare: hash * hash -> order
+  val toHash: node -> hash
 
   (* even if we use zero-based coordinates internally,
    * this should yield one-bazed representation *)
@@ -31,7 +34,7 @@ end
 
 signature TSP_GRAPH = sig
 
-  eqtype node
+  type node
   type tour
 
   structure Node: TSP_NODE where type node = node
@@ -47,9 +50,10 @@ signature TSP_GRAPH = sig
   datatype descents = TERM of (word * tour) option
                     | DESC of (node * (word -> word) * (tour -> tour)) list
 
+  type optional_params
   (*
    * we will need problem size and distance function here
    *)
-  val descend: word -> (word * word -> word) -> node -> descents
+  val descend: word -> (word * word -> word) -> optional_params -> node -> descents
 
 end

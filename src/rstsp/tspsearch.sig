@@ -8,9 +8,10 @@
 signature TSP_SEARCH = sig
 
   type tour
+  type optional_params
 
   structure Tour: TSP_TOUR where type tour = tour
 
-  val search: word -> (word * word -> word) -> unit -> tour option
+  val search: word -> (word * word -> word) -> optional_params -> unit -> tour option
 
 end
