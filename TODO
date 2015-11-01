@@ -5,30 +5,31 @@
 # $Rev: 34 $
 #
 
-repo:
-  - structure -> readme
-  - ? bb issue tracker
-  - ? bb wiki
-ml:
-  - rs testing & cleanup (refactor)
-  - transparent dot log & pyrtour dot log
-  - robust input handling / exception per file + options parsing + dotfile name
-  - ordered snippets path ?
+Repo:
+  - readme + pkg readmes + license files
+  - bb wiki
+  - bb issue tracker
+Source:
+  - packaging: add version option and prepend to dirname
+  - concurrent search with CML: spawn & sync vs tuple space
   - local search
+  - options parser
+
+  - plan/call for 0.1.0rc1
+  - doublekeymap -> sbgraph cleanup
   - so interface
-benchmarks:
-  - tsp i/o/conversion
-  - data licensing
-  - tsplib
+  - vim sml indent mode
+Testing:
+  - correctness tests
+  - tsplib i/o/conversion & benchmarks
+  - check data licenses
   - dyn vs rs dyn vs local search vs relaxed
-CML:
-  - concurrent version
 Other:
   - aliceml + clojure port
 RS:
   - 3d euclidean applies?
   - relaxations
   - generator sandbox
-report:
+Report:
+  - outline
   - writeup
-

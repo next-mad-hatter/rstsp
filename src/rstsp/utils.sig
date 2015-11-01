@@ -8,7 +8,8 @@
 (*
  * Little bits which have no particular place.
  *)
-signature UTILS = sig
+signature UTILS =
+sig
 
   val curry: ('a * 'b -> 'c) -> 'a -> 'b -> 'c
   val uncurry: ('a -> 'b -> 'c) -> 'a * 'b -> 'c
