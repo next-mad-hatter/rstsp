@@ -1,0 +1,14 @@
+(*
+ * $File$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *)
+
+use "rstsp.polyml";
+
+structure SMLofNJ = struct
+  val getArgs = CommandLine.arguments
+end;
+
+use "main.sml";

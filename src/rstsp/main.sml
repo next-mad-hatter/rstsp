@@ -7,12 +7,12 @@
 
 open Utils
 
+structure PyrSearch : TSP_SEARCH = SimpleSearchFn(PyrGraph)
+structure SBSearch : TSP_SEARCH = SimpleSearchFn(SBGraph)
 (*
-structure PyrSearch : TSP_SEARCH = TSPSimpleSearchFn(PyrGraph)
-structure SBSearch : TSP_SEARCH = TSPSimpleSearchFn(SBGraph)
+structure PyrSearch : TSP_SEARCH = CMLSearchFn(PyrGraph)
+structure SBSearch : TSP_SEARCH = CMLSearchFn(SBGraph)
 *)
-structure PyrSearch : TSP_SEARCH = TSPAsyncSearchFn(PyrGraph)
-structure SBSearch : TSP_SEARCH = TSPAsyncSearchFn(SBGraph)
 
 fun read file =
   (DistMat.readDistFile file)
@@ -71,13 +71,3 @@ in
          | _ => print "Invalid input.\n"
 end
 
-(*
-val _ = main ()
-*)
-val quantum = SOME (Time.fromMilliseconds 10)
-val _ = RunCML.doit (fn () =>
-  (
-    main ();
-    RunCML.shutdown OS.Process.success;
-    ()
-  ), quantum)

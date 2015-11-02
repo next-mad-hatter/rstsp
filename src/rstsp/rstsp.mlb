@@ -11,6 +11,13 @@ $(SML_LIB)/basis/mlton.mlb
 $(SML_LIB)/basis/sml-nj.mlb
 $(SML_LIB)/smlnj-lib/Util/smlnj-lib.mlb
 $(SML_LIB)/cml/cml.mlb
+(*
+ * multiMLton -> ?
+$(SML_LIB)/basis/default.mlb
+$(SML_LIB)/basis/basis-2002.mlb
+$(SML_LIB)/basis/pcml/util/util.mlb
+$(SML_LIB)/basis/pcml/cml-lib/cml-lib.mlb
+ *)
 
 ann
   "warnUnused true"
@@ -25,7 +32,8 @@ in
   sbgraph.sml
   tspsearch.sig
   simplesearch.sml
-  asyncsearch.sml
+  cmlsearch.sml
   tsputils.sml
-  rstsp.sml
+  main.sml
+  maineval.sml
 end
