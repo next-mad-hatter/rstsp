@@ -19,4 +19,8 @@ use "sbgraph.sml";
 use "tspsearch.sig";
 use "simplesearch.sml";
 use "tsputils.sml";
+(*
+use "settings.sig";
+use "main.sml";
+*)
 

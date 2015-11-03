@@ -34,4 +34,4 @@ WIN_BIN_EXT=.exe
 WIN_LIB_EXT=.dll
 
 mlton ${MLTON_OPTS} ${WIN_TARGET} -output "${BUILD_DIR}"/rstsp${WIN_BIN_EXT} \
-      "${SRC_DIR}/rstsp.mlb" || exit 1
+      "${SRC_DIR}/rstsp-mlton.mlb" || exit 1

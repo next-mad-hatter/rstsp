@@ -37,5 +37,10 @@ CM.autoload "$cml/cml-lib.cm";
 use "cmlsearch.sml";
 use "tsputils.sml";
 
+(*
+use "settings.sig";
+use "main.sml";
+*)
+
 val _ = TextIO.print;
 
