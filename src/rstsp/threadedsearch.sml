@@ -113,7 +113,7 @@ struct
       broadcast cv;
       if isSome result then
           (
-            logErr ("Done " ^ (Node.toString node) ^ "\n");
+            (* logErr ("Done " ^ (Node.toString node) ^ "\n"); *)
           fork (fn () => log_value (node, (#2 o valOf) result), []); ())
         else ()
     end
@@ -136,7 +136,7 @@ struct
                            let
                              val nc = conditionVar ()
                            in
-                             logErr ("Forking " ^ (Node.toString node) ^ "\n");
+                             (* logErr ("Forking " ^ (Node.toString node) ^ "\n"); *)
                              fork (fn () => compute node, []);
                              memo := MemMap.insert (!memo, Node.toHash node, PENDING nc);
                              nc

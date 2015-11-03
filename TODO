@@ -10,21 +10,18 @@ Repo:
   - bb wiki
   - bb issue tracker
 Source:
-  - threaded search performance
-  - multimlton : native/mingw stable executables?
+  - concurrent search model/performance ?
+  - concurrent hashing: distinct map/lock per level ?
+  - multimlton : hangs on number-processors > 2 -> native/mingw stable executables ?
   - polyml: smlofnj-lib license check
-  - concurrent hashing: distinct map/lock per level
-  - concurrent traversal: document
-  - concurrent vs normal search: benchmarking & quantum tests
   - packaging: add version option and prepend to dirname
   - packaging & build: normal and debug versions
   - local search
   - options parser
-
   - plan/call for 0.1.0rc1
-  - doublekeymap -> sbgraph cleanup
-  - so interface
-  - vim sml indent mode
+  - doublekeymap -> sbgraph cleanup ?
+  - so interface ?
+  - vim sml indent mode ?
 Testing:
   - correctness tests
   - tsplib i/o/conversion & benchmarks
