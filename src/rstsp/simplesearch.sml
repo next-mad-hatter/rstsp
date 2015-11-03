@@ -5,20 +5,11 @@
  * $Revision$
  *)
 
-functor SimpleSearchFn (G: TSP_GRAPH) : TSP_SEARCH =
+functor SimpleSearchFn (X: sig structure Graph: TSP_GRAPH; structure Store: TSP_STORE where type tour = Graph.tour where type node = Graph.node end) : TSP_SEARCH =
 struct
 
-  open G
-
-  local
-    structure MemKey =
-    struct
-      type ord_key = Node.hash
-      val compare = Node.compare
-    end
-  in
-    structure MemMap: ORD_MAP = SplayMapFn(MemKey)
-  end
+  open X
+  open Graph
 
   (*
    * (log vertex, log value, close file) functions tuple
@@ -42,11 +33,11 @@ struct
 
   fun traverse size dist (log_vertex, log_value) options =
   let
-    val memo = ref MemMap.empty
+    val store = Store.init size
 
     fun trav node =
       let
-        val res = MemMap.find (!memo, Node.toHash node)
+        val res = Store.getResult (store, node)
       in
         case res of SOME r => r
         | NONE =>
@@ -80,7 +71,7 @@ struct
               end
             in
               if isSome result then log_value (node, (#2 o valOf) result) else ();
-              memo := MemMap.insert (!memo, Node.toHash node, result);
+              Store.setResult (store, node, result);
               result
             end
       end

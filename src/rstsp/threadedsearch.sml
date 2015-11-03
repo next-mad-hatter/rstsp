@@ -5,7 +5,7 @@
  * $Revision$
  *)
 
-functor ThreadedSearchFn (X: sig structure Graph: TSP_GRAPH; structure Store: TSP_STORE where type tour = Graph.tour where type node = Graph.node end) : TSP_SEARCH =
+functor ThreadedSearchFn (X: sig structure Graph: TSP_GRAPH; structure Store: TSP_THREADED_STORE where type tour = Graph.tour where type node = Graph.node end) : TSP_SEARCH =
 struct
 
   open X

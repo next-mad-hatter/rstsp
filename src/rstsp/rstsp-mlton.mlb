@@ -24,6 +24,9 @@ in
   sbutils.sml
   sbgraph.sml
   tspsearch.sig
+  tspstore.sig
+  mapstore.sml
+  pyrstore.sml
   simplesearch.sml
   tsputils.sml
   settings.sig
