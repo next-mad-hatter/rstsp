@@ -5,9 +5,10 @@
  * $Revision$
  *)
 
-functor TSPAsyncSearchFn (G: TSP_GRAPH) : TSP_SEARCH =
+functor CMLSearchFn (G: TSP_GRAPH) : TSP_SEARCH =
 struct
 
+  open CML
   open SyncVar
   open G
 
@@ -59,6 +60,11 @@ struct
   let
 
     val storage = mVarInit MemMap.empty
+    (*
+     * TODO: memoize per level for SB graphs -> faster access?
+     *                                       -> less locking
+    val storage = Vector.tabulate size (fn _ => mVarInit MemMap.empty)
+    *)
 
     fun compute node =
     let
@@ -68,7 +74,7 @@ struct
           fn ((new_node, dist_fn, tour_fn), old_sol) =>
           let
             val new_sol = trav new_node
-            val _ = CML.spawn (fn () => log_vertex (node, new_node))
+            val _ = spawn (fn () => log_vertex (node, new_node))
           in
             case new_sol of
               NONE => old_sol
@@ -112,7 +118,7 @@ struct
               val port = Multicast.port chan
             in
               mPut (storage, MemMap.insert (mem, Node.toHash node, PENDING chan));
-              if isSome res then () else (CML.spawn (fn () => compute node); ());
+              if isSome res then () else (spawn (fn () => compute node); ());
               Multicast.recv port
             end
       end

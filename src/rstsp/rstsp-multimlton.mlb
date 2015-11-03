@@ -9,8 +9,10 @@
 $(SML_LIB)/basis/basis.mlb
 $(SML_LIB)/basis/mlton.mlb
 $(SML_LIB)/basis/sml-nj.mlb
+$(SML_LIB)/basis/default.mlb
+$(SML_LIB)/basis/basis-2002.mlb
+$(SML_LIB)/smlnj-lib/smlnj-lib.mlb
 $(SML_LIB)/smlnj-lib/Util/smlnj-lib.mlb
-$(SML_LIB)/cml/cml.mlb
 
 ann
   "warnUnused true"
@@ -24,8 +26,9 @@ in
   sbutils.sml
   sbgraph.sml
   tspsearch.sig
-  simplesearch.sml
-  asyncsearch.sml
+  pacmlsearch.sml
   tsputils.sml
-  rstsp.sml
+  settings.sig
+  main.sml
+  main-multimlton.sml
 end

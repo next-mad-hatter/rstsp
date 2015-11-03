@@ -11,6 +11,8 @@ doc/ext
 
 src/rstsp/build
 src/rstsp/win32
+src/rstsp/polyml/*.sml
+src/rstsp/polyml/*.sh
 
 test/data/misc
 test/data/tsplib

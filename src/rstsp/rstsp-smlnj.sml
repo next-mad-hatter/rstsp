@@ -28,12 +28,19 @@ use "simplesearch.sml";
  * HACK: SML/NJ has some problem with CML and readDistFile,
  * so we have to call it prior to loading CML.
  *)
-val distance = (valOf o DistMat.readDistFile) "../../test/data/small/small.0";
+(*
+val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/dantzig42_d.txt";
+*)
 CM.autoload "$cml/basis.cm";
 CM.autoload "$cml/cml.cm";
 CM.autoload "$cml/cml-lib.cm";
-use "asyncsearch.sml";
+use "cmlsearch.sml";
 use "tsputils.sml";
+
+(*
+use "settings.sig";
+use "main.sml";
+*)
 
 val _ = TextIO.print;
 

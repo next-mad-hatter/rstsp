@@ -5,7 +5,7 @@
  * $Revision$
  *)
 
-functor TSPSimpleSearchFn (G: TSP_GRAPH) : TSP_SEARCH =
+functor SimpleSearchFn (G: TSP_GRAPH) : TSP_SEARCH =
 struct
 
   open G

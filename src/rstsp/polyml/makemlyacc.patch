@@ -1,0 +1,8 @@
+5c5
+< MLBSRC=/usr/local/lib/mlton/sml
+---
+> MLBSRC=/usr/lib64/mlton/sml
+9c9
+< LIBSRC=/usr/local/lib/mlton/sml
+---
+> LIBSRC=/usr/lib64/mlton/sml

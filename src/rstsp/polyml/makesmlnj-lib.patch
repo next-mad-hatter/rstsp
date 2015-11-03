@@ -1,0 +1,20 @@
+5c5
+< MLBSRC=/usr/local/lib/mlton/sml
+---
+> MLBSRC=/usr/lib64/mlton/sml
+9c9
+< LIBSRC=/usr/local/lib/mlton/sml
+---
+> LIBSRC=/usr/lib64/mlton/sml
+22a23
+> echo 'structure WordVector = Word8Vector'
+24a26
+>           structure Vector = Vector
+25a28,34
+>           structure CharArray = struct
+>             open CharArray
+> 
+>             fun create n = array (n, #"0")
+>           end
+>           structure Word8Array = Word8Array
+>           structure Word8Vector = Word8Vector

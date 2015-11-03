@@ -10,8 +10,12 @@ Repo:
   - bb wiki
   - bb issue tracker
 Source:
-  - concurrent vs normal search: benchmarking & quantum tests
+  - multimlton : native/mingw stable executables?
+  - polyml: threaded search
+  - polyml: smlofnj-lib license check
+  - concurrent hashing: distinct map/lock per level
   - concurrent traversal: document
+  - concurrent vs normal search: benchmarking & quantum tests
   - packaging: add version option and prepend to dirname
   - packaging & build: normal and debug versions
   - local search
@@ -27,7 +31,7 @@ Testing:
   - check data licenses
   - dyn vs rs dyn vs local search vs relaxed
 Other:
-  - aliceml + clojure port
+  - concurrency: cml/aliceml/clojure/akka, linda/clotilde/pylinda etc
 RS:
   - 3d euclidean applies?
   - relaxations
