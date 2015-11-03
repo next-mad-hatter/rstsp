@@ -10,7 +10,7 @@ Repo:
   - bb wiki
   - bb issue tracker
 Source:
-  - polyml: threaded search performance
+  - threaded search performance
   - multimlton : native/mingw stable executables?
   - polyml: smlofnj-lib license check
   - concurrent hashing: distinct map/lock per level
@@ -31,7 +31,7 @@ Testing:
   - check data licenses
   - dyn vs rs dyn vs local search vs relaxed
 Other:
-  - concurrency: cml/aliceml/clojure/akka, linda/clotilde/pylinda etc
+  - concurrency: jocaml/aliceml/clojure/akka, linda/clotilde/pylinda etc
   - concurrency -> nim computation
 RS:
   - 3d euclidean applies?

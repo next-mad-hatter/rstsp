@@ -32,10 +32,10 @@ struct
     fun writestr s = TextIO.outputSubstr (dotfile, Substring.full s)
     fun log s =
     let
-      val token = mTake store
+      val _ = mTake store
     in
-      writestr s;
-      mPut (store, token)
+      (writestr s; mPut (store, ()))
+        handle e => (mPut (store, ()); raise e)
     end
     val _ = log "digraph Log {\n"
     val _ = log "node[shape=box];\n"
@@ -46,7 +46,9 @@ struct
         ,
       fn (node, tour) => log
         ("\"" ^ Node.toString node ^ "\" [xlabel = \"" ^ Tour.toString tour ^ "\"]; \n"),
-      fn () => (log "}\n"; TextIO.closeOut dotfile)
+      fn () => (
+        (mTake store; writestr "}\n"; TextIO.closeOut dotfile; mPut (store, ()))
+          handle e => (mPut (store, ()); raise e))
     )
   end
 
