@@ -6,13 +6,13 @@
  *)
 
 use "rstsp-polyml.sml";
-use "simplesearch.sml";
+use "threadedsearch.sml";
 use "settings.sig";
 use "main.sml";
 
 structure Settings: SETTINGS = struct
-  structure PyrSearch : TSP_SEARCH = SimpleSearchFn(PyrGraph)
-  structure SBSearch : TSP_SEARCH = SimpleSearchFn(SBGraph)
+  structure PyrSearch : TSP_SEARCH = ThreadedSearchFn(PyrGraph)
+  structure SBSearch : TSP_SEARCH = ThreadedSearchFn(SBGraph)
   val getArgs = CommandLine.arguments
 end
 

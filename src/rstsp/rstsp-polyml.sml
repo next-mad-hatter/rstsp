@@ -17,7 +17,10 @@ use "pyrgraph.sml";
 use "sbutils.sml";
 use "sbgraph.sml";
 use "tspsearch.sig";
+(*
 use "simplesearch.sml";
+use "threadedsearch.sml";
+*)
 use "tsputils.sml";
 (*
 use "settings.sig";

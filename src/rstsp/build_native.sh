@@ -11,6 +11,11 @@ trap "exit 1" INT QUIT TERM
 SRC_DIR=`realpath ${0%/*}/`
 BUILD_DIR="${SRC_DIR}/build"
 
+echo "Building Poly/ML (threaded) executable"
+polyc \
+    -o "${BUILD_DIR}"/rstsp.threaded \
+       "${SRC_DIR}"/main-threaded.sml || exit 1
+
 echo "Building Poly/ML executable"
 polyc \
     -o "${BUILD_DIR}"/rstsp.poly \
