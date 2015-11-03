@@ -5,12 +5,14 @@
  * $Revision$
  *)
 
-functor PacmlSearchFn (G: TSP_GRAPH) : TSP_SEARCH =
+functor ThreadedSearchFn (G: TSP_GRAPH) : TSP_SEARCH =
 struct
 
-  open MLton.Pacml
-  open SyncVar
   open G
+  open Thread
+  open Thread
+  open Mutex
+  open ConditionVar
 
   local
     structure MemKey =
@@ -22,21 +24,23 @@ struct
     structure MemMap: ORD_MAP = SplayMapFn(MemKey)
   end
 
+  fun synchronized mutex f =
+    fn x => (
+      (lock mutex; f x; unlock mutex)
+        handle e => (unlock mutex; raise e)
+    )
+
+  val logErr = synchronized (mutex ()) Utils.printErr
+
   (*
    * (log vertex, log value, close file) functions tuple
    *)
   fun dotlogs filename =
   let
-    val store = mVarInit ()
+    val token = mutex ()
     val dotfile = TextIO.openOut filename
     fun writestr s = TextIO.outputSubstr (dotfile, Substring.full s)
-    fun log s =
-    let
-      val _ = mTake store
-    in
-      (writestr s; mPut (store, ()))
-        handle e => (mPut (store, ()); raise e)
-    end
+    val log = synchronized token writestr
     val _ = log "digraph Log {\n"
     val _ = log "node[shape=box];\n"
   in
@@ -46,26 +50,29 @@ struct
         ,
       fn (node, tour) => log
         ("\"" ^ Node.toString node ^ "\" [xlabel = \"" ^ Tour.toString tour ^ "\"]; \n"),
-      fn () => (
-        (mTake store; writestr "}\n"; TextIO.closeOut dotfile; mPut (store, ()))
-          handle e => (mPut (store, ()); raise e))
+      fn () => (synchronized token (fn () => (writestr "}\n"; TextIO.closeOut dotfile))) ()
     )
   end
 
   datatype status = DONE of (word * tour) option
-                  | PENDING of (((word * tour) option) Multicast.mchan)
+                  | PENDING of conditionVar
 
-  fun getChannel (PENDING c) = c
-    | getChannel _ = raise Fail "No Channel"
+  fun getCV (PENDING c) = c
+    | getCV _ = raise Fail "No CV"
 
   fun traverse size dist (log_vertex, log_value) options =
   let
 
-    val storage = mVarInit MemMap.empty
+    val memo = ref MemMap.empty
+    val mem_token = mutex ()
+    (*
+    val find = synchronized mem_token (fn x => MemMap.find (!memo, x))
+    val insert = synchronized mem_token (fn (x,v) => MemMap.insert (!memo, x, v))
+    *)
     (*
      * TODO: memoize per level for SB graphs -> faster access?
-     *                                       -> less locking
-    val storage = Vector.tabulate size (fn _ => mVarInit MemMap.empty)
+     *
+    val memo = Vector.tabulate size (fn _ => mVarInit MemMap.empty)
     *)
 
     fun compute node =
@@ -76,7 +83,7 @@ struct
           fn ((new_node, dist_fn, tour_fn), old_sol) =>
           let
             val new_sol = trav new_node
-            val _ = spawn (fn () => log_vertex (node, new_node))
+            val _ = (fork (fn () => log_vertex (node, new_node), []); ())
           in
             case new_sol of
               NONE => old_sol
@@ -98,30 +105,50 @@ struct
           DESC opts => foldl collect NONE opts
         | TERM r => r
       end
-      val mem = mTake storage
-      val chan = (getChannel o valOf o MemMap.find) (mem, Node.toHash node)
+      val _ = lock mem_token
+      val cv = (getCV o valOf o MemMap.find) (!memo, Node.toHash node)
     in
-      Multicast.multicast (chan, result);
-      mPut (storage, MemMap.insert (mem, Node.toHash node, DONE result));
-      if isSome result then log_value (node, (#2 o valOf) result) else ()
+      memo := MemMap.insert (!memo, Node.toHash node, DONE result);
+      unlock mem_token;
+      broadcast cv;
+      if isSome result then
+          (
+            (* logErr ("Done " ^ (Node.toString node) ^ "\n"); *)
+          fork (fn () => log_value (node, (#2 o valOf) result), []); ())
+        else ()
     end
     and trav node =
       let
-        val mem = mTake storage
-        val res = MemMap.find (mem, Node.toHash node)
+        val _ = lock mem_token
+        val res = MemMap.find (!memo, Node.toHash node)
       in
         case res of
-          SOME (DONE r) => (mPut (storage, mem); r)
+          SOME (DONE r) =>
+            (
+              unlock mem_token;
+              r
+            )
         | _ =>
             let
-              val chan = case res of
-                           SOME (PENDING c) => c
-                         | _ => Multicast.mChannel ()
-              val port = Multicast.port chan
+              val cv = case res of
+                         SOME (PENDING c) => c
+                       | NONE =>
+                           let
+                             val nc = conditionVar ()
+                           in
+                             (* logErr ("Forking " ^ (Node.toString node) ^ "\n"); *)
+                             fork (fn () => compute node, []);
+                             memo := MemMap.insert (!memo, Node.toHash node, PENDING nc);
+                             nc
+                           end
+                        | _ => raise Fail "shut up compiler"
+              val _ = wait (cv, mem_token)
+              val r = MemMap.find (!memo, Node.toHash node)
+              fun unpack (SOME (DONE r)) = r
+                | unpack _ = raise Fail "Ooops"
             in
-              mPut (storage, MemMap.insert (mem, Node.toHash node, PENDING chan));
-              if isSome res then () else (spawn (fn () => compute node); ());
-              Multicast.recv port
+              unlock mem_token;
+              unpack r
             end
       end
   in
