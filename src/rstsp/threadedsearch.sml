@@ -5,24 +5,15 @@
  * $Revision$
  *)
 
-functor ThreadedSearchFn (G: TSP_GRAPH) : TSP_SEARCH =
+functor ThreadedSearchFn (X: sig structure Graph: TSP_GRAPH; structure Store: TSP_STORE where type tour = Graph.tour where type node = Graph.node end) : TSP_SEARCH =
 struct
 
-  open G
-  open Thread
-  open Thread
-  open Mutex
-  open ConditionVar
-
-  local
-    structure MemKey =
-    struct
-      type ord_key = Node.hash
-      val compare = Node.compare
-    end
-  in
-    structure MemMap: ORD_MAP = SplayMapFn(MemKey)
-  end
+  open X
+  open Graph
+  open Thread.Thread
+  open Thread.Mutex
+  open Thread.ConditionVar
+  open Store
 
   fun synchronized mutex f =
     fn x => (
@@ -54,8 +45,10 @@ struct
     )
   end
 
+  (*
   datatype status = DONE of (word * tour) option
                   | PENDING of conditionVar
+  *)
 
   fun getCV (PENDING c) = c
     | getCV _ = raise Fail "No CV"
@@ -63,19 +56,9 @@ struct
   fun traverse size dist (log_vertex, log_value) options =
   let
 
-    val memo = ref MemMap.empty
-    val mem_token = mutex ()
-    (*
-    val find = synchronized mem_token (fn x => MemMap.find (!memo, x))
-    val insert = synchronized mem_token (fn (x,v) => MemMap.insert (!memo, x, v))
-    *)
-    (*
-     * TODO: memoize per level for SB graphs -> faster access?
-     *
-    val memo = Vector.tabulate size (fn _ => mVarInit MemMap.empty)
-    *)
+    val store = Store.init size
 
-    fun compute node =
+    fun compute node (cell, token) =
     let
       val result =
       let
@@ -105,51 +88,47 @@ struct
           DESC opts => foldl collect NONE opts
         | TERM r => r
       end
-      val _ = lock mem_token
-      val cv = (getCV o valOf o MemMap.find) (!memo, Node.toHash node)
+      fun unpack (SOME (PENDING c)) = c
+        | unpack _ = raise Fail "Ho"
+      val cv = unpack (!cell)
     in
-      memo := MemMap.insert (!memo, Node.toHash node, DONE result);
-      unlock mem_token;
+      lock token;
+      cell := SOME (DONE result);
+      unlock token;
       broadcast cv;
       if isSome result then
           (
             (* logErr ("Done " ^ (Node.toString node) ^ "\n"); *)
-          fork (fn () => log_value (node, (#2 o valOf) result), []); ())
+            fork (fn () => log_value (node, (#2 o valOf) result), []); ())
         else ()
     end
     and trav node =
       let
-        val _ = lock mem_token
-        val res = MemMap.find (!memo, Node.toHash node)
+        val token = Store.getToken (store, node)
+        val _ = lock token
+        val cell = Store.getStatus (store, node)
+        val _ = case !cell of
+          NONE =>
+          (
+            cell := SOME (PENDING (conditionVar ()));
+            (* logErr ("Fork " ^ (Node.toString node) ^ "\n"); *)
+            fork (fn () => compute node (cell, token), []);
+            ()
+          )
+        | _ => ()
+        fun unpack (SOME (DONE r)) = r
+          | unpack _ = raise Fail "Ooops"
       in
-        case res of
-          SOME (DONE r) =>
-            (
-              unlock mem_token;
-              r
-            )
-        | _ =>
-            let
-              val cv = case res of
-                         SOME (PENDING c) => c
-                       | NONE =>
-                           let
-                             val nc = conditionVar ()
-                           in
-                             (* logErr ("Forking " ^ (Node.toString node) ^ "\n"); *)
-                             fork (fn () => compute node, []);
-                             memo := MemMap.insert (!memo, Node.toHash node, PENDING nc);
-                             nc
-                           end
-                        | _ => raise Fail "shut up compiler"
-              val _ = wait (cv, mem_token)
-              val r = MemMap.find (!memo, Node.toHash node)
-              fun unpack (SOME (DONE r)) = r
-                | unpack _ = raise Fail "Ooops"
-            in
-              unlock mem_token;
-              unpack r
-            end
+        case !cell of
+          SOME (DONE r) => (unlock token; r)
+        | SOME (PENDING cv) =>
+          let
+            val _ = wait (cv, token)
+          in
+            unlock token;
+            unpack (!cell)
+          end
+        | _ => raise Fail "Shutup compiler"
       end
   in
     trav

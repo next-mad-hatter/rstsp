@@ -62,11 +62,6 @@ struct
   let
 
     val storage = mVarInit MemMap.empty
-    (*
-     * TODO: memoize per level for SB graphs -> faster access?
-     *                                       -> less locking
-    val storage = Vector.tabulate size (fn _ => mVarInit MemMap.empty)
-    *)
 
     fun compute node =
     let
