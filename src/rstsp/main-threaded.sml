@@ -11,7 +11,7 @@ structure Settings: SETTINGS = struct
   structure PyrSearch : TSP_SEARCH = ThreadedSearchFn(
     struct structure Graph = PyrGraph; structure Store = PyrThreadedStore end)
   structure SBSearch : TSP_SEARCH = ThreadedSearchFn(
-    struct structure Graph = SBGraph; structure Store = MapThreadedStore(SBGraph) end)
+    struct structure Graph = SBGraph; structure Store = SBThreadedStore end)
   val getArgs = CommandLine.arguments
 end
 

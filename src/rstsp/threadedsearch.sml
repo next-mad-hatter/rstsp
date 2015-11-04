@@ -97,9 +97,11 @@ struct
       unlock token;
       broadcast cv;
       if isSome result then
-          (
-            (* logErr ("Done " ^ (Node.toString node) ^ "\n"); *)
-            fork (fn () => log_value (node, (#2 o valOf) result), []); ())
+        (
+          (* logErr ("Done " ^ (Node.toString node) ^ "\n"); *)
+          fork (fn () => log_value (node, (#2 o valOf) result), []);
+          ()
+        )
         else ()
     end
     and trav node =

@@ -29,6 +29,7 @@ use "simplesearch.sml";
 use "tspthreadedstore.sig";
 use "mapthreadedstore.sml";
 use "pyrthreadedstore.sml";
+use "sbthreadedstore.sml";
 use "threadedsearch.sml";
 
 use "tsputils.sml";

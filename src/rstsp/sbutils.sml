@@ -72,4 +72,7 @@ structure SBUtils = struct
     VectorSlice.concat [VectorSlice.full v', VectorSlice.slice (w',1,NONE)]
   end
 
+  fun normNode (level,ints) =
+    ((WordPairSet.map (fn (a,b) => (level-a-0w2, level-b-0w2))) o getItems) ints
+
 end

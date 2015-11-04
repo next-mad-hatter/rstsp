@@ -10,10 +10,14 @@ Repo:
   - bb wiki
   - bb issue tracker
 Source:
+  - collect node types
   - concurrent hashing: better/flat storage + precompute types
   - concurrent hashing -> normal traversal -> compare
   - concurrent performance/model
   - move structure-intern types to tsputils
+  - remove cml + multimlton support
+  - when word is not enough: overwrap check / type option / replace
+  - wiki/documentation & bug tracker
   - multimlton : hangs on number-processors > 2 -> native/mingw stable executables ?
   - polyml: smlofnj-lib license check
   - packaging: add version option and prepend to dirname

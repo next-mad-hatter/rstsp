@@ -18,8 +18,11 @@ sig
   datatype status = DONE of (word * tour) option
                   | PENDING of Thread.ConditionVar.conditionVar
 
-  (* depends on problem size *)
-  val init: word -> store
+  (* init: problem size, new-type-log message *)
+  (*
+  val init: word * ((node -> string) option) -> store
+  *)
+  val init: word  -> store
   val getToken: store * node -> Thread.Mutex.mutex
   val getStatus: store * node -> status option ref
 
