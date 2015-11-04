@@ -88,7 +88,7 @@ struct
     trav
   end
 
-  fun search size dist dotfilename wants_count options =
+  fun search size dist dotfilename wants_stats options =
   let
     val (log_vertex, log_value, close_log) =
       case dotfilename of
@@ -103,9 +103,11 @@ struct
         val res = trav memo root
         val _ = close_log ()
         val nk =
-          case wants_count of
+          case wants_stats of
             false => NONE
           | _ => SOME (
+            Word.fromInt (MemMap.numItems (!memo))
+            ,
             (Word.fromInt o WordPairSetSet.numItems)
             (MemMap.foldli
               (fn (k, _, s) => WordPairSetSet.add (s, Node.normHash k))

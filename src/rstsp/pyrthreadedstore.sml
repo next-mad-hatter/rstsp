@@ -31,13 +31,14 @@ struct
 
   fun getStatus (mem, (i,j)) = Vector.sub (#2 mem, flatCoor (i,j))
 
-  fun getNumKeys store =
+  fun getStats store =
   let
     val (tokens, memo) = store
     val _ = Vector.app Mutex.lock tokens
     val nk = Vector.foldl (fn (e,s) => if isSome (!e) then s+0w1 else s) 0w0 memo
+    val nn = Word.fromInt (Vector.length tokens)
   in
     Vector.app Mutex.unlock tokens;
-    nk
+    (nn, nk)
   end
 end

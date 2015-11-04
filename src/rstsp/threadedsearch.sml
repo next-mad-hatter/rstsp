@@ -151,7 +151,7 @@ struct
         val nk =
           case wants_count of
             false => NONE
-          | _ => SOME (Store.getNumKeys store)
+          | _ => SOME (Store.getStats store)
       in
         case res of
           NONE => (NONE, nk)
