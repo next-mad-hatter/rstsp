@@ -39,8 +39,8 @@ structure SBNode = struct
     val toString: node -> string = nodeToString 0w1
   end
 
-  fun getInts (_, ints): node -> intsset = ints
-  fun getLevel (level, _): node -> word = level
+  fun getInts ((_, ints): node): intsset = ints
+  fun getLevel ((level, _): node): word = level
   fun numItems (_, ints) = (Word.fromInt o WordPairSet.numItems o getItems) ints
 
   fun insertInterval (node_ints, v) = let
@@ -64,6 +64,9 @@ structure SBNode = struct
     HMAP (ints', keys', map')
   end
   val removeInterval' : (word * word) * intsset -> intsset = removeInterval o swap
+
+  fun normHash ((level, ints): hash) =
+      ((WordPairSet.map (fn (a,b) => (level-a-0w2, level-b-0w2))) ints)
 
 end
 
@@ -184,11 +187,13 @@ structure SBGraph : TSP_GRAPH = struct
     )
   end
 
-  fun descentOpts dist node =
+  fun descentOpts dist max_ints node =
   let
     val (_, ints) = node
     val (m1, m2, m3) = threeMins ints
-    val o1 = [optAdd node]
+    val o1 = case isSome max_ints andalso Node.numItems node = valOf max_ints of
+               true => []
+             | _ => [optAdd node]
     val o2 = case m1 of
                SOME m1' => [optAppend dist node m1']
              | _ => []
@@ -217,7 +222,7 @@ structure SBGraph : TSP_GRAPH = struct
     val node_len = Node.numItems node
   in
     case (
-      size-level+0w1 < node_len orelse isSome max_ints andalso node_len > valOf max_ints,
+      size-level+0w1 < node_len,
       node_len = 0w1 andalso level >= size
     ) of
       (true,_) => TERM NONE
@@ -228,7 +233,7 @@ structure SBGraph : TSP_GRAPH = struct
         in
           TERM (SOME (dist p, q))
         end
-    | _ => DESC (descentOpts dist node)
+    | _ => DESC (descentOpts dist max_ints node)
   end
 
 end

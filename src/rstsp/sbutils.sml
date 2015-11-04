@@ -14,20 +14,11 @@ structure SBUtils = struct
       type ord_key = word
       val compare = Word.compare
     end
-    structure WordPairKey = struct
-      type ord_key = word * word
-      fun compare ((w,s),(w',s')) = let
-        val comp = Word.compare (w,w')
-      in
-        if comp = EQUAL then Word.compare (s,s') else comp
-      end
-    end
     structure WordVectorKey = struct
       type ord_key = word vector
       val compare = Vector.collate Word.compare
     end
   in
-    structure WordPairSet: ORD_SET = SplaySetFn(WordPairKey)
     structure WordVectorSet: ORD_SET = SplaySetFn(WordVectorKey)
     structure WordSet: ORD_SET = SplaySetFn(WordKey)
     structure WordMap: ORD_MAP = SplayMapFn(WordKey)

@@ -21,6 +21,8 @@ structure PyrNode : TSP_NODE = struct
 
   fun toHash x = x
 
+  fun normHash hash = Utils.WordPairSet.add (Utils.WordPairSet.empty, hash)
+
 end
 
 structure PyrTour : TSP_TOUR = struct

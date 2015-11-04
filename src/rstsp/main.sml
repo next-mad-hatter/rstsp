@@ -17,7 +17,8 @@ struct
 
   fun read file =
     (DistMat.readDistFile file)
-      handle Fail msg => (print ("  Input Error: " ^ msg ^ "\n"); NONE)
+      handle Fail msg => (print ("  Format Error: " ^ msg ^ "\n"); NONE)
+           | _ => (print ("  Could not read file \"" ^ file ^ "\" .\n"); NONE)
 
   fun main_iter (search, to_vec, to_str) file = let
     val _ = print ("===================================================\n")
@@ -30,7 +31,9 @@ struct
         val dist = DistMat.getDist (valOf d)
         val size = Word.div(wordSqrt(0w1+0w8*(Word.fromInt (Vector.length (valOf d))))-0w1,0w2)
         val timer = Timer.totalCPUTimer ()
-        val sol = valOf (search (size,dist) ())
+        val res = search (size,dist) ()
+        val sol = valOf (#1 res)
+        val nk = valOf (#2 res)
         val stop = Timer.checkCPUTimer timer
         val sys = (IntInf.toString o Time.toMilliseconds o #sys) stop
         val usr = (IntInf.toString o Time.toMilliseconds o #usr) stop
@@ -39,13 +42,14 @@ struct
         val sol_len = tourLength dist sol_vec
         val sol_val = validTour size sol_vec
       in
-        print ("  Sys: " ^ sys ^ "ms\n");
-        print ("  Usr: " ^ usr ^ "ms\n");
-        print ("  Tour: " ^ sol_str ^ "\n");
-        print ("  Valid: " ^ (if sol_val then "yes" else "NO!") ^ "\n");
-        print ("  Length: " ^ (wordToString sol_len) ^ "\n")
+        print ("   Solution:  " ^ sol_str ^ "\n");
+        print ("      Valid:  " ^ (if sol_val then "yes" else "NO!") ^ "\n");
+        print ("     Length:  " ^ (wordToString sol_len) ^ "\n");
+        print (" Node Types:  " ^ (wordToString nk) ^ "\n");
+        print ("        Sys:  " ^ sys ^ "ms\n");
+        print ("        Usr:  " ^ usr ^ "ms\n")
       end
-    else print "  Empty problem.\n"
+    else print " Empty problem.\n"
   end
 
   fun main () =
@@ -59,13 +63,14 @@ struct
            case (mstr, wordFromString mstr) of
              ("p",_) => List.app (main_iter
                  (fn (size,dist) => PyrSearch.search size dist
-                                      (SOME "log.dot") (),
+                                      (SOME "log.dot") true (),
                   PyrSearch.Tour.toVector,
                   PyrSearch.Tour.toString))
                files
            | (_, SOME m) => List.app (main_iter
                  (fn (size,dist) => SBSearch.search size dist
-                                      (SOME "log.dot") (if m = 0w0 then NONE else SOME m),
+                                      (SOME "log.dot") true
+                                      (if m = 0w0 then NONE else SOME m),
                   SBSearch.Tour.toVector,
                   SBSearch.Tour.toString))
                files

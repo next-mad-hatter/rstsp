@@ -32,4 +32,7 @@ sig
 
   val swap: 'a * 'b -> 'b * 'a
 
+  structure WordPairSet : ORD_SET
+  structure WordPairSetSet : ORD_SET
+
 end

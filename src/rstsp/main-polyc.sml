@@ -6,9 +6,6 @@
  *)
 
 use "rstsp-polyml.sml";
-use "simplesearch.sml";
-use "settings.sig";
-use "main.sml";
 
 structure Settings: SETTINGS = struct
   structure PyrSearch : TSP_SEARCH = SimpleSearchFn(PyrGraph)
