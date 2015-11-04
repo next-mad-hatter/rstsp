@@ -17,7 +17,8 @@ struct
 
   fun read file =
     (DistMat.readDistFile file)
-      handle Fail msg => (print ("  Input Error: " ^ msg ^ "\n"); NONE)
+      handle Fail msg => (print ("  Format Error: " ^ msg ^ "\n"); NONE)
+           | _ => (print ("  Could not read file \"" ^ file ^ "\" .\n"); NONE)
 
   fun main_iter (search, to_vec, to_str) file = let
     val _ = print ("===================================================\n")
