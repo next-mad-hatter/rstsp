@@ -11,5 +11,4 @@ trap "exit 1" INT QUIT TERM
 SRC_DIR=`realpath ${0%/*}/`
 BUILD_DIR="${SRC_DIR}/build"
 
-rm -f -- "${BUILD_DIR}/rstsp"
-rm -f -- "${BUILD_DIR}/rstsp.exe"
+rm -f -- "${BUILD_DIR}/rstsp.*"
