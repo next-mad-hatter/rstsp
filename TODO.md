@@ -18,7 +18,6 @@
   - document/remove TODOs and FIXMEs
   - move structure-intern types to tsputils
   - shared library interface
-  - packaging: rstsp-src tarball
   - plan/call for 0.1.0rc1
   - concurrent performance/model: consult whom ?
   - doublekeymap -> sbgraph cleanup ?
