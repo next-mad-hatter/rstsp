@@ -5,7 +5,7 @@
  * $Revision$
  *)
 
-functor SimpleSearchFn (G: TSP_GRAPH) : TSP_SEARCH =
+functor SimpleSearchFn ( G: TSP_GRAPH ) : TSP_SEARCH =
 struct
 
   open G
@@ -18,6 +18,7 @@ struct
     end
   in
     structure MemMap: ORD_MAP = SplayMapFn(MemKey)
+    structure KeySet: ORD_SET = SplaySetFn(MemKey)
   end
 
   (*
@@ -42,9 +43,8 @@ struct
 
   fun traverse size dist (log_vertex, log_value) options =
   let
-    val memo = ref MemMap.empty
 
-    fun trav node =
+    fun trav memo node =
       let
         val res = MemMap.find (!memo, Node.toHash node)
       in
@@ -55,7 +55,7 @@ struct
                 val collect =
                   fn ((new_node, dist_fn, tour_fn), old_sol) =>
                   let
-                    val new_sol = trav new_node
+                    val new_sol = trav memo new_node
                     val _ = log_vertex (node, new_node)
                   in
                     case new_sol of
@@ -88,7 +88,7 @@ struct
     trav
   end
 
-  fun search size dist dotfilename options =
+  fun search size dist dotfilename wants_count options =
   let
     val (log_vertex, log_value, close_log) =
       case dotfilename of
@@ -99,12 +99,20 @@ struct
     fn () =>
     (
       let
-        val res = trav root
+        val memo = ref MemMap.empty
+        val res = trav memo root
         val _ = close_log ()
+        val nk =
+          case wants_count of
+            false => NONE
+          | _ => SOME (
+            (Word.fromInt o KeySet.numItems)
+            (MemMap.foldli (fn (k, _, s) => KeySet.add (s, k)) KeySet.empty (!memo))
+          )
       in
         case res of
-          NONE => NONE
-        | SOME (_, t) => SOME t
+          NONE => (NONE, nk)
+        | SOME (_, t) => (SOME t, nk)
       end
     ) handle e => (close_log; raise e)
   end

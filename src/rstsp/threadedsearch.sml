@@ -56,16 +56,14 @@ struct
   fun traverse size dist (log_vertex, log_value) options =
   let
 
-    val store = Store.init size
-
-    fun compute node (cell, token) =
+    fun compute store node (cell, token) =
     let
       val result =
       let
         val collect =
           fn ((new_node, dist_fn, tour_fn), old_sol) =>
           let
-            val new_sol = trav new_node
+            val new_sol = trav store new_node
             val _ = (fork (fn () => log_vertex (node, new_node), []); ())
           in
             case new_sol of
@@ -104,7 +102,7 @@ struct
         )
         else ()
     end
-    and trav node =
+    and trav store node =
       let
         val token = Store.getToken (store, node)
         val _ = lock token
@@ -114,7 +112,7 @@ struct
           (
             cell := SOME (PENDING (conditionVar ()));
             (* logErr ("Fork " ^ (Node.toString node) ^ "\n"); *)
-            fork (fn () => compute node (cell, token), []);
+            fork (fn () => compute store node (cell, token), []);
             ()
           )
         | _ => ()
@@ -136,7 +134,7 @@ struct
     trav
   end
 
-  fun search size dist dotfilename options =
+  fun search size dist dotfilename wants_count options =
   let
     val (log_vertex, log_value, close_log) =
       case dotfilename of
@@ -147,12 +145,17 @@ struct
     fn () =>
     (
       let
-        val res = trav root
+        val store = Store.init size
+        val res = trav store root
         val _ = close_log ()
+        val nk =
+          case wants_count of
+            false => NONE
+          | _ => SOME (Store.getNumKeys store)
       in
         case res of
-          NONE => NONE
-        | SOME (_, t) => SOME t
+          NONE => (NONE, nk)
+        | SOME (_, t) => (SOME t, nk)
       end
     ) handle e => (close_log (); raise e)
   end

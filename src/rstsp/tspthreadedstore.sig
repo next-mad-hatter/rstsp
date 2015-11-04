@@ -25,5 +25,6 @@ sig
   val init: word  -> store
   val getToken: store * node -> Thread.Mutex.mutex
   val getStatus: store * node -> status option ref
+  val getNumKeys: store -> word
 
 end

@@ -24,9 +24,11 @@ fun main () =
 let
   val size = Word.div(wordSqrt(0w1+0w8*(Word.fromInt (Vector.length distance)))-0w1,0w2)
   val dist = DistMat.getDist distance
-  val search = Search.search size dist NONE options
+  val search = Search.search size dist NONE true options
   val timer = Timer.startCPUTimer ()
-  val sol = valOf (search ())
+  val res = search ()
+  val sol = valOf (#1 res)
+  val nk = valOf (#2 res)
   val time_sys = (#sys o Timer.checkCPUTimer) timer
   val time_usr = (#usr o Timer.checkCPUTimer) timer
   val sol_vec = Search.Tour.toVector sol
@@ -37,6 +39,7 @@ let
   val _ = print ("  Solution:  " ^ sol_str ^ "\n")
   val _ = print ("     Valid:  " ^ (if sol_val then "yes" else "NO!") ^ "\n")
   val _ = print ("    Length:  " ^ (wordToString sol_len) ^ "\n")
+  val _ = print (" Traversed:  " ^ (wordToString nk) ^ "\n")
   val _ = print ("       Sys:  " ^ (IntInf.toString o Time.toMilliseconds ) time_sys ^ "\n")
   val _ = print ("       Usr:  " ^ (IntInf.toString o Time.toMilliseconds ) time_usr ^ "\n")
   val _ = print ("*********************************\n")

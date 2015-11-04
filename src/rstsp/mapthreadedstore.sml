@@ -21,6 +21,7 @@ struct
     end
   in
     structure MemMap: ORD_MAP = SplayMapFn(MemKey)
+    structure KeySet: ORD_SET = SplaySetFn(MemKey)
   end
 
   datatype status = DONE of (word * tour) option
@@ -58,6 +59,17 @@ struct
     val (_, v) = find' (mem, mut, node)
   in
     v
+  end
+
+  fun getNumKeys store =
+  let
+    val (mem, mut) = store
+    val _ = Mutex.lock mut
+    val nk = (Word.fromInt o KeySet.numItems)
+             (MemMap.foldli (fn (k, _, s) => KeySet.add (s, k)) KeySet.empty (!mem))
+  in
+    Mutex.unlock mut;
+    nk
   end
 
 end

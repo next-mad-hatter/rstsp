@@ -144,4 +144,14 @@ struct
 
   val getStatus = #2 o getCell
 
+  fun getNumKeys store =
+  let
+    val (mem, token, _, _) = store
+    val _ = Mutex.lock token
+    val nk = (Word.fromInt o TypeMap.numItems) (!mem)
+  in
+    Mutex.unlock token;
+    nk
+  end
+
 end
