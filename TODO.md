@@ -1,40 +1,43 @@
+
 #
-# $Id: report.tex,v d2014498bd29 2015/10/19 15:58:15 max $
-# $Author: max <max.deineko@gmail.com> $
-# $Date: 2015/10/19 15:58:15 $
+# $Id$
+# $Author$
+# $Date$
 # $Rev: 34 $
 #
 
-Repo:
+* Repo:
   - readme + pkg readmes + license files
   - wiki/documentation & bug tracker
-Source:
+  - default license
+* Source:
+  - options parsing & dot log as option
   - local search
-  - options parser
-  - document code somewhat
-  - move structure-intern types to tsputils
   - when word is not enough: overwrap check / type option / replace
+  - document code thoroughly
   - document/remove TODOs and FIXMEs
-  - packaging: add version option and prepend to dirname
+  - move structure-intern types to tsputils
+  - shared library interface
   - plan/call for 0.1.0rc1
-  - concurrent performance/model
+  - concurrent performance/model: consult whom ?
   - doublekeymap -> sbgraph cleanup ?
-  - dynamic lib interface ?
-  - vim sml indent mode ?
-Testing:
+  - vim sml indent mode
+* Testing:
+  - scripted statistics collection
+    (version, algorithm/limit -> node types, store size, running time, result)
   - correctness tests
   - tsplib i/o/conversion & benchmarks
   - check data licenses
   - polyml: smlofnj-lib license check
   - relaxations ?
-Other:
+* Other:
   - concurrency: manticore/jocaml/mythryl/aliceml/clojure/akka,
                  linda/clotilde/pylinda etc
   - gains if any -> nim computation?
-RS:
+* RS:
   - 3d euclidean applies?
   - relaxations
   - generator sandbox
-Report:
+* Report:
   - outline
   - writeup

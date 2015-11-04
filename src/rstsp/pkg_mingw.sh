@@ -11,10 +11,12 @@ trap "exit 1" INT QUIT TERM
 SRC_DIR=`realpath ${0%/*}/`
 BUILD_DIR="${SRC_DIR}/build"
 
-DATE=`date -u +%F_%H%M`
-#DATE=`date -u +%Y%m%d`
+#DATE=`date -u +%F_%H%M`
 #DATE=`date -u +%F`
-ARCHIVE=${BUILD_DIR}/../../../tmp/rstsp-win32-${DATE}.tar.xz
+DATE=`date -u +%Y%m%d`
+VERSION=${VERSION:-${DATE}}
+SUFFIX=win32-${VERSION}
+ARCHIVE=${BUILD_DIR}/../../../tmp/rstsp-${SUFFIX}.tar.xz
 
 if [ -f "${ARCHIVE}" ]; then
   echo "Refusing to overwrite existing snapshot."
@@ -22,7 +24,7 @@ if [ -f "${ARCHIVE}" ]; then
 fi
 
 cd "${BUILD_DIR}" || exit 1
-tar cJf "${ARCHIVE}" -h --transform 's,^,rstsp/,' \
+tar cJf "${ARCHIVE}" -h --transform 's,^,rstsp-'${SUFFIX}'/,' \
   rstsp.exe \
   -C ../win32 \
   README_GMP \

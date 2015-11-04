@@ -28,7 +28,7 @@ let
   val timer = Timer.startCPUTimer ()
   val res = search ()
   val sol = valOf (#1 res)
-  val nk = valOf (#2 res)
+  val (nn, nk) = valOf (#2 res)
   val time_sys = (#sys o Timer.checkCPUTimer) timer
   val time_usr = (#usr o Timer.checkCPUTimer) timer
   val sol_vec = Search.Tour.toVector sol
@@ -39,6 +39,7 @@ let
   val _ = print ("   Solution:  " ^ sol_str ^ "\n")
   val _ = print ("      Valid:  " ^ (if sol_val then "yes" else "NO!") ^ "\n")
   val _ = print ("     Length:  " ^ (wordToString sol_len) ^ "\n")
+  val _ = print (" Store size:  " ^ (wordToString nn) ^ "\n");
   val _ = print (" Node Types:  " ^ (wordToString nk) ^ "\n")
   val _ = print ("        Sys:  " ^ (IntInf.toString o Time.toMilliseconds ) time_sys ^ "\n")
   val _ = print ("        Usr:  " ^ (IntInf.toString o Time.toMilliseconds ) time_usr ^ "\n")

@@ -33,7 +33,7 @@ struct
         val timer = Timer.totalCPUTimer ()
         val res = search (size,dist) ()
         val sol = valOf (#1 res)
-        val nk = valOf (#2 res)
+        val (nn, nk) = valOf (#2 res)
         val stop = Timer.checkCPUTimer timer
         val sys = (IntInf.toString o Time.toMilliseconds o #sys) stop
         val usr = (IntInf.toString o Time.toMilliseconds o #usr) stop
@@ -45,7 +45,8 @@ struct
         print ("   Solution:  " ^ sol_str ^ "\n");
         print ("      Valid:  " ^ (if sol_val then "yes" else "NO!") ^ "\n");
         print ("     Length:  " ^ (wordToString sol_len) ^ "\n");
-        print (" Node Types:  " ^ (wordToString nk) ^ "\n");
+        print (" Store size:  " ^ (wordToString nn) ^ "\n");
+        print (" Node types:  " ^ (wordToString nk) ^ "\n");
         print ("        Sys:  " ^ sys ^ "ms\n");
         print ("        Usr:  " ^ usr ^ "ms\n")
       end

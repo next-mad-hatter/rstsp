@@ -11,6 +11,8 @@ trap "exit 1" INT QUIT TERM
 SRC_DIR=`realpath ${0%/*}/`
 BUILD_DIR="${SRC_DIR}/build"
 
+mkdir -p "${BUILD_DIR}" || exit 1
+
 #
 # This should host the needed win libs:
 #    gmp-10.dll

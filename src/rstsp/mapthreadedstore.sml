@@ -61,15 +61,16 @@ struct
     v
   end
 
-  fun getNumKeys store =
+  fun getStats store =
   let
     val (mem, mut) = store
     val _ = Mutex.lock mut
     val nk = (Word.fromInt o KeySet.numItems)
              (MemMap.foldli (fn (k, _, s) => KeySet.add (s, k)) KeySet.empty (!mem))
+    val nn = (Word.fromInt o MemMap.numItems) (!mem)
   in
     Mutex.unlock mut;
-    nk
+    (nn, nk)
   end
 
 end

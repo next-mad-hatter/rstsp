@@ -12,6 +12,7 @@ SRC_DIR=`realpath ${0%/*}/`
 BUILD_DIR="./build"
 
 cd "${SRC_DIR}" || exit 1
+mkdir -p "${BUILD_DIR}" || exit 1
 
 echo "Building Poly/ML (threaded) executable"
 polyc \

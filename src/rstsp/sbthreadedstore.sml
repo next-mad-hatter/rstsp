@@ -148,14 +148,15 @@ struct
 
   val getStatus = #2 o getCell
 
-  fun getNumKeys store =
+  fun getStats store =
   let
-    val (mem, token, _, _) = store
+    val (keymem, token, _, storemem) = store
     val _ = Mutex.lock token
-    val nk = (Word.fromInt o TypeMap.numItems) (!mem)
+    val nk = (Word.fromInt o TypeMap.numItems) (!keymem)
+    val nn = Array.foldl (fn (v, s) => s + Vector.length v) 0 storemem
   in
     Mutex.unlock token;
-    nk
+    (Word.fromInt nn, nk)
   end
 
 end
