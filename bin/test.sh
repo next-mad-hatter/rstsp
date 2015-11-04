@@ -12,4 +12,5 @@ PROJ_DIR=`realpath ${0%/*}/..`
 TEST_DIR="${PROJ_DIR}/test"
 
 #"${PROJ_DIR}/src/rstsp/build_native.sh" || exit 1
-"${TEST_DIR}/test.sh
+"${TEST_DIR}"/test_common.sh
+"${TEST_DIR}"/test_random.sh

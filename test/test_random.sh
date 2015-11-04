@@ -24,5 +24,5 @@ for i in {1..20}; do
     > "${LOG_DIR}"/log_random_$i 2>&1
 done
 
-grep -iE 'real|types' "${LOG_DIR}"/log_random_* >> "${LOG_DIR}"/log_random_all
+grep -iE 'real|types' "${LOG_DIR}"/log_random_* >> "${LOG_DIR}"/log_random
 
