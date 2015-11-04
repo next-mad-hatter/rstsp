@@ -42,12 +42,12 @@ struct
         val sol_len = tourLength dist sol_vec
         val sol_val = validTour size sol_vec
       in
-        print ("  Solution:  " ^ sol_str ^ "\n");
-        print ("     Valid:  " ^ (if sol_val then "yes" else "NO!") ^ "\n");
-        print ("    Length:  " ^ (wordToString sol_len) ^ "\n");
-        print (" Traversed:  " ^ (wordToString nk) ^ "\n");
-        print ("       Sys:  " ^ sys ^ "ms\n");
-        print ("       Usr:  " ^ usr ^ "ms\n")
+        print ("   Solution:  " ^ sol_str ^ "\n");
+        print ("      Valid:  " ^ (if sol_val then "yes" else "NO!") ^ "\n");
+        print ("     Length:  " ^ (wordToString sol_len) ^ "\n");
+        print (" Node Types:  " ^ (wordToString nk) ^ "\n");
+        print ("        Sys:  " ^ sys ^ "ms\n");
+        print ("        Usr:  " ^ usr ^ "ms\n")
       end
     else print " Empty problem.\n"
   end

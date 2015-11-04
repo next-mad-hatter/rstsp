@@ -9,6 +9,7 @@ functor SimpleSearchFn ( G: TSP_GRAPH ) : TSP_SEARCH =
 struct
 
   open G
+  open Utils
 
   local
     structure MemKey =
@@ -18,7 +19,6 @@ struct
     end
   in
     structure MemMap: ORD_MAP = SplayMapFn(MemKey)
-    structure KeySet: ORD_SET = SplaySetFn(MemKey)
   end
 
   (*
@@ -106,8 +106,10 @@ struct
           case wants_count of
             false => NONE
           | _ => SOME (
-            (Word.fromInt o KeySet.numItems)
-            (MemMap.foldli (fn (k, _, s) => KeySet.add (s, k)) KeySet.empty (!memo))
+            (Word.fromInt o WordPairSetSet.numItems)
+            (MemMap.foldli
+              (fn (k, _, s) => WordPairSetSet.add (s, Node.normHash k))
+              WordPairSetSet.empty (!memo))
           )
       in
         case res of

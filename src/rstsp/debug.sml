@@ -36,12 +36,12 @@ let
   val sol_len = tourLength dist sol_vec
   val sol_val = validTour size sol_vec
   val _ = print ("*********************************\n")
-  val _ = print ("  Solution:  " ^ sol_str ^ "\n")
-  val _ = print ("     Valid:  " ^ (if sol_val then "yes" else "NO!") ^ "\n")
-  val _ = print ("    Length:  " ^ (wordToString sol_len) ^ "\n")
-  val _ = print (" Traversed:  " ^ (wordToString nk) ^ "\n")
-  val _ = print ("       Sys:  " ^ (IntInf.toString o Time.toMilliseconds ) time_sys ^ "\n")
-  val _ = print ("       Usr:  " ^ (IntInf.toString o Time.toMilliseconds ) time_usr ^ "\n")
+  val _ = print ("   Solution:  " ^ sol_str ^ "\n")
+  val _ = print ("      Valid:  " ^ (if sol_val then "yes" else "NO!") ^ "\n")
+  val _ = print ("     Length:  " ^ (wordToString sol_len) ^ "\n")
+  val _ = print (" Node Types:  " ^ (wordToString nk) ^ "\n")
+  val _ = print ("        Sys:  " ^ (IntInf.toString o Time.toMilliseconds ) time_sys ^ "\n")
+  val _ = print ("        Usr:  " ^ (IntInf.toString o Time.toMilliseconds ) time_usr ^ "\n")
   val _ = print ("*********************************\n")
 in
   ()

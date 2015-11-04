@@ -18,6 +18,9 @@ signature TSP_NODE = sig
    * this should yield one-bazed representation *)
   val toString: node -> string
 
+  (* level-agnostic representation *)
+  val normHash: hash -> Utils.WordPairSet.set
+
 end
 
 signature TSP_TOUR = sig

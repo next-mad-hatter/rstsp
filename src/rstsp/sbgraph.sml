@@ -65,6 +65,9 @@ structure SBNode = struct
   end
   val removeInterval' : (word * word) * intsset -> intsset = removeInterval o swap
 
+  fun normHash ((level, ints): hash) =
+      ((WordPairSet.map (fn (a,b) => (level-a-0w2, level-b-0w2))) ints)
+
 end
 
 

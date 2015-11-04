@@ -32,6 +32,7 @@ struct
   type store = word TypeMap.map ref * Mutex.mutex * Mutex.mutex Array.array *
                ((Mutex.mutex * status option ref) Vector.vector Array.array)
 
+  (*
   local
     fun synchronized mutex f =
       fn x => (
@@ -41,6 +42,7 @@ struct
   in
     val logErr = synchronized (Mutex.mutex ()) Utils.printErr
   end
+  *)
 
   fun initRow len = Vector.tabulate (len, fn _ => (Mutex.mutex (), ref NONE))
 
@@ -50,7 +52,7 @@ struct
 
   fun getType ((mem, token, _, _), node) =
   let
-    val tp = Node.normNode node
+    val tp = (Node.normHash o Node.toHash) node
     val res = case TypeMap.find (!mem, tp) of
                 SOME r => r
               | NONE =>
@@ -67,7 +69,7 @@ struct
                     | NONE =>
                       let
                         val nt = Word.fromInt (TypeMap.numItems (!mem))
-
+                        (*
                         fun compact (a,b) = if a = b then [a] else [a,b]
                         fun int2str i =
                            "(" ^ ((String.concatWith ",") o
@@ -78,9 +80,11 @@ struct
                                          (map int2str) o
                                          WordPairSet.listItems)
                                            (Node.normNode node)
-
+                        *)
                       in
+                        (*
                         logErr ("New type : " ^ typestr ^ "\n");
+                        *)
                         mem := TypeMap.insert (!mem, tp, nt);
                         Mutex.unlock token;
                         nt

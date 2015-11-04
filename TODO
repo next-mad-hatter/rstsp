@@ -9,7 +9,6 @@ Repo:
   - readme + pkg readmes + license files
   - wiki/documentation & bug tracker
 Source:
-  - collect node types
   - local search
   - options parser
   - document code somewhat
