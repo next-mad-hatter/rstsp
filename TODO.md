@@ -16,15 +16,16 @@
   - when word is not enough: overwrap check / type option / replace
   - document code thoroughly
   - document/remove TODOs and FIXMEs
-  - packaging: add version option and prepend to dirname
   - move structure-intern types to tsputils
   - shared library interface
+  - packaging: rstsp-src tarball
   - plan/call for 0.1.0rc1
   - concurrent performance/model: consult whom ?
   - doublekeymap -> sbgraph cleanup ?
   - vim sml indent mode
 * Testing:
-  - scripted statistics collection (node types, store size, runtime)
+  - scripted statistics collection
+    (version, algorithm/limit -> node types, store size, running time, result)
   - correctness tests
   - tsplib i/o/conversion & benchmarks
   - check data licenses
