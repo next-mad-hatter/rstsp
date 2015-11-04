@@ -17,6 +17,7 @@ src/rstsp/polyml/*.sh
 test/data/misc
 test/data/tsplib
 test/data/tmp
+test/log
 test/ext
 
 tmp
