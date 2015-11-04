@@ -21,9 +21,6 @@ use "sbgraph.sml";
 
 use "tspsearch.sig";
 
-use "tspstore.sig";
-use "mapstore.sml";
-use "pyrstore.sml";
 use "simplesearch.sml";
 
 use "tspthreadedstore.sig";
