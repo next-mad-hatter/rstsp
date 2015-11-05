@@ -9,13 +9,15 @@
     - src/rstsp/README.md: + contents info + licensing info + building info
     - wiki & bug tracker
 * Source:
-    - options parsing & dot log as option
+    - sml/nj unresolved flex record in main ?
+    - put src to dirs
     - local search
     - when word is not enough: overwrap check / type option / replace
     - document code thoroughly
     - document/remove TODOs and FIXMEs
     - move structure-intern types to tsputils
     - shared library interface
+    - options via record
     - plan/call for 0.1.0rc1
     - concurrent performance/model: consult whom ?
     - doublekeymap -> sbgraph cleanup ?

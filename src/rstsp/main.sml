@@ -20,9 +20,9 @@ struct
       handle Fail msg => (print ("  Format Error: " ^ msg ^ "\n"); NONE)
            | _ => (print ("  Could not read file \"" ^ file ^ "\" .\n"); NONE)
 
-  fun main_iter (search, to_vec, to_str) file = let
+  fun main_iter (search, to_vec, to_str, (verbose, pyramidal, max_ints)) file = let
     val _ = print ("===================================================\n")
-    val _ = print ("Processing " ^ file ^ ": \n")
+    val _ = print ("Processing " ^ file ^ ":\n")
     val _ = print ("===================================================\n")
     val d = read file
   in
@@ -37,6 +37,7 @@ struct
         val stop = Timer.checkCPUTimer timer
         val sys = (IntInf.toString o Time.toMilliseconds o #sys) stop
         val usr = (IntInf.toString o Time.toMilliseconds o #usr) stop
+        val total = IntInf.toString (Time.toSeconds (#usr stop) + Time.toSeconds (#sys stop))
         val sol_vec = to_vec sol
         val sol_str = to_str sol
         val sol_len = tourLength dist sol_vec
@@ -45,37 +46,50 @@ struct
         print ("   Solution:  " ^ sol_str ^ "\n");
         print ("      Valid:  " ^ (if sol_val then "yes" else "NO!") ^ "\n");
         print ("     Length:  " ^ (wordToString sol_len) ^ "\n");
-        print (" Store size:  " ^ (wordToString nn) ^ "\n");
-        print (" Node types:  " ^ (wordToString nk) ^ "\n");
-        print ("        Sys:  " ^ sys ^ "ms\n");
-        print ("        Usr:  " ^ usr ^ "ms\n")
+        if verbose then (
+          print ("     Search:  " ^ (if pyramidal then "pyramidal" else "balanced") ^ "\n");
+          print ("      Limit:  " ^ (if pyramidal orelse max_ints = NONE then "none" else (wordToString o valOf) max_ints) ^ "\n");
+          print (" Store size:  " ^ (wordToString nn) ^ "\n");
+          print (" Node types:  " ^ (wordToString nk) ^ "\n");
+          print ("        Sys:  " ^ sys ^ "ms\n");
+          print ("        Usr:  " ^ usr ^ "ms\n");
+          ()
+        ) else ();
+        print ("       Time:  " ^ total ^ "ms\n");
+        ()
       end
     else print " Empty problem.\n"
   end
 
   fun main () =
   let
-    val args = getArgs ()
+    val opts = Options.reader (getArgs) ()
+    val _ = case isSome opts of
+              false => OS.Process.exit OS.Process.failure
+            | _ => ()
+    val (verbose, log, pyramidal, max_ints, files) = valOf opts
+    val _ =
+      case isSome log of
+        true => ( case OS.FileSys.access (valOf log, []) of
+                    true => (printErr "Log file exists.\n"; OS.Process.exit OS.Process.failure)
+                  | _ => ()
+                )
+      | _ => ()
   in
-    case args of
-         [] => print "Expected arguments: max_width|\"p\" file(s)\n"
-       | _::[] => print "No input files given.\n"
-       | mstr::files =>
-           case (mstr, wordFromString mstr) of
-             ("p",_) => List.app (main_iter
-                 (fn (size,dist) => PyrSearch.search size dist
-                                      (SOME "log.dot") true (),
-                  PyrSearch.Tour.toVector,
-                  PyrSearch.Tour.toString))
-               files
-           | (_, SOME m) => List.app (main_iter
-                 (fn (size,dist) => SBSearch.search size dist
-                                      (SOME "log.dot") true
-                                      (if m = 0w0 then NONE else SOME m),
-                  SBSearch.Tour.toVector,
-                  SBSearch.Tour.toString))
-               files
-           | _ => print "Invalid input.\n"
+    if pyramidal then
+        List.app (main_iter (
+            (fn (size,dist) => PyrSearch.search size dist log verbose ()),
+            PyrSearch.Tour.toVector,
+            PyrSearch.Tour.toString,
+            (verbose, pyramidal, max_ints)
+          )) files
+      else
+        List.app (main_iter (
+            (fn (size,dist) => SBSearch.search size dist log verbose max_ints),
+            SBSearch.Tour.toVector,
+            SBSearch.Tour.toString,
+            (verbose, pyramidal, max_ints)
+          )) files
   end
-
 end
+
