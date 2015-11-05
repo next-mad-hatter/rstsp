@@ -33,7 +33,6 @@ struct
         val timer = Timer.totalCPUTimer ()
         val res = search (size,dist) ()
         val sol = valOf (#1 res)
-        val (nn, nk) = valOf (#2 res)
         val stop = Timer.checkCPUTimer timer
         val sys = (IntInf.toString o Time.toMilliseconds o #sys) stop
         val usr = (IntInf.toString o Time.toMilliseconds o #usr) stop
@@ -47,13 +46,17 @@ struct
         print ("      Valid:  " ^ (if sol_val then "yes" else "NO!") ^ "\n");
         print ("     Length:  " ^ (wordToString sol_len) ^ "\n");
         if verbose then (
-          print ("     Search:  " ^ (if pyramidal then "pyramidal" else "balanced") ^ "\n");
-          print ("      Limit:  " ^ (if pyramidal orelse max_ints = NONE then "none" else (wordToString o valOf) max_ints) ^ "\n");
-          print (" Store size:  " ^ (wordToString nn) ^ "\n");
-          print (" Node types:  " ^ (wordToString nk) ^ "\n");
-          print ("        Sys:  " ^ sys ^ "ms\n");
-          print ("        Usr:  " ^ usr ^ "ms\n");
-          ()
+          let
+            val (nn, nk) = valOf (#2 res)
+          in
+            print ("     Search:  " ^ (if pyramidal then "pyramidal" else "balanced") ^ "\n");
+            print ("      Limit:  " ^ (if pyramidal orelse max_ints = NONE then "none" else (wordToString o valOf) max_ints) ^ "\n");
+            print (" Store size:  " ^ (wordToString nn) ^ "\n");
+            print (" Node types:  " ^ (wordToString nk) ^ "\n");
+            print ("        Sys:  " ^ sys ^ "ms\n");
+            print ("        Usr:  " ^ usr ^ "ms\n");
+            ()
+          end
         ) else ();
         print ("       Time:  " ^ total ^ "ms\n");
         ()
@@ -63,7 +66,7 @@ struct
 
   fun main () =
   let
-    val opts = Options.reader (getArgs) ()
+    val opts = Options.reader getCmdName getArgs ()
     val _ = case isSome opts of
               false => OS.Process.exit OS.Process.failure
             | _ => ()
