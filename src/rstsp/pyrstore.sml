@@ -5,7 +5,7 @@
  * $Revision$
  *)
 
-structure PyrThreadedStore : TSP_THREADED_STORE =
+structure PyrStore : TSP_STORE =
 struct
 
   open PyrGraph

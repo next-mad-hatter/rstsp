@@ -17,12 +17,12 @@ LOG_DIR="${TEST_DIR}"/log
 
 mkdir -p "${LOG_DIR}" | exit 1
 
-(time "${PROJ_DIR}"/src/rstsp/build/rstsp.poly p \
+(time "${PROJ_DIR}"/src/rstsp/build/rstsp.poly -v -t p \
   "${DATA_DIR}"/small/* \
   "${DATA_DIR}"/misc/*) \
   > "${LOG_DIR}"/logs_poly_p 2>&1
 
-(time "${PROJ_DIR}"/src/rstsp/build/rstsp.poly 4 \
+(time "${PROJ_DIR}"/src/rstsp/build/rstsp.poly -v -t b -m 4 \
   "${DATA_DIR}"/small/* \
   "${DATA_DIR}"/misc/*) \
   > "${LOG_DIR}"/logs_poly_4 2>&1

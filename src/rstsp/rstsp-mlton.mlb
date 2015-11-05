@@ -26,6 +26,7 @@ in
   simplesearch.sml
   tsputils.sml
   settings.sig
+  options.sml
   main.sml
   main-mlton.sml
 end

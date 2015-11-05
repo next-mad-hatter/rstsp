@@ -5,7 +5,7 @@
  * $Revision$
  *)
 
-functor MapThreadedStore(G: TSP_GRAPH) : TSP_THREADED_STORE =
+functor MapStore(G: TSP_GRAPH) : TSP_STORE =
 struct
 
   open G

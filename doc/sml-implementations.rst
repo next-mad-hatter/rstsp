@@ -15,7 +15,7 @@
  smlnj-lib         Yes      No[3]_     Yes     Yes          ?
  CML[7]_          Yes[1]_   No[2]_     Yes     ?[5]_        ?
 ---------------- -------- --------- ------- ------------ ----------------
- Supported         Yes      Yes       Yes     Dropped      Dropped
+ Supported         REPL     Yes       Yes     Dropped      Dropped
 ================ ======== ========= ======= ============ ================
 
 .. [1] CML implementation under SML/NJ has some I/O related quirks.

@@ -23,13 +23,15 @@ use "tspsearch.sig";
 
 use "simplesearch.sml";
 
-use "tspthreadedstore.sig";
-use "mapthreadedstore.sml";
-use "pyrthreadedstore.sml";
-use "sbthreadedstore.sml";
+use "tspstore.sig";
+use "mapstore.sml";
+use "pyrstore.sml";
+use "sbstore.sml";
 use "threadedsearch.sml";
 
 use "tsputils.sml";
+
 use "settings.sig";
+use "options.sml";
 use "main.sml";
 
