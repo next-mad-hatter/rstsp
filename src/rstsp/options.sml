@@ -45,10 +45,13 @@ struct
     print ("  " ^ cmd_name ^ " [options] file(s)\n");
     print "where options are any of:\n";
     print "    -h|--help      :  print this message and quit\n";
-    print "    -l|--log file  :  dot log\n";
-    print "    -v|--verbose   :  print store statistics\n";
-    print "    -t|--type p|b  :  pyramidal|balanced search (default: balanced)\n";
-    print "    -m|--max width :  maximum node width for balanced search (default: none)\n";
+    print "    -t|--type p|b  :  pyramidal|balanced search\n";
+    print "                      (default: balanced)\n";
+    print "    -m|--max width :  maximum node width for balanced search\n";
+    print "                      (default: none)\n";
+    print "    -l|--log file  :  if specified, traversal trace (in dot format)\n";
+    print "                      will be written to the file\n";
+    print "    -v|--verbose   :  print additional info (such as store statistics)\n";
     print "\n";
     ()
     )
@@ -96,6 +99,8 @@ struct
       | ANY =>
           case args of
             [] => opts
+          | ["-h"] => (printUsage cmd_name; OS.Process.exit OS.Process.success)
+          | ["--help"] => (printUsage cmd_name; OS.Process.exit OS.Process.success)
           | _ =>
             let
               val (verbose, log, pyr, max_ints, files) = opts
@@ -126,7 +131,7 @@ struct
        | Fail msg => (printErr ("Error: " ^ msg ^ "\n\n"); printUsage cmd_name; NONE)
 
   fun reader getCmdName getArgs =
-    fn () => read (getCmdName ()) (getArgs ())
+    fn () => read ((OS.Path.file o getCmdName) ()) (getArgs ())
 
 end
 
