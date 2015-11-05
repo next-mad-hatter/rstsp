@@ -17,7 +17,7 @@ sig
    *    files: string list
    *   option (when wrong args/empty files list).
    *)
-  val reader: (unit -> string list) ->
+  val reader: (unit -> string) -> (unit -> string list) ->
     unit -> (bool * string option * bool * word option * string list) option
 
 end
@@ -39,12 +39,12 @@ struct
     | expect "--max" = MAX_INTS
     | expect _ = ANY
 
-  fun printUsage () = (
-    print "Available arguments are: \n";
-    print "    -h|--help";
-    print "    [options] file(s)\n";
-    print "where available options are any of:\n";
-    print "    -h|--help file :  print this message and exit\n";
+  fun printUsage cmd_name = (
+    print "Usage:\n";
+    print ("  " ^ cmd_name ^ " -h|--help\n");
+    print ("  " ^ cmd_name ^ " [options] file(s)\n");
+    print "where options are any of:\n";
+    print "    -h|--help file :  print this message and quit\n";
     print "    -l|--log file  :  dot log\n";
     print "    -v|--verbose   :  print store statistics\n";
     print "    -t|--type p|b  :  pyramidal|balanced search\n";
@@ -53,7 +53,7 @@ struct
     ()
     )
 
-  fun read args =
+  fun read cmd_name args =
   let
 
     fun read_next expects opts args =
@@ -122,11 +122,11 @@ struct
     (* do we want to check algorithm vs max_ints presence ? *)
     (SOME res)
   end
-  handle Usage => (printUsage (); NONE)
-       | Fail msg => (printErr ("Error: " ^ msg ^ "\n\n"); printUsage (); NONE)
+  handle Usage => (printUsage cmd_name; NONE)
+       | Fail msg => (printErr ("Error: " ^ msg ^ "\n\n"); printUsage cmd_name; NONE)
 
-  fun reader getArgs =
-    fn () => read (getArgs ())
+  fun reader getCmdName getArgs =
+    fn () => read (getCmdName ()) (getArgs ())
 
 end
 

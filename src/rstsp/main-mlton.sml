@@ -8,6 +8,7 @@
 structure Settings: SETTINGS = struct
   structure PyrSearch : TSP_SEARCH = SimpleSearchFn(PyrGraph)
   structure SBSearch : TSP_SEARCH = SimpleSearchFn(SBGraph)
+  val getCmdName = SMLofNJ.getCmdName
   val getArgs = SMLofNJ.getArgs
 end
 
