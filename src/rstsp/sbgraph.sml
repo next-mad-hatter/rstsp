@@ -194,7 +194,7 @@ structure SBGraph : TSP_GRAPH = struct
     val (m1, m2, m3) = threeMins ints
     val o1 = case (
                 isSome max_ints andalso Node.numItems node = valOf max_ints
-                orelse node_len > size-level
+                orelse node_len >= size-level
               ) of
                true => []
              | _ => [optAdd node]
