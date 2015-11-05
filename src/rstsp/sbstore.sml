@@ -5,7 +5,7 @@
  * $Revision$
  *)
 
-structure SBThreadedStore : TSP_THREADED_STORE =
+structure SBStore : TSP_STORE =
 struct
 
   structure Node = SBNode

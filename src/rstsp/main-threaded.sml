@@ -9,9 +9,9 @@ use "rstsp-polyml.sml";
 
 structure Settings: SETTINGS = struct
   structure PyrSearch : TSP_SEARCH = ThreadedSearchFn(
-    struct structure Graph = PyrGraph; structure Store = PyrThreadedStore end)
+    struct structure Graph = PyrGraph; structure Store = PyrStore end)
   structure SBSearch : TSP_SEARCH = ThreadedSearchFn(
-    struct structure Graph = SBGraph; structure Store = SBThreadedStore end)
+    struct structure Graph = SBGraph; structure Store = SBStore end)
   val getArgs = CommandLine.arguments
 end
 

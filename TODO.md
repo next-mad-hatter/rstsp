@@ -7,8 +7,8 @@
 #
 
 * Repo:
-  - README.md: + contents info + pkging info + licensing info + design info
-  - src/rstsp/README.md: + licensing info + building info
+  - README.md: + contents info + pkging info + licensing info
+  - src/rstsp/README.md: + contents info + licensing info + building info
   - wiki & bug tracker
 * Source:
   - options parsing & dot log as option
