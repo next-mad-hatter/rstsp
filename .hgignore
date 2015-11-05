@@ -1,13 +1,11 @@
 syntax: glob
 
-papers
 report/report.pdf
 
 tags
 
-doc/sketches
-doc/log
 doc/ext
+doc/sketches
 
 src/rstsp/build
 src/rstsp/win32
