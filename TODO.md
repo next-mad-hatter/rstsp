@@ -7,9 +7,9 @@
 #
 
 * Repo:
-  - readme + pkg readmes + license files
-  - wiki/documentation & bug tracker
-  - default license
+  - README.md: + contents info + pkging info + licensing info + design info
+  - src/rstsp/README.md: + licensing info + building info
+  - wiki & bug tracker
 * Source:
   - options parsing & dot log as option
   - local search
