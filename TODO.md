@@ -34,10 +34,13 @@
     - shared library interface
     - options via record
     - add version info to executable/build
+    - proper options parser
+    - replace verbose option with quiet ?
     - plan/call for 0.1.0 rc1
     - concurrent performance/model: consult whom ?
     - doublekeymap -> sbgraph cleanup ?
     - vim sml indent mode
+    - moscowml support ?
 * Other:
     - concurrency: manticore/jocaml/mythryl/aliceml/clojure/akka,
                    linda/clotilde/pylinda etc

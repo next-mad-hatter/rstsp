@@ -58,7 +58,7 @@ struct
             ()
           end
         ) else ();
-        print ("       Time:  " ^ total ^ "ms\n");
+        print ("       Time:  " ^ total ^ "s\n");
         ()
       end
     else print " Empty problem.\n"

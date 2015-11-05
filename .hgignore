@@ -7,7 +7,7 @@ tags
 doc/ext
 doc/sketches
 
-plots
+plots/**.pdf
 
 src/rstsp/build
 src/rstsp/win32
