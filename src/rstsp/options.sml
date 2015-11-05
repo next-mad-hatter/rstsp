@@ -44,11 +44,11 @@ struct
     print ("  " ^ cmd_name ^ " -h|--help\n");
     print ("  " ^ cmd_name ^ " [options] file(s)\n");
     print "where options are any of:\n";
-    print "    -h|--help file :  print this message and quit\n";
+    print "    -h|--help      :  print this message and quit\n";
     print "    -l|--log file  :  dot log\n";
     print "    -v|--verbose   :  print store statistics\n";
-    print "    -t|--type p|b  :  pyramidal|balanced search\n";
-    print "    -m|--max width :  maximum node width for balanced search\n";
+    print "    -t|--type p|b  :  pyramidal|balanced search (default: balanced)\n";
+    print "    -m|--max width :  maximum node width for balanced search (default: none)\n";
     print "\n";
     ()
     )
