@@ -11,6 +11,7 @@ struct
   open G
   open Utils
 
+  (*
   local
     structure MemKey =
     struct
@@ -19,7 +20,9 @@ struct
     end
   in
     structure MemMap: ORD_MAP = SplayMapFn(MemKey)
+    structure MemMap: ORD_MAP = RedBlackMapFn(MemKey)
   end
+  *)
 
   (*
    * (log vertex, log value, close file) functions tuple
@@ -46,7 +49,7 @@ struct
 
     fun trav memo node =
       let
-        val res = MemMap.find (!memo, Node.toHash node)
+        val res = HashTable.find memo (Node.toHash node)
       in
         case res of SOME r => r
         | NONE =>
@@ -80,7 +83,7 @@ struct
               end
             in
               if isSome result then log_value (node, (#2 o valOf) result) else ();
-              memo := MemMap.insert (!memo, Node.toHash node, result);
+              HashTable.insert memo (Node.toHash node, result);
               result
             end
       end
@@ -99,19 +102,22 @@ struct
     fn () =>
     (
       let
-        val memo = ref MemMap.empty
+        val memo: (Node.hash, (word * Tour.tour) option) HashTable.hash_table =
+          HashTable.mkTable
+          (Node.toHTHash, fn (a,b) => (Node.compare (a,b) = EQUAL))
+          ((Word.toInt size) * 100, Fail "ht miss")
         val res = trav memo root
         val _ = close_log ()
         val nk =
           case wants_stats of
             false => NONE
           | _ => SOME (
-            Word.fromInt (MemMap.numItems (!memo))
+            Word.fromInt (HashTable.numItems memo)
             ,
             (Word.fromInt o WordPairSetSet.numItems)
-            (MemMap.foldli
+            (HashTable.foldi
               (fn (k, _, s) => WordPairSetSet.add (s, Node.normHash k))
-              WordPairSetSet.empty (!memo))
+              WordPairSetSet.empty memo)
           )
       in
         case res of

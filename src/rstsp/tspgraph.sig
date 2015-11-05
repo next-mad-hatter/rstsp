@@ -13,6 +13,7 @@ signature TSP_NODE = sig
   eqtype hash
   val compare: hash * hash -> order
   val toHash: node -> hash
+  val toHTHash: hash -> word
 
   (* even if we use zero-based coordinates internally,
    * this should yield one-bazed representation *)

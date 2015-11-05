@@ -24,8 +24,12 @@
     - relaxations
     - generator sandbox
 * Source:
+    - store: replace maps with hashtables
     - local search
     - sml/nj unresolved flex record in main ?
+    - polyml/threaded: timer per cpu
+    - profile: mlprof & PolyML.profiling
+    - runtime ≈ pyramidal ?
     - put src to dirs
     - when word is not enough: overwrap check / type option / replace
     - document code thoroughly
