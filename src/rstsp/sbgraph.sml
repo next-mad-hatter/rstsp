@@ -187,11 +187,15 @@ structure SBGraph : TSP_GRAPH = struct
     )
   end
 
-  fun descentOpts dist max_ints node =
+  fun descentOpts size dist max_ints node =
   let
-    val (_, ints) = node
+    val (level, ints) = node
+    val node_len = Node.numItems node
     val (m1, m2, m3) = threeMins ints
-    val o1 = case isSome max_ints andalso Node.numItems node = valOf max_ints of
+    val o1 = case (
+                isSome max_ints andalso Node.numItems node = valOf max_ints
+                orelse node_len > size-level
+              ) of
                true => []
              | _ => [optAdd node]
     val o2 = case m1 of
@@ -221,19 +225,16 @@ structure SBGraph : TSP_GRAPH = struct
     val (level, ints) = node
     val node_len = Node.numItems node
   in
-    case (
-      size-level+0w1 < node_len,
-      node_len = 0w1 andalso level >= size
-    ) of
-      (true,_) => TERM NONE
-    | (_,true) =>
+    case (node_len = 0w1, level >= size) of
+      (true,true) =>
         let
           val p = (hd o WordPairSet.listItems o getItems) ints
           val q = Tour.singlePath p
         in
           TERM (SOME (dist p, q))
         end
-    | _ => DESC (descentOpts dist max_ints node)
+    | (_,true) => TERM NONE
+    | _ => DESC (descentOpts size dist max_ints node)
   end
 
 end
