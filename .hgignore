@@ -7,6 +7,8 @@ tags
 doc/ext
 doc/sketches
 
+plots
+
 src/rstsp/build
 src/rstsp/win32
 src/rstsp/polyml/*.sml
