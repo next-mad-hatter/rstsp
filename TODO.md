@@ -24,14 +24,18 @@
     - relaxations
     - generator sandbox
 * Source:
-    - store: replace maps with hashtables
+    - *check*:
+        - distmat.insert & results
+        - runtime behaviour
+        - hashtables with hashing function / collisions vs Splay/RBMaps ?
+        - => revert storage to maps?
+        - vectors -> arrays necessary where ?
     - local search
-    - sml/nj unresolved flex record in main ?
+    - when word is not enough: overwrap check / type option / replace
+    - sml/nj: unresolved flex record in main ?
     - polyml/threaded: timer per cpu
     - profile: mlprof & PolyML.profiling
-    - runtime ≈ pyramidal ?
     - put src to dirs
-    - when word is not enough: overwrap check / type option / replace
     - document code thoroughly
     - document/remove TODOs and FIXMEs
     - move structure-intern types to tsputils
