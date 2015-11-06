@@ -10,8 +10,8 @@ structure PyrNode : TSP_NODE = struct
   open Utils
 
   type node = word * word
-  type hash = node
 
+  type hash = node
   fun compare ((l,r), (l',r')) =
     case Word.compare (l,l') of
       EQUAL => Word.compare (r,r')
@@ -20,6 +20,8 @@ structure PyrNode : TSP_NODE = struct
   fun toString (a,b) = "(" ^ wordToString a ^ "," ^ wordToString b ^ ")"
 
   fun toHash x = x
+
+  val toHTHash = HashString.hashString o toString
 
   fun normHash hash = Utils.WordPairSet.add (Utils.WordPairSet.empty, hash)
 

@@ -10,6 +10,7 @@ sig
 
   type t
 
+  val length: t -> int
   (* zero-base indexing *)
   val getDist: t -> word * word -> word
   val readDistFile: string -> t option

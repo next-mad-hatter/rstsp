@@ -11,9 +11,12 @@ structure DistMat: DIST_MAT = struct
 
   type t = word vector
 
+  (* TODO: check after vector -> array transition *)
+  val length = Vector.length
+
   (*
   * For now, only symmetric matrices are supported.
-  * This maps them onto flat-indexed vectors.
+  * This maps them onto flat-indexed vectors/arrays.
   *)
   fun flatCoor (row:word,col:word) =
     if row >= col then Word.toInt (Word.div (row*(row+0w1),0w2) + col)
@@ -22,8 +25,9 @@ structure DistMat: DIST_MAT = struct
   fun getDist v (row,col) = Vector.sub (v, flatCoor (row,col))
 
   local
+    fun getDist v (row,col) = Array.sub (v, flatCoor (row,col))
     fun insert v (row,col) d =
-      (if row <= col then Vector.update (v, flatCoor (row,col), d)
+      (if row <= col then (Array.update (v, flatCoor (row,col), d); v)
        else if getDist v (row,col) = d then v
        else raise Fail "Only symmetric matrices are supported."
        )
@@ -45,14 +49,14 @@ structure DistMat: DIST_MAT = struct
         val ds = ((map (fn w => if isSome w then valOf w else raise Fail "Unrecognized Input")) o
                   (map wordFromString) o splitString) (valOf line)
         val newsize = if (not o isSome) size then
-                        (Word.fromInt o length) ds
+                        (Word.fromInt o List.length) ds
                       else if isSome size andalso
                            row <= valOf size andalso
-                           (Word.fromInt o length) ds = valOf size then
+                           (Word.fromInt o List.length) ds = valOf size then
                              valOf size
                       else raise Fail "Input line length mismatch"
-        val newdata = if isSome data then valOf data else Vector.tabulate
-                       ((Word.toInt o Word.div) (newsize*(newsize+0w1),0w2), fn _ => 0w0)
+        val newdata = if isSome data then valOf data else Array.array
+                       ((Word.toInt o Word.div) (newsize*(newsize+0w1),0w2), 0w0)
         val updated = addrow newdata row ds
       in
         readr (SOME updated) (SOME newsize) (row+0w1) input
@@ -62,9 +66,11 @@ structure DistMat: DIST_MAT = struct
     fun readDistFile filename = let
       val file = TextIO.openIn filename
       val d = readr NONE NONE 0w0 file
+      val _ = TextIO.closeIn file;
     in
-      TextIO.closeIn file;
-      d
+      case d of
+        NONE => NONE
+      | SOME d => SOME (Array.vector d)
     end
   end
 

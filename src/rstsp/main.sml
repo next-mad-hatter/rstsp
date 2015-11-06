@@ -26,10 +26,10 @@ struct
     val _ = print ("===================================================\n")
     val d = read file
   in
-    if isSome d andalso (Vector.length o valOf) d > 1 then
+    if isSome d andalso (DistMat.length o valOf) d > 1 then
       let
         val dist = DistMat.getDist (valOf d)
-        val size = Word.div(wordSqrt(0w1+0w8*(Word.fromInt (Vector.length (valOf d))))-0w1,0w2)
+        val size = Word.div(wordSqrt(0w1+0w8*(Word.fromInt (DistMat.length (valOf d))))-0w1,0w2)
         val timer = Timer.totalCPUTimer ()
         val res = search (size,dist) ()
         val sol = valOf (#1 res)
@@ -58,7 +58,7 @@ struct
             ()
           end
         ) else ();
-        print ("       Time:  " ^ total ^ "ms\n");
+        print ("       Time:  " ^ total ^ "s\n");
         ()
       end
     else print " Empty problem.\n"

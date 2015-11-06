@@ -17,8 +17,8 @@ structure SBNode = struct
 
   type intsset = ((WordPairSet.set, word * word) HashedMap)
   type node = word * intsset
-  type hash = word * WordPairSet.set
 
+  type hash = word * WordPairSet.set
   fun compare ((w,s), (w',s')) =
     case Word.compare (w,w') of
       EQUAL => WordPairSet.compare (s,s')
@@ -27,17 +27,24 @@ structure SBNode = struct
   fun toHash (level, ints) = (level, getItems ints)
 
   local
-    fun nodeToString base (level, ints) = let
-      fun compact (a,b) = if a = b then [a] else [a,b]
-      fun int2str i =
-        "(" ^ ((String.concatWith ",") o (map (fn x => wordToString (x+base))) o compact) i ^ ")"
-    in
+    fun compact (a,b) = if a = b then [a] else [a,b]
+    fun int2str base i =
+      "(" ^ ((String.concatWith ",") o (map (fn x => wordToString (x+base))) o compact) i ^ ")"
+    fun nodeToString base (level, ints) =
       wordToString level ^ ": " ^
-        ((String.concatWith " ") o (map int2str) o WordPairSet.listItems o getItems) ints
-    end
+        ((String.concatWith " ") o (map (int2str base)) o WordPairSet.listItems o getItems) ints
   in
     val toString: node -> string = nodeToString 0w1
+
+    (* TODO *)
+    fun toHTHash (level, ints) =
+      HashString.hashString (
+        wordToString level ^ ": " ^
+          ((String.concatWith " ") o (map (int2str 0w0)) o WordPairSet.listItems) ints
+      )
+
   end
+
 
   fun getInts ((_, ints): node): intsset = ints
   fun getLevel ((level, _): node): word = level
