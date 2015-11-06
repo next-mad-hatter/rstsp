@@ -12,12 +12,11 @@
     - scripted statistics collection
       (version, algorithm/limit -> node types, store size, running time, result etc)
     - correctness tests
-    - tsplib i/o/conversion & benchmarks
+    - tsplib i/o & benchmarks
     - check data licenses
     - polyml: smlofnj-lib license check
     - relaxations ?
 * Report:
-    - outline
     - writeup
 * Research:
     - 3d euclidean applies?
@@ -27,23 +26,26 @@
     - *check*:
         - distmat.insert & results
         - runtime behaviour
-        - hashtables with hashing function / collisions vs Splay/RBMaps ?
-        - => revert storage to maps?
+        - hashtables hashing functions / size vs Splay/RBMaps ?
+        - revert storage to maps?
         - vectors -> arrays necessary where ?
-    - local search
+        - other storage changes necessary ?
+    - local search (pyr -> bal)
+    - mst tour
+    - options: algorithm ~= prefx
+    - tsblib/euclidean input
     - when word is not enough: overwrap check / type option / replace
-    - sml/nj: unresolved flex record in main ?
+    - shared library interface
+    - mlton/polyml make ?
+    - add version info to executable/build
     - polyml/threaded: timer per cpu
-    - profile: mlprof & PolyML.profiling
+    - sml/nj: "unresolved flex record in main" bug?
     - put src to dirs
     - document code thoroughly
     - document/remove TODOs and FIXMEs
-    - move structure-intern types to tsputils
-    - shared library interface
+    - move structure-intern types to tsputils ?
     - options via record
-    - add version info to executable/build
     - proper options parser
-    - replace verbose option with quiet ?
     - plan/call for 0.1.0 rc1
     - concurrent performance/model: consult whom ?
     - doublekeymap -> sbgraph cleanup ?
