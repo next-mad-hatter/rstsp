@@ -71,7 +71,7 @@ class Batch
           end
         rescue Timeout::Error
           Process.kill("KILL", t.pid)
-          res[:real_time] = "timeout"
+          res[:real_time] = "timed out"
         end
         res[:thread] = t.value
       end
@@ -88,11 +88,11 @@ end
 
 if __FILE__ == $0 # or true # for ruby-prof
 
-  output = ARGV.shift
-  unless output
-    puts "Error: no output file given"
+  unless ARGV.length > 1
+    puts "Usage: #{File.basename($0)} out_file in_file(s)\n"
     exit 1
   end
+  output = ARGV.shift
 
   batches = []
   ARGV.each do |f|

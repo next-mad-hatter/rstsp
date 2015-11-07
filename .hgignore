@@ -13,7 +13,9 @@ src/rstsp/polyml/*.sml
 src/rstsp/polyml/*.sh
 
 plots/**.pdf
+plots/data/time_*.csv
 
+test/batch/*random*.json
 test/log
 test/data/misc
 test/data/tsplib
