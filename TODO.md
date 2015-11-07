@@ -22,6 +22,7 @@
     - 3d euclidean applies?
     - relaxations
     - generator sandbox
+    - fixed length exec generation
 * Source:
     - *check*:
         - distmat.insert & results
@@ -32,13 +33,13 @@
         - other storage changes necessary ?
     - local search (pyr -> bal)
     - mst tour
-    - options: algorithm ~= prefx
     - tsblib/euclidean input
     - when word is not enough: overwrap check / type option / replace
     - shared library interface
+    - mlprof higher limits balanced search
+    - polyml.profile threaded version
     - mlton/polyml make ?
     - add version info to executable/build
-    - polyml/threaded: timer per cpu
     - sml/nj: "unresolved flex record in main" bug?
     - put src to dirs
     - document code thoroughly

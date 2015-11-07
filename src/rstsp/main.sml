@@ -30,13 +30,15 @@ struct
       let
         val dist = DistMat.getDist (valOf d)
         val size = Word.div(wordSqrt(0w1+0w8*(Word.fromInt (DistMat.length (valOf d))))-0w1,0w2)
-        val timer = Timer.totalCPUTimer ()
+        val cpu_timer = Timer.startCPUTimer ()
+        val real_timer = Timer.startRealTimer ()
         val res = search (size,dist) ()
+        val real_stop = Timer.checkRealTimer real_timer
+        val cpu_stop = Timer.checkCPUTimer cpu_timer
         val sol = valOf (#1 res)
-        val stop = Timer.checkCPUTimer timer
-        val sys = (IntInf.toString o Time.toMilliseconds o #sys) stop
-        val usr = (IntInf.toString o Time.toMilliseconds o #usr) stop
-        val total = IntInf.toString (Time.toSeconds (#usr stop) + Time.toSeconds (#sys stop))
+        val cpu = (IntInf.toString o (foldl op+ 0) o (map Time.toMilliseconds))
+                    [#sys cpu_stop, #usr cpu_stop]
+        val real = (IntInf.toString o Time.toMilliseconds) real_stop
         val sol_vec = to_vec sol
         val sol_str = to_str sol
         val sol_len = tourLength dist sol_vec
@@ -53,12 +55,11 @@ struct
             print ("      Limit:  " ^ (if pyramidal orelse max_ints = NONE then "none" else (wordToString o valOf) max_ints) ^ "\n");
             print (" Store size:  " ^ (wordToString nn) ^ "\n");
             print (" Node types:  " ^ (wordToString nk) ^ "\n");
-            print ("        Sys:  " ^ sys ^ "ms\n");
-            print ("        Usr:  " ^ usr ^ "ms\n");
             ()
           end
         ) else ();
-        print ("       Time:  " ^ total ^ "s\n");
+        print ("   CPU time:  " ^ cpu ^ " ms\n");
+        print ("  Real time:  " ^ real ^ " ms\n");
         ()
       end
     else print " Empty problem.\n"

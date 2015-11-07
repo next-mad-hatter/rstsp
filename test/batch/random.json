@@ -1,0 +1,4802 @@
+[
+  {
+    "name": "mlton_1_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.1",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_1_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.1",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_1_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.1",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_1_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.1",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_1_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.1",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_1_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.1",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_2_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.2",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_2_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.2",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_2_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.2",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_2_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.2",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_2_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.2",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_2_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.2",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_3_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.3",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_3_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.3",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_3_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.3",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_3_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.3",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_3_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.3",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_3_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.3",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_4_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.4",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_4_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.4",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_4_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.4",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_4_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.4",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_4_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.4",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_4_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.4",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_5_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.5",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_5_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.5",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_5_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.5",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_5_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.5",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_5_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.5",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_5_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.5",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_6_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.6",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_6_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.6",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_6_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.6",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_6_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.6",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_6_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.6",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_6_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.6",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_7_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.7",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_7_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.7",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_7_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.7",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_7_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.7",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_7_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.7",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_7_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.7",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_8_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.8",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_8_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.8",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_8_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.8",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_8_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.8",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_8_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.8",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_8_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.8",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_9_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.9",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_9_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.9",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_9_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.9",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_9_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.9",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_9_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.9",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_9_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.9",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_10_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.10",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_10_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.10",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_10_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.10",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_10_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.10",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_10_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.10",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_10_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.10",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_11_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.11",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_11_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.11",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_11_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.11",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_11_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.11",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_11_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.11",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_11_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.11",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_12_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.12",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_12_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.12",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_12_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.12",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_12_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.12",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_12_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.12",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_12_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.12",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_13_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.13",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_13_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.13",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_13_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.13",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_13_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.13",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_13_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.13",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_13_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.13",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_14_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.14",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_14_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.14",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_14_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.14",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_14_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.14",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_14_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.14",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_14_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.14",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_15_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.15",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_15_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.15",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_15_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.15",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_15_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.15",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_15_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.15",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_15_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.15",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_16_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.16",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_16_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.16",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_16_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.16",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_16_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.16",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_16_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.16",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_16_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.16",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_17_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.17",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_17_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.17",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_17_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.17",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_17_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.17",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_17_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.17",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_17_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.17",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_18_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.18",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_18_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.18",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_18_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.18",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_18_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.18",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_18_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.18",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_18_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.18",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_19_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.19",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_19_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.19",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_19_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.19",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_19_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.19",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_19_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.19",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_19_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.19",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_20_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.20",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_20_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.20",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_20_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.20",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_20_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.20",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_20_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.20",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_20_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.20",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_21_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.21",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_21_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.21",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_21_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.21",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_21_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.21",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_21_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.21",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_21_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.21",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_22_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.22",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_22_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.22",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_22_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.22",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_22_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.22",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_22_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.22",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_22_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.22",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_23_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.23",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_23_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.23",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_23_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.23",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_23_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.23",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_23_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.23",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_23_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.23",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_24_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.24",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_24_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.24",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_24_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.24",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_24_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.24",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_24_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.24",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_24_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.24",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_25_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.25",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_25_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.25",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_25_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.25",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_25_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.25",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_25_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.25",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_25_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.25",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_26_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.26",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_26_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.26",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_26_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.26",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_26_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.26",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_26_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.26",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_26_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.26",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_27_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.27",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_27_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.27",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_27_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.27",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_27_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.27",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_27_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.27",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_27_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.27",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_28_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.28",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_28_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.28",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_28_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.28",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_28_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.28",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_28_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.28",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_28_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.28",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_29_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.29",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_29_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.29",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_29_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.29",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_29_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.29",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_29_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.29",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_29_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.29",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_30_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.30",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_30_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.30",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_30_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.30",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_30_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.30",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_30_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.30",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_30_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.30",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_31_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.31",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_31_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.31",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_31_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.31",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_31_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.31",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_31_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.31",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_31_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.31",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_32_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.32",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_32_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.32",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_32_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.32",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_32_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.32",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_32_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.32",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_32_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.32",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_33_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.33",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_33_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.33",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_33_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.33",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_33_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.33",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_33_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.33",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_33_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.33",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_34_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.34",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_34_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.34",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_34_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.34",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_34_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.34",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_34_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.34",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_34_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.34",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_35_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.35",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_35_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.35",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_35_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.35",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_35_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.35",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_35_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.35",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_35_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.35",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_36_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.36",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_36_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.36",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_36_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.36",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_36_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.36",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_36_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.36",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_36_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.36",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_37_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.37",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_37_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.37",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_37_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.37",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_37_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.37",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_37_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.37",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_37_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.37",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_38_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.38",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_38_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.38",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_38_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.38",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_38_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.38",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_38_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.38",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_38_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.38",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_39_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.39",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_39_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.39",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_39_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.39",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_39_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.39",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_39_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.39",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_39_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.39",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_40_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.40",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_40_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.40",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_40_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.40",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_40_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.40",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_40_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.40",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_40_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.40",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_41_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.41",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_41_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.41",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_41_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.41",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_41_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.41",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_41_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.41",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_41_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.41",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_42_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.42",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_42_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.42",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_42_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.42",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_42_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.42",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_42_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.42",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_42_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.42",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_43_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.43",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_43_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.43",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_43_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.43",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_43_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.43",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_43_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.43",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_43_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.43",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_44_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.44",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_44_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.44",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_44_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.44",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_44_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.44",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_44_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.44",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_44_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.44",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_45_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.45",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_45_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.45",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_45_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.45",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_45_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.45",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_45_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.45",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_45_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.45",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_46_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.46",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_46_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.46",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_46_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.46",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_46_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.46",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_46_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.46",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_46_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.46",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_47_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.47",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_47_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.47",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_47_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.47",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_47_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.47",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_47_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.47",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_47_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.47",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_48_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.48",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_48_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.48",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_48_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.48",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_48_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.48",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_48_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.48",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_48_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.48",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_49_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.49",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_49_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.49",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_49_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.49",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_49_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.49",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_49_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.49",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_49_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.49",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_50_pyramidal_null",
+    "bin": "mlton",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.50",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_50_balanced_1",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.50",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_50_balanced_2",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.50",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_50_balanced_3",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.50",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_50_balanced_4",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.50",
+    "timeout": 10
+  },
+  {
+    "name": "mlton_50_balanced_5",
+    "bin": "mlton",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.50",
+    "timeout": 10
+  },
+  {
+    "name": "poly_1_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.1",
+    "timeout": 10
+  },
+  {
+    "name": "poly_1_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.1",
+    "timeout": 10
+  },
+  {
+    "name": "poly_1_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.1",
+    "timeout": 10
+  },
+  {
+    "name": "poly_1_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.1",
+    "timeout": 10
+  },
+  {
+    "name": "poly_1_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.1",
+    "timeout": 10
+  },
+  {
+    "name": "poly_1_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.1",
+    "timeout": 10
+  },
+  {
+    "name": "poly_2_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.2",
+    "timeout": 10
+  },
+  {
+    "name": "poly_2_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.2",
+    "timeout": 10
+  },
+  {
+    "name": "poly_2_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.2",
+    "timeout": 10
+  },
+  {
+    "name": "poly_2_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.2",
+    "timeout": 10
+  },
+  {
+    "name": "poly_2_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.2",
+    "timeout": 10
+  },
+  {
+    "name": "poly_2_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.2",
+    "timeout": 10
+  },
+  {
+    "name": "poly_3_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.3",
+    "timeout": 10
+  },
+  {
+    "name": "poly_3_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.3",
+    "timeout": 10
+  },
+  {
+    "name": "poly_3_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.3",
+    "timeout": 10
+  },
+  {
+    "name": "poly_3_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.3",
+    "timeout": 10
+  },
+  {
+    "name": "poly_3_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.3",
+    "timeout": 10
+  },
+  {
+    "name": "poly_3_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.3",
+    "timeout": 10
+  },
+  {
+    "name": "poly_4_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.4",
+    "timeout": 10
+  },
+  {
+    "name": "poly_4_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.4",
+    "timeout": 10
+  },
+  {
+    "name": "poly_4_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.4",
+    "timeout": 10
+  },
+  {
+    "name": "poly_4_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.4",
+    "timeout": 10
+  },
+  {
+    "name": "poly_4_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.4",
+    "timeout": 10
+  },
+  {
+    "name": "poly_4_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.4",
+    "timeout": 10
+  },
+  {
+    "name": "poly_5_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.5",
+    "timeout": 10
+  },
+  {
+    "name": "poly_5_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.5",
+    "timeout": 10
+  },
+  {
+    "name": "poly_5_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.5",
+    "timeout": 10
+  },
+  {
+    "name": "poly_5_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.5",
+    "timeout": 10
+  },
+  {
+    "name": "poly_5_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.5",
+    "timeout": 10
+  },
+  {
+    "name": "poly_5_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.5",
+    "timeout": 10
+  },
+  {
+    "name": "poly_6_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.6",
+    "timeout": 10
+  },
+  {
+    "name": "poly_6_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.6",
+    "timeout": 10
+  },
+  {
+    "name": "poly_6_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.6",
+    "timeout": 10
+  },
+  {
+    "name": "poly_6_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.6",
+    "timeout": 10
+  },
+  {
+    "name": "poly_6_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.6",
+    "timeout": 10
+  },
+  {
+    "name": "poly_6_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.6",
+    "timeout": 10
+  },
+  {
+    "name": "poly_7_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.7",
+    "timeout": 10
+  },
+  {
+    "name": "poly_7_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.7",
+    "timeout": 10
+  },
+  {
+    "name": "poly_7_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.7",
+    "timeout": 10
+  },
+  {
+    "name": "poly_7_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.7",
+    "timeout": 10
+  },
+  {
+    "name": "poly_7_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.7",
+    "timeout": 10
+  },
+  {
+    "name": "poly_7_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.7",
+    "timeout": 10
+  },
+  {
+    "name": "poly_8_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.8",
+    "timeout": 10
+  },
+  {
+    "name": "poly_8_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.8",
+    "timeout": 10
+  },
+  {
+    "name": "poly_8_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.8",
+    "timeout": 10
+  },
+  {
+    "name": "poly_8_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.8",
+    "timeout": 10
+  },
+  {
+    "name": "poly_8_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.8",
+    "timeout": 10
+  },
+  {
+    "name": "poly_8_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.8",
+    "timeout": 10
+  },
+  {
+    "name": "poly_9_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.9",
+    "timeout": 10
+  },
+  {
+    "name": "poly_9_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.9",
+    "timeout": 10
+  },
+  {
+    "name": "poly_9_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.9",
+    "timeout": 10
+  },
+  {
+    "name": "poly_9_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.9",
+    "timeout": 10
+  },
+  {
+    "name": "poly_9_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.9",
+    "timeout": 10
+  },
+  {
+    "name": "poly_9_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.9",
+    "timeout": 10
+  },
+  {
+    "name": "poly_10_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.10",
+    "timeout": 10
+  },
+  {
+    "name": "poly_10_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.10",
+    "timeout": 10
+  },
+  {
+    "name": "poly_10_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.10",
+    "timeout": 10
+  },
+  {
+    "name": "poly_10_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.10",
+    "timeout": 10
+  },
+  {
+    "name": "poly_10_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.10",
+    "timeout": 10
+  },
+  {
+    "name": "poly_10_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.10",
+    "timeout": 10
+  },
+  {
+    "name": "poly_11_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.11",
+    "timeout": 10
+  },
+  {
+    "name": "poly_11_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.11",
+    "timeout": 10
+  },
+  {
+    "name": "poly_11_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.11",
+    "timeout": 10
+  },
+  {
+    "name": "poly_11_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.11",
+    "timeout": 10
+  },
+  {
+    "name": "poly_11_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.11",
+    "timeout": 10
+  },
+  {
+    "name": "poly_11_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.11",
+    "timeout": 10
+  },
+  {
+    "name": "poly_12_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.12",
+    "timeout": 10
+  },
+  {
+    "name": "poly_12_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.12",
+    "timeout": 10
+  },
+  {
+    "name": "poly_12_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.12",
+    "timeout": 10
+  },
+  {
+    "name": "poly_12_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.12",
+    "timeout": 10
+  },
+  {
+    "name": "poly_12_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.12",
+    "timeout": 10
+  },
+  {
+    "name": "poly_12_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.12",
+    "timeout": 10
+  },
+  {
+    "name": "poly_13_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.13",
+    "timeout": 10
+  },
+  {
+    "name": "poly_13_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.13",
+    "timeout": 10
+  },
+  {
+    "name": "poly_13_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.13",
+    "timeout": 10
+  },
+  {
+    "name": "poly_13_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.13",
+    "timeout": 10
+  },
+  {
+    "name": "poly_13_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.13",
+    "timeout": 10
+  },
+  {
+    "name": "poly_13_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.13",
+    "timeout": 10
+  },
+  {
+    "name": "poly_14_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.14",
+    "timeout": 10
+  },
+  {
+    "name": "poly_14_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.14",
+    "timeout": 10
+  },
+  {
+    "name": "poly_14_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.14",
+    "timeout": 10
+  },
+  {
+    "name": "poly_14_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.14",
+    "timeout": 10
+  },
+  {
+    "name": "poly_14_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.14",
+    "timeout": 10
+  },
+  {
+    "name": "poly_14_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.14",
+    "timeout": 10
+  },
+  {
+    "name": "poly_15_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.15",
+    "timeout": 10
+  },
+  {
+    "name": "poly_15_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.15",
+    "timeout": 10
+  },
+  {
+    "name": "poly_15_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.15",
+    "timeout": 10
+  },
+  {
+    "name": "poly_15_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.15",
+    "timeout": 10
+  },
+  {
+    "name": "poly_15_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.15",
+    "timeout": 10
+  },
+  {
+    "name": "poly_15_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.15",
+    "timeout": 10
+  },
+  {
+    "name": "poly_16_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.16",
+    "timeout": 10
+  },
+  {
+    "name": "poly_16_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.16",
+    "timeout": 10
+  },
+  {
+    "name": "poly_16_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.16",
+    "timeout": 10
+  },
+  {
+    "name": "poly_16_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.16",
+    "timeout": 10
+  },
+  {
+    "name": "poly_16_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.16",
+    "timeout": 10
+  },
+  {
+    "name": "poly_16_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.16",
+    "timeout": 10
+  },
+  {
+    "name": "poly_17_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.17",
+    "timeout": 10
+  },
+  {
+    "name": "poly_17_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.17",
+    "timeout": 10
+  },
+  {
+    "name": "poly_17_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.17",
+    "timeout": 10
+  },
+  {
+    "name": "poly_17_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.17",
+    "timeout": 10
+  },
+  {
+    "name": "poly_17_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.17",
+    "timeout": 10
+  },
+  {
+    "name": "poly_17_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.17",
+    "timeout": 10
+  },
+  {
+    "name": "poly_18_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.18",
+    "timeout": 10
+  },
+  {
+    "name": "poly_18_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.18",
+    "timeout": 10
+  },
+  {
+    "name": "poly_18_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.18",
+    "timeout": 10
+  },
+  {
+    "name": "poly_18_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.18",
+    "timeout": 10
+  },
+  {
+    "name": "poly_18_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.18",
+    "timeout": 10
+  },
+  {
+    "name": "poly_18_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.18",
+    "timeout": 10
+  },
+  {
+    "name": "poly_19_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.19",
+    "timeout": 10
+  },
+  {
+    "name": "poly_19_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.19",
+    "timeout": 10
+  },
+  {
+    "name": "poly_19_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.19",
+    "timeout": 10
+  },
+  {
+    "name": "poly_19_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.19",
+    "timeout": 10
+  },
+  {
+    "name": "poly_19_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.19",
+    "timeout": 10
+  },
+  {
+    "name": "poly_19_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.19",
+    "timeout": 10
+  },
+  {
+    "name": "poly_20_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.20",
+    "timeout": 10
+  },
+  {
+    "name": "poly_20_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.20",
+    "timeout": 10
+  },
+  {
+    "name": "poly_20_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.20",
+    "timeout": 10
+  },
+  {
+    "name": "poly_20_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.20",
+    "timeout": 10
+  },
+  {
+    "name": "poly_20_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.20",
+    "timeout": 10
+  },
+  {
+    "name": "poly_20_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.20",
+    "timeout": 10
+  },
+  {
+    "name": "poly_21_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.21",
+    "timeout": 10
+  },
+  {
+    "name": "poly_21_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.21",
+    "timeout": 10
+  },
+  {
+    "name": "poly_21_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.21",
+    "timeout": 10
+  },
+  {
+    "name": "poly_21_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.21",
+    "timeout": 10
+  },
+  {
+    "name": "poly_21_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.21",
+    "timeout": 10
+  },
+  {
+    "name": "poly_21_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.21",
+    "timeout": 10
+  },
+  {
+    "name": "poly_22_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.22",
+    "timeout": 10
+  },
+  {
+    "name": "poly_22_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.22",
+    "timeout": 10
+  },
+  {
+    "name": "poly_22_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.22",
+    "timeout": 10
+  },
+  {
+    "name": "poly_22_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.22",
+    "timeout": 10
+  },
+  {
+    "name": "poly_22_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.22",
+    "timeout": 10
+  },
+  {
+    "name": "poly_22_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.22",
+    "timeout": 10
+  },
+  {
+    "name": "poly_23_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.23",
+    "timeout": 10
+  },
+  {
+    "name": "poly_23_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.23",
+    "timeout": 10
+  },
+  {
+    "name": "poly_23_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.23",
+    "timeout": 10
+  },
+  {
+    "name": "poly_23_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.23",
+    "timeout": 10
+  },
+  {
+    "name": "poly_23_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.23",
+    "timeout": 10
+  },
+  {
+    "name": "poly_23_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.23",
+    "timeout": 10
+  },
+  {
+    "name": "poly_24_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.24",
+    "timeout": 10
+  },
+  {
+    "name": "poly_24_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.24",
+    "timeout": 10
+  },
+  {
+    "name": "poly_24_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.24",
+    "timeout": 10
+  },
+  {
+    "name": "poly_24_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.24",
+    "timeout": 10
+  },
+  {
+    "name": "poly_24_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.24",
+    "timeout": 10
+  },
+  {
+    "name": "poly_24_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.24",
+    "timeout": 10
+  },
+  {
+    "name": "poly_25_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.25",
+    "timeout": 10
+  },
+  {
+    "name": "poly_25_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.25",
+    "timeout": 10
+  },
+  {
+    "name": "poly_25_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.25",
+    "timeout": 10
+  },
+  {
+    "name": "poly_25_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.25",
+    "timeout": 10
+  },
+  {
+    "name": "poly_25_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.25",
+    "timeout": 10
+  },
+  {
+    "name": "poly_25_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.25",
+    "timeout": 10
+  },
+  {
+    "name": "poly_26_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.26",
+    "timeout": 10
+  },
+  {
+    "name": "poly_26_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.26",
+    "timeout": 10
+  },
+  {
+    "name": "poly_26_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.26",
+    "timeout": 10
+  },
+  {
+    "name": "poly_26_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.26",
+    "timeout": 10
+  },
+  {
+    "name": "poly_26_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.26",
+    "timeout": 10
+  },
+  {
+    "name": "poly_26_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.26",
+    "timeout": 10
+  },
+  {
+    "name": "poly_27_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.27",
+    "timeout": 10
+  },
+  {
+    "name": "poly_27_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.27",
+    "timeout": 10
+  },
+  {
+    "name": "poly_27_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.27",
+    "timeout": 10
+  },
+  {
+    "name": "poly_27_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.27",
+    "timeout": 10
+  },
+  {
+    "name": "poly_27_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.27",
+    "timeout": 10
+  },
+  {
+    "name": "poly_27_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.27",
+    "timeout": 10
+  },
+  {
+    "name": "poly_28_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.28",
+    "timeout": 10
+  },
+  {
+    "name": "poly_28_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.28",
+    "timeout": 10
+  },
+  {
+    "name": "poly_28_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.28",
+    "timeout": 10
+  },
+  {
+    "name": "poly_28_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.28",
+    "timeout": 10
+  },
+  {
+    "name": "poly_28_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.28",
+    "timeout": 10
+  },
+  {
+    "name": "poly_28_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.28",
+    "timeout": 10
+  },
+  {
+    "name": "poly_29_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.29",
+    "timeout": 10
+  },
+  {
+    "name": "poly_29_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.29",
+    "timeout": 10
+  },
+  {
+    "name": "poly_29_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.29",
+    "timeout": 10
+  },
+  {
+    "name": "poly_29_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.29",
+    "timeout": 10
+  },
+  {
+    "name": "poly_29_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.29",
+    "timeout": 10
+  },
+  {
+    "name": "poly_29_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.29",
+    "timeout": 10
+  },
+  {
+    "name": "poly_30_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.30",
+    "timeout": 10
+  },
+  {
+    "name": "poly_30_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.30",
+    "timeout": 10
+  },
+  {
+    "name": "poly_30_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.30",
+    "timeout": 10
+  },
+  {
+    "name": "poly_30_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.30",
+    "timeout": 10
+  },
+  {
+    "name": "poly_30_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.30",
+    "timeout": 10
+  },
+  {
+    "name": "poly_30_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.30",
+    "timeout": 10
+  },
+  {
+    "name": "poly_31_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.31",
+    "timeout": 10
+  },
+  {
+    "name": "poly_31_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.31",
+    "timeout": 10
+  },
+  {
+    "name": "poly_31_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.31",
+    "timeout": 10
+  },
+  {
+    "name": "poly_31_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.31",
+    "timeout": 10
+  },
+  {
+    "name": "poly_31_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.31",
+    "timeout": 10
+  },
+  {
+    "name": "poly_31_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.31",
+    "timeout": 10
+  },
+  {
+    "name": "poly_32_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.32",
+    "timeout": 10
+  },
+  {
+    "name": "poly_32_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.32",
+    "timeout": 10
+  },
+  {
+    "name": "poly_32_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.32",
+    "timeout": 10
+  },
+  {
+    "name": "poly_32_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.32",
+    "timeout": 10
+  },
+  {
+    "name": "poly_32_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.32",
+    "timeout": 10
+  },
+  {
+    "name": "poly_32_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.32",
+    "timeout": 10
+  },
+  {
+    "name": "poly_33_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.33",
+    "timeout": 10
+  },
+  {
+    "name": "poly_33_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.33",
+    "timeout": 10
+  },
+  {
+    "name": "poly_33_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.33",
+    "timeout": 10
+  },
+  {
+    "name": "poly_33_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.33",
+    "timeout": 10
+  },
+  {
+    "name": "poly_33_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.33",
+    "timeout": 10
+  },
+  {
+    "name": "poly_33_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.33",
+    "timeout": 10
+  },
+  {
+    "name": "poly_34_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.34",
+    "timeout": 10
+  },
+  {
+    "name": "poly_34_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.34",
+    "timeout": 10
+  },
+  {
+    "name": "poly_34_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.34",
+    "timeout": 10
+  },
+  {
+    "name": "poly_34_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.34",
+    "timeout": 10
+  },
+  {
+    "name": "poly_34_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.34",
+    "timeout": 10
+  },
+  {
+    "name": "poly_34_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.34",
+    "timeout": 10
+  },
+  {
+    "name": "poly_35_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.35",
+    "timeout": 10
+  },
+  {
+    "name": "poly_35_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.35",
+    "timeout": 10
+  },
+  {
+    "name": "poly_35_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.35",
+    "timeout": 10
+  },
+  {
+    "name": "poly_35_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.35",
+    "timeout": 10
+  },
+  {
+    "name": "poly_35_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.35",
+    "timeout": 10
+  },
+  {
+    "name": "poly_35_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.35",
+    "timeout": 10
+  },
+  {
+    "name": "poly_36_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.36",
+    "timeout": 10
+  },
+  {
+    "name": "poly_36_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.36",
+    "timeout": 10
+  },
+  {
+    "name": "poly_36_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.36",
+    "timeout": 10
+  },
+  {
+    "name": "poly_36_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.36",
+    "timeout": 10
+  },
+  {
+    "name": "poly_36_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.36",
+    "timeout": 10
+  },
+  {
+    "name": "poly_36_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.36",
+    "timeout": 10
+  },
+  {
+    "name": "poly_37_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.37",
+    "timeout": 10
+  },
+  {
+    "name": "poly_37_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.37",
+    "timeout": 10
+  },
+  {
+    "name": "poly_37_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.37",
+    "timeout": 10
+  },
+  {
+    "name": "poly_37_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.37",
+    "timeout": 10
+  },
+  {
+    "name": "poly_37_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.37",
+    "timeout": 10
+  },
+  {
+    "name": "poly_37_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.37",
+    "timeout": 10
+  },
+  {
+    "name": "poly_38_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.38",
+    "timeout": 10
+  },
+  {
+    "name": "poly_38_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.38",
+    "timeout": 10
+  },
+  {
+    "name": "poly_38_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.38",
+    "timeout": 10
+  },
+  {
+    "name": "poly_38_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.38",
+    "timeout": 10
+  },
+  {
+    "name": "poly_38_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.38",
+    "timeout": 10
+  },
+  {
+    "name": "poly_38_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.38",
+    "timeout": 10
+  },
+  {
+    "name": "poly_39_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.39",
+    "timeout": 10
+  },
+  {
+    "name": "poly_39_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.39",
+    "timeout": 10
+  },
+  {
+    "name": "poly_39_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.39",
+    "timeout": 10
+  },
+  {
+    "name": "poly_39_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.39",
+    "timeout": 10
+  },
+  {
+    "name": "poly_39_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.39",
+    "timeout": 10
+  },
+  {
+    "name": "poly_39_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.39",
+    "timeout": 10
+  },
+  {
+    "name": "poly_40_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.40",
+    "timeout": 10
+  },
+  {
+    "name": "poly_40_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.40",
+    "timeout": 10
+  },
+  {
+    "name": "poly_40_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.40",
+    "timeout": 10
+  },
+  {
+    "name": "poly_40_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.40",
+    "timeout": 10
+  },
+  {
+    "name": "poly_40_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.40",
+    "timeout": 10
+  },
+  {
+    "name": "poly_40_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.40",
+    "timeout": 10
+  },
+  {
+    "name": "poly_41_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.41",
+    "timeout": 10
+  },
+  {
+    "name": "poly_41_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.41",
+    "timeout": 10
+  },
+  {
+    "name": "poly_41_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.41",
+    "timeout": 10
+  },
+  {
+    "name": "poly_41_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.41",
+    "timeout": 10
+  },
+  {
+    "name": "poly_41_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.41",
+    "timeout": 10
+  },
+  {
+    "name": "poly_41_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.41",
+    "timeout": 10
+  },
+  {
+    "name": "poly_42_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.42",
+    "timeout": 10
+  },
+  {
+    "name": "poly_42_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.42",
+    "timeout": 10
+  },
+  {
+    "name": "poly_42_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.42",
+    "timeout": 10
+  },
+  {
+    "name": "poly_42_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.42",
+    "timeout": 10
+  },
+  {
+    "name": "poly_42_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.42",
+    "timeout": 10
+  },
+  {
+    "name": "poly_42_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.42",
+    "timeout": 10
+  },
+  {
+    "name": "poly_43_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.43",
+    "timeout": 10
+  },
+  {
+    "name": "poly_43_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.43",
+    "timeout": 10
+  },
+  {
+    "name": "poly_43_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.43",
+    "timeout": 10
+  },
+  {
+    "name": "poly_43_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.43",
+    "timeout": 10
+  },
+  {
+    "name": "poly_43_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.43",
+    "timeout": 10
+  },
+  {
+    "name": "poly_43_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.43",
+    "timeout": 10
+  },
+  {
+    "name": "poly_44_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.44",
+    "timeout": 10
+  },
+  {
+    "name": "poly_44_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.44",
+    "timeout": 10
+  },
+  {
+    "name": "poly_44_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.44",
+    "timeout": 10
+  },
+  {
+    "name": "poly_44_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.44",
+    "timeout": 10
+  },
+  {
+    "name": "poly_44_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.44",
+    "timeout": 10
+  },
+  {
+    "name": "poly_44_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.44",
+    "timeout": 10
+  },
+  {
+    "name": "poly_45_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.45",
+    "timeout": 10
+  },
+  {
+    "name": "poly_45_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.45",
+    "timeout": 10
+  },
+  {
+    "name": "poly_45_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.45",
+    "timeout": 10
+  },
+  {
+    "name": "poly_45_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.45",
+    "timeout": 10
+  },
+  {
+    "name": "poly_45_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.45",
+    "timeout": 10
+  },
+  {
+    "name": "poly_45_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.45",
+    "timeout": 10
+  },
+  {
+    "name": "poly_46_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.46",
+    "timeout": 10
+  },
+  {
+    "name": "poly_46_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.46",
+    "timeout": 10
+  },
+  {
+    "name": "poly_46_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.46",
+    "timeout": 10
+  },
+  {
+    "name": "poly_46_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.46",
+    "timeout": 10
+  },
+  {
+    "name": "poly_46_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.46",
+    "timeout": 10
+  },
+  {
+    "name": "poly_46_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.46",
+    "timeout": 10
+  },
+  {
+    "name": "poly_47_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.47",
+    "timeout": 10
+  },
+  {
+    "name": "poly_47_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.47",
+    "timeout": 10
+  },
+  {
+    "name": "poly_47_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.47",
+    "timeout": 10
+  },
+  {
+    "name": "poly_47_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.47",
+    "timeout": 10
+  },
+  {
+    "name": "poly_47_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.47",
+    "timeout": 10
+  },
+  {
+    "name": "poly_47_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.47",
+    "timeout": 10
+  },
+  {
+    "name": "poly_48_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.48",
+    "timeout": 10
+  },
+  {
+    "name": "poly_48_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.48",
+    "timeout": 10
+  },
+  {
+    "name": "poly_48_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.48",
+    "timeout": 10
+  },
+  {
+    "name": "poly_48_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.48",
+    "timeout": 10
+  },
+  {
+    "name": "poly_48_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.48",
+    "timeout": 10
+  },
+  {
+    "name": "poly_48_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.48",
+    "timeout": 10
+  },
+  {
+    "name": "poly_49_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.49",
+    "timeout": 10
+  },
+  {
+    "name": "poly_49_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.49",
+    "timeout": 10
+  },
+  {
+    "name": "poly_49_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.49",
+    "timeout": 10
+  },
+  {
+    "name": "poly_49_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.49",
+    "timeout": 10
+  },
+  {
+    "name": "poly_49_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.49",
+    "timeout": 10
+  },
+  {
+    "name": "poly_49_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.49",
+    "timeout": 10
+  },
+  {
+    "name": "poly_50_pyramidal_null",
+    "bin": "poly",
+    "algo": "pyramidal",
+    "max": null,
+    "data": "random/random.50",
+    "timeout": 10
+  },
+  {
+    "name": "poly_50_balanced_1",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 1,
+    "data": "random/random.50",
+    "timeout": 10
+  },
+  {
+    "name": "poly_50_balanced_2",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 2,
+    "data": "random/random.50",
+    "timeout": 10
+  },
+  {
+    "name": "poly_50_balanced_3",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 3,
+    "data": "random/random.50",
+    "timeout": 10
+  },
+  {
+    "name": "poly_50_balanced_4",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 4,
+    "data": "random/random.50",
+    "timeout": 10
+  },
+  {
+    "name": "poly_50_balanced_5",
+    "bin": "poly",
+    "algo": "balanced",
+    "max": 5,
+    "data": "random/random.50",
+    "timeout": 10
+  }
+]

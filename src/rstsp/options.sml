@@ -67,9 +67,10 @@ struct
         ALGO =>
         let
           val new_opts =
-            case hd args of
-              "p" => (verbose, log, true, max_ints, files)
-            | "b" => (verbose, log, false, max_ints, files)
+            case (String.isPrefix (hd args) "pyramidal",
+                  String.isPrefix (hd args) "balanced") of
+              (true,_) => (verbose, log, true, max_ints, files)
+            | (_,true) => (verbose, log, false, max_ints, files)
             | _ => raise Fail ("unknown algorithm: " ^ hd args)
         in
           read_next ANY new_opts (tl args)

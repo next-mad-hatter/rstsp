@@ -7,17 +7,17 @@ tags
 doc/ext
 doc/sketches
 
-plots/**.pdf
-
 src/rstsp/build
 src/rstsp/win32
 src/rstsp/polyml/*.sml
 src/rstsp/polyml/*.sh
 
+plots/**.pdf
+
+test/log
 test/data/misc
 test/data/tsplib
 test/data/random
-test/log
 test/ext
 
 tmp
