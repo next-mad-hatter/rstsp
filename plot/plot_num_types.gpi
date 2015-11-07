@@ -26,7 +26,7 @@ set logscale y
 set output 'out/num_types.pdf'
 set xlabel 'problem size'
 set ylabel 'number of node types'
-plot 'num_types.csv' using 1:2 title 'number of node types' w lp ls 1, \
+plot 'data/num_types.csv' using 1:2 title 'number of node types' w lp ls 1, \
 
 unset logscale y
 set output 'out/types_stable.pdf'

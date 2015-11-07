@@ -8,6 +8,7 @@
     - README.md: + contents info + pkging info + licensing info
     - src/rstsp/README.md: + contents info + licensing info + building info
     - wiki & bug tracker
+    - plots clean script
 * Testing:
     - scripted statistics collection
       (version, algorithm/limit -> node types, store size, running time, result etc)

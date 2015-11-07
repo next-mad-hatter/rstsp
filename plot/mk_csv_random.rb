@@ -10,7 +10,7 @@ require 'json'
 
 PREFIX = File.expand_path(File.dirname(__FILE__)) + "/.."
 LOG_DIR = PREFIX + "/test/log/"
-DATA_DIR = PREFIX + "/plots/data/"
+DATA_DIR = PREFIX + "/plot/data/"
 
 ["low", "hi"].each do |part|
   data = JSON.parse(File.read(LOG_DIR + "/random_#{part}.json"),

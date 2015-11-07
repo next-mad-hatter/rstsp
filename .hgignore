@@ -12,8 +12,8 @@ src/rstsp/win32
 src/rstsp/polyml/*.sml
 src/rstsp/polyml/*.sh
 
-plots/**.pdf
-plots/data/time_*.csv
+plot/**.pdf
+plot/data/time_*.csv
 
 test/batch/*random*.json
 test/log
