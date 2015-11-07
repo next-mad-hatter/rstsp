@@ -10,8 +10,8 @@
     - wiki & bug tracker
     - plots clean script
 * Testing:
-    - scripted statistics collection
-      (version, algorithm/limit -> node types, store size, running time, result etc)
+    - batch testing: remove polyml tests
+    - progress bar: ping ?
     - correctness tests
     - tsplib i/o & benchmarks
     - check data licenses

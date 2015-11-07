@@ -10,8 +10,8 @@ require 'json'
 
 res = []
 [:mlton, :poly].each do |bin|
-  (2..40).each do |size|
-    ([[:pyramidal,nil]] + [:balanced].product((2..5).to_a)).each do |algo_max|
+  (10..40).step(5) do |size|
+    ([[:pyramidal,nil]] + [:balanced].product((2..6).to_a)).each do |algo_max|
       algo, max = *algo_max
       next if ((max and algo == :pyramidal) or (!max and algo == :balanced))
       res << {
@@ -21,7 +21,7 @@ res = []
         :max => max,
         :size => size,
         :data => "random/random.#{size}",
-        :timeout => 2.0
+        :timeout => 60.0
       }
     end
   end
