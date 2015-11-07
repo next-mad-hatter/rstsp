@@ -8,42 +8,46 @@
     - README.md: + contents info + pkging info + licensing info
     - src/rstsp/README.md: + contents info + licensing info + building info
     - wiki & bug tracker
+    - plots clean script
 * Testing:
     - scripted statistics collection
       (version, algorithm/limit -> node types, store size, running time, result etc)
     - correctness tests
-    - tsplib i/o/conversion & benchmarks
+    - tsplib i/o & benchmarks
     - check data licenses
     - polyml: smlofnj-lib license check
     - relaxations ?
 * Report:
-    - outline
     - writeup
 * Research:
     - 3d euclidean applies?
     - relaxations
     - generator sandbox
+    - fixed length exec generation
 * Source:
     - *check*:
         - distmat.insert & results
         - runtime behaviour
-        - hashtables with hashing function / collisions vs Splay/RBMaps ?
-        - => revert storage to maps?
+        - hashtables hashing functions / size vs Splay/RBMaps ?
+        - revert storage to maps?
         - vectors -> arrays necessary where ?
-    - local search
+        - other storage changes necessary ?
+    - local search (pyr -> bal)
+    - mst tour
+    - tsblib/euclidean input
     - when word is not enough: overwrap check / type option / replace
-    - sml/nj: unresolved flex record in main ?
-    - polyml/threaded: timer per cpu
-    - profile: mlprof & PolyML.profiling
+    - shared library interface
+    - mlprof higher limits balanced search
+    - polyml.profile threaded version
+    - mlton/polyml make ?
+    - add version info to executable/build
+    - sml/nj: "unresolved flex record in main" bug?
     - put src to dirs
     - document code thoroughly
     - document/remove TODOs and FIXMEs
-    - move structure-intern types to tsputils
-    - shared library interface
+    - move structure-intern types to tsputils ?
     - options via record
-    - add version info to executable/build
     - proper options parser
-    - replace verbose option with quiet ?
     - plan/call for 0.1.0 rc1
     - concurrent performance/model: consult whom ?
     - doublekeymap -> sbgraph cleanup ?

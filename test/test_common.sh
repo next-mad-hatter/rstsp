@@ -13,8 +13,6 @@ TEST_DIR="${PROJ_DIR}"/test
 DATA_DIR="${TEST_DIR}"/data
 LOG_DIR="${TEST_DIR}"/log
 
-#"${PROJ_DIR}/src/rstsp/build_native.sh" || exit 1
-
 mkdir -p "${LOG_DIR}" | exit 1
 
 (time "${PROJ_DIR}"/src/rstsp/build/rstsp.poly -v -t p \

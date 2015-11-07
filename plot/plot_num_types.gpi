@@ -23,16 +23,16 @@ set style line 3 lc rgb '#3e3c76' pt 12 ps 1.3 lt 5 lw 5.4
 set style line 4 lc rgb '#9e7c26' pt 10 ps 1.3 lt 7 lw 5.4
 
 set logscale y
-set output 'num_types.pdf'
+set output 'out/num_types.pdf'
 set xlabel 'problem size'
 set ylabel 'number of node types'
-plot 'num_types.csv' using 1:2 title 'number of node types' w lp ls 1, \
+plot 'data/num_types.csv' using 1:2 title 'number of node types' w lp ls 1, \
 
 unset logscale y
-set output 'types_stable.pdf'
+set output 'out/types_stable.pdf'
 set xlabel 'problem size'
 set ylabel 'stable at'
-plot 'num_types.csv' using 1:3 title 'stable at' w lp ls 2
+plot 'data/num_types.csv' using 1:3 title 'stable at' w lp ls 2
 
-#plot 'num_types.csv' using 1:2 title 'number of nodes' w lp ls 1, \
-#     'num_types.csv' using 1:3 title 'stable at' w lp ls 2
+#plot 'data/num_types.csv' using 1:2 title 'number of nodes' w lp ls 1, \
+#     'data/num_types.csv' using 1:3 title 'stable at' w lp ls 2
