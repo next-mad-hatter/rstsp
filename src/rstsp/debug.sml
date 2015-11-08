@@ -26,9 +26,9 @@ let
   val dist = DistMat.getDist distance
   val search = Search.search size dist NONE true options
   val timer = Timer.startCPUTimer ()
-  val res = search ()
-  val sol = valOf (#1 res)
-  val (nn, nk) = valOf (#2 res)
+  val (sol', stats) = search ()
+  val sol = (valOf sol') ()
+  val (nn, nk) = valOf stats
   val time_sys = (#sys o Timer.checkCPUTimer) timer
   val time_usr = (#usr o Timer.checkCPUTimer) timer
   val sol_vec = Search.Tour.toVector sol

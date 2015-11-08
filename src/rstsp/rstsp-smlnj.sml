@@ -17,6 +17,8 @@ CM.autoload "$MLTON_LIB/com/ssh/generic/unstable/lib.cm";
 use "utils.sig";
 use "utils.sml";
 
+use "lazy.sml";
+
 use "distmat.sig";
 use "distmat.sml";
 

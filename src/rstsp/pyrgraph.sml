@@ -53,8 +53,9 @@ structure PyrGraph : TSP_GRAPH = struct
 
   val root = (0w0, 0w0)
 
-  datatype descents = TERM of (word * tour) option
-                    | DESC of (node * (word -> word) * (tour -> tour)) list
+  datatype descents = TERM of (word * (unit -> tour)) option
+                    | DESC of (node * (word -> word) *
+                               ((unit -> tour) -> (unit -> tour))) list
 
   type optional_params = unit
 
@@ -62,16 +63,16 @@ structure PyrGraph : TSP_GRAPH = struct
     case (i > size orelse j > size orelse i=j andalso i <> 0w0,
           i = size-0w1 orelse j = size-0w1) of
       (true,_) => TERM NONE
-    | (_,true) => TERM (SOME (dist (i,j), Vector.fromList [i,j]))
+    | (_,true) => TERM (SOME (dist (i,j), Lazy.susp (fn () => Vector.fromList [i,j])))
     | (_,_) =>
         let
           val k = Word.max (i,j) + 0w1
           val kj = ((k,j),
                     fn d => d + dist (i,k),
-                    fn t => Vector.concat [Vector.fromList [i], t])
+                    fn t => Lazy.susp (fn () => Vector.concat [Vector.fromList [i], t ()]))
           val ik = ((i,k),
                     fn d => d + dist (k,j),
-                    fn t => Vector.concat [t, Vector.fromList [j]])
+                    fn t => Lazy.susp (fn () => Vector.concat [t (), Vector.fromList [j]]))
         in
           DESC [ik, kj]
         end

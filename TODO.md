@@ -1,5 +1,5 @@
 
-[//]: (#  $Id$)
+[//]: (# $Id$)
 [//]: (# $Author$)
 [//]: (# $Date$)
 [//]: (# $Rev: 34 $)
@@ -10,6 +10,7 @@
     - wiki & bug tracker
     - plots clean script
 * Testing:
+    - batch runner: rename timeout -> time_limit
     - batch runner: operate on file pairs
     - batch runner: progress threaded, total <- sum of time_limits
     - batch runner: write after each test + trap quit/term
@@ -17,7 +18,7 @@
     - test scripts in fresh clone
     - tsplib reader
     - tsp challenge testing
-    - correctness tests
+   - correctness tests
     - tsplib i/o & benchmarks
     - tsp challenge benchmarks
     - check data licenses
@@ -38,8 +39,12 @@
         - revert storage to maps?
         - vectors -> arrays necessary where ?
         - other storage changes necessary ?
+    - lazy vs eager solution performance
+    - safe threaded lazy
+    - compute tree width for info ?
     - tsblib points input with distance target type parameter
     - local search (pyr -> bal)
+    - hardwired code creation (node type -> node types list)
     - mst tour
     - when word is not enough: overwrap check / type option / replace
     - shared library interface
@@ -47,7 +52,6 @@
     - polyml.profile threaded version
     - mlton/polyml make ?
     - add version info to executable/build
-    - sml/nj: "unresolved flex record in main" bug?
     - put src to dirs
     - document code thoroughly
     - document/remove TODOs and FIXMEs

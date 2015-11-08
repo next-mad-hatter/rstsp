@@ -32,10 +32,10 @@ struct
         val size = Word.div(wordSqrt(0w1+0w8*(Word.fromInt (DistMat.length (valOf d))))-0w1,0w2)
         val cpu_timer = Timer.startCPUTimer ()
         val real_timer = Timer.startRealTimer ()
-        val res = search (size,dist) ()
+        val (sol', stats) = (search (size,dist) ())
+        val sol = (valOf sol') ()
         val real_stop = Timer.checkRealTimer real_timer
         val cpu_stop = Timer.checkCPUTimer cpu_timer
-        val sol = valOf (#1 res)
         val cpu = (IntInf.toString o (foldl op+ 0) o (map Time.toMilliseconds))
                     [#sys cpu_stop, #usr cpu_stop]
         val real = (IntInf.toString o Time.toMilliseconds) real_stop
@@ -48,12 +48,12 @@ struct
         print ("       Size:  " ^ (wordToString size) ^ "\n");
         print ("      Valid:  " ^ (if sol_val then "yes" else "NO!") ^ "\n");
         print ("     Length:  " ^ (wordToString sol_len) ^ "\n");
+        print ("     Search:  " ^ (if pyramidal then "pyramidal" else "balanced") ^ "\n");
+        print ("      Limit:  " ^ (if pyramidal orelse max_ints = NONE then "none" else (wordToString o valOf) max_ints) ^ "\n");
         if verbose then (
           let
-            val (nn, nk) = valOf (#2 res)
+            val (nn, nk) = valOf stats
           in
-            print ("     Search:  " ^ (if pyramidal then "pyramidal" else "balanced") ^ "\n");
-            print ("      Limit:  " ^ (if pyramidal orelse max_ints = NONE then "none" else (wordToString o valOf) max_ints) ^ "\n");
             print (" Store size:  " ^ (wordToString nn) ^ "\n");
             print (" Node types:  " ^ (wordToString nk) ^ "\n");
             ()

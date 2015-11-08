@@ -49,10 +49,11 @@ signature TSP_GRAPH = sig
   (*
    * given a node, resulting tour can either be computed directly -- in
    * "terminal" nodes -- or be chosen from a list of successor nodes -- for
-   * this, one will need distance adjustment and tour construction functions
+   * this, one will need distance adjustment and tour construction functions;
    *)
-  datatype descents = TERM of (word * tour) option
-                    | DESC of (node * (word -> word) * (tour -> tour)) list
+  datatype descents = TERM of (word * (unit -> tour)) option
+                    | DESC of (node * (word -> word) *
+                               ((unit -> tour) -> (unit -> tour))) list
 
   type optional_params
   (*

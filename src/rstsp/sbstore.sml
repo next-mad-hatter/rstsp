@@ -25,7 +25,7 @@ struct
     structure TypeMap = SplayMapFn(WordPairSetKey)
   end
 
-  datatype status = DONE of (word * tour) option
+  datatype status = DONE of (word * (unit -> tour)) option
                   | PENDING of ConditionVar.conditionVar
 
   (* types store, types store lock, N locks for/and array of N vectors *)

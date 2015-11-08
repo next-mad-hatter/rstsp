@@ -82,7 +82,7 @@ struct
                 | TERM r => r
               end
             in
-              if isSome result then log_value (node, (#2 o valOf) result) else ();
+              if isSome result then log_value (node, ((#2 o valOf) result) ()) else ();
               HashTable.insert memo (Node.toHash node, result);
               result
             end
@@ -102,12 +102,13 @@ struct
     fn () =>
     (
       let
-        val memo: (Node.hash, (word * Tour.tour) option) HashTable.hash_table =
+        val memo: (Node.hash, (word * (unit -> Tour.tour)) option) HashTable.hash_table =
           HashTable.mkTable
           (Node.toHTHash, fn (a,b) => (Node.compare (a,b) = EQUAL))
           ((Word.toInt size) * 100, Fail "ht miss")
         val res = trav memo root
         val _ = close_log ()
+
         val nk =
           case wants_stats of
             false => NONE
