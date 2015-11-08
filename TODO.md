@@ -10,17 +10,24 @@
     - wiki & bug tracker
     - plots clean script
 * Testing:
-    - batch testing: remove polyml tests
-    - progress bar: ping ?
+    - batch runner: remove polyml tests
+    - batch runner: file pairs
+    - batch runner: progress threaded, total <- sum of time_limits
+    - batch runner: write after each test + trap quit/term
+    - batch runner: check size
+    - test scripts in fresh clone
+    - tsplib reader
+    - tsp challenge testing
     - correctness tests
     - tsplib i/o & benchmarks
+    - tsp challenge benchmarks
     - check data licenses
     - polyml: smlofnj-lib license check
     - relaxations ?
 * Report:
     - writeup
 * Research:
-    - 3d euclidean applies?
+    - ≥3D euclidean applies?
     - relaxations
     - generator sandbox
     - fixed length exec generation
@@ -32,9 +39,9 @@
         - revert storage to maps?
         - vectors -> arrays necessary where ?
         - other storage changes necessary ?
+    - tsblib points input with distance target type parameter
     - local search (pyr -> bal)
     - mst tour
-    - tsblib/euclidean input
     - when word is not enough: overwrap check / type option / replace
     - shared library interface
     - mlprof higher limits balanced search

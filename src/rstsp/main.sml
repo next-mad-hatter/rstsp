@@ -45,6 +45,7 @@ struct
         val sol_val = validTour size sol_vec
       in
         print ("   Solution:  " ^ sol_str ^ "\n");
+        print ("       Size:  " ^ (wordToString size) ^ "\n");
         print ("      Valid:  " ^ (if sol_val then "yes" else "NO!") ^ "\n");
         print ("     Length:  " ^ (wordToString sol_len) ^ "\n");
         if verbose then (
