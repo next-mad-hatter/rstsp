@@ -10,8 +10,7 @@
     - wiki & bug tracker
     - plots clean script
 * Testing:
-    - batch runner: remove polyml tests
-    - batch runner: file pairs
+    - batch runner: operate on file pairs
     - batch runner: progress threaded, total <- sum of time_limits
     - batch runner: write after each test + trap quit/term
     - batch runner: check size

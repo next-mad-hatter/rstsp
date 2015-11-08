@@ -9,7 +9,7 @@
 require 'json'
 
 res = []
-[:mlton, :poly].each do |bin|
+[:mlton].each do |bin|
   (10..40).step(5) do |size|
     ([[:pyramidal,nil]] + [:balanced].product((2..6).to_a)).each do |algo_max|
       algo, max = *algo_max
