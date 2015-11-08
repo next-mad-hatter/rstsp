@@ -9,12 +9,12 @@ For now, try:
 
 2. Running tests:
 
-          ./test.sh
+          ./bin/test.sh
    Requires ruby & powerbar gem.
 
 3. Building plots.
 
-          ./plot.sh
+          ./bin/plot.sh
    This requires ruby & gnuplot.
    The plots will be put to ./plot/out folder.
 
