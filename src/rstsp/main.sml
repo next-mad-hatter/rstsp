@@ -73,6 +73,7 @@ struct
               false => OS.Process.exit OS.Process.failure
             | _ => ()
     val (verbose, log, pyramidal, max_ints, files) = valOf opts
+    (*
     val _ =
       case isSome log of
         true => ( case OS.FileSys.access (valOf log, []) of
@@ -80,6 +81,7 @@ struct
                   | _ => ()
                 )
       | _ => ()
+     *)
   in
     if pyramidal then
         List.app (main_iter (

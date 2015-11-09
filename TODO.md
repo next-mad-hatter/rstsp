@@ -14,6 +14,7 @@
     - batch runner: operate on file pairs
     - batch runner: progress threaded, total <- sum of time_limits
     - batch runner: write after each test + trap quit/term
+    - batch runner: failed vs timed out stats
     - batch runner: check size
     - test scripts in fresh clone
     - tsplib reader
@@ -39,10 +40,11 @@
         - revert storage to maps?
         - vectors -> arrays necessary where ?
         - other storage changes necessary ?
-    - remove dotlog existance check
     - make lazy optional (sbgraph, sblazygraph, etc)
-    - lazy vs eager solution performance / memory
+    - lazy vs eager solution performance / memory / mlprof
     - threadsafe lazy ?
+    - reenable dotlog existance check ?
+    - create changelog from TODO diffs
     - compute tree width for info ?
     - tsblib points input with distance target type parameter
     - local search (pyr -> bal)
