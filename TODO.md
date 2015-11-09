@@ -45,6 +45,7 @@
     - lazy vs eager solution performance / memory / mlprof
     - threadsafe lazy ?
     - measure thread-storage + simplesearch performance
+    - long opts
     - reenable dotlog existance check ?
     - create changelog from TODO diffs
     - compute tree width for info ?

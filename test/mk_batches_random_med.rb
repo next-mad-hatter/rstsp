@@ -11,7 +11,7 @@ require 'json'
 res = []
 #[:mlton].each do |bin|
 [:mlton, :poly].each do |bin|
-  (300..600).step(50) do |size|
+  (200..800).step(50) do |size|
     ([[:pyramidal,nil]] + [:balanced].product((2..3).to_a)).each do |algo_max|
       algo, max = *algo_max
       if (

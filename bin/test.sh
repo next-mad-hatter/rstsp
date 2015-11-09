@@ -19,6 +19,8 @@ echo "Creating test data"
 
 echo "Running batch: random/low"
 "${TEST_DIR}"/run_batch.rb "${TEST_DIR}"/log/random_low.json "${TEST_DIR}"/batch/random_low.json
+echo "Running batch: random/med"
+"${TEST_DIR}"/run_batch.rb "${TEST_DIR}"/log/random_med.json "${TEST_DIR}"/batch/random_med.json
 echo "Running batch: random/hi"
 "${TEST_DIR}"/run_batch.rb "${TEST_DIR}"/log/random_hi.json "${TEST_DIR}"/batch/random_hi.json
 echo "Running batch: common"

@@ -27,7 +27,7 @@ res = []
         :max => max,
         :size => size,
         :data => "random/random.#{size}",
-        :timeout => 90.0
+        :timeout => 100.0
       }
     end
   end
