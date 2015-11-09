@@ -27,6 +27,7 @@
     - relaxations ?
 * Report:
     - writeup
+    - sml support: can the pandoc -> rst way be pretty-fixed?
 * Research:
     - ≥3D euclidean applies?
     - relaxations
