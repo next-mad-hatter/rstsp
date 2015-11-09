@@ -40,9 +40,11 @@
         - revert storage to maps?
         - vectors -> arrays necessary where ?
         - other storage changes necessary ?
+    - recount lazy evaluations
     - make lazy optional (sbgraph, sblazygraph, etc)
     - lazy vs eager solution performance / memory / mlprof
     - threadsafe lazy ?
+    - measure thread-storage + simplesearch performance
     - reenable dotlog existance check ?
     - create changelog from TODO diffs
     - compute tree width for info ?
