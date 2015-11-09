@@ -9,6 +9,7 @@
     - src/rstsp/README.md: + contents info + licensing info + building info
     - wiki & bug tracker
     - plots clean script
+    - script via cmake ?
 * Testing:
     - batch runner: rename timeout -> time_limit
     - batch runner: operate on file pairs

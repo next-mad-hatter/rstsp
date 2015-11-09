@@ -51,7 +51,6 @@ do for [bi = 1:words(bins)] {
   unset logscale y
   plot 'data/time_hi_'.bin.'_balanced_4.csv' using 1:2 title 'max = 4' w lp ls 1, \
        'data/time_hi_'.bin.'_balanced_3.csv' using 1:2 title 'max = 3' w lp ls 2, \
-       'data/time_hi_'.bin.'_balanced_2.csv' using 1:2 title 'max = 2' w lp ls 3, \
        'data/time_hi_'.bin.'_pyramidal_.csv' using 1:2 title 'pyramidal' w lp ls 4
 
 }
