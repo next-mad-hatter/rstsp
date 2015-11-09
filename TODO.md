@@ -39,8 +39,10 @@
         - revert storage to maps?
         - vectors -> arrays necessary where ?
         - other storage changes necessary ?
-    - lazy vs eager solution performance
-    - safe threaded lazy
+    - remove dotlog existance check
+    - make lazy optional (sbgraph, sblazygraph, etc)
+    - lazy vs eager solution performance / memory
+    - threadsafe lazy ?
     - compute tree width for info ?
     - tsblib points input with distance target type parameter
     - local search (pyr -> bal)
@@ -48,11 +50,11 @@
     - mst tour
     - when word is not enough: overwrap check / type option / replace
     - shared library interface
+    - put src to dirs
     - mlprof higher limits balanced search
     - polyml.profile threaded version
     - mlton/polyml make ?
     - add version info to executable/build
-    - put src to dirs
     - document code thoroughly
     - document/remove TODOs and FIXMEs
     - move structure-intern types to tsputils ?
