@@ -37,10 +37,15 @@ do for [bi = 1:words(bins)] {
        'data/time_low_'.bin.'_balanced_5.csv' using 1:2 title 'max = 5' w lp ls 2, \
        'data/time_low_'.bin.'_balanced_4.csv' using 1:2 title 'max = 4' w lp ls 3
 
-  set output 'out/time_'.bin.'_random_low_fast.pdf'
+  set output 'out/time_'.bin.'_random_fast.pdf'
   plot 'data/time_low_'.bin.'_balanced_4.csv' using 1:2 title 'max = 4' w lp ls 1, \
        'data/time_low_'.bin.'_balanced_3.csv' using 1:2 title 'max = 3' w lp ls 2, \
        'data/time_low_'.bin.'_balanced_2.csv' using 1:2 title 'max = 2' w lp ls 3
+
+  set output 'out/time_'.bin.'_random_med.pdf'
+  plot 'data/time_med_'.bin.'_balanced_3.csv' using 1:2 title 'max = 3' w lp ls 1, \
+       'data/time_med_'.bin.'_balanced_2.csv' using 1:2 title 'max = 2' w lp ls 2, \
+       'data/time_med_'.bin.'_pyramidal_.csv' using 1:2 title 'pyramidal' w lp ls 4
 
   set output 'out/time_'.bin.'_random_hi.pdf'
   unset logscale y

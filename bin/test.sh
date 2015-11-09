@@ -14,6 +14,7 @@ TEST_DIR="${PROJ_DIR}/test"
 echo "Creating test data"
 "${TEST_DIR}"/mk_random_data.sh
 "${TEST_DIR}"/mk_batches_random_low.rb > "${TEST_DIR}"/batch/random_low.json
+"${TEST_DIR}"/mk_batches_random_med.rb > "${TEST_DIR}"/batch/random_med.json
 "${TEST_DIR}"/mk_batches_random_hi.rb > "${TEST_DIR}"/batch/random_hi.json
 
 echo "Running batch: random/low"

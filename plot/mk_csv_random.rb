@@ -12,7 +12,7 @@ PREFIX = File.expand_path(File.dirname(__FILE__)) + "/.."
 LOG_DIR = PREFIX + "/test/log/"
 DATA_DIR = PREFIX + "/plot/data/"
 
-["low", "hi"].each do |part|
+["low", "med", "hi"].each do |part|
   data = JSON.parse(File.read(LOG_DIR + "/random_#{part}.json"),
                     {:symbolize_names => true})
          .select{|x| x[:real_time].is_a? Numeric}
