@@ -21,7 +21,7 @@ structure PyrNode : TSP_NODE = struct
 
   fun toHash x = x
 
-  val toHTHash = HashString.hashString o toString
+  fun toHTHash size (a,b) = a*(size+0w1) + b
 
   fun normHash hash = Utils.WordPairSet.add (Utils.WordPairSet.empty, hash)
 
@@ -76,5 +76,7 @@ structure PyrGraph : TSP_GRAPH = struct
         in
           DESC [ik, kj]
         end
+
+  fun HTSize size = (size+0w1) * (size+0w1) - 0w1
 
 end

@@ -36,13 +36,7 @@
     - relaxations
     - generator sandbox
 * Source:
-    - *check*:
-        - distmat.insert & results
-        - runtime behaviour
-        - hashtables hashing functions / size vs Splay/RBMaps ?
-        - revert storage to maps?
-        - vectors -> arrays necessary where ?
-        - other storage changes necessary ?
+    - memo: graph -> hash size info
     - lazy vs eager solution performance / memory / mlprof comparison
     - make lazy optional ?
     - threadsafe lazy ?
@@ -50,6 +44,9 @@
     - local search (pyr & bal)
     - test simplesearch under multimlton
     - measure thread-storage + simplesearch performance
+    - revert storage to maps?
+    - vectors -> arrays necessary where ?
+    - other storage changes necessary ?
     - long opts
     - reenable dotlog existence check ?
     - create changelog from TODO diffs ?

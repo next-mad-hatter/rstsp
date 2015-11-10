@@ -113,8 +113,8 @@ struct
       let
         val memo: (Node.hash, (word * (unit -> Tour.tour)) option) HashTable.hash_table =
           HashTable.mkTable
-          (Node.toHTHash, fn (a,b) => (Node.compare (a,b) = EQUAL))
-          ((Word.toInt size) * 100, Fail "ht miss")
+          (Node.toHTHash size, fn (a,b) => (Node.compare (a,b) = EQUAL))
+          (Word.toInt (HTSize size), Fail "ht miss")
         val res = trav memo root
         val _ = close_log ()
 

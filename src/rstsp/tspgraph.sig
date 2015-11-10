@@ -13,7 +13,6 @@ signature TSP_NODE = sig
   eqtype hash
   val compare: hash * hash -> order
   val toHash: node -> hash
-  val toHTHash: hash -> word
 
   (* even if we use zero-based coordinates internally,
    * this should yield one-bazed representation *)
@@ -21,6 +20,8 @@ signature TSP_NODE = sig
 
   (* level-agnostic representation *)
   val normHash: hash -> Utils.WordPairSet.set
+
+  val toHTHash: word -> hash -> word
 
 end
 
@@ -60,5 +61,7 @@ signature TSP_GRAPH = sig
    * we will need problem size and distance function here
    *)
   val descend: word -> (word * word -> word) -> optional_params -> node -> descents
+
+  val HTSize: word -> word
 
 end

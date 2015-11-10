@@ -37,7 +37,7 @@ structure SBNode = struct
     val toString: node -> string = nodeToString 0w1
 
     (* TODO *)
-    fun toHTHash (level, ints) =
+    fun toHTHash _ (level, ints) =
       HashString.hashString (
         wordToString level ^ ": " ^
           ((String.concatWith " ") o (map (int2str 0w0)) o WordPairSet.listItems) ints
@@ -249,5 +249,7 @@ structure SBGraph : TSP_GRAPH = struct
     | (_,true) => TERM NONE
     | _ => DESC (descentOpts size dist max_ints node)
   end
+
+  fun HTSize size = (size+0w1) * 0w121
 
 end
