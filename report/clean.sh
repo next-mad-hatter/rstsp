@@ -13,5 +13,5 @@ rm -f -- *.output \
          *.aux *.log *.toc *.out *.lol \
          *.bcf *.bbl *.blg *.run.xml \
          *.dvi
-rm -f -- plot/*converted-to.png
+#rm -f -- plots/*converted-to.png
 
