@@ -25,6 +25,7 @@
     - tsplib i/o & benchmarks
     - tsp challenge benchmarks
     - check data licenses
+    - add needed non-random test data to repo
     - polyml: smlofnj-lib license check
     - relaxations ?
 * Report:
@@ -34,7 +35,6 @@
     - ≥3D euclidean applies?
     - relaxations
     - generator sandbox
-    - fixed length exec generation
 * Source:
     - *check*:
         - distmat.insert & results
@@ -46,20 +46,21 @@
     - lazy vs eager solution performance / memory / mlprof comparison
     - make lazy optional ?
     - threadsafe lazy ?
+    - metric instances input + distance target type parameter
+    - local search (pyr & bal)
+    - test simplesearch under multimlton
     - measure thread-storage + simplesearch performance
     - long opts
-    - reenable dotlog existance check ?
-    - create changelog from TODO diffs
+    - reenable dotlog existence check ?
+    - create changelog from TODO diffs ?
     - compute tree width for info ?
-    - tsblib points input with distance target type parameter
-    - local search (pyr -> bal)
     - hardwired code creation (node type -> node types list)
-    - mst tour
+    - mst tour / hk bounds
     - when word is not enough: overwrap check / type option / replace
     - shared library interface
     - put src to dirs
-    - mlprof higher limits balanced search
-    - polyml.profile threaded version
+    - mlprof !
+    - polyml.profile threaded
     - mlton/polyml make ?
     - add version info to executable/build
     - document code thoroughly
