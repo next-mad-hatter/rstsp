@@ -14,13 +14,14 @@
     - batch runner: rename timeout -> time_limit
     - batch runner: operate on file pairs
     - batch runner: progress threaded, total <- sum of time_limits
+    - batch runner: make progress bar optional
     - batch runner: write after each test + trap quit/term
     - batch runner: failed vs timed out stats
     - batch runner: check size
     - test scripts in fresh clone
     - tsplib reader
     - tsp challenge testing
-   - correctness tests
+    - correctness tests
     - tsplib i/o & benchmarks
     - tsp challenge benchmarks
     - check data licenses
@@ -42,9 +43,8 @@
         - revert storage to maps?
         - vectors -> arrays necessary where ?
         - other storage changes necessary ?
-    - recount lazy evaluations
-    - make lazy optional (sbgraph, sblazygraph, etc)
-    - lazy vs eager solution performance / memory / mlprof
+    - lazy vs eager solution performance / memory / mlprof comparison
+    - make lazy optional ?
     - threadsafe lazy ?
     - measure thread-storage + simplesearch performance
     - long opts
@@ -67,10 +67,11 @@
     - move structure-intern types to tsputils ?
     - options via record
     - proper options parser
-    - plan/call for 0.1.0 rc1
+    - plan/call for 0.1.0 rc1 when interfaces stabilize
     - concurrent performance/model: consult whom ?
     - doublekeymap -> sbgraph cleanup ?
     - vim sml indent mode
+    - resurrect CML version ?
     - moscowml support ?
 * Other:
     - concurrency: manticore/jocaml/mythryl/aliceml/clojure/akka,
