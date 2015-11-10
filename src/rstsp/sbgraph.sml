@@ -89,6 +89,7 @@ structure SBTour = struct
   open SBUtils
 
   type tour = (WordVectorSet.set, word vector) HashedMap
+  type lazy_tour = unit -> tour
 
   local
     fun pathToString base v =
@@ -152,8 +153,10 @@ structure SBGraph : TSP_GRAPH = struct
 
   val root = (0w0, HMAP (WordPairSet.empty, WordSet.empty, WordMap.empty))
 
-  datatype descents = TERM of (word * tour) option
-                    | DESC of (node * (word -> word) * (tour -> tour)) list
+  datatype descents = TERM of (word * (unit -> tour)) option
+                    | DESC of (node * (word -> word) *
+                               ((unit -> tour) -> (unit -> tour))) list
+
 
   fun threeMins ints = let
     (* FIXME: can we avoid this easily? *)
@@ -176,7 +179,7 @@ structure SBGraph : TSP_GRAPH = struct
     (* NB: intervals are sorted *)
     (level+0w1, Node.insertInterval (Node.removeInterval (ints, old), (#2 old, level))),
     fn (d:word) => d + dist (min1, level),
-    Tour.insertPath (Vector.fromList [min1,level])
+    fn t => Lazy.susp (fn () => Tour.insertPath (Vector.fromList [min1,level]) (t ()))
     )
   end
 
@@ -190,7 +193,7 @@ structure SBGraph : TSP_GRAPH = struct
   in (
     (level+0w1, ints'),
     fn d => d + dist (min1, level) + dist (level, min2): word,
-    Tour.insertPath (Vector.fromList [min1, level, min2])
+    fn t => Lazy.susp (fn () => Tour.insertPath (Vector.fromList [min1, level, min2]) (t ()))
     )
   end
 
@@ -241,7 +244,7 @@ structure SBGraph : TSP_GRAPH = struct
           val p = (hd o WordPairSet.listItems o getItems) ints
           val q = Tour.singlePath p
         in
-          TERM (SOME (dist p, q))
+          TERM (SOME (dist p, Lazy.susp (fn () => q)))
         end
     | (_,true) => TERM NONE
     | _ => DESC (descentOpts size dist max_ints node)

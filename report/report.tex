@@ -266,6 +266,80 @@
 %
 
 \clearpage
+
+\input{sml-support.tex}
+
+\setlength{\aboverulesep}{0pt}
+\setlength{\belowrulesep}{0pt}
+\renewcommand{\tabcolsep}{9pt}
+\setlength{\extrarowheight}{1.1ex}
+\newcolumntype{g}{>{\columncolor{Gray}}c}
+
+%\begin{table}[hpb]
+\begin{figure}[htbp]
+\centering
+  \null\hfill%
+  \subfloat[numbers]{%
+    \mbox{%
+      \pgfplotstabletypeset[
+        col sep=space,
+        std=-10:10,
+        every head row/.style={output empty row},
+        every head row/.style={%
+          before row={\toprule},
+          after row={\midrule}
+        },
+        display columns/0/.style={%
+          column name={\bfseries Node size limit},
+          column type={g}
+        },
+        display columns/1/.style={%
+          column name={\bfseries Node types},
+          column type={r}
+        },
+        display columns/2/.style={%
+          column name={\bfseries Stable at size},
+          column type={g}
+        },
+        every last row/.style={after row=\bottomrule},
+        %multicolumn names,
+      ]{../plot/data/num\string_types.csv}%
+    }
+  }
+  \hfill\null\\
+  \null\hfill%
+  \subfloat[graph]{%
+    \includegraphics[width=0.64\textwidth]{../plot/out/num_types.pdf}
+  }
+  \hfill\null
+\caption{Node types encountered.}%
+\label{fig:nodeTypes}%
+%\end{table}
+\end{figure}
+
+\begin{figure}[htbp]
+\null\hfill%
+\subfloat[low]{%
+  \includegraphics[width=0.48\textwidth]{../plot/out/time_mlton_random_low.pdf}
+}\hfill\null
+\null\hfill%
+\subfloat[fast]{%
+  \includegraphics[width=0.48\textwidth]{../plot/out/time_mlton_random_fast.pdf}
+}\hfill\null\\
+\null\hfill%
+\subfloat[medium]{%
+  \includegraphics[width=0.48\textwidth]{../plot/out/time_mlton_random_med.pdf}
+}\hfill\null
+\null\hfill%
+\subfloat[hi]{%
+  \includegraphics[width=0.48\textwidth]{../plot/out/time_mlton_random_hi.pdf}
+}
+\hfill\null
+\caption{Runtime behaviour.}
+\label{fig:timeGraph}
+\end{figure}
+
+\clearpage
 \begin{appendices}
 \section{Platform/Compiler Support}
 %\clearpage

@@ -11,6 +11,8 @@ use "polyml/poly_smlnj-lib.sml";
 use "utils.sig";
 use "utils.sml";
 
+use "lazy.sml";
+
 use "distmat.sig";
 use "distmat.sml";
 

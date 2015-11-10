@@ -17,9 +17,10 @@ signature TSP_SEARCH = sig
    * (such as max # of intervals per node for SBGraph)
    * we can produce generic search graph traversal,
    * also returning number of stored nodes & seen node types.
+   * Note: We want lazy solution.
    *)
   val search: word -> (word * word -> word) ->
               string option -> bool -> optional_params ->
-              unit -> (tour option * (word * word) option)
+              unit -> ((unit -> tour) option * (word * word) option)
 
 end

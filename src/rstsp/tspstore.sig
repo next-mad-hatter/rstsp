@@ -15,7 +15,7 @@ sig
   structure Node: TSP_NODE where type node = node
   structure Tour: TSP_TOUR where type tour = tour
 
-  datatype status = DONE of (word * tour) option
+  datatype status = DONE of (word * (unit -> tour)) option
                   | PENDING of Thread.ConditionVar.conditionVar
 
   (* init: problem size, new-type-log message *)

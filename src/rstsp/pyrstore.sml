@@ -13,7 +13,7 @@ struct
   type tour = Tour.tour
   open Thread
 
-  datatype status = DONE of (word * tour) option
+  datatype status = DONE of (word * (unit -> tour)) option
                   | PENDING of ConditionVar.conditionVar
 
   fun flatCoor (row:word,col:word) =

@@ -16,6 +16,7 @@ ann
 in
   utils.sig
   utils.sml
+  lazy.sml
   distmat.sig
   distmat.sml
   tspgraph.sig

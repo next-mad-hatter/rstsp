@@ -64,7 +64,9 @@ struct
           fn ((new_node, dist_fn, tour_fn), old_sol) =>
           let
             val new_sol = trav store new_node
-            val _ = (fork (fn () => log_vertex (node, new_node), []); ())
+            val _ = case log_vertex of
+                      SOME f => fork (fn () => f (node, new_node), []); ()
+                    | NONE => ()
           in
             case new_sol of
               NONE => old_sol
@@ -94,10 +96,10 @@ struct
       cell := SOME (DONE result);
       unlock token;
       broadcast cv;
-      if isSome result then
+      if isSome result andalso isSome log_value then
         (
           (* logErr ("Done " ^ (Node.toString node) ^ "\n"); *)
-          fork (fn () => log_value (node, (#2 o valOf) result), []);
+          fork (fn () => (valOf log_value) (node, ((#2 o valOf) result) ()), []);
           ()
         )
         else ()
@@ -138,8 +140,13 @@ struct
   let
     val (log_vertex, log_value, close_log) =
       case dotfilename of
-        NONE => (fn _ => (), fn _ => (), fn _ => ())
-      | SOME filename => dotlogs filename
+        NONE => (NONE, NONE, fn () => ())
+      | SOME filename =>
+          let
+            val (f,g,h) = dotlogs filename
+          in
+            (SOME f, SOME g, h)
+          end
     val trav = traverse size dist (log_vertex, log_value) options
   in
     fn () =>

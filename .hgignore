@@ -1,6 +1,7 @@
 syntax: glob
 
 report/report.pdf
+report/sml-support.tex
 
 tags
 
@@ -16,6 +17,7 @@ plot/**.pdf
 plot/data/time_*.csv
 
 test/batch/*random*.json
+test/doc/tsplib.p*
 test/log
 test/data/misc
 test/data/tsplib

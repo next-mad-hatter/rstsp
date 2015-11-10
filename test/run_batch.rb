@@ -27,7 +27,7 @@ class Batch
       else
         raise FormatError
       end
-    cmd << " -v"
+    #cmd << " -v"
     cmd << case opts[:algo]
       when "pyramidal"
         " -t p"
@@ -114,6 +114,8 @@ if __FILE__ == $0 # or true # for ruby-prof
     progress.settings.tty.finite.template.padchar = '.'
     count = fails = 0
     results = []
+    progress.show(:msg =>if count == total then "Done" else "Test #{count+1}/#{total}" end,
+                  :done => count, :total => total)
     batches.each do |batch|
       status, res = Batch.run_batch(batch, Proc.new{|x| progress.print(x+"\n")})
       #outfile.write(JSON.pretty_generate(res)+"\n") if res
@@ -121,7 +123,7 @@ if __FILE__ == $0 # or true # for ruby-prof
       results << res
       fails += 1 unless status
       count += 1
-      progress.show(:msg =>if count == total then "Done" else "Test #{count}/#{total}" end,
+      progress.show(:msg =>if count == total then "Done" else "Test #{count+1}/#{total}" end,
                     :done => count, :total => total)
     end
     progress.close true

@@ -24,7 +24,7 @@ struct
     structure KeySet: ORD_SET = SplaySetFn(MemKey)
   end
 
-  datatype status = DONE of (word * tour) option
+  datatype status = DONE of (word * (unit -> tour)) option
                   | PENDING of ConditionVar.conditionVar
 
   type store = (Mutex.mutex * status option ref) MemMap.map ref * Mutex.mutex

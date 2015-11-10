@@ -59,7 +59,9 @@ struct
                   fn ((new_node, dist_fn, tour_fn), old_sol) =>
                   let
                     val new_sol = trav memo new_node
-                    val _ = log_vertex (node, new_node)
+                    val _ = case log_vertex of
+                              SOME f => f (node, new_node)
+                            | NONE => ()
                   in
                     case new_sol of
                       NONE => old_sol
@@ -81,8 +83,10 @@ struct
                   DESC opts => foldl collect NONE opts
                 | TERM r => r
               end
+              val _ = case (result, log_value) of
+                        (SOME (_,r), SOME f) => f (node, r ())
+                      | (_,_) => ()
             in
-              if isSome result then log_value (node, (#2 o valOf) result) else ();
               HashTable.insert memo (Node.toHash node, result);
               result
             end
@@ -95,19 +99,25 @@ struct
   let
     val (log_vertex, log_value, close_log) =
       case dotfilename of
-        SOME filename => dotlogs filename
-      | NONE => (fn _ => (), fn _ => (), fn _ => ())
+        NONE => (NONE, NONE, fn () => ())
+      | SOME filename =>
+          let
+            val (f,g,h) = dotlogs filename
+          in
+            (SOME f, SOME g, h)
+          end
     val trav = traverse size dist (log_vertex, log_value) options
   in
     fn () =>
     (
       let
-        val memo: (Node.hash, (word * Tour.tour) option) HashTable.hash_table =
+        val memo: (Node.hash, (word * (unit -> Tour.tour)) option) HashTable.hash_table =
           HashTable.mkTable
           (Node.toHTHash, fn (a,b) => (Node.compare (a,b) = EQUAL))
           ((Word.toInt size) * 100, Fail "ht miss")
         val res = trav memo root
         val _ = close_log ()
+
         val nk =
           case wants_stats of
             false => NONE
