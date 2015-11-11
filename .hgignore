@@ -11,7 +11,7 @@ doc/sketches
 src/rstsp/build
 src/rstsp/win32
 src/rstsp/polyml/*.sml
-src/rstsp/polyml/*.sh
+src/belperm
 
 plot/**.pdf
 plot/data/time_*.csv

@@ -62,4 +62,12 @@ structure Utils: UTILS = struct
     structure WordPairSetSet = SplaySetFn(WordPairSetKey)
   end
 
+  fun power (a,p) =
+  let
+    fun pr (a,_,0w0) = a
+      | pr (a,v,n) = pr (a,v*a,n-0w1)
+  in
+    pr (a,0w1,p)
+  end
+
 end

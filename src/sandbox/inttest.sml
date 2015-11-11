@@ -7,6 +7,8 @@
 
 val w = 0w0 - 0w1
 val _ = print "sub ok\n"
+val _ = print (Utils.wordToString w)
+val _ = print "\n"
 val _ = w + 0w1
 val _ = print "add ok\n"
 val i = (valOf Int.maxInt)

@@ -65,7 +65,7 @@ struct
           let
             val new_sol = trav store new_node
             val _ = case log_vertex of
-                      SOME f => fork (fn () => f (node, new_node), []); ()
+                      SOME f => (fork (fn () => f (node, new_node), []); ())
                     | NONE => ()
           in
             case new_sol of

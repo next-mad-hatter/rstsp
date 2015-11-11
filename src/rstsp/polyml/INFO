@@ -1,5 +1,0 @@
-To make SMLofNJ library available to Poly/ML, we patch scripts available from
-
-  http://www.tbrk.org/software/poly_smlnj-lib.html by Timothy Bourke,
-
-which in turn use code from mlton-20130715.
