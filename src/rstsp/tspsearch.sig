@@ -21,6 +21,6 @@ signature TSP_SEARCH = sig
    *)
   val search: word -> (word * word -> word) ->
               string option -> bool -> optional_params ->
-              unit -> ((unit -> tour) option * (word * word) option)
+              unit -> ((unit -> tour) option * (word * word * word) option)
 
 end

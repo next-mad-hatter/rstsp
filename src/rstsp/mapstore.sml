@@ -68,9 +68,15 @@ struct
     val nk = (Word.fromInt o KeySet.numItems)
              (MemMap.foldli (fn (k, _, s) => KeySet.add (s, k)) KeySet.empty (!mem))
     val nn = (Word.fromInt o MemMap.numItems) (!mem)
+    (*
+    val hs = (Word.fromInt o List.length o
+              (ListMergeSort.uniqueSort Word.compare) o
+              (map ((Node.toHTHash size) o Node.toHash o #1)) o
+              (MemMap.listItemsi)) memo
+     *)
   in
     Mutex.unlock mut;
-    (nn, nk)
+    (nn, nk, 0w0)
   end
 
 end

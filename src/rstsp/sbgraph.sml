@@ -36,15 +36,33 @@ structure SBNode = struct
   in
     val toString: node -> string = nodeToString 0w1
 
-    (* TODO *)
+    (* TODO: find good hash *)
+    (*
     fun toHTHash _ (level, ints) =
       HashString.hashString (
         wordToString level ^ ": " ^
           ((String.concatWith " ") o (map (int2str 0w0)) o WordPairSet.listItems) ints
       )
+     *)
+    fun toHTHash size (level, ints) =
+    let
+      val lg = (Real.fromInt o Word.toInt) size;
+      val lg' = (Math.ln lg) / (Math.ln 2.0)
+      (* type 1
+      *)
+      val base = (Word.fromInt o Real.ceil) lg'
+      (* type 2: bad for sizes = powers of 2
+      val base = size
+      *)
+      val ps = WordPairSet.listItems ints
+      val bs = ListPair.map (fn ((x,y),(x',_)) => (level-x+x',level-y)) (ps, (0w0,0w0)::ps)
+      val flat = (foldl (fn ((x,y), l) => y::x::l) []) bs
+      val (h,b) = foldl (fn (x,(s,b)) => (s + x*b, b*base)) (0w0,0w1) flat
+    in
+      level*b + h
+    end
 
   end
-
 
   fun getInts ((_, ints): node): intsset = ints
   fun getLevel ((level, _): node): word = level
@@ -250,6 +268,10 @@ structure SBGraph : TSP_GRAPH = struct
     | _ => DESC (descentOpts size dist max_ints node)
   end
 
-  fun HTSize size = (size+0w1) * 0w121
+  (* TODO *)
+  fun HTSize (size, opts) =
+    case opts of
+      NONE => size * 0w121
+    | SOME m => (size+0w1) * power(0w11,m)
 
 end

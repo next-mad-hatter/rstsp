@@ -40,9 +40,9 @@ struct
                     [#sys cpu_stop, #usr cpu_stop]
         val real = (IntInf.toString o Time.toMilliseconds) real_stop
         val sol_vec = to_vec sol
-        val sol_str = to_str sol
         val sol_len = tourLength dist sol_vec
         val sol_val = validTour size sol_vec
+        val sol_str = to_str sol
       in
         print ("   Solution:  " ^ sol_str ^ "\n");
         print ("       Size:  " ^ (wordToString size) ^ "\n");
@@ -52,10 +52,11 @@ struct
         print ("      Limit:  " ^ (if pyramidal orelse max_ints = NONE then "none" else (wordToString o valOf) max_ints) ^ "\n");
         if verbose then (
           let
-            val (nn, nk) = valOf stats
+            val (nn, nk, hs) = valOf stats
           in
-            print (" Store size:  " ^ (wordToString nn) ^ "\n");
             print (" Node types:  " ^ (wordToString nk) ^ "\n");
+            print (" Store size:  " ^ (wordToString nn) ^ "\n");
+            print ("Node hashes:  " ^ (wordToString hs) ^ "\n");
             ()
           end
         ) else ();

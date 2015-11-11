@@ -77,6 +77,6 @@ structure PyrGraph : TSP_GRAPH = struct
           DESC [ik, kj]
         end
 
-  fun HTSize size = (size+0w1) * (size+0w1) - 0w1
+  fun HTSize (size,_) = (size+0w1) * (size+0w1) - 0w1
 
 end

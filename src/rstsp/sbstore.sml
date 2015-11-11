@@ -156,7 +156,7 @@ struct
     val nn = Array.foldl (fn (v, s) => s + Vector.length v) 0 storemem
   in
     Mutex.unlock token;
-    (Word.fromInt nn, nk)
+    (Word.fromInt nn, nk, 0w0)
   end
 
 end

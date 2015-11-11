@@ -35,4 +35,6 @@ sig
   structure WordPairSet : ORD_SET
   structure WordPairSetSet : ORD_SET
 
+  val power: word * word -> word
+
 end

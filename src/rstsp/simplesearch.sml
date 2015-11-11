@@ -114,10 +114,9 @@ struct
         val memo: (Node.hash, (word * (unit -> Tour.tour)) option) HashTable.hash_table =
           HashTable.mkTable
           (Node.toHTHash size, fn (a,b) => (Node.compare (a,b) = EQUAL))
-          (Word.toInt (HTSize size), Fail "ht miss")
+          (Word.toInt (HTSize (size,options)), Fail "ht miss")
         val res = trav memo root
         val _ = close_log ()
-
         val nk =
           case wants_stats of
             false => NONE
@@ -127,7 +126,12 @@ struct
             (Word.fromInt o WordPairSetSet.numItems)
             (HashTable.foldi
               (fn (k, _, s) => WordPairSetSet.add (s, Node.normHash k))
-              WordPairSetSet.empty memo)
+              WordPairSetSet.empty memo),
+            (Word.fromInt o List.length o
+             (ListMergeSort.uniqueSort Word.compare) o
+             (map (Node.toHTHash size)) o
+             (map #1) o
+             HashTable.listItemsi) memo
           )
       in
         case res of

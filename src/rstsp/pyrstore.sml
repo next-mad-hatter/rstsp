@@ -39,6 +39,6 @@ struct
     val nn = Word.fromInt (Vector.length tokens)
   in
     Vector.app Mutex.unlock tokens;
-    (nn, nk)
+    (nn, nk, 0w0)
   end
 end

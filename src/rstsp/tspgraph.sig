@@ -62,6 +62,6 @@ signature TSP_GRAPH = sig
    *)
   val descend: word -> (word * word -> word) -> optional_params -> node -> descents
 
-  val HTSize: word -> word
+  val HTSize: word * optional_params -> word
 
 end
