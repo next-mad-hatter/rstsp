@@ -88,5 +88,6 @@ in
   ()
 end
 
+val _ = TextIO.print;
 val _ = main ()
 

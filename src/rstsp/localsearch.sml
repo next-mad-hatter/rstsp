@@ -42,7 +42,7 @@ struct
             val res = find d'
           in
             case res of
-              NONE => loop (d', sol, iter_limit + 1, old_len)
+              NONE => loop (d', sol, iter_limit+1, old_len)
             | SOME r =>
                 let
                   val t = Search.Tour.toVector (r ())
@@ -67,9 +67,12 @@ struct
                   print (wordToString (tourLength dist (valOf ts)));
                   print "\n";
                   *)
-                  (* TODO: count stale iterations *)
+                  (* TODO: count stale iterations / detect cycles ? *)
                   if isSome old_len andalso new_len = valOf old_len then
                     loop (d'', ts, iter_limit+1, SOME new_len)
+                  (* TODO: do we allow this? *)
+                  else if isSome old_len andalso new_len > valOf old_len then
+                    loop (d', sol, iter_limit+1, old_len)
                   else
                     loop (d'', ts, iter+1, SOME new_len)
                 end
