@@ -11,6 +11,9 @@ struct
   open G
   open Utils
 
+  val toVector = Tour.toVector
+  val toString = Tour.toString
+
   (*
   local
     structure MemKey =

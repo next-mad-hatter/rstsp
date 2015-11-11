@@ -32,6 +32,7 @@ use "sbstore.sml";
 use "threadedsearch.sml";
 
 use "tsputils.sml";
+use "localsearch.sml";
 
 use "settings.sig";
 use "options.sml";

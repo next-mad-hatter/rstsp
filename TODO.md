@@ -12,6 +12,7 @@
     - script via cmake ?
 * Testing:
     - why the single poly timeout in batch run ?
+    - add long/2-4 test to test new hash
     - batch runner: rename timeout -> time_limit
     - batch runner: operate on file pairs
     - batch runner: progress threaded, total <- sum of time_limits
