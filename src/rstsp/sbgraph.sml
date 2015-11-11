@@ -36,13 +36,7 @@ structure SBNode = struct
   in
     val toString: node -> string = nodeToString 0w1
 
-    (* TODO: find good hash *)
-    (*
-    fun toHTHash _ (level, ints) =
-      HashString.hashString (
-        wordToString level ^ ": " ^
-          ((String.concatWith " ") o (map (int2str 0w0)) o WordPairSet.listItems) ints
-      )
+    (* Fastest hash so far
      *)
     fun toHTHash size (level, ints) =
     let
@@ -61,6 +55,41 @@ structure SBNode = struct
     in
       level*b + h
     end
+
+    (* Collision free hash
+    local
+      structure WordPairSetKey = struct
+        type ord_key = WordPairSet.set
+        val compare = WordPairSet.compare
+      end
+    in
+      structure TypeMap = SplayMapFn(WordPairSetKey)
+    end
+    fun toHTHash size =
+    let
+      fun hasher mem (level, ints) =
+        case TypeMap.find (!mem, ints) of
+          SOME r => r
+        | _ =>
+            let
+              val t = Word.fromInt (TypeMap.numItems (!mem))
+              val _ = mem := TypeMap.insert (!mem, ints, t);
+            in
+              t*size + level
+            end
+      val mem = ref TypeMap.empty
+    in
+      fn args => hasher mem args
+    end
+     *)
+
+    (* Safe hash
+    fun toHTHash _ (level, ints) =
+      HashString.hashString (
+        wordToString level ^ ": " ^
+          ((String.concatWith " ") o (map (int2str 0w0)) o WordPairSet.listItems) ints
+      )
+     *)
 
   end
 

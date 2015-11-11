@@ -12,8 +12,8 @@ types = File.open("types_1").readlines.map(&:split).map{|t| t.map(&:to_i)}
   hs = []
   f = Math.log(size,2).ceil
   #base = 2 ** f
-  #base = f
-  base = size
+  base = f
+  #base = size
   (1..size).each do |sz|
     types.each do |t|
       # subtract
