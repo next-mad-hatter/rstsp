@@ -6,8 +6,6 @@
 # $Revision$
 #
 
-size = 200
-
 def flat_coor(row, col)
   if row >= col then ((row*(row+1)).div 2) + col else flat_coor(col, row) end
 end
@@ -24,6 +22,8 @@ max_v = ARGV[2].to_i
 mat = []
 0.upto(size-1) do |x|
   0.upto(size-1) do |y|
+#  0.upto(size-1-x) do |y|
+    #y += x
     print ( mat[flat_coor(x,y)] ||=
            if x == y then 0 else rand (min_v..max_v) end )
     print " " unless y == size-1

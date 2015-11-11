@@ -49,8 +49,8 @@
     - measure thread-storage + simplesearch performance
     - make size & max_int graph functor parameters
     - metric instances input + distance target type parameter
-    - lower diag input
-    - random matrix: create upper diag matrix only
+    - upper/lower diag input
+    - random matrix: create upper/lower diag matrix only
     - local search (pyr & bal)
     - lazy vs eager solution performance / memory / mlprof comparison
     - make lazy optional ?
