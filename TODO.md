@@ -11,7 +11,7 @@
     - plots clean script
     - script via cmake ?
 * Testing:
-    - why the single poly timeout ?
+    - why the single poly timeout in batch run ?
     - batch runner: rename timeout -> time_limit
     - batch runner: operate on file pairs
     - batch runner: progress threaded, total <- sum of time_limits
