@@ -9,6 +9,7 @@
     - src/rstsp/README.md: + contents info + licensing info + building info
     - wiki & bug tracker
     - plots clean script
+    - add fetch-data / load-polyml-smlnjlib scripts
     - script via cmake ?
 * Testing:
     - why the single poly timeout in batch run ?
@@ -23,7 +24,7 @@
     - batch runner: named batches
     - mk_batches: factor out common code
     - create_random_data (and more?): write <-> rescue unlink
-    - measure memory usage (memusg: read apache license)
+    - measure memory usage (memusg: how do we script this?)
     - plot hash collisions nrs ?
     - test scripts in fresh clone
     - tsplib reader

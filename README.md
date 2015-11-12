@@ -25,5 +25,5 @@ For now, try:
 4. Packaging:
 
           [env VERSION=my-great-build] ./bin/pkg.sh
-   Packages the crosscompiled version.
+   Packages the crosscompiled version and puts it into `./tmp/`.
 
