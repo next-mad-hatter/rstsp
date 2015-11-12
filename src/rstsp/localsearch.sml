@@ -9,7 +9,6 @@ functor LocalSearchFn(
   P: sig
     structure Search: TSP_SEARCH
     structure Opts: sig
-      val iter_limit: IntInf.int
       val inv_order: word -> word -> word
     end
   end) =
@@ -20,6 +19,7 @@ struct
   open Utils
 
   type tour = word vector
+  type optional_params = IntInf.int option * Search.optional_params
 
   fun toVector t = t
   fun toString t =
@@ -29,25 +29,25 @@ struct
       "") t
     ^ ">"
 
-  fun search size dist _ _ opts =
+  fun search size dist _ _ (iter_limit,opts) =
   let
     fun lookup t = fn i => Vector.sub (t, Word.toInt (inv_order size i))
     fun find d' = #1 ((Search.search size d' NONE false opts) ())
-    fun loop (d', sol, iter, old_len) =
-      case (iter > iter_limit, sol) of
+    fun loop (d', sol, iter, iter_limit, old_len) =
+      case (isSome iter_limit andalso iter > valOf iter_limit, sol) of
         (true, NONE) => NONE
       | (true, SOME t) => SOME (fn () => t)
-      | (_, ts) =>
+      | (_, _) =>
           let
             val res = find d'
           in
             case res of
-              NONE => loop (d', sol, iter_limit+1, old_len)
+              NONE => loop (d', sol, iter+1, SOME (IntInf.fromInt 0), old_len)
             | SOME r =>
                 let
                   val t = Search.Tour.toVector (r ())
                   val new_len = tourLength d' t
-                  val _ = print ("LOCAL SOLUTION: ")
+                  val _ = print ("      * Iter yields: ")
                   (*
                   val _ = print (toString t)
                   val _ = print " : "
@@ -69,17 +69,17 @@ struct
                   *)
                   (* TODO: count stale iterations / detect cycles ? *)
                   if isSome old_len andalso new_len = valOf old_len then
-                    loop (d'', ts, iter_limit+1, SOME new_len)
+                    loop (d'', ts, iter+1, SOME (IntInf.fromInt 0), SOME new_len)
                   (* TODO: do we allow this? *)
                   else if isSome old_len andalso new_len > valOf old_len then
-                    loop (d', sol, iter_limit+1, old_len)
+                    loop (d', sol, iter+1, SOME (IntInf.fromInt 0), old_len)
                   else
-                    loop (d'', ts, iter+1, SOME new_len)
+                    loop (d'', ts, iter+1, iter_limit, SOME new_len)
                 end
           end
   in
     (* TODO: return iterations count / termination reason *)
-    fn () => (loop (dist, NONE, IntInf.fromInt 1, NONE), SOME (0w0, 0w0, 0w0))
+    fn () => (loop (dist, NONE, IntInf.fromInt 1, iter_limit, NONE), SOME (0w0, 0w0, 0w0))
   end
 
 end

@@ -18,13 +18,12 @@ val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/gr17_d.txt";
 val iter_limit = 50
 
 structure Search : TSP_SEARCH = SimpleSearchFn(SBGraph)
-val options = SOME 0w3
+val options = (SOME (IntInf.fromInt 10), SOME 0w3)
 local
   structure P =
   struct
     structure Search = Search
     structure Opts = struct
-      val iter_limit = IntInf.fromInt iter_limit
       fun inv_order size i =
       let
         val size' = Word.toInt size
@@ -44,13 +43,12 @@ end
 *)
 (*
 structure Search : TSP_SEARCH = SimpleSearchFn(PyrGraph)
-val options = ()
+val options = (SOME (IntInf.fromInt 10), ())
 local
   structure P =
   struct
     structure Search = Search
     structure Opts = struct
-      val iter_limit = IntInf.fromInt iter_limit
       fun inv_order size i = i
     end
   end
