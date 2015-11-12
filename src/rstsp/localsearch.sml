@@ -47,13 +47,13 @@ struct
                 let
                   val t = Search.Tour.toVector (r ())
                   val new_len = tourLength d' t
-                  val _ = print ("      * Iter yields: ")
+                  val _ = printErr ("      * Iter yields: ")
                   (*
-                  val _ = print (toString t)
-                  val _ = print " : "
+                  val _ = printErr (toString t)
+                  val _ = printErr " : "
                   *)
-                  val _ = print (wordToString new_len)
-                  val _ = print "\n"
+                  val _ = printErr (wordToString new_len)
+                  val _ = printErr "\n"
                   val lu = lookup t
                   val d'' = fn (x,y) => d' (lu x, lu y)
                   val ts = case sol of
@@ -61,11 +61,11 @@ struct
                            | SOME t' => SOME (Vector.map (lookup t') t)
                 in
                   (*
-                  print ("TRANSFORMED SOLUTION: ");
-                  print (toString (valOf ts));
-                  print " : ";
-                  print (wordToString (tourLength dist (valOf ts)));
-                  print "\n";
+                  printErr ("TRANSFORMED SOLUTION: ");
+                  printErr (toString (valOf ts));
+                  printErr " : ";
+                  printErr (wordToString (tourLength dist (valOf ts)));
+                  printErr "\n";
                   *)
                   (* TODO: count stale iterations / detect cycles ? *)
                   if isSome old_len andalso new_len = valOf old_len then

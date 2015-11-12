@@ -85,9 +85,9 @@ struct
           let
             val (nn, nk, hs) = valOf stats
           in
-            print ("       Node types:  " ^ (wordToString nk) ^ "\n");
-            print ("       Store size:  " ^ (wordToString nn) ^ "\n");
-            print ("      Node hashes:  " ^ (wordToString hs) ^ "\n");
+            print ("        Node types:  " ^ (wordToString nk) ^ "\n");
+            print ("        Store size:  " ^ (wordToString nn) ^ "\n");
+            print ("       Node hashes:  " ^ (wordToString hs) ^ "\n");
             ()
           end
         ) else ();
