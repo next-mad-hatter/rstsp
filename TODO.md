@@ -45,7 +45,9 @@
             - dist target type -- for metric input
             - src description, combthrough & dirs tree structure
     - add:
+            - sb local search: two reorderings?
             - [threaded] n-local search -> to settings ?  terminate when ?
+            - local search (1/n) time limits
             - metric instances input + distance target type parameter
             - upper/lower diag input
             - shared library interface
