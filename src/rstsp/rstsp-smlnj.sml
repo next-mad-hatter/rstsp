@@ -31,6 +31,7 @@ use "tspsearch.sig";
 
 use "simplesearch.sml";
 use "tsputils.sml";
+use "localsearch.sml";
 
 (*
 use "settings.sig";

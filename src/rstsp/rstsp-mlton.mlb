@@ -26,6 +26,7 @@ in
   tspsearch.sig
   simplesearch.sml
   tsputils.sml
+  localsearch.sml
   settings.sig
   options.sml
   main.sml

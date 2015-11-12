@@ -12,6 +12,7 @@
     - script via cmake ?
 * Testing:
     - why the single poly timeout in batch run ?
+    - add long/2-4 test to test new hasher
     - batch runner: rename timeout -> time_limit
     - batch runner: operate on file pairs
     - batch runner: progress threaded, total <- sum of time_limits
@@ -42,15 +43,19 @@
     - relaxations
     - generator sandbox
 * Source:
+    - refactor:
+            - make size / opts / etc graph functor parameters
+            - return tour length for n-local search
+            - threaded n-local search -> to settings
+    - add:
+            - local search (pyr & bal / 1- vs n- )
+            - metric instances input + distance target type parameter
+            - upper/lower diag input
     - better sb hashing function / types-map?
     - add hashing function option ?
     - revert storage to maps?
     - measure thread-storage + simplesearch performance
-    - make size & max_int graph functor parameters
-    - metric instances input + distance target type parameter
-    - lower diag input
-    - random matrix: create upper diag matrix only
-    - local search (pyr & bal)
+    - random matrix: create upper/lower diag matrix only
     - lazy vs eager solution performance / memory / mlprof comparison
     - make lazy optional ?
     - threadsafe lazy ?
@@ -60,7 +65,6 @@
     - misleading timings / timer stop points
     - long opts
     - reenable dotlog existence check ?
-    - create changelog from TODO diffs ?
     - compute tree width for info ?
     - hardwired code creation (node type -> node types list)
     - mst tour / hk bounds
@@ -71,6 +75,7 @@
     - polyml.profile threaded
     - mlton/polyml make ?
     - add version info to executable/build
+    - create changelog from TODO diffs ?
     - document code thoroughly
     - document/remove TODOs and FIXMEs
     - move structure-intern types to tsputils ?

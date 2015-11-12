@@ -15,6 +15,9 @@ struct
   open Thread.ConditionVar
   open Store
 
+  val toVector = Tour.toVector
+  val toString = Tour.toString
+
   fun synchronized mutex f =
     fn x => (
       (lock mutex; f x; unlock mutex)
