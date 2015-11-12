@@ -5,11 +5,12 @@
 [//]: (# $Rev: 34 $)
 
 * Repo:
-    - README.md: + contents info + pkging info + licensing info
-    - src/rstsp/README.md: + contents info + licensing info + building info
-    - wiki & bug tracker
+    - README.md: repo info
+    - src/rstsp/README.md: src info
+    - add fetch-data & create-polyml-smlnjlib scripts
     - plots clean script
     - script via cmake ?
+    - wiki / bug tracker ?
 * Testing:
     - why the single poly timeout in batch run ?
     - add long/2-4 test to test new hasher
@@ -22,19 +23,14 @@
     - batch runner: check size
     - batch runner: named batches
     - mk_batches: factor out common code
+    - random matrix: create upper/lower diag matrix only
     - create_random_data (and more?): write <-> rescue unlink
-    - measure memory usage (memusg: read apache license)
-    - plot hash collisions nrs ?
+    - measure memory usage (memusg: how do we script this?)
     - test scripts in fresh clone
-    - tsplib reader
-    - tsp challenge testing
-    - correctness tests
-    - tsplib i/o & benchmarks
     - tsp challenge benchmarks
-    - check data licenses
-    - add needed non-random test data to repo
-    - polyml: smlofnj-lib license check
-    - relaxations ?
+    - tsplib i/o & benchmarks
+    - plot hash collisions nrs ?
+    - correctness tests ?
 * Report:
     - writeup
     - sml support: can the pandoc -> rst way be pretty-fixed?
@@ -44,43 +40,38 @@
     - generator sandbox
 * Source:
     - refactor:
-            - make size / opts / etc graph functor parameters
-            - return tour length for n-local search
-            - threaded n-local search -> to settings
+            - return tour length -- for n-local search
+            - dist target type -- for metric input
+            - src description, combthrough & dirs tree structure
     - add:
-            - local search (pyr & bal / 1- vs n- )
+            - [threaded] n-local search -> to settings ?  terminate when ?
             - metric instances input + distance target type parameter
             - upper/lower diag input
+            - shared library interface
     - better sb hashing function / types-map?
     - add hashing function option ?
     - revert storage to maps?
     - measure thread-storage + simplesearch performance
-    - random matrix: create upper/lower diag matrix only
     - lazy vs eager solution performance / memory / mlprof comparison
-    - make lazy optional ?
     - threadsafe lazy ?
     - test simplesearch under multimlton
     - vectors -> arrays necessary where ?
     - other storage changes necessary ?
     - misleading timings / timer stop points
-    - long opts
     - reenable dotlog existence check ?
     - compute tree width for info ?
     - hardwired code creation (node type -> node types list)
     - mst tour / hk bounds
     - when word is not enough: overwrap check / type option / replace
-    - shared library interface
-    - put src to dirs
     - mlprof !
     - polyml.profile threaded
     - mlton/polyml make ?
-    - add version info to executable/build
+    - add version info to executable/build ?
     - create changelog from TODO diffs ?
-    - document code thoroughly
     - document/remove TODOs and FIXMEs
     - move structure-intern types to tsputils ?
-    - options via record
-    - proper options parser
+    - options via record ?
+    - proper options parser ?
     - plan/call for 0.1.0 rc1 when interfaces stabilize
     - concurrent performance/model: consult whom ?
     - doublekeymap -> sbgraph cleanup ?
