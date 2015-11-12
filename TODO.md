@@ -14,6 +14,8 @@
 * Testing:
     - why the single poly timeout in batch run ?
     - add long/2-4 test to test new hasher
+    - plot convergence ?
+    - measure memory usage (steady/memusg: how do we script this?)
     - batch runner: rename timeout -> time_limit
     - batch runner: operate on file pairs
     - batch runner: progress threaded, total <- sum of time_limits
@@ -25,7 +27,6 @@
     - mk_batches: factor out common code
     - random matrix: create upper/lower diag matrix only
     - create_random_data (and more?): write <-> rescue unlink
-    - measure memory usage (memusg: how do we script this?)
     - test scripts in fresh clone
     - tsp challenge benchmarks
     - tsplib i/o & benchmarks

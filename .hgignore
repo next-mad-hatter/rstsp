@@ -14,7 +14,8 @@ src/rstsp/polyml/*.sml
 src/belperm
 
 plot/**.pdf
-plot/data/time_*.csv
+plot/data/mlton_*.csv
+plot/data/poly_*.csv
 
 test/batch/*random*.json
 test/doc/tsplib.p*

@@ -306,11 +306,6 @@
       ]{../plot/data/num\string_types.csv}%
     }
   }
-  \hfill\null\\
-  \null\hfill%
-  \subfloat[graph]{%
-    \includegraphics[width=0.64\textwidth]{../plot/out/num_types.pdf}
-  }
   \hfill\null
 \caption{Node types encountered.}%
 \label{fig:nodeTypes}%
@@ -320,22 +315,31 @@
 \begin{figure}[htbp]
 \null\hfill%
 \subfloat[low]{%
-  \includegraphics[width=0.48\textwidth]{../plot/out/time_mlton_random_low.pdf}
-}\hfill\null
+  \includegraphics[width=0.59\textwidth]{../plot/out/mlton_time_random_low.pdf}
+}\hfill\null\\
 \null\hfill%
 \subfloat[fast]{%
-  \includegraphics[width=0.48\textwidth]{../plot/out/time_mlton_random_fast.pdf}
+  \includegraphics[width=0.59\textwidth]{../plot/out/mlton_time_random_steady.pdf}
 }\hfill\null\\
 \null\hfill%
 \subfloat[medium]{%
-  \includegraphics[width=0.48\textwidth]{../plot/out/time_mlton_random_med.pdf}
-}\hfill\null
+  \includegraphics[width=0.59\textwidth]{../plot/out/mlton_time_random_med.pdf}
+}\hfill\null\\
 \null\hfill%
 \subfloat[hi]{%
-  \includegraphics[width=0.48\textwidth]{../plot/out/time_mlton_random_hi.pdf}
+  \includegraphics[width=0.59\textwidth]{../plot/out/mlton_time_random_hi.pdf}
 }
 \hfill\null
 \caption{Runtime behaviour.}
+\label{fig:timeGraph}
+\end{figure}
+
+\begin{figure}[htbp]
+\null\hfill%
+\subfloat[random]{%
+  \includegraphics[width=0.69\textwidth]{../plot/out/mlton_val_random_steady.pdf}
+}\hfill\null
+\caption{Results.}
 \label{fig:timeGraph}
 \end{figure}
 
