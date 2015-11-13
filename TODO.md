@@ -14,6 +14,9 @@
 * Testing:
     - why the single poly timeout in batch run ?
     - add long/2-4 test to test new hasher
+    - plot convergence ?
+    - investigate stale threshold influence
+    - measure memory usage (steady/memusg: how do we script this?)
     - batch runner: rename timeout -> time_limit
     - batch runner: operate on file pairs
     - batch runner: progress threaded, total <- sum of time_limits
@@ -25,7 +28,6 @@
     - mk_batches: factor out common code
     - random matrix: create upper/lower diag matrix only
     - create_random_data (and more?): write <-> rescue unlink
-    - measure memory usage (memusg: how do we script this?)
     - test scripts in fresh clone
     - tsp challenge benchmarks
     - tsplib i/o & benchmarks
@@ -40,14 +42,16 @@
     - generator sandbox
 * Source:
     - refactor:
-            - return tour length -- for n-local search
             - dist target type -- for metric input
             - src description, combthrough & dirs tree structure
+            - rename local search to iter search ?
     - add:
-            - [threaded] n-local search -> to settings ?  terminate when ?
+            - sb local search: two reorderings?
+            - local search (+1/n) time limits
             - metric instances input + distance target type parameter
             - upper/lower diag input
             - shared library interface
+            - [threaded] rotated local search -> to settings ?
     - better sb hashing function / types-map?
     - add hashing function option ?
     - revert storage to maps?
@@ -59,8 +63,11 @@
     - other storage changes necessary ?
     - misleading timings / timer stop points
     - reenable dotlog existence check ?
-    - compute tree width for info ?
+    - compute tree width for info
+    - options via record: see http://mlton.org/FunctionalRecordUpdate
+    - proper options parser ?
     - hardwired code creation (node type -> node types list)
+    - branch cutting ?
     - mst tour / hk bounds
     - when word is not enough: overwrap check / type option / replace
     - mlprof !
@@ -70,8 +77,6 @@
     - create changelog from TODO diffs ?
     - document/remove TODOs and FIXMEs
     - move structure-intern types to tsputils ?
-    - options via record ?
-    - proper options parser ?
     - plan/call for 0.1.0 rc1 when interfaces stabilize
     - concurrent performance/model: consult whom ?
     - doublekeymap -> sbgraph cleanup ?

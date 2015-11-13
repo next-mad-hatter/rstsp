@@ -163,9 +163,7 @@ struct
             false => NONE
           | _ => SOME (Store.getStats store)
       in
-        case res of
-          NONE => (NONE, nk)
-        | SOME (_, t) => (SOME t, nk)
+        (res, nk)
       end
     ) handle e => (close_log (); raise e)
   end

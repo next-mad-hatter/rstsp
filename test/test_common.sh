@@ -15,13 +15,13 @@ LOG_DIR="${TEST_DIR}"/log
 
 mkdir -p "${LOG_DIR}" | exit 1
 
-(time "${PROJ_DIR}"/src/rstsp/build/rstsp.mlton -t p -i 30 \
+(time "${PROJ_DIR}"/src/rstsp/build/rstsp.mlton -t p -i 100 -j 10 -r none \
   "${DATA_DIR}"/small/* \
   "${DATA_DIR}"/misc/* 2>&1 ; sleep 1) \
   > "${LOG_DIR}"/common_p 2>&1
 
-(time "${PROJ_DIR}"/src/rstsp/build/rstsp.mlton -t b -m 4 -i 30 \
+(time "${PROJ_DIR}"/src/rstsp/build/rstsp.mlton -t b -m 3 -i 100 -j 10 -r none \
   "${DATA_DIR}"/small/* \
   "${DATA_DIR}"/misc/* ; sleep 1) \
-  > "${LOG_DIR}"/common_m4 2>&1
+  > "${LOG_DIR}"/common_b 2>&1
 

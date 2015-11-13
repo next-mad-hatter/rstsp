@@ -10,8 +10,6 @@ signature TSP_SEARCH = sig
   type tour
   type optional_params
 
-  structure Tour: TSP_TOUR where type tour = tour
-
   val toString: tour -> string
 
   val toVector: tour -> word vector
@@ -25,6 +23,6 @@ signature TSP_SEARCH = sig
    *)
   val search: word -> (word * word -> word) ->
               string option -> bool -> optional_params ->
-              unit -> ((unit -> tour) option * (word * word * word) option)
+              unit -> ((word * (unit -> tour)) option * (word * word * word) option)
 
 end

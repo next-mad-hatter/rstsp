@@ -43,6 +43,29 @@ class Batch
         if opts[:max].class == Fixnum then " -m #{opts[:max]}"
                                       else raise FormatError end
       end
+    cmd << case opts[:iters]
+      when nil
+        ""
+      else
+        if opts[:iters].class == Fixnum then " -i #{opts[:iters]}"
+                                        else raise FormatError end
+      end
+    cmd << case opts[:stale]
+      when nil
+        ""
+      else
+        if opts[:stale].class == Fixnum then " -j #{opts[:stale]}"
+                                        else raise FormatError end
+      end
+    cmd << case opts[:rot]
+      when nil
+        ""
+      when "all"
+        "all"
+      else
+        if opts[:rot].class == Fixnum then " -r #{opts[:rot]}"
+                                      else raise FormatError end
+      end
     cmd << " " + File.expand_path(File.dirname(__FILE__)) + "/data/"
     cmd << case opts[:data]
       when nil
@@ -68,6 +91,8 @@ class Batch
             #res[:out] =~ /Real time:\s+(\d+)\s+ms/
             #res[:time] = $1
             res[:real_time] = Time.now - t0
+            mtch = res[:out].match(/Tour Length:\s*(\d+)/)
+            res[:val] = if mtch then mtch[1] else nil end
           end
         rescue Timeout::Error
           Process.kill("KILL", t.pid)
@@ -75,7 +100,7 @@ class Batch
         end
         res[:thread] = t.value
       end
-      return [(res[:thread] and res[:thread].success?),
+      return [((res[:out] =~ /Valid:\s*yes/) and res[:val] and res[:thread] and res[:thread].success?),
               batch.merge({:cmd => cmd}).merge(res)]
     rescue JSON::ParserError, FormatError
       printer.call "Bad batch" # + opt[:name].inspect
