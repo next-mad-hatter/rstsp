@@ -42,17 +42,16 @@
     - generator sandbox
 * Source:
     - refactor:
-            - return tour length -- for n-local search
             - dist target type -- for metric input
             - src description, combthrough & dirs tree structure
+            - rename local search to iter search ?
     - add:
             - sb local search: two reorderings?
-            - local search: terminate when ?
-            - local search (1/n) time limits
+            - local search (+1/n) time limits
             - metric instances input + distance target type parameter
             - upper/lower diag input
             - shared library interface
-            - [threaded] n-local search -> to settings ?
+            - [threaded] rotated local search -> to settings ?
     - better sb hashing function / types-map?
     - add hashing function option ?
     - revert storage to maps?
@@ -68,6 +67,7 @@
     - options via record: see http://mlton.org/FunctionalRecordUpdate
     - proper options parser ?
     - hardwired code creation (node type -> node types list)
+    - branch cutting ?
     - mst tour / hk bounds
     - when word is not enough: overwrap check / type option / replace
     - mlprof !
