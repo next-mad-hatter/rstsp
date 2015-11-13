@@ -13,9 +13,13 @@ LOG_DIR = PREFIX + "/test/log/"
 DATA_DIR = PREFIX + "/plot/data/"
 
 ["len", "steady", "low", "med", "hi"].each do |batch|
-  data = JSON.parse(File.read(LOG_DIR + "/random_#{batch}.json"),
-                    {:symbolize_names => true})
-         .select{|x| x[:real_time].is_a? Numeric}
+  begin
+    data = JSON.parse(File.read(LOG_DIR + "/random_#{batch}.json"),
+                      {:symbolize_names => true})
+           .select{|x| x[:real_time].is_a? Numeric}
+  rescue
+    next
+  end
 
   bins = data.collect{|x| x[:bin]}.uniq
   algos = data.collect{|x| x[:algo]}.uniq

@@ -21,5 +21,6 @@ for BATCH in steady len low med hi; do
   "${TEST_DIR}"/run_batch.rb "${TEST_DIR}"/log/random_${BATCH}.json "${TEST_DIR}"/batch/random_${BATCH}.json
 done
 
+echo "Running common tests"
 "${TEST_DIR}"/test_common.sh
 
