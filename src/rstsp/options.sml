@@ -69,8 +69,8 @@ struct
     print "    -j|--stale num :  maximum number of stale iterations in local search\n";
     print "                      (zero for unlimited, default: 10)\n";
     print "\n";
-    print " -r|--rot none|num :  maximum number of rotations in local search\n";
-    print "                      (\"none\" for all rotations, default: 0)\n";
+    print "  -r|--rot all|num :  maximum number of rotations in local search\n";
+    print "                      (\"all\" for all rotations, default: 0)\n";
     print "\n";
     print "    -l|--log file  :  if specified, traversal trace (in dot format)\n";
     print "                      will be written to the file\n";

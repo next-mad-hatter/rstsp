@@ -57,6 +57,15 @@ class Batch
         if opts[:stale].class == Fixnum then " -j #{opts[:stale]}"
                                         else raise FormatError end
       end
+    cmd << case opts[:rot]
+      when nil
+        ""
+      when "all"
+        "all"
+      else
+        if opts[:rot].class == Fixnum then " -r #{opts[:rot]}"
+                                      else raise FormatError end
+      end
     cmd << " " + File.expand_path(File.dirname(__FILE__)) + "/data/"
     cmd << case opts[:data]
       when nil
@@ -91,7 +100,7 @@ class Batch
         end
         res[:thread] = t.value
       end
-      return [(res[:val] and res[:thread] and res[:thread].success?),
+      return [((res[:out] =~ /Valid:\s*yes/) and res[:val] and res[:thread] and res[:thread].success?),
               batch.merge({:cmd => cmd}).merge(res)]
     rescue JSON::ParserError, FormatError
       printer.call "Bad batch" # + opt[:name].inspect
