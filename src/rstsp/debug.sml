@@ -15,10 +15,12 @@ val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/dantzig42_d.
 val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/fri26_d.txt";
 val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/gr17_d.txt";
 *)
-val iter_limit = 50
-
 structure Search : TSP_SEARCH = SimpleSearchFn(SBGraph)
-val options = (SOME (IntInf.fromInt 10), SOME 0w3)
+val iter_limit = SOME (IntInf.fromInt 80)
+val stale_thresh = SOME (IntInf.fromInt 20)
+val node_size = SOME 0w3
+val options = (iter_limit, stale_thresh, node_size)
+
 local
   structure P =
   struct

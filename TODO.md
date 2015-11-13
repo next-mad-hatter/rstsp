@@ -15,6 +15,7 @@
     - why the single poly timeout in batch run ?
     - add long/2-4 test to test new hasher
     - plot convergence ?
+    - investigate stale threshold influence
     - measure memory usage (steady/memusg: how do we script this?)
     - batch runner: rename timeout -> time_limit
     - batch runner: operate on file pairs
@@ -46,11 +47,12 @@
             - src description, combthrough & dirs tree structure
     - add:
             - sb local search: two reorderings?
-            - [threaded] n-local search -> to settings ?  terminate when ?
+            - local search: terminate when ?
             - local search (1/n) time limits
             - metric instances input + distance target type parameter
             - upper/lower diag input
             - shared library interface
+            - [threaded] n-local search -> to settings ?
     - better sb hashing function / types-map?
     - add hashing function option ?
     - revert storage to maps?
@@ -62,7 +64,9 @@
     - other storage changes necessary ?
     - misleading timings / timer stop points
     - reenable dotlog existence check ?
-    - compute tree width for info ?
+    - compute tree width for info
+    - options via record: see http://mlton.org/FunctionalRecordUpdate
+    - proper options parser ?
     - hardwired code creation (node type -> node types list)
     - mst tour / hk bounds
     - when word is not enough: overwrap check / type option / replace
@@ -73,8 +77,6 @@
     - create changelog from TODO diffs ?
     - document/remove TODOs and FIXMEs
     - move structure-intern types to tsputils ?
-    - options via record ?
-    - proper options parser ?
     - plan/call for 0.1.0 rc1 when interfaces stabilize
     - concurrent performance/model: consult whom ?
     - doublekeymap -> sbgraph cleanup ?

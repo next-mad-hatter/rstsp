@@ -15,11 +15,12 @@ sig
    *    pyramidal: bool
    *    max ints: word option
    *    iters: IntInf.int option
+   *    stale: IntInf.int option
    *    files: string list
    *   option (when wrong args/empty files list).
    *)
   val reader: (unit -> string) -> (unit -> string list) ->
-    unit -> (bool * string option * bool * word option * IntInf.int option * string list) option
+    unit -> (bool * string option * bool * word option * IntInf.int option * IntInf.int option * string list) option
 
 end
 
@@ -30,7 +31,7 @@ struct
 
   exception Usage
 
-  datatype expect = ANY | ALGO | LOG | MAX_INTS | MAX_ITERS
+  datatype expect = ANY | ALGO | LOG | MAX_INTS | MAX_ITERS | STALE_THRESH
 
   fun expect "-t" = ALGO
     | expect "--type" = ALGO
@@ -40,6 +41,8 @@ struct
     | expect "--max" = MAX_INTS
     | expect "-i" = MAX_ITERS
     | expect "--iter" = MAX_ITERS
+    | expect "-j" = STALE_THRESH
+    | expect "--stale" = STALE_THRESH
     | expect _ = ANY
 
   fun printUsage cmd_name = (
@@ -47,17 +50,25 @@ struct
     print ("  " ^ cmd_name ^ " -h|--help\n");
     print ("  " ^ cmd_name ^ " [options] file(s)\n");
     print "where options are any of:\n";
+    print "\n";
     print "    -h|--help      :  print this message and quit\n";
+    print "\n";
     print "    -t|--type p|b  :  pyramidal|balanced search\n";
     print "                      (default: balanced)\n";
+    print "\n";
     print "    -m|--max width :  maximum node width for balanced search\n";
-    print "                      (zero for unlimited)";
-    print "                      (default: none)\n";
+    print "                      (zero for unlimited, default: none)\n";
+    print "\n";
     print "    -i|--iter num  :  maximum number of iterations in local search\n";
-    print "                      (zero for unlimited)";
+    print "                      (zero for unlimited)\n";
     print "                      (default: 1, i.e. no local search)\n";
+    print "\n";
+    print "    -j|--stale num :  maximum number of stale iterations in local search\n";
+    print "                      (zero for unlimited, default: 10)\n";
+    print "\n";
     print "    -l|--log file  :  if specified, traversal trace (in dot format)\n";
     print "                      will be written to the file\n";
+    print "\n";
     print "    -v|--verbose   :  print additional info (such as store statistics)\n";
     print "\n";
     ()
@@ -68,7 +79,7 @@ struct
 
     fun read_next expects opts args =
     let
-      val (verbose, log, pyr, max_ints, max_iters, files) = opts
+      val (verbose, log, pyr, max_ints, max_iters, stale_thresh, files) = opts
     in
       case expects of
         ALGO =>
@@ -76,8 +87,8 @@ struct
           val new_opts =
             case (String.isPrefix (hd args) "pyramidal",
                   String.isPrefix (hd args) "balanced") of
-              (true,_) => (verbose, log, true, max_ints, max_iters, files)
-            | (_,true) => (verbose, log, false, max_ints, max_iters, files)
+              (true,_) => (verbose, log, true, max_ints, max_iters, stale_thresh, files)
+            | (_,true) => (verbose, log, false, max_ints, max_iters, stale_thresh, files)
             | _ => raise Fail ("unknown algorithm: " ^ hd args)
         in
           read_next ANY new_opts (tl args)
@@ -86,7 +97,7 @@ struct
         let
           val new_opts =
             case log of
-              NONE => (verbose, SOME (hd args), pyr, max_ints, max_iters, files)
+              NONE => (verbose, SOME (hd args), pyr, max_ints, max_iters, stale_thresh, files)
             | SOME l =>
                 case l = hd args of
                   true => opts
@@ -98,8 +109,8 @@ struct
         let
           val new_opts =
             case wordFromString (hd args) of
-              SOME 0w0 => (verbose, log, pyr, NONE, max_iters, files)
-            | SOME m => (verbose, log, pyr, SOME m, max_iters, files)
+              SOME 0w0 => (verbose, log, pyr, NONE, max_iters, stale_thresh, files)
+            | SOME m => (verbose, log, pyr, SOME m, max_iters, stale_thresh, files)
             | _ => raise Fail ("invalid maximum intervals number")
         in
           read_next ANY new_opts (tl args)
@@ -111,10 +122,24 @@ struct
               SOME m =>
                 (
                   case m = IntInf.fromInt 0 of
-                    true => (verbose, log, pyr, max_ints, NONE, files)
-                  | false => (verbose, log, pyr, max_ints, SOME m, files)
+                    true => (verbose, log, pyr, max_ints, NONE, stale_thresh, files)
+                  | false => (verbose, log, pyr, max_ints, SOME m, stale_thresh, files)
                 )
             | NONE => raise Fail ("invalid maximum intervals number")
+        in
+          read_next ANY new_opts (tl args)
+        end
+      | STALE_THRESH =>
+        let
+          val new_opts =
+            case IntInf.fromString (hd args) of
+              SOME m =>
+                (
+                  case m = IntInf.fromInt 0 of
+                    true => (verbose, log, pyr, max_ints, max_iters, NONE, files)
+                  | false => (verbose, log, pyr, max_ints, max_iters, SOME m, files)
+                )
+            | NONE => raise Fail ("invalid stale intervals number")
         in
           read_next ANY new_opts (tl args)
         end
@@ -125,26 +150,27 @@ struct
           | ["--help"] => (printUsage cmd_name; OS.Process.exit OS.Process.success)
           | _ =>
             let
-              val (verbose, log, pyr, max_ints, max_iters, files) = opts
+              val (verbose, log, pyr, max_ints, max_iters, stale_thresh, files) = opts
             in
               case (expect (hd args), hd args) of
                 (ALGO,_) => read_next ALGO opts (tl args)
               | (LOG,_) => read_next LOG opts (tl args)
               | (MAX_INTS,_) => read_next MAX_INTS opts (tl args)
               | (MAX_ITERS,_) => read_next MAX_ITERS opts (tl args)
-              | (_,"--") => (verbose, log, pyr, max_ints, max_iters, files @ (tl args))
-              | (_,"-v") => read_next ANY (true, log, pyr, max_ints, max_iters, files) (tl args)
-              | (_,"--verbose") => read_next ANY (true, log, pyr, max_ints, max_iters, files) (tl args)
+              | (STALE_THRESH,_) => read_next STALE_THRESH opts (tl args)
+              | (_,"--") => (verbose, log, pyr, max_ints, max_iters, stale_thresh, files @ (tl args))
+              | (_,"-v") => read_next ANY (true, log, pyr, max_ints, max_iters, stale_thresh, files) (tl args)
+              | (_,"--verbose") => read_next ANY (true, log, pyr, max_ints, max_iters, stale_thresh, files) (tl args)
               | (_,"-h") => raise Usage
               | (_,"--help") => raise Usage
               | (_,f) => case String.isPrefix "-" f of
                            true => raise Usage
-                         | _ => read_next ANY (verbose, log, pyr, max_ints, max_iters, files @ [f]) (tl args)
+                         | _ => read_next ANY (verbose, log, pyr, max_ints, max_iters, stale_thresh, files @ [f]) (tl args)
             end
     end
 
-    val res = read_next ANY (false, NONE, false, NONE, SOME (IntInf.fromInt 1), []) args
-    val _ = if #6 res = [] then raise Fail "no input files" else ()
+    val res = read_next ANY (false, NONE, false, NONE, SOME (IntInf.fromInt 1), SOME (IntInf.fromInt 10), []) args
+    val _ = if #7 res = [] then raise Fail "no input files" else ()
   in
     (* do we want to check log existence here ? *)
     (* do we want to check algorithm vs max_ints presence ? *)

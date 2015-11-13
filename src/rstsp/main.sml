@@ -53,7 +53,7 @@ struct
       handle Fail msg => (print ("  Format Error: " ^ msg ^ "\n"); NONE)
            | _ => (print ("  Could not read file \"" ^ file ^ "\" .\n"); NONE)
 
-  fun main_iter (search, to_vec, to_str, (verbose, pyramidal, max_ints, max_iters)) file = let
+  fun main_iter (search, to_vec, to_str, (verbose, pyramidal, max_ints, max_iters, stale_thresh)) file = let
     val _ = print ("===================================================\n")
     val _ = print ("Processing " ^ file ^ ":\n")
     val _ = print ("===================================================\n")
@@ -80,7 +80,8 @@ struct
         print ("      Problem size:  " ^ (wordToString size) ^ "\n");
         print ("         Algorithm:  " ^ (if pyramidal then "pyramidal" else "balanced") ^ "\n");
         print (" Node length limit:  " ^ (if pyramidal orelse max_ints = NONE then "none" else (wordToString o valOf) max_ints) ^ "\n");
-        print ("        Iterations:  " ^ (if max_iters = NONE then "none" else (IntInf.toString o valOf) max_iters) ^ "\n");
+        print ("  Iterations limit:  " ^ (if max_iters = NONE then "none" else (IntInf.toString o valOf) max_iters) ^ "\n");
+        print ("   Stale threshold:  " ^ (if stale_thresh = NONE then "none" else (IntInf.toString o valOf) stale_thresh) ^ "\n");
         if verbose andalso isSome max_iters andalso valOf max_iters = IntInf.fromInt 1 then (
           let
             val (nn, nk, hs) = valOf stats
@@ -107,7 +108,7 @@ struct
     val _ = case isSome opts of
               false => OS.Process.exit OS.Process.failure
             | _ => ()
-    val (verbose, log, pyramidal, max_ints, max_iters, files) = valOf opts
+    val (verbose, log, pyramidal, max_ints, max_iters, stale_thresh, files) = valOf opts
     (*
     val _ =
       case isSome log of
@@ -117,6 +118,7 @@ struct
                 )
       | _ => ()
      *)
+    val stale_thresh = NONE
   in
     case (pyramidal, isSome max_iters andalso valOf max_iters = IntInf.fromInt 1) of
       (true, true) =>
@@ -124,28 +126,28 @@ struct
             (fn (size,dist) => PyrSearch.search size dist log verbose ()),
             PyrSearch.toVector,
             PyrSearch.toString,
-            (verbose, pyramidal, max_ints, max_iters)
+            (verbose, pyramidal, max_ints, max_iters, stale_thresh)
           )) files
     | (false, true) =>
         List.app (main_iter (
             (fn (size,dist) => SBSearch.search size dist log verbose max_ints),
             SBSearch.toVector,
             SBSearch.toString,
-            (verbose, pyramidal, max_ints, max_iters)
+            (verbose, pyramidal, max_ints, max_iters, stale_thresh)
           )) files
     | (true, false) =>
         List.app (main_iter (
-            (fn (size,dist) => LocalPyrSearch.search size dist log verbose (max_iters,())),
+            (fn (size,dist) => LocalPyrSearch.search size dist log verbose (max_iters, stale_thresh, ())),
             LocalPyrSearch.toVector,
             LocalPyrSearch.toString,
-            (verbose, pyramidal, max_ints, max_iters)
+            (verbose, pyramidal, max_ints, max_iters, stale_thresh)
           )) files
     | (false, false) =>
         List.app (main_iter (
-            (fn (size,dist) => LocalSBSearch.search size dist log verbose (max_iters, max_ints)),
+            (fn (size,dist) => LocalSBSearch.search size dist log verbose (max_iters, stale_thresh, max_ints)),
             LocalSBSearch.toVector,
             LocalSBSearch.toString,
-            (verbose, pyramidal, max_ints, max_iters)
+            (verbose, pyramidal, max_ints, max_iters, stale_thresh)
           )) files
   end
 
