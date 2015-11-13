@@ -47,7 +47,14 @@ class Batch
       when nil
         ""
       else
-        if opts[:iters].class == Fixnum then " -i #{opts[:iters] || 1}"
+        if opts[:iters].class == Fixnum then " -i #{opts[:iters]}"
+                                        else raise FormatError end
+      end
+    cmd << case opts[:stale]
+      when nil
+        ""
+      else
+        if opts[:stale].class == Fixnum then " -j #{opts[:stale]}"
                                         else raise FormatError end
       end
     cmd << " " + File.expand_path(File.dirname(__FILE__)) + "/data/"

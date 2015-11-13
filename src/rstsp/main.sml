@@ -109,6 +109,9 @@ struct
               false => OS.Process.exit OS.Process.failure
             | _ => ()
     val (verbose, log, pyramidal, max_ints, max_iters, stale_thresh, files) = valOf opts
+    val _ = case (max_iters, stale_thresh) of
+              (NONE, NONE) => printErr "WARNING: neither iterations limit nor stale threshold is set.  This might diverge.\n"
+            | _ => ()
     (*
     val _ =
       case isSome log of
@@ -118,7 +121,6 @@ struct
                 )
       | _ => ()
      *)
-    val stale_thresh = NONE
   in
     case (pyramidal, isSome max_iters andalso valOf max_iters = IntInf.fromInt 1) of
       (true, true) =>

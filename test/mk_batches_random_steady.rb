@@ -14,7 +14,7 @@ set = []
 (3..100).step(1) do |i| set << [:mlton,i] end
 (3..100).step(1) do |i| set << [:poly,i] end
 set.each do |bin,size|
-  [1,1000].each do |iters|
+  [1,300].each do |iters|
     ([[:pyramidal,nil]] + [:balanced].product((2..3).to_a)).each do |algo_max|
       algo, max = *algo_max
       if (
@@ -28,6 +28,7 @@ set.each do |bin,size|
         :algo => algo,
         :max => max,
         :iters => iters,
+        :stale => if iters == 1 then nil else 2 end,
         :size => size,
         :data => "random/random.#{size}",
         :timeout => 30.0

@@ -68,7 +68,7 @@ struct
                   printErr " (";
                   printErr (wordToString (tourLength dist (valOf ts)));
                   printErr ")\n";
-                  if ts = first_sol orelse isSome stale_thresh andalso stale_count' > valOf stale_thresh then
+                  if ts = first_sol orelse isSome stale_thresh andalso stale_count' >= valOf stale_thresh then
                     loop (d'', ts, iter+1, SOME (IntInf.fromInt 0), SOME new_len, first_sol', stale_count', stale_thresh)
                   else if isSome old_len andalso new_len > valOf old_len then (
                     printErr "WARNING: target increase detected.\n";
