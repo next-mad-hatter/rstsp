@@ -60,14 +60,13 @@ struct
     print "                      (default: balanced)\n";
     print "\n";
     print "    -m|--max width :  maximum node width for balanced search\n";
-    print "                      (zero for unlimited, default: none)\n";
+    print "                      (zero for unlimited, default: 4)\n";
     print "\n";
     print "    -i|--iter num  :  maximum number of iterations in local search\n";
-    print "                      (zero for unlimited)\n";
-    print "                      (default: 1, i.e. no local search)\n";
+    print "                      (zero for unlimited, default: 1, i.e. no local search)\n";
     print "\n";
     print "    -j|--stale num :  maximum number of stale iterations in local search\n";
-    print "                      (zero for unlimited, default: 10)\n";
+    print "                      (zero for unlimited, default: 5)\n";
     print "\n";
     print "  -r|--rot all|num :  maximum number of rotations in local search\n";
     print "                      (\"all\" for all rotations, default: 0)\n";
@@ -149,23 +148,17 @@ struct
         in
           read_next ANY new_opts (tl args)
         end
-
-
-
       | MAX_ROT =>
         let
           val new_opts =
             case hd args of
-              "none" => (verbose, log, pyr, max_ints, max_iters, stale_thresh, NONE, files)
+              "all" => (verbose, log, pyr, max_ints, max_iters, stale_thresh, NONE, files)
             | str => case wordFromString str of
                        SOME m => (verbose, log, pyr, max_ints, max_iters, stale_thresh, SOME m, files)
                      | NONE => raise Fail ("invalid rotations number")
         in
           read_next ANY new_opts (tl args)
         end
-
-
-
       | ANY =>
           case args of
             [] => opts
@@ -193,7 +186,7 @@ struct
             end
     end
 
-    val res = read_next ANY (false, NONE, false, NONE, SOME (IntInf.fromInt 1), SOME (IntInf.fromInt 10), SOME 0w0, []) args
+    val res = read_next ANY (false, NONE, false, SOME 0w4, SOME (IntInf.fromInt 1), SOME (IntInf.fromInt 5), SOME 0w0, []) args
     val _ = if #8 res = [] then raise Fail "no input files" else ()
   in
     (* do we want to check log existence here ? *)

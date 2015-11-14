@@ -13,9 +13,7 @@
     - wiki / bug tracker ?
 * Testing:
     - why the single poly timeout in batch run ?
-    - add long/2-4 test to test new hasher
-    - plot convergence ?
-    - investigate stale threshold influence
+    - better local search tests / plots
     - measure memory usage (steady/memusg: how do we script this?)
     - batch runner: rename timeout -> time_limit
     - batch runner: operate on file pairs
@@ -28,11 +26,13 @@
     - mk_batches: factor out common code
     - random matrix: create upper/lower diag matrix only
     - create_random_data (and more?): write <-> rescue unlink
+    - use multiple random instances for target tests
     - test scripts in fresh clone
     - tsp challenge benchmarks
     - tsplib i/o & benchmarks
     - plot hash collisions nrs ?
     - correctness tests ?
+    - glpk/hk bounds comparison
 * Report:
     - writeup
     - sml support: can the pandoc -> rst way be pretty-fixed?
@@ -46,11 +46,14 @@
             - src description, combthrough & dirs tree structure
             - rename local search to iter search ?
     - add:
+            - flip flop search
+            - iterative/rotational searches: return list of target values
             - sb local search: two reorderings?
             - local search (+1/n) time limits
-            - metric instances input + distance target type parameter
+            - metric instances input
             - upper/lower diag input
             - shared library interface
+            - use tsplib from glpk-tspsol ?
             - [threaded] rotated local search -> to settings ?
     - better sb hashing function / types-map?
     - add hashing function option ?
