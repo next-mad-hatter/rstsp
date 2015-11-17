@@ -5,16 +5,21 @@
  * $Revision$
  *)
 
+(**
+ * Search graph traversal implementations shall abide by this interface.
+ *)
 signature TSP_SEARCH = sig
 
   type tour
+
   type optional_params
 
-  val toString: tour -> string
+  val tourToString: tour -> string
 
-  val toVector: tour -> word vector
+  val tourToVector: tour -> word vector
 
-  (* given problem size, distance function,
+  (**
+   * Given problem size, distance function,
    * dot file name, statistics wish and other optional parameters
    * (such as max # of intervals per node for SBGraph)
    * we can produce generic search graph traversal,

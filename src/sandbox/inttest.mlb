@@ -1,0 +1,20 @@
+(*
+ * $File$
+ *
+ * $Author$
+ * $Date$
+ * $Revision$
+ *)
+
+$(SML_LIB)/basis/basis.mlb
+$(SML_LIB)/basis/mlton.mlb
+$(SML_LIB)/basis/sml-nj.mlb
+$(SML_LIB)/smlnj-lib/Util/smlnj-lib.mlb
+
+ann
+  "warnUnused true"
+in
+  ../rstsp/common/utils.sig
+  ../rstsp/common/utils.sml
+  inttest.sml
+end

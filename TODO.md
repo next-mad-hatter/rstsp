@@ -56,6 +56,8 @@
             - shared library interface
             - use tsplib from glpk-tspsol ?
             - [threaded] rotated local search -> to settings ?
+    - validity & length output: only recompute if verbose / add check option ?
+    - test stdin input
     - threaded: splay trees -> redblack trees !
     - better sb hashing function / types-map?
     - add hashing function option ?

@@ -5,6 +5,9 @@
  * $Revision$
  *)
 
+(**
+ * Suspended & then memoized evaluation.
+ *)
 signature LAZY =
 sig
   val susp: (unit -> 'a) -> unit -> 'a

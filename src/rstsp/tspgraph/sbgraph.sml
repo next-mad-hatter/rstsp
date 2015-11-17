@@ -5,93 +5,96 @@
  * $Revision$
  *)
 
-(*
- * Search tree node:
+(**
+ * Strongly Balanced Tours Graph.
  *
- * depth & set of intervals, i.e. (a,b) where a <= b
+ * FIXME: this contains lots of HashedMap housekeeping which could be factored out.
+ * FIXME: can we expose internals to SBGraph while keeping the tspgraph signatures?
+ *)
+
+(**
+ * A SB node consists of
+ *   - tree depth (here: also "level") and
+ *   - a set of intervals, i.e. {(a_i,b_i)} where a_i <= b_i.
  *)
 structure SBNode = struct
 
-  open Utils
+  structure U = Utils
+  open TSPTypes
   open SBUtils
 
   type intsset = ((WordPairSet.set, word * word) HashedMap)
+
   type node = word * intsset
 
-  type hash = word * WordPairSet.set
-  fun compare ((w,s), (w',s')) =
-    case Word.compare (w,w') of
-      EQUAL => WordPairSet.compare (s,s')
-    | c => c
+  type key = word * WordPairSet.set
 
-  fun toHash (level, ints) = (level, getItems ints)
+  fun compare ((w,s), (w',s')) = case Word.compare (w,w') of
+                                   EQUAL => WordPairSet.compare (s,s')
+                                 | c => c
+
+  fun toKey (level, ints) = (level, getItems ints)
 
   local
     fun compact (a,b) = if a = b then [a] else [a,b]
     fun int2str base i =
-      "(" ^ ((String.concatWith ",") o (map (fn x => wordToString (x+base))) o compact) i ^ ")"
+      "(" ^ ((String.concatWith ",") o (map (fn x => U.wordToString (x+base))) o compact) i ^ ")"
     fun nodeToString base (level, ints) =
-      wordToString level ^ ": " ^
+      U.wordToString level ^ ": " ^
         ((String.concatWith " ") o (map (int2str base)) o WordPairSet.listItems o getItems) ints
   in
     val toString: node -> string = nodeToString 0w1
-
-    (* Fastest hash so far
-     *)
-    fun toHTHash size (level, ints) =
-    let
-      val lg = (Real.fromInt o Word.toInt) size;
-      val lg' = (Math.ln lg) / (Math.ln 2.0)
-      (* type 1
-      *)
-      val base = (Word.fromInt o Real.ceil) lg'
-      (* type 2: bad for sizes = powers of 2
-      val base = size
-      *)
-      val ps = WordPairSet.listItems ints
-      val bs = ListPair.map (fn ((x,y),(x',_)) => (level-x+x',level-y)) (ps, (0w0,0w0)::ps)
-      val flat = (foldl (fn ((x,y), l) => y::x::l) []) bs
-      val (h,b) = foldl (fn (x,(s,b)) => (s + x*b, b*base)) (0w0,0w1) flat
-    in
-      level*b + h
-    end
-
-    (* Collision free hash
-    local
-      structure WordPairSetKey = struct
-        type ord_key = WordPairSet.set
-        val compare = WordPairSet.compare
-      end
-    in
-      structure TypeMap = SplayMapFn(WordPairSetKey)
-    end
-    fun toHTHash size =
-    let
-      fun hasher mem (level, ints) =
-        case TypeMap.find (!mem, ints) of
-          SOME r => r
-        | _ =>
-            let
-              val t = Word.fromInt (TypeMap.numItems (!mem))
-              val _ = mem := TypeMap.insert (!mem, ints, t);
-            in
-              t*size + level
-            end
-      val mem = ref TypeMap.empty
-    in
-      fn args => hasher mem args
-    end
-     *)
-
-    (* Safe hash
-    fun toHTHash _ (level, ints) =
-      HashString.hashString (
-        wordToString level ^ ": " ^
-          ((String.concatWith " ") o (map (int2str 0w0)) o WordPairSet.listItems) ints
-      )
-     *)
-
   end
+
+  (**
+   * A polynomial hash -- fastest so far.
+   *)
+  fun toHash size (level, ints) =
+  let
+    val lg = (Real.fromInt o Word.toInt) size;
+    val lg' = (Math.ln lg) / (Math.ln 2.0)
+    val base = (Word.fromInt o Real.ceil) lg'
+    val ps = WordPairSet.listItems ints
+    val bs = ListPair.map (fn ((x,y),(x',_)) => (level-x+x',level-y)) (ps, (0w0,0w0)::ps)
+    val flat = (foldl (fn ((x,y), l) => y::x::l) []) bs
+    val (h,b) = foldl (fn (x,(s,b)) => (s + x*b, b*base)) (0w0,0w1) flat
+  in
+    level*b + h
+  end
+
+  (* A collision free hash --
+   * having a map and thus counting encountered node types.
+   *)
+  (*
+  local
+    structure WordPairSetKey = struct
+      type ord_key = WordPairSet.set
+      val compare = WordPairSet.compare
+    end
+  in
+    structure TypeMap = SplayMapFn(WordPairSetKey)
+  end
+
+  fun toHash size =
+  let
+    fun hasher mem (level, ints) =
+      case TypeMap.find (!mem, ints) of
+        SOME r => r
+      | _ =>
+          let
+            val t = Word.fromInt (TypeMap.numItems (!mem))
+            val _ = mem := TypeMap.insert (!mem, ints, t);
+          in
+            t*size + level
+          end
+    val mem = ref TypeMap.empty
+  in
+    fn args => hasher mem args
+  end
+  *)
+
+  fun normKey ((level, ints): key) =
+      ((WordPairSet.map (fn (a,b) => (level-a-0w2, level-b-0w2))) ints)
 
   fun getInts ((_, ints): node): intsset = ints
   fun getLevel ((level, _): node): word = level
@@ -106,45 +109,38 @@ structure SBNode = struct
   in
     HMAP (ints', keys', map')
   end
-  val insertInterval' = insertInterval o swap
+  val insertInterval' = insertInterval o U.swap
 
   fun removeInterval (node_ints: intsset, v: word * word) = let
     val v' = orderInterval v
     val ints' = WordPairSet.delete (getItems node_ints, v')
     val vl = intervalToList v'
-    val keys' = foldl (WordSet.delete o swap) (getKeys node_ints) vl
-    val map' = foldl (#1 o WordMap.remove o swap) (getMap node_ints) vl
+    val keys' = foldl (WordSet.delete o U.swap) (getKeys node_ints) vl
+    val map' = foldl (#1 o WordMap.remove o U.swap) (getMap node_ints) vl
   in
     HMAP (ints', keys', map')
   end
-  val removeInterval' : (word * word) * intsset -> intsset = removeInterval o swap
-
-  fun normHash ((level, ints): hash) =
-      ((WordPairSet.map (fn (a,b) => (level-a-0w2, level-b-0w2))) ints)
+  val removeInterval' : (word * word) * intsset -> intsset = removeInterval o U.swap
 
 end
 
 
 (*
- * Search tree traversal result:
- *
- * set of paths, i.e. [a,...,b] of length >= 2 where a <> b and length > 2 if a = b
+ * A SB tour shall be a set of paths,
+ * i.e. (here) vectors #[a,...,b] of length >= 2 where a <> b and length > 2 if a = b.
  *)
 structure SBTour = struct
 
-  open Utils
+  structure U = Utils
+  structure TU = TSPUtils
+  open TSPTypes
   open SBUtils
 
   type tour = (WordVectorSet.set, word vector) HashedMap
-  type lazy_tour = unit -> tour
 
   local
-    fun pathToString base v =
-      "<" ^
-      Vector.foldl (fn (x,s) => s ^ (if s = "" then "" else " ") ^ wordToString (x+base)) "" v
-      ^ ">"
     fun pathsToString base p = String.concatWith " + "
-      (((map (pathToString base)) o WordVectorSet.listItems) p)
+      (((map (TU.wvToString base)) o WordVectorSet.listItems) p)
   in
     val toString : tour -> string = (pathsToString 0w1) o getItems
   end
@@ -153,7 +149,7 @@ structure SBTour = struct
 
   fun toVector paths =
     case numItems paths <> 1 of
-      true => raise Fail "Cannot export invalid tours."
+      true => raise Fail "Cannot export incomplete tours."
     | _ => valOf (WordVectorSet.find (fn _ => true) (getItems paths))
 
   fun singlePath (a,b) = let
@@ -172,11 +168,11 @@ structure SBTour = struct
                        (map (fn x => WordMap.find (getMap paths, x)))) (pathEnds' v)
     val stale_keys = (unique o (foldl op@ []) o (map pathEnds')) stale_paths
     val v' = foldl mergePaths v stale_paths
-    val items = foldl (WordVectorSet.delete o swap) (getItems paths) stale_paths
+    val items = foldl (WordVectorSet.delete o U.swap) (getItems paths) stale_paths
     val items' = WordVectorSet.add (items, v')
-    val keys' = foldl (WordSet.delete o swap) (getKeys paths) stale_keys
+    val keys' = foldl (WordSet.delete o U.swap) (getKeys paths) stale_keys
     val keys'' = foldl WordSet.add' keys' (pathEnds' v')
-    val paths' = foldl (#1 o WordMap.remove o swap) (getMap paths) stale_keys
+    val paths' = foldl (#1 o WordMap.remove o U.swap) (getMap paths) stale_keys
     val paths'' = foldl (fn (k,m) => WordMap.insert (m,k,v')) paths' (pathEnds' v')
   in
     HMAP (items', keys'', paths'')
@@ -185,25 +181,28 @@ structure SBTour = struct
 end
 
 
-(*
- * Tree descent and results' reconstruction.
- *)
-structure SBGraph : TSP_GRAPH = struct
+functor SBGraph(D : DISTANCE) : TSP_GRAPH = struct
 
-  open Utils
+  structure U = Utils
+  (*
+  structure TU = TSPUtils
+  *)
+  open TSPTypes
   open SBUtils
 
   structure Node = SBNode
   structure Tour = SBTour
+  structure Dist = D
+
   type node = SBNode.node
   type tour = SBTour.tour
+  type dist = Dist.dist
 
   val root = (0w0, HMAP (WordPairSet.empty, WordSet.empty, WordMap.empty))
 
-  datatype descents = TERM of (word * (unit -> tour)) option
-                    | DESC of (node * (word -> word) *
-                               ((unit -> tour) -> (unit -> tour))) list
-
+  datatype descent = TERM of (Dist.Num.num * (unit -> tour)) option
+                   | DESC of (node * (Dist.Num.num -> Dist.Num.num)
+                                   * ((unit -> tour) -> (unit -> tour))) list
 
   fun threeMins ints = let
     (* FIXME: can we avoid this easily? *)
@@ -216,7 +215,7 @@ structure SBGraph : TSP_GRAPH = struct
 
   fun optAdd (level, ints) = (
     (level+0w1, Node.insertInterval (ints, (level,level))),
-    fn (d:word) => d,
+    fn d => d,
     fn x => x
   )
 
@@ -225,7 +224,7 @@ structure SBGraph : TSP_GRAPH = struct
   in (
     (* NB: intervals are sorted *)
     (level+0w1, Node.insertInterval (Node.removeInterval (ints, old), (#2 old, level))),
-    fn (d:word) => d + dist (min1, level),
+    fn d => Dist.Num.+ (d, dist (min1, level)),
     fn t => Lazy.susp (fn () => Tour.insertPath (Vector.fromList [min1,level]) (t ()))
     )
   end
@@ -239,7 +238,7 @@ structure SBGraph : TSP_GRAPH = struct
     val ints' = Node.insertInterval (foldl Node.removeInterval' ints old, orderInterval (a,b))
   in (
     (level+0w1, ints'),
-    fn d => d + dist (min1, level) + dist (level, min2): word,
+    fn d => Dist.Num.+(d, Dist.Num.+(dist (min1,level), dist (level,min2))),
     fn t => Lazy.susp (fn () => Tour.insertPath (Vector.fromList [min1, level, min2]) (t ()))
     )
   end
@@ -280,7 +279,7 @@ structure SBGraph : TSP_GRAPH = struct
 
   type optional_params = word option
 
-  fun descend size dist max_ints node =
+  fun descendants size dist max_ints node =
   let
     val (level, ints) = node
     val node_len = Node.numItems node
@@ -291,16 +290,16 @@ structure SBGraph : TSP_GRAPH = struct
           val p = (hd o WordPairSet.listItems o getItems) ints
           val q = Tour.singlePath p
         in
-          TERM (SOME (dist p, Lazy.susp (fn () => q)))
+          TERM (SOME (Dist.getDist dist p, Lazy.susp (fn () => q)))
         end
     | (_,true) => TERM NONE
-    | _ => DESC (descentOpts size dist max_ints node)
+    | _ => DESC (descentOpts size (Dist.getDist dist) max_ints node)
   end
 
-  (* TODO *)
+  (* TODO: use tree width as opposed to tree area here *)
   fun HTSize (size, opts) =
     case opts of
       NONE => size * 0w121
-    | SOME m => (size+0w1) * power(0w11,m)
+    | SOME m => (size+0w1) * U.power(0w11,m)
 
 end

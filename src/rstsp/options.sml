@@ -9,26 +9,30 @@ signature OPTIONS =
 sig
 
   (*
-   * Returns:
-   *    verbose: bool
-   *    dot file: string option
-   *    pyramidal: bool
-   *    max ints: word option
-   *    iters: IntInf.int option
-   *    stale: IntInf.int option
-   *    max rot: word option
-   *    files: string list
-   *   option (when wrong args/empty files list).
+   * Returns an
+   *  (  bool               (verbose)
+   *   * string option      (dot file name)
+   *   * bool               (pyramidal)
+   *   * word option        (interval size limit)
+   *   * IntInf.int option  (iterations limit)
+   *   * IntInf.int option  (stale iterations limit)
+   *   * word option        (rotations limit)
+   *   * string list        (filenames)
+   *  ) option              (bad args)
+   *   reader.
    *)
   val reader: (unit -> string) -> (unit -> string list) ->
-    unit -> (bool * string option * bool * word option * IntInf.int option * IntInf.int option * word option * string list) option
+              unit -> (bool * string option *
+                       bool * word option *
+                       IntInf.int option * IntInf.int option *
+                       word option * string list) option
 
 end
 
 structure Options : OPTIONS =
 struct
 
-  open Utils
+  structure U = Utils
 
   exception Usage
 
@@ -76,6 +80,10 @@ struct
     print "\n";
     print "    -v|--verbose   :  print additional info (such as store statistics)\n";
     print "\n";
+    print "    --             :  options terminator\n";
+    print "\n";
+    print "When a file named \"-\" is encountered, standard input will be read instead.\n";
+    print "\n";
     ()
     )
 
@@ -113,7 +121,7 @@ struct
       | MAX_INTS =>
         let
           val new_opts =
-            case wordFromString (hd args) of
+            case U.wordFromString (hd args) of
               SOME 0w0 => (verbose, log, pyr, NONE, max_iters, stale_thresh, max_rot, files)
             | SOME m => (verbose, log, pyr, SOME m, max_iters, stale_thresh, max_rot, files)
             | _ => raise Fail ("invalid maximum intervals number")
@@ -153,7 +161,7 @@ struct
           val new_opts =
             case hd args of
               "all" => (verbose, log, pyr, max_ints, max_iters, stale_thresh, NONE, files)
-            | str => case wordFromString str of
+            | str => case U.wordFromString str of
                        SOME m => (verbose, log, pyr, max_ints, max_iters, stale_thresh, SOME m, files)
                      | NONE => raise Fail ("invalid rotations number")
         in
@@ -180,7 +188,7 @@ struct
               | (_,"--verbose") => read_next ANY (true, log, pyr, max_ints, max_iters, stale_thresh, max_rot, files) (tl args)
               | (_,"-h") => raise Usage
               | (_,"--help") => raise Usage
-              | (_,f) => case String.isPrefix "-" f of
+              | (_,f) => case String.isPrefix "-" f andalso size f > 1 of
                            true => raise Usage
                          | _ => read_next ANY (verbose, log, pyr, max_ints, max_iters, stale_thresh, max_rot, files @ [f]) (tl args)
             end
@@ -189,12 +197,10 @@ struct
     val res = read_next ANY (false, NONE, false, SOME 0w4, SOME (IntInf.fromInt 1), SOME (IntInf.fromInt 5), SOME 0w0, []) args
     val _ = if #8 res = [] then raise Fail "no input files" else ()
   in
-    (* do we want to check log existence here ? *)
-    (* do we want to check algorithm vs max_ints presence ? *)
     (SOME res)
   end
   handle Usage => (printUsage cmd_name; NONE)
-       | Fail msg => (printErr ("Error: " ^ msg ^ "\n\n"); printUsage cmd_name; NONE)
+       | Fail msg => (U.printErr ("Error: " ^ msg ^ "\n\n"); printUsage cmd_name; NONE)
 
   fun reader getCmdName getArgs =
     fn () => read ((OS.Path.file o getCmdName) ()) (getArgs ())

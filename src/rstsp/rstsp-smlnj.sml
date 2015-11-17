@@ -1,6 +1,5 @@
 (*
  * $File$
- *
  * $Author$
  * $Date$
  * $Revision$
@@ -9,29 +8,28 @@
 CM.make "$smlnj-tdp/back-trace.cm";
 SMLofNJ.Internals.TDP.mode := true;
 
+use "common/utils.sig";
+use "common/utils.sml";
+use "common/lazy.sml";
+
+use "common/numeric.sml";
+use "common/distance.sml";
+use "common/tsptypes.sml";
+use "common/tsputils.sml";
+
+use "tspgraph/tspgraph.sig";
+use "tspgraph/pyrgraph.sml";
+use "tspgraph/sbutils.sml";
+use "tspgraph/sbgraph.sml";
+
 (*
-CM.autoload "$/regexp-lib.cm";
-CM.autoload "$MLTON_LIB/com/ssh/generic/unstable/lib.cm";
-*)
-
-use "utils.sig";
-use "utils.sml";
-
-use "lazy.sml";
+use "tspsearch.sig";
+use "simplesearch.sml";
+use "localsearch.sml";
 
 use "distmat.sig";
 use "distmat.sml";
-
-use "tspgraph.sig";
-use "pyrgraph.sml";
-use "sbutils.sml";
-use "sbgraph.sml";
-
-use "tspsearch.sig";
-
-use "simplesearch.sml";
-use "tsputils.sml";
-use "localsearch.sml";
+*)
 
 (*
 use "settings.sig";

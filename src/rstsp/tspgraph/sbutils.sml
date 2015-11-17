@@ -7,7 +7,7 @@
 
 structure SBUtils = struct
 
-  open Utils
+  structure U = Utils
 
   local
     structure WordKey = struct
@@ -24,13 +24,16 @@ structure SBUtils = struct
     structure WordMap: ORD_MAP = SplayMapFn(WordKey)
   end
 
-  (*
-   * Ordered map with keys stored outside for faster access
+  (**
+   * HashedMap: ordered map with keys also stored aside, so that multiple (here: usually two)
+   *            keys can point to same (as opposed to equal) items (enter proper items counting etc),
+   *            should consist of:
+   *              - set of stored items;
+   *              - set of keys;
+   *              - map from the keys to the items.
+   * FIXME: implement a general "doublekeymap" & remove all housekeeping from sbgraph
+   * FIXME: can we also have a faster threeMins in sbgraph?
    *)
-
-  (* FIXME: is this really faster with keys set? *)
-  (* FIXME: can we have fast threeMins? *)
-  (* FIXME: implement a "doublekeymap" -> cleanup sbgraph *)
   datatype ('a,'b) HashedMap = HMAP of 'a * WordSet.set * 'b WordMap.map
   fun getItems (HMAP (x,_,_)) = x
   fun getKeys (HMAP (_,x,_)) = x
@@ -54,10 +57,10 @@ structure SBUtils = struct
     val (a:word, b:word) = pathEnds v
     val (a':word, b':word) = pathEnds w
     val (v',w') = case (a=a', a=b', b=a', b=b') of
-                       (true,_,_,_) => (revVector w, v)
+                       (true,_,_,_) => (U.revVector w, v)
                      | (_,true,_,_) => (w, v)
                      | (_,_,true,_) => (v, w)
-                     | (_,_,_,true) => (v, revVector w)
+                     | (_,_,_,true) => (v, U.revVector w)
                      | _ => raise Fail "Merging incompatible paths."
   in
     VectorSlice.concat [VectorSlice.full v', VectorSlice.slice (w',1,NONE)]

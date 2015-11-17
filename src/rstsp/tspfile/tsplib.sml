@@ -7,78 +7,21 @@
 
 structure U = Utils
 
-signature NUMERIC =
-sig
-  type num
-  val + : num * num -> num
-  val zero : num
-  val compare : num * num -> order
-  val toString : num -> string
-end
-
-structure RealNum : NUMERIC =
-struct
-  type num = Real.real
-  val op+ = Real.+
-  val zero = 0.0
-  val compare = Real.compare
-  val toString = Real.toString
-end
-
-structure WordNum : NUMERIC =
-struct
-  type num = Word.word
-  val op+ = Word.+
-  val zero = 0w0
-  val compare = Word.compare
-  val toString = U.wordToString
-end
-
-signature DISTANCE =
-sig
-  structure DistType : NUMERIC
-  type dist
-  val getDist : dist -> word * word -> DistType.num
-end
-
-fun flatCoor (row:word,col:word) =
-  if row >= col then Word.toInt (Word.div (row*(row+0w1),0w2) + col)
-                else flatCoor (col,row)
-
-structure NatDist : DISTANCE =
-struct
-  structure DistType = WordNum
-  type dist = word vector
-  fun getDist v (i,j) = Vector.sub (v, flatCoor (i,j))
-end
-
-structure EuclDist : DISTANCE =
-struct
-  structure DistType = RealNum
-  type dist = real vector * real vector
-  fun getDist (xs,ys) (i,j) =
-  let
-    val dx = Vector.sub (xs, Word.toInt i) - Vector.sub (xs, Word.toInt j)
-    val dy = Vector.sub (ys, Word.toInt i) - Vector.sub (ys, Word.toInt j)
-  in
-    Math.sqrt (dx*dx+dy*dy)
-  end
-end
-
 datatype tsplib_dist = EUCL_DIST of real vector * real vector
                      | NAT_DIST of word vector
                      | ERR of string
 
 datatype tsplib_dist' = EUCL_DIST' of real array * real array
-                     | NAT_DIST' of word array
-                     | ERR' of string
+                      | NAT_DIST' of word array
+                      | ERR' of string
 
 datatype edge_weight_type = EXPLICIT
                           | EUC_2D
 
-datatype edge_weight_format = FUNCTION | FULL_MATRIX
-                            | UPPER_DIAG_ROW | UPPER_ROW
-                            | LOWER_DIAG_ROW | LOWER_ROW
+datatype edge_weight_format = FUNCTION
+                            | FULL_MATRIX
+                            | UPPER_DIAG_ROW
+                            | LOWER_DIAG_ROW
 
 datatype expect = CMD | DATA | DONE
 
@@ -99,7 +42,6 @@ in
   | _ => err ()
 end
 
-(* TODO: UPPER_DIAG_ROW + no-diag? *)
 fun readNatLine (line_num, dim, to_read, weight_format, data, line) =
 let
   fun err msg = raise Fail (msg ^ " at line " ^ U.wordToString line_num)
@@ -108,17 +50,35 @@ let
   val _ = if len > to_read then err "unexpected data" else ()
   val _ = if len < 0w1 then err "unexpected empty line" else ()
   val done = if len = to_read then DONE else DATA
-  val coor = case weight_format of
-               LOWER_DIAG_ROW => (fn n => Word.toInt (Word.div (dim*(dim+0w1),0w2) - n))
-             | FULL_MATRIX => (fn n =>
-                 let
-                   val n' = dim*dim - n
-                   val i = Word.mod(n', dim)
-                   val j = Word.div(n', dim)
-                 in
-                   flatCoor (i,j)
-                 end
-                 )
+  val coorTrans = case weight_format of
+                    LOWER_DIAG_ROW =>
+                    (fn n =>
+                     let
+                       val m = Word.div (dim*(dim+0w1),0w2)
+                     in
+                       Word.toInt (m - n)
+                     end
+                    )
+                  | UPPER_DIAG_ROW =>
+                    (fn n =>
+                     let
+                       val m = n - 0w1
+                       val i = Word.div (U.wordSqrt(0w1 + 0w8*m) - 0w1, 0w2)
+                       val j = m - Word.div (i*(i+0w1), 0w2)
+                     in
+                       flatCoor (dim-i-0w1,dim-j-0w1)
+                     end
+                    )
+                  | FULL_MATRIX =>
+                    (fn n =>
+                      let
+                        val n' = dim*dim - n
+                        val i = Word.mod(n', dim)
+                        val j = Word.div(n', dim)
+                      in
+                        flatCoor (i,j)
+                      end
+                    )
              | _ => raise Fail "not implemented"
   fun iter (pos, []) = ()
     | iter (pos, x::xs) =
@@ -128,12 +88,12 @@ let
         val _ = case weight_format of
                   FULL_MATRIX =>
                   let
-                    val y = Array.sub (data, coor pos)
+                    val y = Array.sub (data, coorTrans pos)
                   in
                     if y = 0w0 orelse y = x'' then () else err "not a symmetric instance"
                   end
                 | _ => ()
-        val _ = Array.update (data, coor pos, x'')
+        val _ = Array.update (data, coorTrans pos, x'')
       in
         iter (pos-0w1, xs)
       end
@@ -193,9 +153,11 @@ in
          | ("EDGE_WEIGHT_FORMAT", ["FUNCTION"]) =>       (line_num, (dim, weight_type, SOME FUNCTION),       (CMD,0w1), NONE)
          | ("EDGE_WEIGHT_FORMAT", ["FULL_MATRIX"]) =>    (line_num, (dim, weight_type, SOME FULL_MATRIX),    (CMD,0w1), NONE)
          | ("EDGE_WEIGHT_FORMAT", ["UPPER_DIAG_ROW"]) => (line_num, (dim, weight_type, SOME UPPER_DIAG_ROW), (CMD,0w1), NONE)
-         | ("EDGE_WEIGHT_FORMAT", ["UPPER_ROW"]) =>      (line_num, (dim, weight_type, SOME UPPER_ROW),      (CMD,0w1), NONE)
          | ("EDGE_WEIGHT_FORMAT", ["LOWER_DIAG_ROW"]) => (line_num, (dim, weight_type, SOME LOWER_DIAG_ROW), (CMD,0w1), NONE)
+         (*
+         | ("EDGE_WEIGHT_FORMAT", ["UPPER_ROW"]) =>      (line_num, (dim, weight_type, SOME UPPER_ROW),      (CMD,0w1), NONE)
          | ("EDGE_WEIGHT_FORMAT", ["LOWER_ROW"]) =>      (line_num, (dim, weight_type, SOME LOWER_ROW),      (CMD,0w1), NONE)
+         *)
          | ("EDGE_WEIGHT_FORMAT", []) => err "edge weight format expected"
          | ("EDGE_WEIGHT_FORMAT", _) => err "unsupported edge weight format"
          | ("NODE_COORD_SECTION", []) =>
@@ -211,8 +173,10 @@ in
                  (SOME n, SOME EXPLICIT, SOME FULL_MATRIX) =>    (line_num, (dim, weight_type, weight_format), (DATA,n*n), NONE)
                | (SOME n, SOME EXPLICIT, SOME UPPER_DIAG_ROW) => (line_num, (dim, weight_type, weight_format), (DATA, Word.div (n*(n+0w1),0w2)), NONE)
                | (SOME n, SOME EXPLICIT, SOME LOWER_DIAG_ROW) => (line_num, (dim, weight_type, weight_format), (DATA, Word.div (n*(n+0w1),0w2)), NONE)
+               (*
                | (SOME n, SOME EXPLICIT, SOME UPPER_ROW) =>      (line_num, (dim, weight_type, weight_format), (DATA, Word.div (n*(n-0w1),0w2)), NONE)
                | (SOME n, SOME EXPLICIT, SOME LOWER_ROW) =>      (line_num, (dim, weight_type, weight_format), (DATA, Word.div (n*(n-0w1),0w2)), NONE)
+               *)
                | _ => raise Fail "readCmd error"
              )
          | ("EDGE_WEIGHT_SECTION", _) => err "stale input"
@@ -240,12 +204,13 @@ in
       end
 end
 
-fun readFile filename =
+fun readTSPFile filename =
 let
-  val file = TextIO.openIn filename
+  val file = if filename = "-" then TextIO.stdIn else TextIO.openIn filename
+  fun closeIn () = if filename = "-" then () else TextIO.closeIn file
   val dist = readTSP file (0w0, (NONE, NONE, NONE), (CMD,0w1), NONE)
-               handle Fail e => (TextIO.closeIn file; SOME (ERR' e))
-  val _ = TextIO.closeIn file
+               handle Fail e => (closeIn (); SOME (ERR' e))
+  val _ = closeIn ()
 in
   case dist of
     SOME (NAT_DIST' x) => NAT_DIST (Array.vector x)

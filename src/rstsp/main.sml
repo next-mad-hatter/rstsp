@@ -112,15 +112,6 @@ struct
     val _ = case (max_iters, stale_thresh) of
               (NONE, NONE) => printErr "WARNING: neither iterations limit nor stale threshold is set.  This might diverge.\n"
             | _ => ()
-    (*
-    val _ =
-      case isSome log of
-        true => ( case OS.FileSys.access (valOf log, []) of
-                    true => (printErr "Log file exists.\n"; OS.Process.exit OS.Process.failure)
-                  | _ => ()
-                )
-      | _ => ()
-     *)
   in
     case (pyramidal,
           isSome max_iters andalso valOf max_iters = IntInf.fromInt 1 andalso max_rot = SOME 0w0
