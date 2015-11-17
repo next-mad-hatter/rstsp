@@ -29,7 +29,7 @@ structure Utils: UTILS = struct
     (fn c =>
       c = #" " orelse c = #"\t" orelse
       c = #"," orelse c = #"\n" orelse
-      c = #"\r");
+      c = #"\r")
 
   val wordToString = Word.fmt StringCvt.DEC
 

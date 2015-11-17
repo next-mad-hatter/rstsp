@@ -7,18 +7,10 @@
 
 open Utils
 
-val distance = (valOf o DistMat.readDistFile) "../../test/data/small/small.2";
-(*
-val distance = (valOf o DistMat.readDistFile) "../../test/data/random/random.5";
-val distance = (valOf o DistMat.readDistFile) "../../test/data/small/small.1";
-val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/att48_d.txt";
-val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/dantzig42_d.txt";
-val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/fri26_d.txt";
-val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/gr17_d.txt";
-*)
-structure SBSearch : TSP_SEARCH = SimpleSearchFn(SBGraph)
 structure PyrSearch : TSP_SEARCH = SimpleSearchFn(PyrGraph)
-
+structure SBSearch : TSP_SEARCH = SimpleSearchFn(SBGraph)
+structure RotPyrSearch : TSP_SEARCH = RotSearchFn(PyrSearch)
+structure RotSBSearch : TSP_SEARCH = RotSearchFn(SBSearch)
 local
   structure P =
   struct
@@ -38,6 +30,12 @@ local
   end
 in
   structure LocalSBSearch = LocalSearchFn(P)
+  structure LocalRotSBSearch = LocalSearchFn(
+    struct
+      structure Search = RotSearchFn(SBSearch);
+      structure Opts = P.Opts
+    end
+  )
 end
 
 local
@@ -50,24 +48,63 @@ local
   end
 in
   structure LocalPyrSearch = LocalSearchFn(P)
+  structure LocalRotPyrSearch = LocalSearchFn(
+    struct
+      structure Search = RotSearchFn(PyrSearch);
+      structure Opts = P.Opts
+    end
+  )
 end
+structure RotLocalPyrSearch = RotSearchFn(LocalPyrSearch)
+structure RotLocalSBSearch = RotSearchFn(LocalSBSearch)
 
+val distance = (valOf o DistMat.readDistFile) "../../test/data/random/random.10";
+(*
+val distance = (valOf o DistMat.readDistFile) "../../test/data/small/small.1";
+val distance = (valOf o DistMat.readDistFile) "../../test/data/small/small.2";
+val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/att48_d.txt";
+val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/dantzig42_d.txt";
+val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/fri26_d.txt";
+val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/gr17_d.txt";
+*)
+
+val node_size = SOME 0w3
 val iter_limit = SOME (IntInf.fromInt 10)
 val stale_thresh = SOME (IntInf.fromInt 2)
 val rotations = NONE
-val node_size = SOME 0w3
 
+(*
+val options = ()
+structure Search = PyrSearch
+*)
+(*
+val options = node_size
+structure Search = SBSearch
+*)
+(*
+val options = (iter_limit, stale_thresh, ())
+structure Search = LocalPyrSearch
+*)
 (*
 val options = (iter_limit, stale_thresh, node_size)
 structure Search = LocalSBSearch
 *)
+(*
 val options = (rotations, (iter_limit, stale_thresh, node_size))
-structure Search = RotSearchFn(LocalSBSearch)
+structure Search = RotLocalSBSearch
+*)
 (*
 val options = (rotations, (iter_limit, stale_thresh, ()))
-structure Search = RotSearchFn(LocalPyrSearch)
+structure Search = RotLocalPyrSearch
 *)
-
+(*
+val options = (iter_limit, stale_thresh, (rotations, (node_size)))
+structure Search = LocalRotSBSearch
+*)
+(*
+*)
+val options = (iter_limit, stale_thresh, (rotations, ()))
+structure Search = LocalRotPyrSearch
 
 fun main () =
 let

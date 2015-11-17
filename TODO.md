@@ -46,15 +46,17 @@
             - src description, combthrough & dirs tree structure
             - rename local search to iter search ?
     - add:
+            - stdin input
+            - metric instances input
+            - upper/lower diag input
             - flip flop search
             - iterative/rotational searches: return list of target values
             - sb local search: two reorderings?
             - local search (+1/n) time limits
-            - metric instances input
-            - upper/lower diag input
             - shared library interface
             - use tsplib from glpk-tspsol ?
             - [threaded] rotated local search -> to settings ?
+    - threaded: splay trees -> redblack trees !
     - better sb hashing function / types-map?
     - add hashing function option ?
     - revert storage to maps?
