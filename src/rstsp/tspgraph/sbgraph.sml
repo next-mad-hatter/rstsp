@@ -21,9 +21,9 @@
  *)
 structure SBNode = struct
 
-  structure U = Utils
   open TSPTypes
   open SBUtils
+  structure U = Utils
 
   type intsset = ((WordPairSet.set, word * word) HashedMap)
 
@@ -134,10 +134,10 @@ end
  *)
 structure SBTour = struct
 
-  structure U = Utils
-  structure TU = TSPUtils
   open TSPTypes
   open SBUtils
+  structure U = Utils
+  structure TU = TSPUtils
 
   type tour = (WordVectorSet.set, word vector) HashedMap
 
@@ -186,9 +186,9 @@ end
 
 functor SBGraph(N : NUMERIC) : TSP_GRAPH = struct
 
-  structure U = Utils
   open TSPTypes
   open SBUtils
+  structure U = Utils
 
   structure Node = SBNode
   structure Tour = SBTour

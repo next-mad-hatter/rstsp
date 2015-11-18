@@ -40,8 +40,7 @@
     - glpk/hk bounds comparison
     - test scripts in fresh clone
 * Source:
-    - finish port to tsplib instances
-    - threaded: finish port to tsplib instances
+    - threaded: port to tsplib instances
     - add:
             - tsplib input
             - stdin input

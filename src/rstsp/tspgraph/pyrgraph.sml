@@ -38,7 +38,6 @@ end
 
 structure PyrTour : TSP_TOUR = struct
 
-  structure U = Utils
   structure TU = TSPUtils
 
   type tour = word vector

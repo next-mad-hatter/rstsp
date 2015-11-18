@@ -5,11 +5,12 @@
  * $Revision$
  *)
 
-use "rstsp-polyml.sml";
+use "rstsp/rstsp-polyml-common.sml";
+use "main/defaultsearches.sml";
+use "main/settings.sig";
+use "main/main.sml";
 
 structure Settings: SETTINGS = struct
-  structure PyrSearch : TSP_SEARCH = SimpleSearchFn(PyrGraph)
-  structure SBSearch : TSP_SEARCH = SimpleSearchFn(SBGraph)
   val getCmdName = CommandLine.name
   val getArgs = CommandLine.arguments
 end

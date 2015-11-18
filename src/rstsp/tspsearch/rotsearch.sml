@@ -16,7 +16,6 @@ functor RotSearchFn(Search: TSP_SEARCH) : TSP_SEARCH =
 struct
 
   structure U = Utils
-  structure TU = TSPUtils
   structure S = Search
 
   structure Len = S.Len

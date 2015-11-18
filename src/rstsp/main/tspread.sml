@@ -16,11 +16,10 @@ sig
    *
    * We also want the metric for metric instances.
    *)
-  datatype tsplib_inst = METRIC_2D_INSTANCE of (real vector * real vector) *
-                                               (((real * real) * (real * real)) -> real)
+  datatype tsplib_inst = EUCLIDEAN_2D_INSTANCE of real vector * real vector
                        | EXPLICIT_INSTANCE of word vector
 
-  val readTSPFile : string -> tsplib_inst option
+  val readTSPFile : string -> tsplib_inst
 
 end
 
@@ -37,8 +36,7 @@ struct
   structure U = Utils
   structure TU = TSPUtils
 
-  datatype tsplib_inst = METRIC_2D_INSTANCE of (real vector * real vector) *
-                                               (((real * real) * (real * real)) -> real)
+  datatype tsplib_inst = EUCLIDEAN_2D_INSTANCE of real vector * real vector
                        | EXPLICIT_INSTANCE of word vector
 
   datatype edge_weight_type = EXPLICIT
@@ -121,7 +119,7 @@ struct
                         end
                       )
                | _ => raise Fail "not implemented"
-    fun iter (pos, []) = ()
+    fun iter (_, []) = ()
       | iter (pos, x::xs) =
         let
           val x' = U.wordFromString x
@@ -256,14 +254,6 @@ struct
         end
   end
 
-  fun metric_euc2d ((x,y),(x',y')) =
-  let
-    val dx = x - x'
-    val dy = y - y'
-  in
-    Math.sqrt (dx*dx+dy*dy)
-  end
-
   fun readTSPFile filename =
   let
     val file = if filename = "-" then TextIO.stdIn else TextIO.openIn filename
@@ -273,10 +263,10 @@ struct
     val _ = closeIn ()
   in
     case dist of
-      SOME (NAT_INST x) => SOME (EXPLICIT_INSTANCE (Array.vector x))
-    | SOME (EUCL_INST (x,y)) => SOME (METRIC_2D_INSTANCE ((Array.vector x, Array.vector y), metric_euc2d))
-    | SOME (ERR s) => (U.printErr s; NONE)
-    | NONE => (U.printErr "tsplib reader error\n"; NONE)
+      SOME (NAT_INST x) => EXPLICIT_INSTANCE (Array.vector x)
+    | SOME (EUCL_INST (x,y)) => EUCLIDEAN_2D_INSTANCE (Array.vector x, Array.vector y)
+    | SOME (ERR s) => raise Fail s
+    | NONE => raise Fail "tsplib reader error\n"
   end
 
 end

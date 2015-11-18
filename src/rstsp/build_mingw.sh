@@ -35,5 +35,10 @@ WIN_TARGET="-target i686-w64-mingw32"
 WIN_BIN_EXT=.exe
 WIN_LIB_EXT=.dll
 
+if ! mlton ${WIN_TARGET} > /dev/null; then
+  echo "No crosscompiler found."
+  exit 1
+fi
+
 mlton ${MLTON_OPTS} ${WIN_TARGET} -output "${BUILD_DIR}"/rstsp${WIN_BIN_EXT} \
-      "${SRC_DIR}/rstsp-mlton.mlb" || exit 1
+      "${SRC_DIR}/rstsp/rstsp-mlton.mlb" || exit 1

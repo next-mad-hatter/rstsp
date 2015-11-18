@@ -13,7 +13,6 @@
 functor SimpleSearchFn(G: TSP_GRAPH) : TSP_SEARCH =
 struct
 
-  structure U = Utils
   structure T = G.Tour
   structure N = G.Node
   open TSPTypes

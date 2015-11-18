@@ -5,15 +5,6 @@
  * $Revision$
  *)
 
-signature DISTANCE =
-sig
-  structure Num : NUMERIC
-
-  type dist
-  val getDist : dist -> word * word -> Num.num
-  val getDim : dist -> word
-end
-
 (**
  * Flat vector containing lower triangular part
  * of a matrix, rows concatenated.
@@ -36,7 +27,7 @@ end
 (**
  * Simple pair of vectors holding floating point coordinates.
  *)
-structure EuclDist : DISTANCE =
+structure Eucl2DDist : DISTANCE =
 struct
 
   structure Num = RealNum
