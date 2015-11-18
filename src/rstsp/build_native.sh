@@ -12,6 +12,8 @@ SRC_DIR=`realpath ${0%/*}/`
 BUILD_DIR="./build"
 
 cd "${SRC_DIR}" || exit 1
+ctags -Ra
+
 mkdir -p "${BUILD_DIR}" || exit 1
 
 echo "Building MLton executable"
