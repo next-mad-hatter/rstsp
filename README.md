@@ -1,29 +1,50 @@
+# Pyramidal & Relaxed Supnick TSP
 
-## This is where a readme is going to be :).
+## Quick Start Guide
 
-For now, try:
+### Building
 
-1. Building:
-
+   ```
            ./bin/build.sh
-   This requires a working mlton installation.
-   Building the mingw binary requires a suitable
-   (i.e. featuring gmp) cross-compiler environment.
-   For details, see `./src/rstsp/build_*.sh`.
+   ```
+   requires a working `mlton` installation.
 
-2. Running tests:
+   Building the mingw binary requires a suitable (i.e. featuring gmp)
+   cross-compiler environment.
 
+   For details, see `./src/rstsp/build_*.sh` and `./src/rstsp/README.md`.
+
+### Getting more test data
+
+   ```
+          ./bin/fetch-data.sh
+   ```
+   uses `wget`, `tar`, `gunzip` and `lynx` and takes about 60MB,
+   plus about 20MB in `./tmp/` which can be cleaned afterwards.
+
+### Running tests
+
+   ```
           ./bin/test.sh
-   Requires ruby & powerbar gem.
+   ```
+   requires `ruby` & powerbar gem.
 
-3. Plotting test results:
+   At first run, this will also generate random test data,
+   which needs significant chunk of space -- about 200MB right now.
 
+### Plotting test results
+
+   ```
           ./bin/plot.sh
-   This requires ruby & gnuplot.
-   The plots will be put to ./plot/out folder.
+   ```
+   requires `ruby` & `gnuplot`.
 
-4. Packaging:
+   Generated plots will be put to `./plot/out` folder.
 
+### Packaging
+
+   ```
           [env VERSION=my-great-build] ./bin/pkg.sh
-   Packages the crosscompiled version and puts it into `./tmp/`.
+   ```
+   packages the crosscompiled version and puts it into `./tmp/`.
 

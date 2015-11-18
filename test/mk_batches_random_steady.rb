@@ -14,7 +14,7 @@ set = []
 (3..100).step(1) do |i| set << [:mlton,i] end
 (3..100).step(1) do |i| set << [:poly,i] end
 set.each do |bin,size|
-  ([[:pyramidal,nil]] + [:balanced].product((2..3).to_a)).each do |algo_max|
+  ([[:pyramidal,nil]] + [:balanced].product((2..4).to_a)).each do |algo_max|
     algo, max = *algo_max
     if (
       (max and algo == :pyramidal) or

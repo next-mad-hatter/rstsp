@@ -18,10 +18,11 @@ plot/data/mlton_*.csv
 plot/data/poly_*.csv
 
 test/batch/*random*.json
-test/doc/tsplib.p*
 test/log
-test/data/misc
 test/data/tsplib
+test/data/dimacs
+test/data/vlsi
+test/data/world
 test/data/random
 test/ext
 

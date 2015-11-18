@@ -1,0 +1,45 @@
+(*
+ * $File$
+ *
+ * $Author$
+ * $Date$
+ * $Revision$
+ *)
+
+$(SML_LIB)/basis/basis.mlb
+$(SML_LIB)/basis/mlton.mlb
+$(SML_LIB)/basis/sml-nj.mlb
+$(SML_LIB)/smlnj-lib/Util/smlnj-lib.mlb
+
+ann
+  "warnUnused true"
+in
+  ../common/utils.sig
+  ../common/utils.sml
+  ../common/lazy.sml
+
+  ../common/numeric.sml
+  ../common/distance.sig
+  ../common/tsptypes.sml
+  ../common/tsputils.sml
+  ../common/distance.sml
+
+  ../tspgraph/tspgraph.sig
+  ../tspgraph/pyrgraph.sml
+  ../tspgraph/sbutils.sml
+  ../tspgraph/sbgraph.sml
+
+  ../tspsearch/tspsearch.sig
+  ../tspsearch/simplesearch.sml
+  ../tspsearch/itersearch.sml
+  ../tspsearch/rotsearch.sml
+
+  ../main/options.sml
+  ../main/tspread.sml
+  ../main/searches.sig
+  ../main/defaultsearches.sml
+  ../main/settings.sig
+  ../main/main.sml
+
+  rstsp-mlton.sml
+end
