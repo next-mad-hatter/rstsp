@@ -195,11 +195,11 @@ struct
                )
            | ("DIMENSION", _) => err "dimension expected"
            | ("TYPE", ["TSP"]) => (line_num, (dim, weight_type, weight_format), (CMD,0w1), NONE)
-           | ("TYPE", l) => err ("unsupported data type" ^ String.concatWith " " l)
+           | ("TYPE", l) => err ("unsupported data type (" ^ (String.concatWith " " l) ^ ")")
            | ("EDGE_WEIGHT_TYPE", ["EXPLICIT"]) => (line_num, (dim, SOME EXPLICIT, weight_format), (CMD,0w1), NONE)
            | ("EDGE_WEIGHT_TYPE", ["EUC_2D"]) =>   (line_num, (dim, SOME EUC_2D,   weight_format), (CMD,0w1), NONE)
            | ("EDGE_WEIGHT_TYPE", []) => err "edge weight type expected"
-           | ("EDGE_WEIGHT_TYPE", _) => err "unsupported edge weight type"
+           | ("EDGE_WEIGHT_TYPE", l) => err ("unsupported edge weight type (" ^ (String.concatWith " " l) ^ ")")
            | ("EDGE_WEIGHT_FORMAT", ["FUNCTION"]) =>       (line_num, (dim, weight_type, SOME FUNCTION),       (CMD,0w1), NONE)
            | ("EDGE_WEIGHT_FORMAT", ["FULL_MATRIX"]) =>    (line_num, (dim, weight_type, SOME FULL_MATRIX),    (CMD,0w1), NONE)
            | ("EDGE_WEIGHT_FORMAT", ["UPPER_DIAG_ROW"]) => (line_num, (dim, weight_type, SOME UPPER_DIAG_ROW), (CMD,0w1), NONE)
@@ -209,7 +209,7 @@ struct
            | ("EDGE_WEIGHT_FORMAT", ["LOWER_ROW"]) =>      (line_num, (dim, weight_type, SOME LOWER_ROW),      (CMD,0w1), NONE)
            *)
            | ("EDGE_WEIGHT_FORMAT", []) => err "edge weight format expected"
-           | ("EDGE_WEIGHT_FORMAT", _) => err "unsupported edge weight format"
+           | ("EDGE_WEIGHT_FORMAT", l) => err ("unsupported edge weight format (" ^ (String.concatWith " " l) ^ ")")
            | ("NODE_COORD_SECTION", []) =>
                (
                  case (dim, weight_type, weight_format = SOME FUNCTION orelse weight_format = NONE) of
