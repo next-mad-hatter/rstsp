@@ -19,7 +19,7 @@ sig
 end
 
 (**
- * SML calls its floats reals for historical reasons --
+ * SML calls its floating point numbers reals for historical reasons --
  * we're sticking with it as well.
  *)
 structure RealNum : NUMERIC =

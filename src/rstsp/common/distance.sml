@@ -17,6 +17,8 @@ end
 (**
  * Flat vector containing lower triangular part
  * of a matrix, rows concatenated.
+ *
+ * For now, no wrapover checks are done.
  *)
 structure NatDist : DISTANCE =
 struct
@@ -25,18 +27,14 @@ struct
 
   type dist = word vector
 
-  fun flatCoor (row:word,col:word) =
-    if row >= col then Word.toInt (Word.div (row*(row+0w1),0w2) + col)
-                  else flatCoor (col,row)
-
   fun getDim v = Word.div(Utils.wordSqrt(0w1+0w8*(Word.fromInt (Vector.length v)))-0w1,0w2)
 
-  fun getDist v (i,j) = Vector.sub (v, flatCoor (i,j))
+  fun getDist v (i,j) = Vector.sub (v, TSPUtils.flatCoor (i,j))
 
 end
 
 (**
- * Simple pair of vectors holding coordinates.
+ * Simple pair of vectors holding floating point coordinates.
  *)
 structure EuclDist : DISTANCE =
 struct

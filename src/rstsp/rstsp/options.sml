@@ -8,27 +8,35 @@
 signature OPTIONS =
 sig
 
-  (*
-   * Returns an
-   *  (  bool               (verbose)
-   *   * string option      (dot file name)
-   *   * bool               (pyramidal)
-   *   * word option        (interval size limit)
-   *   * IntInf.int option  (iterations limit)
-   *   * IntInf.int option  (stale iterations limit)
-   *   * word option        (rotations limit)
-   *   * string list        (filenames)
-   *  ) option              (bad args)
-   *   reader.
+  (**
+   * Given a command name reader and arguments reader, returns a
+   *
+   *  (  bool               : verbose
+   *   * string option      : dot file name
+   *   * bool               : pyramidal
+   *   * word option        : interval size limit
+   *   * IntInf.int option  : iterations limit
+   *   * IntInf.int option  : stale iterations limit
+   *   * word option        : rotations limit
+   *   * string list        : filenames
+   *  ) option              : in case of bad args
+   *
+   *  reader.
    *)
-  val reader: (unit -> string) -> (unit -> string list) ->
-              unit -> (bool * string option *
-                       bool * word option *
-                       IntInf.int option * IntInf.int option *
-                       word option * string list) option
+  val reader : (unit -> string) -> (unit -> string list) ->
+               unit -> (bool * string option *
+                        bool * word option *
+                        IntInf.int option * IntInf.int option *
+                        word option * string list) option
 
 end
 
+(**
+ * Very simple options parser.
+ *
+ * This will become unwieldy quickly as number of options increases --
+ * for a possible solution, see http://mlton.org/FunctionalRecordUpdate .
+ *)
 structure Options : OPTIONS =
 struct
 
@@ -36,14 +44,14 @@ struct
 
   exception Usage
 
-  datatype expect = ANY | ALGO | LOG | MAX_INTS | MAX_ITERS | STALE_THRESH | MAX_ROT
+  datatype expect = ANY | ALGO | LOG | MAX_NODE_SIZE | MAX_ITERS | STALE_THRESH | MAX_ROT
 
   fun expect "-t" = ALGO
     | expect "--type" = ALGO
     | expect "-l" = LOG
     | expect "--log" = LOG
-    | expect "-m" = MAX_INTS
-    | expect "--max" = MAX_INTS
+    | expect "-m" = MAX_NODE_SIZE
+    | expect "--max" = MAX_NODE_SIZE
     | expect "-i" = MAX_ITERS
     | expect "--iter" = MAX_ITERS
     | expect "-j" = STALE_THRESH
@@ -63,7 +71,7 @@ struct
     print "    -t|--type p|b  :  pyramidal / balanced search\n";
     print "                      (default: balanced)\n";
     print "\n";
-    print "    -m|--max width :  maximum node width for balanced search\n";
+    print "    -m|--max width :  maximum number of intervals in a node for balanced search\n";
     print "                      (zero for unlimited, default: 4)\n";
     print "\n";
     print "    -i|--iter num  :  maximum number of iterations in local search\n";
@@ -92,7 +100,7 @@ struct
 
     fun read_next expects opts args =
     let
-      val (verbose, log, pyr, max_ints, max_iters, stale_thresh, max_rot, files) = opts
+      val (verbose, log, pyr, max_node_size, max_iters, stale_thresh, max_rot, files) = opts
     in
       case expects of
         ALGO =>
@@ -100,8 +108,8 @@ struct
           val new_opts =
             case (String.isPrefix (hd args) "pyramidal",
                   String.isPrefix (hd args) "balanced") of
-              (true,_) => (verbose, log, true, max_ints, max_iters, stale_thresh, max_rot, files)
-            | (_,true) => (verbose, log, false, max_ints, max_iters, stale_thresh, max_rot, files)
+              (true,_) => (verbose, log, true, max_node_size, max_iters, stale_thresh, max_rot, files)
+            | (_,true) => (verbose, log, false, max_node_size, max_iters, stale_thresh, max_rot, files)
             | _ => raise Fail ("unknown algorithm: " ^ hd args)
         in
           read_next ANY new_opts (tl args)
@@ -110,7 +118,7 @@ struct
         let
           val new_opts =
             case log of
-              NONE => (verbose, SOME (hd args), pyr, max_ints, max_iters, stale_thresh, max_rot, files)
+              NONE => (verbose, SOME (hd args), pyr, max_node_size, max_iters, stale_thresh, max_rot, files)
             | SOME l =>
                 case l = hd args of
                   true => opts
@@ -118,7 +126,7 @@ struct
         in
           read_next ANY new_opts (tl args)
         end
-      | MAX_INTS =>
+      | MAX_NODE_SIZE =>
         let
           val new_opts =
             case U.wordFromString (hd args) of
@@ -135,8 +143,8 @@ struct
               SOME m =>
                 (
                   case m = IntInf.fromInt 0 of
-                    true => (verbose, log, pyr, max_ints, NONE, stale_thresh, max_rot, files)
-                  | false => (verbose, log, pyr, max_ints, SOME m, stale_thresh, max_rot, files)
+                    true => (verbose, log, pyr, max_node_size, NONE, stale_thresh, max_rot, files)
+                  | false => (verbose, log, pyr, max_node_size, SOME m, stale_thresh, max_rot, files)
                 )
             | NONE => raise Fail ("invalid maximum intervals number")
         in
@@ -149,8 +157,8 @@ struct
               SOME m =>
                 (
                   case m = IntInf.fromInt 0 of
-                    true => (verbose, log, pyr, max_ints, max_iters, NONE, max_rot, files)
-                  | false => (verbose, log, pyr, max_ints, max_iters, SOME m, max_rot, files)
+                    true => (verbose, log, pyr, max_node_size, max_iters, NONE, max_rot, files)
+                  | false => (verbose, log, pyr, max_node_size, max_iters, SOME m, max_rot, files)
                 )
             | NONE => raise Fail ("invalid stale intervals number")
         in
@@ -160,9 +168,9 @@ struct
         let
           val new_opts =
             case hd args of
-              "all" => (verbose, log, pyr, max_ints, max_iters, stale_thresh, NONE, files)
+              "all" => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, NONE, files)
             | str => case U.wordFromString str of
-                       SOME m => (verbose, log, pyr, max_ints, max_iters, stale_thresh, SOME m, files)
+                       SOME m => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, SOME m, files)
                      | NONE => raise Fail ("invalid rotations number")
         in
           read_next ANY new_opts (tl args)
@@ -174,23 +182,23 @@ struct
           | ["--help"] => (printUsage cmd_name; OS.Process.exit OS.Process.success)
           | _ =>
             let
-              val (verbose, log, pyr, max_ints, max_iters, stale_thresh, max_rot, files) = opts
+              val (verbose, log, pyr, max_node_size, max_iters, stale_thresh, max_rot, files) = opts
             in
               case (expect (hd args), hd args) of
                 (ALGO,_) => read_next ALGO opts (tl args)
               | (LOG,_) => read_next LOG opts (tl args)
-              | (MAX_INTS,_) => read_next MAX_INTS opts (tl args)
+              | (MAX_NODE_SIZE,_) => read_next MAX_NODE_SIZE opts (tl args)
               | (MAX_ITERS,_) => read_next MAX_ITERS opts (tl args)
               | (STALE_THRESH,_) => read_next STALE_THRESH opts (tl args)
               | (MAX_ROT,_) => read_next MAX_ROT opts (tl args)
-              | (_,"--") => (verbose, log, pyr, max_ints, max_iters, stale_thresh, max_rot, files @ (tl args))
-              | (_,"-v") => read_next ANY (true, log, pyr, max_ints, max_iters, stale_thresh, max_rot, files) (tl args)
-              | (_,"--verbose") => read_next ANY (true, log, pyr, max_ints, max_iters, stale_thresh, max_rot, files) (tl args)
+              | (_,"--") => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, max_rot, files @ (tl args))
+              | (_,"-v") => read_next ANY (true, log, pyr, max_node_size, max_iters, stale_thresh, max_rot, files) (tl args)
+              | (_,"--verbose") => read_next ANY (true, log, pyr, max_node_size, max_iters, stale_thresh, max_rot, files) (tl args)
               | (_,"-h") => raise Usage
               | (_,"--help") => raise Usage
               | (_,f) => case String.isPrefix "-" f andalso size f > 1 of
                            true => raise Usage
-                         | _ => read_next ANY (verbose, log, pyr, max_ints, max_iters, stale_thresh, max_rot, files @ [f]) (tl args)
+                         | _ => read_next ANY (verbose, log, pyr, max_node_size, max_iters, stale_thresh, max_rot, files @ [f]) (tl args)
             end
     end
 
@@ -206,4 +214,3 @@ struct
     fn () => read ((OS.Path.file o getCmdName) ()) (getArgs ())
 
 end
-

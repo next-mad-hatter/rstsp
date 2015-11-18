@@ -5,30 +5,32 @@
  * $Revision$
  *)
 
-functor SimpleSearchFn ( G: TSP_GRAPH ) : TSP_SEARCH =
+(**
+ * Simple recursive traversal, equivalent to depth first search.
+ *
+ * A hash table is used for memoization.
+ *)
+functor SimpleSearchFn(G: TSP_GRAPH) : TSP_SEARCH =
 struct
 
-  open G
-  open Utils
+  structure U = Utils
+  structure T = G.Tour
+  structure N = G.Node
+  open TSPTypes
+  datatype descent = datatype G.descent
 
-  val toVector = Tour.toVector
-  val toString = Tour.toString
+  structure Len = G.Len
 
-  (*
-  local
-    structure MemKey =
-    struct
-      type ord_key = Node.hash
-      val compare = Node.compare
-    end
-  in
-    structure MemMap: ORD_MAP = SplayMapFn(MemKey)
-    structure MemMap: ORD_MAP = RedBlackMapFn(MemKey)
-  end
-  *)
+  type tour = G.tour
 
-  (*
-   * (log vertex, log value, close file) functions tuple
+  type optional_params = G.optional_params
+
+  val tourToVector = T.toVector
+
+  val tourToString = T.toString
+
+  (**
+   * For dot logging, returns (log vertex, log value, close file) functions.
    *)
   fun dotlogs filename =
   let
@@ -38,11 +40,8 @@ struct
     val _ = log "node[shape=box];\n"
   in
     (
-      fn (node, node') => log
-        ("\"" ^ Node.toString node ^ "\" -> \"" ^ Node.toString node' ^ "\";\n")
-        ,
-      fn (node, tour) => log
-        ("\"" ^ Node.toString node ^ "\" [xlabel = \"" ^ Tour.toString tour ^ "\"]; \n"),
+      fn (node, node') => log ("\"" ^ N.toString node ^ "\" -> \"" ^ N.toString node' ^ "\";\n"),
+      fn (node, tour) => log ("\"" ^ N.toString node ^ "\" [xlabel = \"" ^ T.toString tour ^ "\"]; \n"),
       fn () => (log "}\n"; TextIO.closeOut dotfile)
     )
   end
@@ -52,7 +51,7 @@ struct
 
     fun trav memo node =
       let
-        val res = HashTable.find memo (Node.toHash node)
+        val res = HashTable.find memo (N.toKey node)
       in
         case res of SOME r => r
         | NONE =>
@@ -75,12 +74,12 @@ struct
                              let
                                val d'' = dist_fn d
                              in
-                               case d' <= d'' of
-                                 true => SOME (d', t')
-                               | _ => SOME (d'', tour_fn t)
+                               case Len.compare (d', d'') of
+                                 GREATER => SOME (d'', tour_fn t)
+                               | _ => SOME (d', t')
                              end
                   end
-                val desc = descend size dist options node
+                val desc = G.descendants size dist options node
               in
                 case desc of
                   DESC opts => foldl collect NONE opts
@@ -90,13 +89,15 @@ struct
                         (SOME (_,r), SOME f) => f (node, r ())
                       | (_,_) => ()
             in
-              HashTable.insert memo (Node.toHash node, result);
+              HashTable.insert memo (N.toKey node, result);
               result
             end
       end
   in
     trav
   end
+
+  exception HTMiss
 
   fun search size dist dotfilename wants_stats options =
   let
@@ -114,12 +115,12 @@ struct
     fn () =>
     (
       let
-        val hasher = Node.toHTHash size
-        val memo: (Node.hash, (word * (unit -> Tour.tour)) option) HashTable.hash_table =
+        val hasher = N.toHash size
+        val memo: (N.key, (Len.num * (unit -> T.tour)) option) HashTable.hash_table =
           HashTable.mkTable
-          (hasher, fn (a,b) => (Node.compare (a,b) = EQUAL))
-          (Word.toInt (HTSize (size,options)), Fail "ht miss")
-        val res = trav memo root
+          (hasher, fn (a,b) => (N.compare (a,b) = EQUAL))
+          (Word.toInt (G.HTSize (size,options)), HTMiss)
+        val res = trav memo G.root
         val _ = close_log ()
         val nk =
           case wants_stats of
@@ -129,7 +130,7 @@ struct
             ,
             (Word.fromInt o WordPairSetSet.numItems)
             (HashTable.foldi
-              (fn (k, _, s) => WordPairSetSet.add (s, Node.normHash k))
+              (fn (k, _, s) => WordPairSetSet.add (s, N.normKey k))
               WordPairSetSet.empty memo),
             (Word.fromInt o List.length o
              (ListMergeSort.uniqueSort Word.compare) o

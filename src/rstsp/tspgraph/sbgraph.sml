@@ -8,14 +8,16 @@
 (**
  * Strongly Balanced Tours Graph.
  *
- * FIXME: this contains lots of HashedMap housekeeping which could be factored out.
- * FIXME: can we expose internals to SBGraph while keeping the tspgraph signatures?
+ * FIXME: SBNode and SBTour contain lots of HashedMap housekeeping which
+ *        should be factored out into a proper structure.
+ *        This also keeps us from using TSPNode/TSPTour signatures -- 
+ *        since we have to expose their internals to SBGraph.
  *)
 
 (**
  * A SB node consists of
  *   - tree depth (here: also "level") and
- *   - a set of intervals, i.e. {(a_i,b_i)} where a_i <= b_i.
+ *   - a set of intervals, i.e. {(a_i,b_i) |i in I} where a_i <= b_i.
  *)
 structure SBNode = struct
 
@@ -63,7 +65,7 @@ structure SBNode = struct
   end
 
   (* A collision free hash --
-   * having a map and thus counting encountered node types.
+   * via a map and counting encountered node types.
    *)
   (*
   local
@@ -126,8 +128,9 @@ end
 
 
 (*
- * A SB tour shall be a set of paths,
- * i.e. (here) vectors #[a,...,b] of length >= 2 where a <> b and length > 2 if a = b.
+ * A SB tour is a set of paths, i.e.
+ * {[a_i, c_i_1, ...,, c_i_k_i, b_i] | i in I} of length >= 2
+ * where a_i <> b_i and path length > 2 where a_i = b_i.
  *)
 structure SBTour = struct
 
@@ -181,27 +184,23 @@ structure SBTour = struct
 end
 
 
-functor SBGraph(D : DISTANCE) : TSP_GRAPH = struct
+functor SBGraph(N : NUMERIC) : TSP_GRAPH = struct
 
   structure U = Utils
-  (*
-  structure TU = TSPUtils
-  *)
   open TSPTypes
   open SBUtils
 
   structure Node = SBNode
   structure Tour = SBTour
-  structure Dist = D
+  structure Len = N
 
   type node = SBNode.node
   type tour = SBTour.tour
-  type dist = Dist.dist
 
   val root = (0w0, HMAP (WordPairSet.empty, WordSet.empty, WordMap.empty))
 
-  datatype descent = TERM of (Dist.Num.num * (unit -> tour)) option
-                   | DESC of (node * (Dist.Num.num -> Dist.Num.num)
+  datatype descent = TERM of (Len.num * (unit -> tour)) option
+                   | DESC of (node * (Len.num -> Len.num)
                                    * ((unit -> tour) -> (unit -> tour))) list
 
   fun threeMins ints = let
@@ -224,7 +223,7 @@ functor SBGraph(D : DISTANCE) : TSP_GRAPH = struct
   in (
     (* NB: intervals are sorted *)
     (level+0w1, Node.insertInterval (Node.removeInterval (ints, old), (#2 old, level))),
-    fn d => Dist.Num.+ (d, dist (min1, level)),
+    fn d => Len.+ (d, dist (min1, level)),
     fn t => Lazy.susp (fn () => Tour.insertPath (Vector.fromList [min1,level]) (t ()))
     )
   end
@@ -238,18 +237,18 @@ functor SBGraph(D : DISTANCE) : TSP_GRAPH = struct
     val ints' = Node.insertInterval (foldl Node.removeInterval' ints old, orderInterval (a,b))
   in (
     (level+0w1, ints'),
-    fn d => Dist.Num.+(d, Dist.Num.+(dist (min1,level), dist (level,min2))),
+    fn d => Len.+(d, Len.+(dist (min1,level), dist (level,min2))),
     fn t => Lazy.susp (fn () => Tour.insertPath (Vector.fromList [min1, level, min2]) (t ()))
     )
   end
 
-  fun descentOpts size dist max_ints node =
+  fun descentOpts size dist max_node_size node =
   let
     val (level, ints) = node
     val node_len = Node.numItems node
     val (m1, m2, m3) = threeMins ints
     val o1 = case (
-                isSome max_ints andalso Node.numItems node = valOf max_ints
+                isSome max_node_size andalso Node.numItems node = valOf max_node_size
                 orelse node_len > size-level-0w1
               ) of
                true => []
@@ -279,7 +278,7 @@ functor SBGraph(D : DISTANCE) : TSP_GRAPH = struct
 
   type optional_params = word option
 
-  fun descendants size dist max_ints node =
+  fun descendants size dist max_node_size node =
   let
     val (level, ints) = node
     val node_len = Node.numItems node
@@ -290,13 +289,13 @@ functor SBGraph(D : DISTANCE) : TSP_GRAPH = struct
           val p = (hd o WordPairSet.listItems o getItems) ints
           val q = Tour.singlePath p
         in
-          TERM (SOME (Dist.getDist dist p, Lazy.susp (fn () => q)))
+          TERM (SOME (dist p, Lazy.susp (fn () => q)))
         end
     | (_,true) => TERM NONE
-    | _ => DESC (descentOpts size (Dist.getDist dist) max_ints node)
+    | _ => DESC (descentOpts size dist max_node_size node)
   end
 
-  (* TODO: use tree width as opposed to tree area here *)
+  (* FIXME: use final tree width as opposed to unique area as growth factor *)
   fun HTSize (size, opts) =
     case opts of
       NONE => size * 0w121

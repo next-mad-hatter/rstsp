@@ -13,7 +13,6 @@ use "common/utils.sml";
 use "common/lazy.sml";
 
 use "common/numeric.sml";
-use "common/distance.sml";
 use "common/tsptypes.sml";
 use "common/tsputils.sml";
 
@@ -22,20 +21,16 @@ use "tspgraph/pyrgraph.sml";
 use "tspgraph/sbutils.sml";
 use "tspgraph/sbgraph.sml";
 
-(*
-use "tspsearch.sig";
-use "simplesearch.sml";
-use "localsearch.sml";
+use "tspsearch/tspsearch.sig";
+use "tspsearch/simplesearch.sml";
+use "tspsearch/itersearch.sml";
+use "tspsearch/rotsearch.sml";
 
-use "distmat.sig";
-use "distmat.sml";
-*)
-
-(*
-use "settings.sig";
-use "options.sml";
+use "rstsp/options.sml";
+use "rstsp/tspread.sml";
+use "rstsp/settings.sig";
+use "common/distance.sml";
 use "main.sml";
-*)
 
 val _ = TextIO.print;
 

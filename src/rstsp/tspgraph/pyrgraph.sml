@@ -50,20 +50,19 @@ structure PyrTour : TSP_TOUR = struct
 end
 
 
-functor PyrGraph(D : DISTANCE) : TSP_GRAPH = struct
+functor PyrGraph(N : NUMERIC) : TSP_GRAPH = struct
 
+  structure Len = N
   structure Node = PyrNode
   structure Tour = PyrTour
-  structure Dist = D
 
   type node = Node.node
   type tour = Tour.tour
-  type dist = Dist.dist
 
   val root = (0w0, 0w0)
 
-  datatype descent = TERM of (Dist.Num.num * (unit -> tour)) option
-                   | DESC of (node * (Dist.Num.num -> Dist.Num.num)
+  datatype descent = TERM of (Len.num * (unit -> tour)) option
+                   | DESC of (node * (Len.num -> Len.num)
                                    * ((unit -> tour) -> (unit -> tour))) list
 
   type optional_params = unit
@@ -72,15 +71,15 @@ functor PyrGraph(D : DISTANCE) : TSP_GRAPH = struct
     case (i > size orelse j > size orelse i=j andalso i <> 0w0,
           i = size-0w1 orelse j = size-0w1) of
       (true,_) => TERM NONE
-    | (_,true) => TERM (SOME (Dist.getDist dist (i,j), Lazy.susp (fn () => Vector.fromList [i,j])))
+    | (_,true) => TERM (SOME (dist (i,j), Lazy.susp (fn () => Vector.fromList [i,j])))
     | (_,_) =>
         let
           val k = Word.max (i,j) + 0w1
           val kj = ((k,j),
-                    fn d => Dist.Num.+ (d, Dist.getDist dist (i,k)),
+                    fn d => Len.+ (d, dist (i,k)),
                     fn t => Lazy.susp (fn () => Vector.concat [Vector.fromList [i], t ()]))
           val ik = ((i,k),
-                    fn d => Dist.Num.+ (d, Dist.getDist dist (k,j)),
+                    fn d => Len.+ (d, dist (k,j)),
                     fn t => Lazy.susp (fn () => Vector.concat [t (), Vector.fromList [j]]))
         in
           DESC [ik, kj]

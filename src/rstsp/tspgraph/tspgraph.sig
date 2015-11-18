@@ -83,9 +83,13 @@ signature TSP_GRAPH = sig
   type node
   type tour
 
+  (**
+   * Type of tour lengths.
+   *)
+  structure Len : NUMERIC
+
   structure Node: TSP_NODE where type node = node
   structure Tour: TSP_TOUR where type tour = tour
-  structure Dist : DISTANCE
 
   val root: node
 
@@ -100,8 +104,8 @@ signature TSP_GRAPH = sig
    *     as necessary -- to allow for such transformations, we will need to pass
    *     distance adjustment and tour construction functions.
    *)
-  datatype descent = TERM of (Dist.Num.num * (unit -> tour)) option
-                   | DESC of (node * (Dist.Num.num -> Dist.Num.num)
+  datatype descent = TERM of (Len.num * (unit -> tour)) option
+                   | DESC of (node * (Len.num -> Len.num)
                                    * ((unit -> tour) -> (unit -> tour))) list
 
   (**
@@ -111,9 +115,10 @@ signature TSP_GRAPH = sig
 
   (**
    * This shall compute the descendants and ascendent transfomations --
-   * we will generally want to know problem size here.
+   * we will generally want to know problem size and distance function here.
    *)
-  val descendants: word -> Dist.dist -> optional_params -> node -> descent
+  val descendants: word -> (word * word -> Len.num) -> optional_params ->
+                   node -> descent
 
   (**
    * In case a hash table is to be used for memoization, we would like to

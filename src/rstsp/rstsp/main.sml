@@ -56,7 +56,7 @@ struct
       handle Fail msg => (print ("  Format Error: " ^ msg ^ "\n"); NONE)
            | _ => (print ("  Could not read file \"" ^ file ^ "\" .\n"); NONE)
 
-  fun main_iter (search, to_vec, to_str, (pyramidal, max_ints, max_iters, stale_thresh)) file = let
+  fun main_iter (search, to_vec, to_str, (pyramidal, max_node_size, max_iters, stale_thresh)) file = let
     val _ = print ("===================================================\n")
     val _ = print ("Processing " ^ file ^ ":\n")
     val _ = print ("===================================================\n")
@@ -82,7 +82,7 @@ struct
       in
         print ("      Problem size:  " ^ (wordToString size) ^ "\n");
         print ("         Algorithm:  " ^ (if pyramidal then "pyramidal" else "balanced") ^ "\n");
-        print (" Node length limit:  " ^ (if pyramidal orelse max_ints = NONE then "none" else (wordToString o valOf) max_ints) ^ "\n");
+        print (" Node length limit:  " ^ (if pyramidal orelse max_node_size = NONE then "none" else (wordToString o valOf) max_node_size) ^ "\n");
         print ("  Iterations limit:  " ^ (if max_iters = NONE then "none" else (IntInf.toString o valOf) max_iters) ^ "\n");
         print ("   Stale threshold:  " ^ (if stale_thresh = NONE then "none" else (IntInf.toString o valOf) stale_thresh) ^ "\n");
         (case stats of
@@ -108,7 +108,7 @@ struct
     val _ = case isSome opts of
               false => OS.Process.exit OS.Process.failure
             | _ => ()
-    val (verbose, log, pyramidal, max_ints, max_iters, stale_thresh, max_rot, files) = valOf opts
+    val (verbose, log, pyramidal, max_node_size, max_iters, stale_thresh, max_rot, files) = valOf opts
     val _ = case (max_iters, stale_thresh) of
               (NONE, NONE) => printErr "WARNING: neither iterations limit nor stale threshold is set.  This might diverge.\n"
             | _ => ()
@@ -121,28 +121,28 @@ struct
             (fn (size,dist) => PyrSearch.search size dist log verbose ()),
             PyrSearch.toVector,
             PyrSearch.toString,
-            (pyramidal, max_ints, max_iters, stale_thresh)
+            (pyramidal, max_node_size, max_iters, stale_thresh)
           )) files
     | (false, true) =>
         List.app (main_iter (
-            (fn (size,dist) => SBSearch.search size dist log verbose max_ints),
+            (fn (size,dist) => SBSearch.search size dist log verbose max_node_size),
             SBSearch.toVector,
             SBSearch.toString,
-            (pyramidal, max_ints, max_iters, stale_thresh)
+            (pyramidal, max_node_size, max_iters, stale_thresh)
           )) files
     | (true, false) =>
         List.app (main_iter (
             (fn (size,dist) => RotPyrSearch.search size dist log verbose (max_rot, (max_iters, stale_thresh, ()))),
             RotPyrSearch.toVector,
             RotPyrSearch.toString,
-            (pyramidal, max_ints, max_iters, stale_thresh)
+            (pyramidal, max_node_size, max_iters, stale_thresh)
           )) files
     | (false, false) =>
         List.app (main_iter (
-            (fn (size,dist) => RotSBSearch.search size dist log verbose (max_rot, (max_iters, stale_thresh, max_ints))),
+            (fn (size,dist) => RotSBSearch.search size dist log verbose (max_rot, (max_iters, stale_thresh, max_node_size))),
             RotSBSearch.toVector,
             RotSBSearch.toString,
-            (pyramidal, max_ints, max_iters, stale_thresh)
+            (pyramidal, max_node_size, max_iters, stale_thresh)
           )) files
   end
 
