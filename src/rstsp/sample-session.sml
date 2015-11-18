@@ -7,66 +7,10 @@
 
 open Utils
 
-structure PyrSearch : TSP_SEARCH = SimpleSearchFn(PyrGraph)
-structure SBSearch : TSP_SEARCH = SimpleSearchFn(SBGraph)
-structure RotPyrSearch : TSP_SEARCH = RotSearchFn(PyrSearch)
-structure RotSBSearch : TSP_SEARCH = RotSearchFn(SBSearch)
-local
-  structure P =
-  struct
-    structure Search = SBSearch
-    structure Opts = struct
-      fun inv_order size i =
-      let
-        val size' = Word.toInt size
-        val i' = Word.toInt i
-        val j = case Int.mod(i',2) of
-                  0 => Real.floor (Real.fromInt (size'-i'-1) / Real.fromInt 2)
-                | _ => Real.ceil (Real.fromInt (size'+i'-1) / Real.fromInt 2)
-      in
-        Word.fromInt j
-      end
-    end
-  end
-in
-  structure LocalSBSearch = LocalSearchFn(P)
-  structure LocalRotSBSearch = LocalSearchFn(
-    struct
-      structure Search = RotSearchFn(SBSearch);
-      structure Opts = P.Opts
-    end
-  )
-end
+structure NSrch : SEARCHES = DefaultSearches(WordNum)
+structure RSrch : SEARCHES = DefaultSearches(RealNum)
 
-local
-  structure P =
-  struct
-    structure Search = PyrSearch
-    structure Opts = struct
-      fun inv_order size i = i
-    end
-  end
-in
-  structure LocalPyrSearch = LocalSearchFn(P)
-  structure LocalRotPyrSearch = LocalSearchFn(
-    struct
-      structure Search = RotSearchFn(PyrSearch);
-      structure Opts = P.Opts
-    end
-  )
-end
-structure RotLocalPyrSearch = RotSearchFn(LocalPyrSearch)
-structure RotLocalSBSearch = RotSearchFn(LocalSBSearch)
-
-val distance = (valOf o DistMat.readDistFile) "../../test/data/random/random.10";
-(*
-val distance = (valOf o DistMat.readDistFile) "../../test/data/small/small.1";
-val distance = (valOf o DistMat.readDistFile) "../../test/data/small/small.2";
-val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/att48_d.txt";
-val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/dantzig42_d.txt";
-val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/fri26_d.txt";
-val distance = (valOf o DistMat.readDistFile) "../../test/data/misc/gr17_d.txt";
-*)
+val inst = TsplibReader.readTSPFile "../../test/data/misc/gr17_d.txt"
 
 val node_size = SOME 0w3
 val iter_limit = SOME (IntInf.fromInt 10)
@@ -104,12 +48,12 @@ structure Search = LocalRotSBSearch
 (*
 *)
 val options = (iter_limit, stale_thresh, (rotations, ()))
-structure Search = LocalRotPyrSearch
+structure Search = NSrch.RotPyrSearch
 
 fun main () =
 let
-  val size = Word.div(wordSqrt(0w1+0w8*(Word.fromInt (Vector.length distance)))-0w1,0w2)
-  val dist = DistMat.getDist distance
+  val size = NatDist.getDim data
+  val dist = NatDist.getDist data
   val search = Search.search size dist NONE true options
   val timer = Timer.startCPUTimer ()
   val (sol', stats) = search ()

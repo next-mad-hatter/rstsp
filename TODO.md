@@ -5,7 +5,6 @@
 [//]: (# $Rev: 34 $)
 
 * Repo:
-    - "return less errors" scripts
     - add fetch-data & create-polyml-smlnjlib scripts
     - plots clean script
     - script via cmake ?
@@ -18,7 +17,9 @@
     - relaxations
     - generator sandbox
 * Testing:
-    - random matrix: lower diag + euclidean
+    - benchmark: dimacs
+    - benchmark: vlsi
+    - benchmark: tsplib
     - why the single poly timeout in batch run ?
     - measure memory usage (steady/memusg: how do we script this?)
     - better iter search testing
@@ -33,23 +34,19 @@
     - mk_batches: factor out common code
     - create_random_data (and more?): write <-> rescue unlink
     - use multiple random instances for target tests
-    - benchmark: tsplib
-    - benchmark: tsp challenge
-    - benchmark: vlsi
     - plot hash collisions nrs ?
     - glpk/hk bounds comparison
     - test scripts in fresh clone
 * Source:
-    - threaded: port to tsplib instances
+    - smlnj session: finish port
+    - threaded version: finish port
     - add:
-            - tsplib input
-            - stdin input
             - flip flop search
             - iter/rot searches: return list of target values
             - sb iter search: two reorderings?
             - iter search (+1/n) time limits
             - shared library interface
-    - validity & length output: only recompute if verbose / add check option
+    - complete source readme
     - compute tree width for info
     - word distance: wrapover check cost ?
     - tsplib input: support more formats

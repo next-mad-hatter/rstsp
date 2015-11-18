@@ -27,7 +27,7 @@ class Batch
       else
         raise FormatError
       end
-    #cmd << " -v"
+    cmd << " -v" if opts[:verbose]
     cmd << case opts[:algo]
       when "pyramidal"
         " -t p"

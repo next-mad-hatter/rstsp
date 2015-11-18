@@ -19,14 +19,17 @@ size = ARGV[0].to_i
 min_v = ARGV[1].to_i
 max_v = ARGV[2].to_i
 
+puts "TYPE : TSP"
+puts "DIMENSION : #{size}"
+puts "EDGE_WEIGHT_TYPE : EXPLICIT"
+puts "EDGE_WEIGHT_FORMAT : LOWER_DIAG_ROW"
+puts "EDGE_WEIGHT_SECTION"
 mat = []
 0.upto(size-1) do |x|
-  0.upto(size-1) do |y|
-#  0.upto(size-1-x) do |y|
-    #y += x
-    print ( mat[flat_coor(x,y)] ||=
-           if x == y then 0 else rand (min_v..max_v) end )
+  0.upto(x) do |y|
+    print(mat[flat_coor(x,y)] ||= if x == y then 0 else rand(min_v..max_v) end)
     print " " unless y == size-1
   end
   puts
 end
+puts "EOF"

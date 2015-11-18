@@ -19,9 +19,10 @@ plot/data/poly_*.csv
 
 test/batch/*random*.json
 test/log
-test/data/misc
 test/data/tsplib
-test/data/tspchal
+test/data/dimacs
+test/data/vlsi
+test/data/world
 test/data/random
 test/ext
 
