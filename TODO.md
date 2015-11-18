@@ -19,7 +19,7 @@
     - benchmark: dimacs
     - benchmark: vlsi
     - benchmark: tsplib
-    - why the single poly timeout in batch run ?
+    - investigate the single poly timeout in random/hi (4k) batch run ?
     - measure memory usage (steady/memusg: how do we script this?)
     - better iter search testing
     - batch runner: rename timeout -> time_limit
