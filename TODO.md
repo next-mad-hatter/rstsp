@@ -5,8 +5,7 @@
 [//]: (# $Rev: 34 $)
 
 * Repo:
-    - add fetch-data & create-polyml-smlnjlib scripts
-    - plots clean script
+    - automate create-polyml-smlnjlib scripts
     - script via cmake ?
     - wiki / bug tracker ?
 * Report:
