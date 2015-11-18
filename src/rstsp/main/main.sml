@@ -71,6 +71,7 @@ struct
           print ("        Real timer:  " ^ real ^ " ms\n");
           print ("          Solution:  " ^ (toStr sol) ^ "\n");
           print ("       Tour Length:  " ^ (D.Num.toString sol_len) ^ "\n");
+          TextIO.flushOut TextIO.stdOut;
           ()
         end
       end
