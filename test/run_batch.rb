@@ -100,7 +100,7 @@ class Batch
         end
         res[:thread] = t.value
       end
-      return [((res[:out] =~ /Valid:\s*yes/) and res[:val] and res[:thread] and res[:thread].success?),
+      return [(!(res[:out] =~ /Valid:\s*no/i) and res[:val] and res[:thread] and res[:thread].success?),
               batch.merge({:cmd => cmd}).merge(res)]
     rescue JSON::ParserError, FormatError
       printer.call "Bad batch" # + opt[:name].inspect

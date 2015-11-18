@@ -1,36 +1,50 @@
+# Pyramidal & Relaxed Supnick TSP
 
-## This is where a readme is going to be :).
+## Quick Start Guide
 
-For now, try:
+### Building
 
-### Building:
-
+   ```
            ./bin/build.sh
-   This requires a working mlton installation.
-   Building the mingw binary requires a suitable
-   (i.e. featuring gmp) cross-compiler environment.
+   ```
+   requires a working `mlton` installation.
+
+   Building the mingw binary requires a suitable (i.e. featuring gmp)
+   cross-compiler environment.
+
    For details, see `./src/rstsp/build_*.sh` and `./src/rstsp/README.md`.
 
-### Getting more test data:
+### Getting more test data
 
+   ```
           ./bin/fetch-data.sh
-   This uses wget, tar, gunzip and lynx (for tsplib solutions file).
-   Needs space.  `./tmp/` should probably be cleaned sometime after this.
+   ```
+   uses `wget`, `tar`, `gunzip` and `lynx` and takes about 60MB,
+   plus about 20MB in `./tmp/` which can be cleaned afterwards.
 
-### Running tests:
+### Running tests
 
+   ```
           ./bin/test.sh
-   Requires ruby & powerbar gem.
-   This will also generate random test data, which needs space.
+   ```
+   requires `ruby` & powerbar gem.
 
-### Plotting test results:
+   At first run, this will also generate random test data,
+   which needs significant chunk of space -- about 200MB right now.
 
+### Plotting test results
+
+   ```
           ./bin/plot.sh
-   This requires ruby & gnuplot.
-   The plots will be put to ./plot/out folder.
+   ```
+   requires `ruby` & `gnuplot`.
 
-### Packaging:
+   Generated plots will be put to `./plot/out` folder.
 
+### Packaging
+
+   ```
           [env VERSION=my-great-build] ./bin/pkg.sh
-   Packages the crosscompiled version and puts it into `./tmp/`.
+   ```
+   packages the crosscompiled version and puts it into `./tmp/`.
 
