@@ -16,9 +16,9 @@
     - relaxations
     - generator sandbox
 * Testing:
+    - benchmark: tsplib
     - benchmark: dimacs
     - benchmark: vlsi
-    - benchmark: tsplib
     - investigate the single poly timeout in random/hi (4k) batch run ?
     - measure memory usage (steady/memusg: how do we script this?)
     - better iter search testing

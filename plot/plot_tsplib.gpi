@@ -1,0 +1,41 @@
+#!/usr/bin/gnuplot
+#
+# $Id$
+# $Author$
+# $Date$
+# $Rev: 34 $
+#
+
+reset
+
+set terminal pdfcairo
+set termoption dashed monochrome
+
+set style line 11 lc rgb '#808080' lt 1
+set border 3 back ls 11
+set tics nomirror
+set style line 12 lc rgb'#808080' lt 0 lw 1
+set grid back ls 12
+
+set style line 1 lc rgb '#8b1a0e' pt 4 ps 1.01 lt 1 lw 3.2
+set style line 2 lc rgb '#5e9c36' pt 6 ps 1.01 lt 3 lw 3.2
+set style line 3 lc rgb '#3e3c76' pt 12 ps 1.01 lt 5 lw 3.2
+set style line 4 lc rgb '#9e7c26' pt 10 ps 1.01 lt 7 lw 3.2
+
+bins = "mlton poly"
+#bins = "mlton"
+set key top left box ls 11 spacing 1.1
+do for [bi = 1:words(bins)] {
+
+  bin = word(bins, bi)
+
+  set xlabel 'tsplib problem'
+  set ylabel 'solution'
+
+  set xtics rotate by 80 right font ", 5"
+  set logscale y
+
+  set output 'out/tsplib_test.pdf'
+  plot 'data/tsplib_val_pyramidal_m0.csv' using 2: xtic(1) title 'pyramidal' with histogram, \
+       'data/tsplib_val_balanced_m3.csv' using 2: xtic(1) title 'balanced' with histogram
+}
