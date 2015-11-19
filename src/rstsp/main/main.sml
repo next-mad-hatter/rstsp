@@ -117,7 +117,10 @@ struct
 
   local
     structure ProcExpl = ProcessFn(NatDist)
+    (*
     structure ProcEucl2D = ProcessFn(Eucl2DDist)
+    *)
+    structure ProcEucl2D = ProcessFn(Eucl2DNNDist)
   in
     fun processFile opts file =
     let

@@ -37,9 +37,9 @@
     - glpk/hk bounds comparison
     - test scripts in fresh clone
 * Source:
-    - smlnj session: finish port
     - threaded version: finish port
     - add:
+            - round to nearest integer option?
             - flip flop search
             - iter/rot searches: return list of target values
             - sb iter search: two reorderings?
