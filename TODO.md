@@ -16,9 +16,11 @@
     - relaxations
     - generator sandbox
 * Testing:
+    - eil51
     - benchmark: tsplib
     - benchmark: dimacs
     - benchmark: vlsi
+    - bar plots: combine patterns and color
     - investigate the single poly timeout in random/hi (4k) batch run ?
     - measure memory usage (steady/memusg: how do we script this?)
     - better iter search testing
@@ -30,7 +32,7 @@
     - batch runner: failed vs timed out stats
     - batch runner: check size / validity if present
     - batch runner: named batches
-    - mk_batches: factor out common code
+    - mk_batches / mk_csv : factor out common code
     - create_random_data (and more?): write <-> rescue unlink
     - use multiple random instances for target tests
     - plot hash collisions nrs ?
@@ -41,7 +43,7 @@
     - add:
             - round to nearest integer option?
             - flip flop search
-            - iter/rot searches: return list of target values
+            - iter/rot searches: return iterations results (for convergence studies)
             - sb iter search: two reorderings?
             - iter search (+1/n) time limits
             - shared library interface

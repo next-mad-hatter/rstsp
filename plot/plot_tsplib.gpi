@@ -29,13 +29,19 @@ do for [bi = 1:words(bins)] {
 
   bin = word(bins, bi)
 
-  set xlabel 'tsplib problem'
   set ylabel 'solution'
 
-  set xtics rotate by 80 right font ", 5"
+  set xtics rotate by 69 right font ", 9"
   set logscale y
 
   set output 'out/tsplib_test.pdf'
-  plot 'data/tsplib_val_pyramidal_m0.csv' using 2: xtic(1) title 'pyramidal' with histogram, \
-       'data/tsplib_val_balanced_m3.csv' using 2: xtic(1) title 'balanced' with histogram
+  plot 'data/tsplib_val_pyramidal_m0_i1_jdef_r0.csv' using 2: xtic(1) title 'pyramidal' with histogram lt -1 fs pattern 2, \
+       'data/tsplib_val_pyramidal_m0_i20_j3_r0.csv' using 2: xtic(1) title 'pyramidal/20' with histogram lt -1 fs pattern 1, \
+       'data/tsplib_val_pyramidal_m0_i20_j3_rall.csv' using 2: xtic(1) title 'pyramidal/20/rot' with histogram lt -1 fs pattern 3, \
+       'data/tsplib_val_balanced_m2_i1_jdef_r0.csv' using 2: xtic(1) title 'balanced2' with histogram lt -1 fs pattern 4, \
+       'data/tsplib_val_balanced_m2_i20_j3_r0.csv' using 2: xtic(1) title 'balanced2/20' with histogram lt -1 fs pattern 6, \
+       'data/tsplib_val_balanced_m2_i20_j3_rall.csv' using 2: xtic(1) title 'balanced2/20/rot' with histogram lt -1 fs pattern 5, \
+       'data/tsplib_val_balanced_m3_i1_jdef_r0.csv' using 2: xtic(1) title 'balanced3' with histogram lt -1 fs pattern 7, \
+       'data/tsplib_val_balanced_m3_i20_j3_r0.csv' using 2: xtic(1) title 'balanced3/20' with histogram lt -1 fs pattern 9, \
+       'data/tsplib_val_balanced_m3_i20_j3_rall.csv' using 2: xtic(1) title 'balanced3/20/rot' with histogram lt -1 fs pattern 8
 }
