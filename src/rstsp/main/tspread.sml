@@ -69,6 +69,8 @@ struct
     fun err () = raise Fail ("bad coordinates at line " ^ U.wordToString line_num)
     val line' = splitLine line
     val _ = if length line' <> 3 then err () else ()
+    val _ = if SOME (pos+1) = Int.fromString (List.nth (line',0)) then ()
+            else raise Fail "only ordered coordinates are supported"
     val x = Real.fromString (List.nth (line',1))
     val y = Real.fromString (List.nth (line',2))
   in
