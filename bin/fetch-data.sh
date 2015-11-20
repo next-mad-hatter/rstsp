@@ -16,9 +16,10 @@ mkdir -p "${TEST_DIR}" || exit 1
 mkdir -p "${TMP_DIR}" || exit 1
 
 
-#
-# TSPLIB data
-#
+echo "***************************************"
+echo
+echo " Fetching TSPLIB dataset"
+echo
 
 DATA_DIR="${TEST_DIR}"/data/tsplib
 mkdir -p "${DATA_DIR}" || exit 1
@@ -35,9 +36,10 @@ wget --continue \
   > "${DATA_DIR}"/SOLUTIONS.txt
 
 
-#
-# DIMACS TSP Challenge data
-#
+echo "***************************************"
+echo
+echo " Fetching DIMACS Challenge dataset"
+echo
 
 DATA_DIR="${TEST_DIR}"/data/dimacs
 mkdir -p "${DATA_DIR}" || exit 1
@@ -59,9 +61,11 @@ wget --continue \
       'http://dimacs.rutgers.edu/Challenges/TSP/bounds' \
       -O ${DATA_DIR}/BOUNDS.txt
 
-#
-# VLSI data
-#
+
+echo "***************************************"
+echo
+echo " Fetching VLSI dataset"
+echo
 
 DATA_DIR="${TEST_DIR}"/data/vlsi
 mkdir -p "${DATA_DIR}" || exit 1
@@ -75,9 +79,11 @@ wget --continue \
     'http://www.math.uwaterloo.ca/tsp/vlsi/summary.html' \
     > "${DATA_DIR}"/SUMMARY.txt
 
-#
-# National data
-#
+
+echo "***************************************"
+echo
+echo " Fetching national data overview"
+echo
 
 DATA_DIR="${TEST_DIR}"/data/world
 mkdir -p "${DATA_DIR}" || exit 1
@@ -86,3 +92,4 @@ mkdir -p "${DATA_DIR}" || exit 1
   'http://www.math.uwaterloo.ca/tsp/world/summary.html' \
   > "${DATA_DIR}"/SUMMARY.txt
 
+echo "***************************************"

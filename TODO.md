@@ -5,9 +5,10 @@
 [//]: (# $Rev: 34 $)
 
 * Repo:
-    - automate create-polyml-smlnjlib scripts
-    - script via cmake ?
     - wiki / bug tracker ?
+    - script via cmake ?
+    - automate create-polyml-smlnjlib scripts
+    - complete the source readme
 * Report:
     - writeup
     - sml support: can the pandoc -> rst way be pretty-fixed?
@@ -16,39 +17,39 @@
     - relaxations
     - generator sandbox
 * Testing:
-    - benchmark: dimacs
+    - eil51
     - benchmark: vlsi
-    - benchmark: tsplib
-    - investigate the single poly timeout in random/hi (4k) batch run ?
+    - bar plots: combine patterns and color
+    - investigate poly timeouts in random/hi (4k+5k)
     - measure memory usage (steady/memusg: how do we script this?)
     - better iter search testing
-    - batch runner: rename timeout -> time_limit
-    - batch runner: operate on file pairs
-    - batch runner: progress threaded, total <- sum of time_limits
+    - batch runner: make progress reporting threaded, total <- sum of time_limits
     - batch runner: make progress bar optional
     - batch runner: write after each test + trap quit/term
+    - batch runner: operate on file pairs + name batches
+    - batch runner: rename timeout -> time_limit
     - batch runner: failed vs timed out stats
-    - batch runner: check size / validity if present
-    - batch runner: named batches
-    - mk_batches: factor out common code
     - create_random_data (and more?): write <-> rescue unlink
+    - random matrix creation: add 3d metric instances
+    - mk_batches & mk_csv : factor out common code
     - use multiple random instances for target tests
     - plot hash collisions nrs ?
-    - glpk/hk bounds comparison
+    - random data: compute hk bounds
     - test scripts in fresh clone
+    - do we need merge xscales script ?
 * Source:
-    - smlnj session: finish port
     - threaded version: finish port
-    - add:
-            - flip flop search
-            - iter/rot searches: return list of target values
-            - sb iter search: two reorderings?
-            - iter search (+1/n) time limits
-            - shared library interface
-    - complete source readme
+    - add flip flop search
+    - iter/rot searches: return iterations results (for convergence studies)
+    - sb iter search: two reorderings?
+    - shared library interface
+    - options parser: http://mlton.org/FunctionalRecordUpdate
+    - round to nearest integer option
+    - iter search (+1/n) time limits
+    - word distance: wrapover cost check
     - compute tree width for info
-    - word distance: wrapover check cost ?
     - tsplib input: support more formats
+    - tsplib input: allow for empty & comment lines in data section
     - mlprof
     - measure threaded storage + simplesearch performance
     - threaded rot/iter search
@@ -59,7 +60,6 @@
     - misleading timings / timer stop points
     - hardwired code creation (node type -> node types list)
     - implement doublekeymap & move the housekeeping from sbgraph
-    - options parser: http://mlton.org/FunctionalRecordUpdate ?
     - when word is not enough: overwrap check / type option / replace
     - branch cutting ?
     - mst tour / hk bounds

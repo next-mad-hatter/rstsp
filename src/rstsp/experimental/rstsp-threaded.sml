@@ -6,11 +6,6 @@
  *)
 
 use "rstsp/rstsp-polyml-common.sml";
-use "threaded/defaultsearches.sml";
-use "main/settings.sig";
-use "main/main.sml";
-
-use "rstsp/rstsp-polyml-common.sml";
 use "threaded/tspstore.sml";
 use "threaded/mapstore.sml";
 use "threaded/pyrstore.sml";

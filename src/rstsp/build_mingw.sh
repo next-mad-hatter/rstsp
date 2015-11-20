@@ -36,9 +36,18 @@ WIN_BIN_EXT=.exe
 WIN_LIB_EXT=.dll
 
 if ! mlton ${WIN_TARGET} > /dev/null; then
-  echo "No crosscompiler found."
+  echo "***************************************"
+  echo
+  echo " No crosscompiler found."
+  echo
+  echo "***************************************"
   exit 1
 fi
 
+echo "***************************************"
+echo
+echo " Building MinGW executable"
+echo
 mlton ${MLTON_OPTS} ${WIN_TARGET} -output "${BUILD_DIR}"/rstsp${WIN_BIN_EXT} \
       "${SRC_DIR}/rstsp/rstsp-mlton.mlb" || exit 1
+echo "***************************************"
