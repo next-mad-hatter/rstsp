@@ -17,7 +17,7 @@ end
 res = []
 files.each_key do |dataset|
   files[dataset].each do |tsp|
-    ([[1,0]] + [[20,0]] + [[20,"all"]]).each do |iters,rot|
+    ([[1,0]] + [[10,0]] + [[10,5]]).each do |iters,rot|
       ([[:pyramidal,nil]] + [:balanced].product((2..3).to_a)).each do |algo,max|
         if (
           (max and algo == :pyramidal) or

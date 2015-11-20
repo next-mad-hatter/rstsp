@@ -18,8 +18,6 @@
     - generator sandbox
 * Testing:
     - eil51
-    - benchmark: tsplib
-    - benchmark: dimacs
     - benchmark: vlsi
     - bar plots: combine patterns and color
     - investigate poly timeouts in random/hi (4k+5k)
