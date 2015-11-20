@@ -135,17 +135,19 @@ struct
                       if y = 0w0 orelse y = x'' then () else err "not a symmetric instance"
                     end
                   | _ => ()
-          val _ = Array.update (data, coorTrans pos, x'')
         in
+          Array.update (data, coorTrans pos, x'');
           iter (pos-0w1, xs)
         end
-    val _ = iter (to_read, line')
   in
+    iter (to_read, line');
     (done, to_read-len)
   end
 
   (**
    * Once we started reading data, we expect nothing else until we are finished.
+   *
+   * FIXME: allow empty/comment lines here?
    *)
   fun readData (line_num, (dim, weight_type, weight_format), to_read, data) line =
     case weight_type of

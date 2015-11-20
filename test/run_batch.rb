@@ -10,6 +10,7 @@ require 'json'
 require 'powerbar'
 require 'open3'
 require 'timeout'
+require 'bigdecimal'
 
 class FormatError < Exception
 end
@@ -91,12 +92,15 @@ class Batch
             #res[:out] =~ /Real time:\s+(\d+)\s+ms/
             #res[:time] = $1
             res[:real_time] = Time.now - t0
-            mtch = res[:out].match(/Tour Length:\s*(\d+)/)
-            res[:val] = if mtch then mtch[1] else nil end
+            mtch = res[:out].match(/Tour Length:\s*(\d+(.\d+)*)/)
+            res[:val] =
+              if mtch then
+                (BigDecimal.new(mtch[1]).frac == 0) and mtch[1].to_i or mtch[1].to_f
+              else nil end
           end
         rescue Timeout::Error
           Process.kill("KILL", t.pid)
-          res[:real_time] = "timed out"
+          res[:real_time] = nil
         end
         res[:thread] = t.value
       end
@@ -139,7 +143,7 @@ if __FILE__ == $0 # or true # for ruby-prof
     progress.settings.tty.finite.template.padchar = '.'
     count = fails = 0
     results = []
-    progress.show(:msg =>if count == total then "Done" else "Test #{count+1}/#{total}" end,
+    progress.show(:msg =>if count == total then "Done" else " Test #{count+1}/#{total}" end,
                   :done => count, :total => total)
     batches.each do |batch|
       status, res = Batch.run_batch(batch, Proc.new{|x| progress.print(x+"\n")})
@@ -148,11 +152,11 @@ if __FILE__ == $0 # or true # for ruby-prof
       results << res
       fails += 1 unless status
       count += 1
-      progress.show(:msg =>if count == total then "Done" else "Test #{count+1}/#{total}" end,
+      progress.show(:msg =>if count == total then "Done" else " Test #{count+1}/#{total}" end,
                     :done => count, :total => total)
     end
     progress.close true
-    puts "Tests completed: #{count}; succeded: #{count-fails}, failed: #{fails}."
+    puts " Tests completed: #{count}; succeded: #{count-fails}, failed: #{fails}."
     File.open(output, "w+") do |outfile|
       outfile.write(JSON.pretty_generate(results))
     end

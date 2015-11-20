@@ -44,11 +44,14 @@ struct
           val cpu = (IntInf.toString o (foldl op+ 0) o (map Time.toMilliseconds)) [#sys cpu_stop, #usr cpu_stop]
           val real = (IntInf.toString o Time.toMilliseconds) real_stop
         in
+          print ("          Solution:  " ^ (toStr sol) ^ "\n");
           print ("      Problem size:  " ^ (U.wordToString size) ^ "\n");
           print ("         Algorithm:  " ^ (if pyramidal then "pyramidal" else "balanced") ^ "\n");
           print ("   Node size limit:  " ^ (if pyramidal orelse max_node_size = NONE then "none" else (U.wordToString o valOf) max_node_size) ^ "\n");
           print ("  Iterations limit:  " ^ (if max_iters = NONE then "none" else (IntInf.toString o valOf) max_iters) ^ "\n");
           print ("   Stale threshold:  " ^ (if stale_thresh = NONE then "none" else (IntInf.toString o valOf) stale_thresh) ^ "\n");
+          print ("         CPU timer:  " ^ cpu ^ " ms\n");
+          print ("        Real timer:  " ^ real ^ " ms\n");
           (case stats of
             NONE => ()
           | SOME (nn, nk, hs) => (
@@ -67,9 +70,6 @@ struct
                 print ("    Solution valid:  " ^ (if sol_val andalso len_val then "yes" else "NO!") ^ "\n")
              end
           );
-          print ("         CPU timer:  " ^ cpu ^ " ms\n");
-          print ("        Real timer:  " ^ real ^ " ms\n");
-          print ("          Solution:  " ^ (toStr sol) ^ "\n");
           print ("       Tour Length:  " ^ (D.Num.toString sol_len) ^ "\n");
           TextIO.flushOut TextIO.stdOut;
           ()

@@ -33,7 +33,7 @@ files.each_key do |dataset|
           :rot => rot,
           :max => max,
           :data => "#{dataset}/#{tsp}",
-          :timeout => 40.0
+          :timeout => 30.0
         }
       end
     end
