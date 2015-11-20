@@ -17,7 +17,6 @@
     - relaxations
     - generator sandbox
 * Testing:
-    - eil51
     - benchmark: vlsi
     - bar plots: combine patterns and color
     - investigate poly timeouts in random/hi (4k+5k)
@@ -38,7 +37,6 @@
     - test scripts in fresh clone
     - do we need merge xscales script ?
 * Source:
-    - threaded version: finish port
     - add flip flop search
     - iter/rot searches: return iterations results (for convergence studies)
     - sb iter search: two reorderings?

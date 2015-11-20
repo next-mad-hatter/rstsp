@@ -5,15 +5,17 @@
  * $Revision$
  *)
 
-structure PyrStore : TSP_STORE =
+functor PyrStore(N : NUMERIC) : TSP_STORE =
 struct
 
+  structure PyrGraph = PyrGraph(N)
   open PyrGraph
   type node = Node.node
   type tour = Tour.tour
   open Thread
+  structure Len = N
 
-  datatype status = DONE of (word * (unit -> tour)) option
+  datatype status = DONE of (Len.num * (unit -> tour)) option
                   | PENDING of ConditionVar.conditionVar
 
   fun flatCoor (row:word,col:word) =

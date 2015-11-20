@@ -9,9 +9,9 @@ functor DefaultSearches(N : NUMERIC) : SEARCHES =
 struct
 
   structure PyrSearch : TSP_SEARCH = ThreadedSearchFn(
-    struct structure Graph = PyrGraph; structure Store = PyrStore end)
+    struct structure Graph = PyrGraph(N); structure Store = PyrStore(N) end)
   structure SBSearch : TSP_SEARCH = ThreadedSearchFn(
-    struct structure Graph = SBGraph; structure Store = SBStore end)
+    struct structure Graph = SBGraph(N); structure Store = SBStore(N) end)
 
   local
     structure P =

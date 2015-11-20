@@ -14,14 +14,11 @@ sig
   type tour
   structure Node: TSP_NODE where type node = node
   structure Tour: TSP_TOUR where type tour = tour
+  structure Len: NUMERIC
 
-  datatype status = DONE of (word * (unit -> tour)) option
+  datatype status = DONE of (Len.num * (unit -> tour)) option
                   | PENDING of Thread.ConditionVar.conditionVar
 
-  (* init: problem size, new-type-log message *)
-  (*
-  val init: word * ((node -> string) option) -> store
-  *)
   val init: word  -> store
   val getToken: store * node -> Thread.Mutex.mutex
   val getStatus: store * node -> status option ref

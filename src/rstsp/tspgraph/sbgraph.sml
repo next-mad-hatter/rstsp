@@ -19,7 +19,8 @@
  *   - tree depth (here: also "level") and
  *   - a set of intervals, i.e. {(a_i,b_i) |i in I} where a_i <= b_i.
  *)
-structure SBNode = struct
+structure SBNode =
+struct
 
   open TSPTypes
   open SBUtils
@@ -132,7 +133,8 @@ end
  * {[a_i, c_i_1, ...,, c_i_k_i, b_i] | i in I} of length >= 2
  * where a_i <> b_i and path length > 2 where a_i = b_i.
  *)
-structure SBTour = struct
+structure SBTour =
+struct
 
   open TSPTypes
   open SBUtils
@@ -184,7 +186,8 @@ structure SBTour = struct
 end
 
 
-functor SBGraph(N : NUMERIC) : TSP_GRAPH = struct
+functor SBGraph(N : NUMERIC) : TSP_GRAPH =
+struct
 
   open TSPTypes
   open SBUtils

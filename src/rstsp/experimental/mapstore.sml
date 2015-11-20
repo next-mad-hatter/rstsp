@@ -11,12 +11,13 @@ struct
   open G
   type node = G.Node.node
   type tour = G.Tour.tour
+  structure Len = G.Len
   open Thread
 
   local
     structure MemKey =
     struct
-      type ord_key = Node.hash
+      type ord_key = Node.key
       val compare = Node.compare
     end
   in
@@ -24,7 +25,7 @@ struct
     structure KeySet: ORD_SET = SplaySetFn(MemKey)
   end
 
-  datatype status = DONE of (word * (unit -> tour)) option
+  datatype status = DONE of (Len.num * (unit -> tour)) option
                   | PENDING of ConditionVar.conditionVar
 
   type store = (Mutex.mutex * status option ref) MemMap.map ref * Mutex.mutex
@@ -33,13 +34,13 @@ struct
   fun find' (mem, mut, node) =
   let
     val _ = Mutex.lock mut
-    val res = case MemMap.find (!mem, Node.toHash node) of
+    val res = case MemMap.find (!mem, Node.toKey node) of
                 SOME r => r
               | NONE =>
                   let
                     val r = (Mutex.mutex (), ref NONE)
                   in
-                    mem := MemMap.insert (!mem, Node.toHash node, r);
+                    mem := MemMap.insert (!mem, Node.toKey node, r);
                     r
                   end
   in
@@ -71,7 +72,7 @@ struct
     (*
     val hs = (Word.fromInt o List.length o
               (ListMergeSort.uniqueSort Word.compare) o
-              (map ((Node.toHTHash size) o Node.toHash o #1)) o
+              (map ((Node.toHash size) o Node.toKey o #1)) o
               (MemMap.listItemsi)) memo
      *)
   in
