@@ -17,6 +17,7 @@ sig
    * We also want the metric for metric instances.
    *)
   datatype tsplib_inst = EUCLIDEAN_2D_INSTANCE of real vector * real vector
+                       | EUCLIDEAN_2D_CEIL_INSTANCE of real vector * real vector
                        | EXPLICIT_INSTANCE of word vector
 
   val readTSPFile : string -> tsplib_inst
@@ -37,10 +38,12 @@ struct
   structure TU = TSPUtils
 
   datatype tsplib_inst = EUCLIDEAN_2D_INSTANCE of real vector * real vector
+                       | EUCLIDEAN_2D_CEIL_INSTANCE of real vector * real vector
                        | EXPLICIT_INSTANCE of word vector
 
   datatype edge_weight_type = EXPLICIT
                             | EUC_2D
+                            | EUC_2D_CEIL
 
   datatype edge_weight_format = FUNCTION
                               | FULL_MATRIX
@@ -48,6 +51,7 @@ struct
                               | LOWER_DIAG_ROW
 
   datatype tsplib_read_inst = EUCL_INST of real array * real array
+                            | EUCL_C_INST of real array * real array
                             | NAT_INST of word array
                             | ERR of string
 
@@ -161,17 +165,22 @@ struct
         in
           (line_num, (SOME dim, weight_type, weight_format), expect, SOME (NAT_INST data'))
         end
-    | SOME EUC_2D =>
+    | SOME _ =>
         let
           val data' = case data of
                         NONE => (Array.array (Word.toInt dim, 0.0),
                                  Array.array (Word.toInt dim, 0.0))
                       | SOME (EUCL_INST (xs,ys)) => (xs,ys)
+                      | SOME (EUCL_C_INST (xs,ys)) => (xs,ys)
                       | _ => raise Fail "readData/Eucl error"
           val _ = readMetric2DLine (line_num, Word.toInt (dim-to_read), data', line)
           val expect = if to_read = 0w1 then (DONE,0w0) else (DATA, to_read-0w1)
+          val data'' = case valOf weight_type of
+                         EUC_2D => EUCL_INST data'
+                       | EUC_2D_CEIL => EUCL_C_INST data'
+                       | EXPLICIT => raise Fail "impossible warning turned true"
         in
-          (line_num, (SOME dim, weight_type, weight_format), expect, SOME (EUCL_INST data'))
+          (line_num, (SOME dim, weight_type, weight_format), expect, SOME data'')
         end
     | _ => raise Fail "readData error"
 
@@ -198,8 +207,9 @@ struct
            | ("DIMENSION", _) => err "dimension expected"
            | ("TYPE", ["TSP"]) => (line_num, (dim, weight_type, weight_format), (CMD,0w1), NONE)
            | ("TYPE", l) => err ("unsupported data type (" ^ (String.concatWith " " l) ^ ")")
-           | ("EDGE_WEIGHT_TYPE", ["EXPLICIT"]) => (line_num, (dim, SOME EXPLICIT, weight_format), (CMD,0w1), NONE)
-           | ("EDGE_WEIGHT_TYPE", ["EUC_2D"]) =>   (line_num, (dim, SOME EUC_2D,   weight_format), (CMD,0w1), NONE)
+           | ("EDGE_WEIGHT_TYPE", ["EXPLICIT"]) =>         (line_num, (dim, SOME EXPLICIT,     weight_format), (CMD,0w1), NONE)
+           | ("EDGE_WEIGHT_TYPE", ["EUC_2D"]) =>           (line_num, (dim, SOME EUC_2D,       weight_format), (CMD,0w1), NONE)
+           | ("EDGE_WEIGHT_TYPE", ["EUC_2D_CEIL"]) =>      (line_num, (dim, SOME EUC_2D_CEIL,  weight_format), (CMD,0w1), NONE)
            | ("EDGE_WEIGHT_TYPE", []) => err "edge weight type expected"
            | ("EDGE_WEIGHT_TYPE", l) => err ("unsupported edge weight type (" ^ (String.concatWith " " l) ^ ")")
            | ("EDGE_WEIGHT_FORMAT", ["FUNCTION"]) =>       (line_num, (dim, weight_type, SOME FUNCTION),       (CMD,0w1), NONE)
@@ -214,8 +224,10 @@ struct
            | ("EDGE_WEIGHT_FORMAT", l) => err ("unsupported edge weight format (" ^ (String.concatWith " " l) ^ ")")
            | ("NODE_COORD_SECTION", []) =>
                (
-                 case (dim, weight_type, weight_format = SOME FUNCTION orelse weight_format = NONE) of
-                    (SOME n, SOME EUC_2D, true) => (line_num, (dim, weight_type, weight_format), (DATA,n), NONE)
+                 case (dim,
+                       weight_type = SOME EUC_2D orelse weight_type = SOME EUC_2D_CEIL,
+                       weight_format = SOME FUNCTION orelse weight_format = NONE) of
+                    (SOME n, true, true) => (line_num, (dim, weight_type, weight_format), (DATA,n), NONE)
                   | _ => err "unexpected coordinates section"
                )
            | ("NODE_COORD_SECTION", _) => err "stale input"
@@ -267,6 +279,7 @@ struct
     case dist of
       SOME (NAT_INST x) => EXPLICIT_INSTANCE (Array.vector x)
     | SOME (EUCL_INST (x,y)) => EUCLIDEAN_2D_INSTANCE (Array.vector x, Array.vector y)
+    | SOME (EUCL_C_INST (x,y)) => EUCLIDEAN_2D_CEIL_INSTANCE (Array.vector x, Array.vector y)
     | SOME (ERR s) => raise Fail s
     | NONE => raise Fail "tsplib reader error\n"
   end

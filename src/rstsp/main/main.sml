@@ -121,6 +121,7 @@ struct
     structure ProcEucl2D = ProcessFn(Eucl2DDist)
     *)
     structure ProcEucl2D = ProcessFn(Eucl2DNNDist)
+    structure ProcEucl2DCeil = ProcessFn(Eucl2DCeilDist)
   in
     fun processFile opts file =
     let
@@ -135,6 +136,7 @@ struct
         NONE => ()
       | SOME (EXPLICIT_INSTANCE data) => ProcExpl.run opts data
       | SOME (EUCLIDEAN_2D_INSTANCE data) => ProcEucl2D.run opts data
+      | SOME (EUCLIDEAN_2D_CEIL_INSTANCE data) => ProcEucl2DCeil.run opts data
     end
   end
 

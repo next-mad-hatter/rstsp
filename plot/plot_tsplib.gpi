@@ -22,7 +22,7 @@ set style line 2 lc rgb '#5e9c36' pt 6 ps 1.01 lt 3 lw 3.2
 set style line 3 lc rgb '#3e3c76' pt 12 ps 1.01 lt 5 lw 3.2
 set style line 4 lc rgb '#9e7c26' pt 10 ps 1.01 lt 7 lw 3.2
 
-set key top left box ls 11 spacing 1.1
+set key top left box ls 11 spacing 1.1 horizontal font ", 7" samplen 2
 set datafile missing "t"
 set ylabel 'solution'
 set xtics rotate by 69 right font ", 9"

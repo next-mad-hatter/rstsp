@@ -47,6 +47,28 @@ struct
 end
 
 (**
+ * Simple pair of vectors holding floating point coordinates.
+ *)
+structure Eucl2DCeilDist : DISTANCE =
+struct
+
+  structure Num = WordNum
+
+  type dist = real vector * real vector
+
+  fun getDim (xs,_) = (Word.fromInt o Vector.length) xs
+
+  fun getDist (xs,ys) (i,j) =
+  let
+    val dx = Vector.sub (xs, Word.toInt i) - Vector.sub (xs, Word.toInt j)
+    val dy = Vector.sub (ys, Word.toInt i) - Vector.sub (ys, Word.toInt j)
+  in
+    (Word.fromInt o (Real.toInt IEEEReal.TO_POSINF) o Math.sqrt) (dx*dx+dy*dy)
+  end
+
+end
+
+(**
  * Euclidean distance rounded to nearest integer.
  *)
 structure Eucl2DNNDist : DISTANCE =
