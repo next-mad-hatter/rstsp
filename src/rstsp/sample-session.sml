@@ -8,21 +8,21 @@
 open Utils
 
 structure NSrch : SEARCHES = DefaultSearches(WordNum)
+datatype tsplib_inst = datatype TsplibReader.tsplib_inst
 
 val node_size = SOME 0w3
 val iter_limit = SOME (IntInf.fromInt 10)
 val stale_thresh = SOME (IntInf.fromInt 2)
 val rotations = NONE
-
 val options = (rotations, (iter_limit, stale_thresh, (node_size)))
 structure Search = NSrch.RotSBSearch
 
-val inst = TsplibReader.readTSPFile "../../test/data/tsplib/gr17.tsp"
 structure Dist = NatDist
-datatype tsplib_inst = datatype TsplibReader.tsplib_inst
+val inst = TsplibReader.readTSPFile "../../test/data/tsplib/gr17.tsp"
 val data = case inst of
              EXPLICIT_INSTANCE v => v
            | EUCLIDEAN_2D_INSTANCE (xs,ys) => raise Fail "not here"
+           | EUCLIDEAN_2D_CEIL_INSTANCE (xs,ys) => raise Fail "not here"
 structure LenCheck = TSPLengthFn(Dist)
 
 fun main () =
@@ -34,6 +34,7 @@ let
   val (sol_len, sol_fn) = valOf sol'
   val sol = sol_fn ()
   val _ = print ("*********************************\n")
+  val _ = print ("   Solution:  " ^ (Search.tourToString sol) ^ "\n")
   val _ = case stats of
             NONE => ()
           | SOME (nn, nk, hs) => (
@@ -49,7 +50,6 @@ let
     in
       print ("    Solution valid:  " ^ (if sol_val andalso len_val then "yes" else "NO!") ^ "\n")
     end
-  val _ = print ("   Solution:  " ^ (Search.tourToString sol) ^ "\n")
   val _ = print ("Tour Length:  " ^ (wordToString sol_len) ^ "\n")
   val _ = print ("*********************************\n")
 in

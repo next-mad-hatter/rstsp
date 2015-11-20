@@ -30,6 +30,7 @@
     - batch runner: rename timeout -> time_limit
     - batch runner: failed vs timed out stats
     - create_random_data (and more?): write <-> rescue unlink
+    - random matrix creation: add 3d metric instances
     - mk_batches & mk_csv : factor out common code
     - use multiple random instances for target tests
     - plot hash collisions nrs ?
