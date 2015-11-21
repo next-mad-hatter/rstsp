@@ -21,7 +21,7 @@ int main(int argc, const char **argv) {
     return i+j;
   }
 
-  Objptr sol = rstsp_sbsearch(max_width, size, *dst);
+  uint32_t *sol = rstsp_sbsearch(max_width, size, *dst);
 
   printf("  Status: %" PRIu32 "\n", sol[0]);
   printf("  Tour length: %" PRIu32 "\n", sol[1]);
@@ -30,6 +30,7 @@ int main(int argc, const char **argv) {
     printf("%" PRIu32, sol[2+i] + 1);
     if(i+1<size) printf(" ");
   }
+  printf("\n");
 
   free(sol);
 

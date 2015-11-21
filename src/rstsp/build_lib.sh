@@ -57,16 +57,16 @@ else
   echo "done."
 fi
 
-echo -n " Building example        "
+echo -n " Building test           "
 ${LIN_GCC} \
       -I"${INC_DIR}" -L"${LIB_DIR}" \
-      -o "${BUILD_DIR}"/example \
+      -o "${BUILD_DIR}"/test \
       -std=c99 \
       -lrstsp \
-      "${SRC_DIR}"/librstsp/example.c || exit 1
+      "${SRC_DIR}"/librstsp/test.c || exit 1
 echo "done."
 echo
-echo " Running example:"
-env LD_LIBRARY_PATH="${LIB_DIR}" "${BUILD_DIR}"/example || exit 1
+echo " Running test:"
+env LD_LIBRARY_PATH="${LIB_DIR}" "${BUILD_DIR}"/test || exit 1
 echo
 echo "***************************************"
