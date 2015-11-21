@@ -6,6 +6,7 @@
  *)
 
 structure S = DefaultSearches(WordNum)
+structure F = FFIUtils
 
 (**
  * We shall prepend the solution by solution length.
@@ -13,16 +14,15 @@ structure S = DefaultSearches(WordNum)
 fun extractSol toVec r =
 let
   val res = case r of
-              NONE => Vector.fromList [0w1]
+              NONE => MLton.Pointer.null
             | SOME (len, tour) =>
-                let
-                  val head = VectorSlice.full (Vector.fromList [len])
-                  val tail = VectorSlice.full (toVec (tour ()))
-                in
-                  VectorSlice.concat [head,tail]
-                end
+                F.exportPtrVector (Vector.fromList [
+                  (* F.exportSize (Word.toInt len), *)
+                  F.exportWordVector (Vector.fromList [len]),
+                  F.exportWordVector (toVec (tour ()))
+                ])
 in
-  FFIUtils.exportWordVector res
+  res
 end
 
 val _ =

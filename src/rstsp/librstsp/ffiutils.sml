@@ -14,7 +14,8 @@ structure FFIUtils: FFI_UTILS = struct
 
   fun cStringSub (s, i) = Byte.byteToChar (MLton.Pointer.getWord8 (s, i))
 
-  fun cStringSize s = let
+  fun cStringSize s =
+  let
     fun loop i = if #"\000" = cStringSub (s, i) then i else loop (i+1)
   in
     loop 0
@@ -24,7 +25,8 @@ structure FFIUtils: FFI_UTILS = struct
     if isNull s then raise Fail "Null string"
     else CharVector.tabulate (cStringSize s, fn i => cStringSub (s, i))
 
-  fun exportSize s = let
+  fun exportSize s =
+  let
     val p = malloc (C_Size.fromInt 1)
     val _ = if isNull p then raise Fail "Out of memory" else ()
   in
@@ -32,7 +34,8 @@ structure FFIUtils: FFI_UTILS = struct
     p
   end
 
-  fun exportString s = let
+  fun exportString s =
+  let
     val p = malloc (C_Size.fromInt (String.size s + 1))
     val _ = if isNull p then raise Fail "Out of memory" else ()
   in
@@ -42,8 +45,10 @@ structure FFIUtils: FFI_UTILS = struct
     p
   end
 
-  fun vectorExporter size setter = let
-    fun exp v = let
+  fun vectorExporter size setter =
+  let
+    fun exp v =
+    let
       val p = malloc (0w1 + size * C_Size.fromInt (Vector.length v))
       val _ = if isNull p then raise Fail "Out of memory" else ()
     in
@@ -58,7 +63,9 @@ structure FFIUtils: FFI_UTILS = struct
   val exportPtrVector = vectorExporter
         (C_Size.fromInt (Word.toInt MLton.Pointer.sizeofPointer)) MLton.Pointer.setPointer
 
-  fun importVector getter size p =
-    Vector.tabulate (Word.toInt size, fn i => getter (p, i))
+  fun importVector getter (p,size) =
+    Vector.tabulate (C_Size.toInt size, fn i => getter (p, i))
+
+  val importWordVector = importVector MLton.Pointer.getWord32
 
 end

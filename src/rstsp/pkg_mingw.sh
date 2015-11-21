@@ -26,7 +26,7 @@ fi
 cd "${BUILD_DIR}" || exit 1
 tar cJf "${ARCHIVE}" -h --transform 's,^,rstsp-'${SUFFIX}'/,' \
   rstsp.exe include/rstsp.h lib/rstsp.dll lib/rstsp.def \
-  -C ../librstsp example.c \
+  -C ../librstsp test.c \
   -C ../win32 README_GMP libgmp-10.dll \
   -C ./pkg gmp-5.0.1-1-mingw32-src.tar.lzma \
 || rm -- "${ARCHIVE}"
