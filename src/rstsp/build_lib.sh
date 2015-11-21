@@ -61,7 +61,6 @@ echo -n " Building test           "
 ${LIN_GCC} \
       -I"${INC_DIR}" -L"${LIB_DIR}" \
       -o "${BUILD_DIR}"/test \
-      -std=c99 \
       -lrstsp \
       "${SRC_DIR}"/librstsp/test.c || exit 1
 echo "done."

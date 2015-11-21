@@ -34,11 +34,11 @@ do for [bi = 1:words(bins)] {
   set ylabel 'tour length'
 
   set output 'out/'.bin.'_val_random_len.pdf'
-  plot 'data/'.bin.'_val_len_balanced_m3_i1_jdef_r0.csv' using 1:($2) title 'balanceed (-m 3)' w l ls 1, \
-       'data/'.bin.'_val_len_balanced_m3_i300_j2_rall.csv' using 1:($2) title 'balanced (-m 3 -i 200 -j 2 -r all)' w l ls 2, \
-       'data/'.bin.'_val_len_balanced_m2_i300_j2_rall.csv' using 1:($2) title 'balanced (-m 2 -i 200 -j 2 -r all)' w l ls 5, \
+  plot 'data/'.bin.'_val_len_balanced_m3_i1_jdef_r0.csv' using 1:($2) title 'balanced (-m 3)' w l ls 1, \
+       'data/'.bin.'_val_len_balanced_m3_i400_jdef_r0.csv' using 1:($2) title 'balanced (-m 3 -i 400)' w l ls 2, \
+       'data/'.bin.'_val_len_balanced_m2_i400_jdef_r0.csv' using 1:($2) title 'balanced (-m 2 -i 400)' w l ls 5, \
        'data/'.bin.'_val_len_pyramidal_m0_i1_jdef_r0.csv' using 1:($2) title 'pyramidal' w l ls 3, \
-       'data/'.bin.'_val_len_pyramidal_m0_i300_j2_rall.csv' using 1:($2) title 'pyramidal (-i 200 -j 2 -r all)' w l ls 4
+       'data/'.bin.'_val_len_pyramidal_m0_i200_jdef_rall.csv' using 1:($2) title 'pyramidal (-i 200 -r all)' w l ls 4
 
   set xlabel 'problem size'
   set ylabel 'time needed (seconds)'

@@ -19,11 +19,12 @@ uint32_t dst(uint32_t i, uint32_t j) {
 }
 
 void print_tour(uint32_t *tour, uint32_t size) {
-    for(int i=0; i<size+1; i++) {
-      printf("%" PRIu32, tour[i]+1);
-      if(i<size) printf(" ");
-    }
-    printf("\n");
+  int i;
+  for(i=0; i<size+1; i++) {
+    printf("%" PRIu32, tour[i]+1);
+    if(i<size) printf(" ");
+  }
+  printf("\n");
 }
 
 int main(int argc, const char **argv) {

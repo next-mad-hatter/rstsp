@@ -17,7 +17,6 @@
     - relaxations
     - generator sandbox
 * Testing:
-    - benchmark: vlsi
     - bar plots: combine patterns and color
     - investigate poly timeouts in random/hi (4k+5k)
     - measure memory usage (steady/memusg: how do we script this?)
@@ -40,6 +39,7 @@
     - do we need merge xscales script ?
 * Source:
     - add flip flop search & fork search
+    - remove rot-sb-search (since it does not make sense)
     - iter/rot searches: return iterations results (for convergence studies)
     - sb iter search: two reorderings?
     - shared lib interface: all searches / search -> search transforms?
