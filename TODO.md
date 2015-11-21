@@ -40,7 +40,7 @@
     - add flip flop search
     - iter/rot searches: return iterations results (for convergence studies)
     - sb iter search: two reorderings?
-    - shared library interface
+    - shared lib interface: all searches / search -> search transforms?
     - options parser: http://mlton.org/FunctionalRecordUpdate
     - round to nearest integer option
     - iter search (+1/n) time limits

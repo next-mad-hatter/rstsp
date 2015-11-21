@@ -16,23 +16,22 @@ int main(int argc, const char **argv) {
 
   uint32_t size = 5;
   uint32_t max_width = 0;
-
   uint32_t dst(uint32_t i, uint32_t j) {
     return i+j;
   }
 
   uint32_t *sol = rstsp_sbsearch(max_width, size, *dst);
 
-  printf("  Status: %" PRIu32 "\n", sol[0]);
-  printf("  Tour length: %" PRIu32 "\n", sol[1]);
-  printf("  Tour: ");
-  for(int i=0; i<size; i++) {
-    printf("%" PRIu32, sol[2+i] + 1);
-    if(i+1<size) printf(" ");
+  if(sol) {
+    printf("  Tour length: %" PRIu32 "\n", sol[0]);
+    printf("  Tour: ");
+    for(int i=0; i<size; i++) {
+      printf("%" PRIu32, sol[1+i] + 1);
+      if(i+1<size) printf(" ");
+    }
+    printf("\n");
+    free(sol);
   }
-  printf("\n");
-
-  free(sol);
 
   rstsp_close();
   return 0;

@@ -48,3 +48,7 @@
    ```
    packages the crosscompiled version and puts it into `./tmp/`.
 
+### Calling rstsp from your code
+
+   See `./src/rstsp/librstsp/test.c`, `./src/rstsp/build_lib.sh` and `./src/rstsp/README.md`.
+
