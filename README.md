@@ -32,6 +32,8 @@
    At first run, this will also generate random test data,
    which needs significant chunk of space -- about 200MB right now.
 
+   Also takes some time and memory (sometimes over 3GB in our tests).
+
 ### Plotting test results
 
    ```

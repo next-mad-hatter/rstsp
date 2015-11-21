@@ -15,40 +15,46 @@ struct
   structure PyrSearch = SimpleSearchFn(PyrGraph(N))
   structure SBSearch = SimpleSearchFn(SBGraph(N))
 
+  structure RotPyrSearch = RotSearchFn(PyrSearch)
+  structure RotSBSearch = RotSearchFn(SBSearch)
+
   local
-    structure P =
-    struct
-      structure Search = PyrSearch
-      structure Opts = struct
-        fun inv_order _ i = i
-      end
-    end
+    fun inv_order _ i = i
   in
-    structure IterPyrSearch = IterSearchFn(P)
+    structure IterPyrSearch = IterSearchFn(
+      struct
+        structure Search = PyrSearch
+        val inv_order = inv_order
+      end)
+    structure IterRotPyrSearch = IterSearchFn(
+      struct
+        structure Search = RotPyrSearch
+        val inv_order = inv_order
+      end)
   end
 
   local
-    structure P =
-    struct
-      structure Search = SBSearch
-      structure Opts = struct
-        fun inv_order size i =
-        let
-          val size' = Word.toInt size
-          val i' = Word.toInt i
-          val j = case Int.mod(i',2) of
-                    0 => Real.floor (Real.fromInt (size'-i'-1) / Real.fromInt 2)
-                  | _ => Real.ceil (Real.fromInt (size'+i'-1) / Real.fromInt 2)
-        in
-          Word.fromInt j
-        end
-      end
+    fun inv_order size i =
+    let
+      val size' = Word.toInt size
+      val i' = Word.toInt i
+      val j = case Int.mod(i',2) of
+                0 => Real.floor (Real.fromInt (size'-i'-1) / Real.fromInt 2)
+              | _ => Real.ceil (Real.fromInt (size'+i'-1) / Real.fromInt 2)
+    in
+      Word.fromInt j
     end
   in
-    structure IterSBSearch = IterSearchFn(P)
+    structure IterSBSearch = IterSearchFn(
+      struct
+        structure Search = SBSearch
+        val inv_order = inv_order
+      end)
+    structure IterRotSBSearch = IterSearchFn(
+      struct
+        structure Search = RotSBSearch
+        val inv_order = inv_order
+      end)
   end
-
-  structure RotPyrSearch = RotSearchFn(IterPyrSearch)
-  structure RotSBSearch = RotSearchFn(IterSBSearch)
 
 end

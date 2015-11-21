@@ -7,6 +7,8 @@
 
 signature FFI_UTILS = sig
 
+  val isNull : MLton.Pointer.t -> bool
+
   val importString : MLton.Pointer.t -> string
 
   val exportString : string -> MLton.Pointer.t

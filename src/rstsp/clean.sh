@@ -14,5 +14,5 @@ BUILD_DIR="${SRC_DIR}/build"
 rm -rf -- "${BUILD_DIR}"/rstsp.* \
           "${BUILD_DIR}"/lib \
           "${BUILD_DIR}"/include \
-          "${BUILD_DIR}"/example
+          "${BUILD_DIR}"/test
 

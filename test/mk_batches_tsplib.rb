@@ -11,13 +11,13 @@ require 'json'
 files = {}
 ["tsplib", "dimacs"].each do |dataset|
   files[dataset] = Dir[ File.expand_path(File.dirname(__FILE__)) + "/data/#{dataset}/*.tsp" ]
-                   .take(11).map{|x| File.basename x}
+                   .take(13).map{|x| File.basename x}
 end
 
 res = []
 files.each_key do |dataset|
   files[dataset].each do |tsp|
-    ([[1,0]] + [[10,0]] + [[10,5]]).each do |iters,rot|
+    ([[1,0]] + [[10,0]] + [[10,10]]).each do |iters,rot|
       ([[:pyramidal,nil]] + [:balanced].product((2..3).to_a)).each do |algo,max|
         if (
           (max and algo == :pyramidal) or
@@ -29,11 +29,11 @@ files.each_key do |dataset|
           :bin => :mlton,
           :algo => algo,
           :iters => iters,
-          :stale => if iters == 1 then nil else 3 end,
+          :stale => if iters == 1 then nil else 2 end,
           :rot => rot,
           :max => max,
           :data => "#{dataset}/#{tsp}",
-          :timeout => 30.0
+          :timeout => 45.0
         }
       end
     end

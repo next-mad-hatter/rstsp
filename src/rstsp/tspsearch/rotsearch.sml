@@ -55,9 +55,11 @@ struct
       | false =>
           let
             val sol' = solve size dist rot opts
+            (*
             val _ = U.printErr ("     * Rot yields:  ")
             val _ = U.printErr ((Len.toString o #1 o valOf) sol')
             val _ = U.printErr "\n"
+            *)
             val sol'' = case (sol, sol') of
                           (NONE, _) => sol'
                         | (_, NONE) => sol

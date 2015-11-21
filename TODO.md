@@ -22,6 +22,8 @@
     - investigate poly timeouts in random/hi (4k+5k)
     - measure memory usage (steady/memusg: how do we script this?)
     - better iter search testing
+    - implement + test 3d euclidean/manhattan instances
+    - try random euclidean instances
     - batch runner: make progress reporting threaded, total <- sum of time_limits
     - batch runner: make progress bar optional
     - batch runner: write after each test + trap quit/term
@@ -37,7 +39,7 @@
     - test scripts in fresh clone
     - do we need merge xscales script ?
 * Source:
-    - add flip flop search
+    - add flip flop search & fork search
     - iter/rot searches: return iterations results (for convergence studies)
     - sb iter search: two reorderings?
     - shared lib interface: all searches / search -> search transforms?
@@ -46,6 +48,7 @@
     - iter search (+1/n) time limits
     - word distance: wrapover cost check
     - compute tree width for info
+    - try nearest neightbour / relaxed demidenko / relaxed supnick instances
     - tsplib input: support more formats
     - tsplib input: allow for empty & comment lines in data section
     - mlprof

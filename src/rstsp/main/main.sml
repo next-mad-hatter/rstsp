@@ -95,13 +95,13 @@ struct
                              S.SBSearch.tourToString,
                              S.SBSearch.tourToVector)
         | (true, false) => singlerun (data, opts,
-                             fn (s,d) => S.RotPyrSearch.search s d log verbose (max_rot, (max_iters, stale_thresh, ())),
-                             S.RotPyrSearch.tourToString,
-                             S.RotPyrSearch.tourToVector)
+                             fn (s,d) => S.IterRotPyrSearch.search s d log verbose (max_iters, stale_thresh, (max_rot, ())),
+                             S.IterRotPyrSearch.tourToString,
+                             S.IterRotPyrSearch.tourToVector)
         | (false, false) => singlerun (data, opts,
-                              fn (s,d) => S.RotSBSearch.search s d log verbose (max_rot, (max_iters, stale_thresh, max_node_size)),
-                              S.RotSBSearch.tourToString,
-                              S.RotSBSearch.tourToVector)
+                              fn (s,d) => S.IterRotSBSearch.search s d log verbose (max_iters, stale_thresh, (max_rot, max_node_size)),
+                              S.IterRotSBSearch.tourToString,
+                              S.IterRotSBSearch.tourToVector)
     end
   end
 
