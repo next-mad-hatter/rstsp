@@ -15,8 +15,10 @@
 functor RotSearchFn(X : sig structure Search: TSP_SEARCH; val perm : word -> word -> word -> word end ) : TSP_SEARCH =
 struct
 
-  structure U = Utils
   structure S = X.Search
+  (*
+  structure U = Utils
+  *)
 
   structure Len = S.Len
 
@@ -26,9 +28,6 @@ struct
    * Additionally to any parameters to the initial search,
    * we need a number of permutations to perform, NONE if
    * all permutations are wanted.
-   *
-   * Note that this is on top of the natural ordering,
-   * thus (SOME 0w0) will yield the initial search.
    *)
   type optional_params = word option * S.optional_params
 
@@ -40,7 +39,10 @@ struct
   let
     fun solve size dist rot opts =
     let
-      val trans = X.perm size rot
+      (**
+       * We wish the first rotation to yield the initial search.
+       *)
+      val trans = if rot = 0w0 then fn i => i else X.perm size rot
       val dist' = fn (x,y) => dist(trans x, trans y)
       val sol = #1 ((S.search size dist' NONE false opts) ())
     in
@@ -67,8 +69,8 @@ struct
             iter size dist (rot+0w1) max_rot sol'' opts
           end
     val max_rot' = case max_rot of
-                     NONE => size-0w1
-                   | SOME m => Word.min (m,size-0w1)
+                     NONE => size
+                   | SOME m => Word.min (m,size)
   in
     fn () => (iter size dist 0w0 max_rot' NONE opts, NONE)
   end

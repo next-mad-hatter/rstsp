@@ -23,21 +23,21 @@ set style line 3 lc rgb '#3e3c76' pt 12 ps 1.01 lt 5 lw 3.2
 set style line 4 lc rgb '#9e7c26' pt 10 ps 1.01 lt 7 lw 3.2
 
 set key top left box ls 11 spacing 1.1
-bins = "mlton poly"
-#bins = "mlton"
 set datafile missing "t"
+
+set output 'out/random_val.pdf'
+set xlabel 'problem size'
+set ylabel 'tour length'
+plot 'data/mlton_val_len_balanced_m3_i1_jdef_r0.csv' using 1:($2) title 'balanced (-m 3)' w l ls 1, \
+     'data/mlton_val_len_balanced_m3_i200_jdef_rall.csv' using 1:($2) title 'balanced (-m 3 -i 200 -r all)' w l ls 2, \
+     'data/mlton_val_len_pyramidal_m0_i1_jdef_r0.csv' using 1:($2) title 'pyramidal' w l ls 3, \
+     'data/mlton_val_len_pyramidal_m0_i200_jdef_rall.csv' using 1:($2) title 'pyramidal (-i 200 -r all)' w l ls 4, \
+     'data/mlton_val_len_pyramidal_m0_i200_jdef_r0.csv' using 1:($2) title 'pyramidal (-i 200 -r 0)' w l ls 5, \
+     'data/mlton_val_len_balanced_m3_i200_jdef_r0.csv' using 1:($2) title 'balanced (-m 3 -i 200 -r 0)' w l ls 6
+
+bins = "mlton poly"
 do for [bi = 1:words(bins)] {
-
   bin = word(bins, bi)
-
-  set xlabel 'problem size'
-  set ylabel 'tour length'
-
-  set output 'out/'.bin.'_val_random_len.pdf'
-  plot 'data/'.bin.'_val_len_balanced_m3_i1_jdef_r0.csv' using 1:($2) title 'balanced (-m 3)' w l ls 1, \
-       'data/'.bin.'_val_len_balanced_m3_i300_jdef_rall.csv' using 1:($2) title 'balanced (-m 3 -i 300 -r all)' w l ls 2, \
-       'data/'.bin.'_val_len_pyramidal_m0_i1_jdef_r0.csv' using 1:($2) title 'pyramidal' w l ls 3, \
-       'data/'.bin.'_val_len_pyramidal_m0_i300_jdef_rall.csv' using 1:($2) title 'pyramidal (-i 300 -r all)' w l ls 4
 
   set xlabel 'problem size'
   set ylabel 'time needed (seconds)'
@@ -66,4 +66,5 @@ do for [bi = 1:words(bins)] {
   plot 'data/'.bin.'_time_hi_balanced_m4_i1_jdef_r0.csv' using 1:($2) title 'max = 4' w lp ls 1, \
        'data/'.bin.'_time_hi_balanced_m3_i1_jdef_r0.csv' using 1:($2) title 'max = 3' w lp ls 2, \
        'data/'.bin.'_time_hi_pyramidal_m0_i1_jdef_r0.csv' using 1:($2) title 'pyramidal' w lp ls 4
+
 }

@@ -11,10 +11,9 @@ require 'json'
 res = []
 
 set = []
-(3..50).step(1) do |i| set << [:mlton,i] end
-(3..50).step(1) do |i| set << [:poly,i] end
+(3..45).step(1) do |i| set << [:mlton,i] end
 set.each do |bin,size|
-  [1,300].each do |iters|
+  ([[1,0]] + [[200,0]] + [[200,"all"]]).each do |iters,rot|
     ([[:pyramidal,nil]] + [:balanced].product((3..3).to_a)).each do |algo_max|
       algo, max = *algo_max
       if (
@@ -29,10 +28,10 @@ set.each do |bin,size|
         :max => max,
         :iters => iters,
         :stale => nil,
-        :rot => if iters > 1 then "all" else 0 end,
+        :rot => rot,
         :size => size,
         :data => "random/random.#{size}",
-        :timeout => 30.0
+        :timeout => 45.0
       }
     end
   end

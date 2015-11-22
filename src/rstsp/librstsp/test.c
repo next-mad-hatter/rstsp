@@ -58,7 +58,7 @@ int main(int argc, const char **argv) {
 
   uint32_t max_iters = 10;
   uint32_t stale_iters = 3;
-  uint32_t rotations = prob_size - 1;
+  uint32_t rotations = prob_size-1;
   result = (uint32_t **)rstsp_ir_pyr_search(prob_size, *dst, max_iters, stale_iters, rotations);
   if(result) {
     printf("  > Pyramidal/iter/rot tour: ");
@@ -69,7 +69,7 @@ int main(int argc, const char **argv) {
     free(result);
   }
 
-  result = (uint32_t **)rstsp_ir_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, rotations);
+  result = (uint32_t **)rstsp_ir_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, rotations+1);
   if(result) {
     printf("  > SB/iter/rot tour: ");
     print_tour(result[1], prob_size);

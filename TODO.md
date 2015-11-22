@@ -5,10 +5,10 @@
 [//]: (# $Rev: 34 $)
 
 * Repo:
-    - wiki / bug tracker ?
-    - script via cmake ?
     - automate create-polyml-smlnjlib scripts
     - complete the source readme
+    - wiki / bug tracker ?
+    - script via cmake ?
 * Report:
     - writeup
     - sml support: can the pandoc -> rst way be pretty-fixed?
@@ -17,12 +17,12 @@
     - relaxations
     - generator sandbox
 * Testing:
+    - implement + test 3d euclidean/manhattan instances
+    - try random euclidean instances
     - bar plots: combine patterns and color
     - investigate poly timeouts in random/hi (4k+5k)
     - measure memory usage (steady/memusg: how do we script this?)
     - better iter search testing
-    - implement + test 3d euclidean/manhattan instances
-    - try random euclidean instances
     - batch runner: make progress reporting threaded, total <- sum of time_limits
     - batch runner: make progress bar optional
     - batch runner: write after each test + trap quit/term
@@ -30,18 +30,17 @@
     - batch runner: rename timeout -> time_limit
     - batch runner: failed vs timed out stats
     - create_random_data (and more?): write <-> rescue unlink
-    - random matrix creation: add 3d metric instances
     - mk_batches & mk_csv : factor out common code
-    - use multiple random instances for target tests
+    - use multiple random instances for target tests ?
     - plot hash collisions nrs ?
     - random data: compute hk bounds
     - test scripts in fresh clone
     - do we need merge xscales script ?
 * Source:
     - add flip flop search
-    - iter + ff searches: return iterations results (for convergence studies)
+    - iter + ff searches: return iterations results (for convergence studies) -> plot
     - options parser: http://mlton.org/FunctionalRecordUpdate
-    - round to nearest integer option
+    - round to nearest integer as option
     - iter search (+1/n) time limits
     - shared lib interface: search transforms worth memory management hassle ?
     - word distance: wrapover cost check
