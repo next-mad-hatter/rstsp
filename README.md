@@ -15,6 +15,8 @@
 
    For details, see `./src/rstsp/build_*.sh` and `./src/rstsp/README.md`.
 
+   If you don't have `exuberant-ctags` installed, simply ignore the ctags error message.
+
 ### Getting more test data
 
    ```
@@ -28,7 +30,7 @@
    ```
           ./bin/test.sh
    ```
-   requires `ruby` & powerbar gem.
+   requires `ruby` ≥ 1.9.3 & `powerbar` gem.
 
    At first run, this will also generate random test data,
    which needs significant chunk of space -- about 200MB right now.

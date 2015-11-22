@@ -21,6 +21,7 @@
     - implement -> test 3d-euclidean/manhattan instances
     - implement -> test starting tours options
     - tsplib med/large instances
+    - test on rs instances
     - profile everything
     - bar plots: combine patterns and color
     - investigate poly timeouts in random/hi (4k+5k)
