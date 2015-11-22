@@ -8,8 +8,8 @@
 
 require 'json'
 
-MAX_DIM = 250
-MAX_PROBS_PER_DATASET = 25
+MAX_DIM = 90
+MAX_PROBS_PER_DATASET = 20
 
 files = {}
 ["tsplib", "dimacs","vlsi"].each do |dataset|
@@ -33,7 +33,7 @@ end
 res = []
 files.each_key do |dataset|
   files[dataset].each do |size,tsp,supp|
-    ([[50,0]] + [[50,100]]).each do |iters,rot|
+    ([50].product([0,"all"])).each do |iters,rot|
       ([[:pyramidal,nil]] + [:balanced].product((3..3).to_a)).each do |algo,max|
         if (
           (rot == 0 and algo == :balanced) or
@@ -51,7 +51,7 @@ files.each_key do |dataset|
           :max => max,
           :data => "#{dataset}/#{tsp}",
           :size => size,
-          :timeout => 180.0
+          :timeout => 240.0
         }
       end
     end
