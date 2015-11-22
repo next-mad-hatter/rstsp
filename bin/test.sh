@@ -13,7 +13,7 @@ TEST_DIR="${PROJ_DIR}/test"
 
 echo -n "Checking ruby version and libraries: "
 $( ruby -e "if RUBY_VERSION >= \"1.9.3\" then print \"OK\" and require \"powerbar\" else exit(1) end" > /dev/null 2>&1 )
-if ! [ $? == 0 ]; then
+if [ $? -ne 0 ]; then
   echo "not found"
   exit 1
 fi
