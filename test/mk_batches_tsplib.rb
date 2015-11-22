@@ -33,7 +33,7 @@ end
 res = []
 files.each_key do |dataset|
   files[dataset].each do |size,tsp,supp|
-    ([[30,0]] + [[30,100]]).each do |iters,rot|
+    ([[50,0]] + [[50,100]]).each do |iters,rot|
       ([[:pyramidal,nil]] + [:balanced].product((3..3).to_a)).each do |algo,max|
         if (
           (rot == 0 and algo == :balanced) or

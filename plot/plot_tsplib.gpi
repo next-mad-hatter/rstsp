@@ -31,15 +31,15 @@ set bars fullwidth
 
 set output 'out/tsplib_val.pdf'
 set yrange [*<0.9:1.2<*]
-plot 'data/tsplib_val_pyramidal_m0_i30_jdef_r50.csv' using ($2):xtic(1) title 'pyramidal/r50/i30' with histogram lt -1 fs pattern 3 , \
-     'data/tsplib_val_balanced_m3_i30_jdef_r50.csv' using ($2):xtic(1) title 'balanced/m3/r50/i30' with histogram lt -1 fs pattern 7 , \
-     'data/tsplib_val_pyramidal_m0_i30_jdef_r0.csv' using ($2):xtic(1) title 'pyramidal/i30' with histogram lt -1 fs pattern 2 #, \
-#     'data/tsplib_val_balanced_m3_i30_jdef_r0.csv' using ($2):xtic(1) title 'balanced/m3/i30' with histogram lt -1 fs pattern 1
+plot 'data/tsplib_val_pyramidal_m0_i50_jdef_r100.csv' using ($2):xtic(1) title 'pyramidal/r100/i50' with histogram lt -1 fs pattern 3 , \
+     'data/tsplib_val_balanced_m3_i50_jdef_r100.csv' using ($2):xtic(1) title 'balanced/m3/r100/i50' with histogram lt -1 fs pattern 7 , \
+     'data/tsplib_val_pyramidal_m0_i50_jdef_r0.csv' using ($2):xtic(1) title 'pyramidal/i50' with histogram lt -1 fs pattern 2 #, \
+#     'data/tsplib_val_balanced_m3_i50_jdef_r0.csv' using ($2):xtic(1) title 'balanced/m3/i50' with histogram lt -1 fs pattern 1
 
 set output 'out/tsplib_time.pdf'
 set logscale y
 set ylabel 'time (seconds)'
-plot 'data/tsplib_time_pyramidal_m0_i30_jdef_r50.csv' using ($2):xtic(1) title 'pyramidal/r50/i30' with histogram lt -1 fs pattern 3 , \
-     'data/tsplib_time_balanced_m3_i30_jdef_r50.csv' using ($2):xtic(1) title 'balanced/m3/r50/i30' with histogram lt -1 fs pattern 7 , \
-     'data/tsplib_time_pyramidal_m0_i30_jdef_r0.csv' using ($2):xtic(1) title 'pyramidal/i30' with histogram lt -1 fs pattern 2 #, \
-#     'data/tsplib_time_balanced_m3_i30_jdef_r0.csv' using ($2):xtic(1) title 'balanced/m3/i30' with histogram lt -1 fs pattern 1
+plot 'data/tsplib_time_pyramidal_m0_i50_jdef_r100.csv' using ($2):xtic(1) title 'pyramidal/r100/i50' with histogram lt -1 fs pattern 3 , \
+     'data/tsplib_time_balanced_m3_i50_jdef_r100.csv' using ($2):xtic(1) title 'balanced/m3/r100/i50' with histogram lt -1 fs pattern 7 , \
+     'data/tsplib_time_pyramidal_m0_i50_jdef_r0.csv' using ($2):xtic(1) title 'pyramidal/i50' with histogram lt -1 fs pattern 2 #, \
+#     'data/tsplib_time_balanced_m3_i50_jdef_r0.csv' using ($2):xtic(1) title 'balanced/m3/i50' with histogram lt -1 fs pattern 1
