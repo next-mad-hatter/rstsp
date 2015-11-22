@@ -62,7 +62,7 @@ class Batch
       when nil
         ""
       when "all"
-        "all"
+        " -r all"
       else
         if opts[:rot].class == Fixnum then " -r #{opts[:rot]}"
                                       else raise FormatError end

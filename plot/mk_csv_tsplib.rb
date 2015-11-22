@@ -12,24 +12,33 @@ PREFIX = File.expand_path(File.dirname(__FILE__)) + "/.."
 LOG_DIR = PREFIX + "/test/log/"
 DATA_DIR = PREFIX + "/plot/data/"
 
-SOLUTIONS = File.read( File.expand_path(File.dirname(__FILE__)) + "/../test/data/tsplib/SOLUTIONS.txt" )
-BOUNDS =    File.read( File.expand_path(File.dirname(__FILE__)) + "/../test/data/dimacs/BOUNDS.txt" )
+$bounds = {}
+
+File.open(File.expand_path(File.dirname(__FILE__)) + "/../test/data/tsplib/SOLUTIONS.txt").each_line do |line|
+  next unless line.strip =~ /(\S+)[\s:]+(\d+)$/
+  $bounds[$1] = $2.to_i
+end
+
+File.read(File.expand_path(File.dirname(__FILE__)) + "/../test/data/dimacs/BOUNDS.txt" ).each_line do |line|
+  xs = line.split
+  key = xs[0]
+  val = xs.select{|x| x =~ /^\d+(.\d+)*$/}
+  next unless val.length > 0
+  $bounds[xs[0]] = val[-1].to_i
+end
+
+File.read(File.expand_path(File.dirname(__FILE__)) + "/../test/data/vlsi/SUMMARY.txt").each_line do |line|
+  xs = line.split
+  next unless xs.length > 2 and xs[3] =~ /^[\d,]+\d$/
+  $bounds[xs[0]] = xs[3].gsub(/,/,'').to_i
+end
 
 def inst_name(filename)
   filename.split(".")[0..-2].join(".")
 end
 
 def inst_val(tsp,val)
-  #print tsp, " ", val, " "
-  if SOLUTIONS =~ /#{tsp}\s*:\s*(\d+)/
-    #print($1, " ",val.to_f / ($1.to_i),"\n")
-    return val.to_f / ($1.to_i)
-  end
-  if BOUNDS =~ /#{tsp}([^\n]+)/
-    #print($1," ",val.to_f / ($1.split[-1].to_i),"\n")
-    return val.to_f / ($1.split[-1].to_i)
-  end
-  nil
+  if $bounds[tsp] and val then val.to_f / $bounds[tsp] else nil end
 end
 
 ["tsplib"].each do |batch|
@@ -61,8 +70,8 @@ end
                     .select{|x| x[:iters] == iters}
                     .select{|x| x[:stale] == stale}
                     .select{|x| x[:rot] == rot}
-            #[:val, :time].each do |plot|
-            [:val].each do |plot|
+            [:val, :time].each do |plot|
+            #[:val].each do |plot|
               csv = instances.collect{|tsp|
                 e = d.find{|x| x[:name] == tsp}
                 #puts e.delete_if{|k| [:err,:out,:cmd].include? k}.inspect

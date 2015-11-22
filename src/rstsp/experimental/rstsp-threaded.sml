@@ -6,12 +6,12 @@
  *)
 
 use "rstsp/rstsp-polyml-common.sml";
-use "threaded/tspstore.sml";
-use "threaded/mapstore.sml";
-use "threaded/pyrstore.sml";
-use "threaded/sbstore.sml";
-use "threaded/threadedsearch.sml";
-use "threaded/defaultsearches.sml";
+use "experimental/tspstore.sig";
+use "experimental/mapstore.sml";
+use "experimental/pyrstore.sml";
+use "experimental/sbstore.sml";
+use "experimental/threadedsearch.sml";
+use "experimental/defaultsearches.sml";
 use "main/settings.sig";
 use "main/main.sml";
 

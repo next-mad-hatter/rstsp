@@ -5,10 +5,10 @@
 [//]: (# $Rev: 34 $)
 
 * Repo:
-    - wiki / bug tracker ?
-    - script via cmake ?
     - automate create-polyml-smlnjlib scripts
     - complete the source readme
+    - wiki / bug tracker ?
+    - script via cmake ?
 * Report:
     - writeup
     - sml support: can the pandoc -> rst way be pretty-fixed?
@@ -17,8 +17,8 @@
     - relaxations
     - generator sandbox
 * Testing:
-    - eil51
-    - benchmark: vlsi
+    - implement + test 3d euclidean/manhattan instances
+    - try random euclidean instances
     - bar plots: combine patterns and color
     - investigate poly timeouts in random/hi (4k+5k)
     - measure memory usage (steady/memusg: how do we script this?)
@@ -30,31 +30,29 @@
     - batch runner: rename timeout -> time_limit
     - batch runner: failed vs timed out stats
     - create_random_data (and more?): write <-> rescue unlink
-    - random matrix creation: add 3d metric instances
     - mk_batches & mk_csv : factor out common code
-    - use multiple random instances for target tests
+    - use multiple random instances for target tests ?
     - plot hash collisions nrs ?
     - random data: compute hk bounds
     - test scripts in fresh clone
     - do we need merge xscales script ?
 * Source:
-    - threaded version: finish port
     - add flip flop search
-    - iter/rot searches: return iterations results (for convergence studies)
-    - sb iter search: two reorderings?
-    - shared library interface
+    - iter + ff searches: return iterations results (for convergence studies) -> plot
     - options parser: http://mlton.org/FunctionalRecordUpdate
-    - round to nearest integer option
+    - round to nearest integer as option
     - iter search (+1/n) time limits
+    - shared lib interface: search transforms worth memory management hassle ?
     - word distance: wrapover cost check
     - compute tree width for info
+    - try nearest neightbour / relaxed demidenko / relaxed supnick instances
     - tsplib input: support more formats
     - tsplib input: allow for empty & comment lines in data section
     - mlprof
     - measure threaded storage + simplesearch performance
     - threaded rot/iter search
-    - threaded: splay trees -> redblack trees !
-    - threaded: readsafe lazy ?
+    - threaded: splay trees -> redblack trees ?
+    - threaded: threadsafe lazy ?
     - threaded: polyml.profile
     - test simplesearch under multimlton
     - misleading timings / timer stop points

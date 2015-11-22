@@ -32,6 +32,8 @@
    At first run, this will also generate random test data,
    which needs significant chunk of space -- about 200MB right now.
 
+   Also takes some time and memory (sometimes over 3GB in our tests).
+
 ### Plotting test results
 
    ```
@@ -47,4 +49,8 @@
           [env VERSION=my-great-build] ./bin/pkg.sh
    ```
    packages the crosscompiled version and puts it into `./tmp/`.
+
+### Calling rstsp from your code
+
+   See `./src/rstsp/librstsp/test.c`, `./src/rstsp/build_lib.sh` and `./src/rstsp/README.md`.
 

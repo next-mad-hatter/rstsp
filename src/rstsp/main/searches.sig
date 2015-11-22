@@ -14,4 +14,8 @@
   structure SBSearch : TSP_SEARCH
   structure RotPyrSearch : TSP_SEARCH
   structure RotSBSearch : TSP_SEARCH
+  structure IterPyrSearch : TSP_SEARCH
+  structure IterSBSearch : TSP_SEARCH
+  structure IterRotPyrSearch : TSP_SEARCH
+  structure IterRotSBSearch : TSP_SEARCH
  end

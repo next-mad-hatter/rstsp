@@ -12,7 +12,8 @@
  * nodes being word tuples and tours being word vectors.
  *)
 
-structure PyrNode : TSP_NODE = struct
+structure PyrNode : TSP_NODE =
+struct
 
   structure U = Utils
   structure T = TSPTypes
@@ -36,7 +37,8 @@ structure PyrNode : TSP_NODE = struct
 end
 
 
-structure PyrTour : TSP_TOUR = struct
+structure PyrTour : TSP_TOUR =
+struct
 
   structure TU = TSPUtils
 
@@ -49,7 +51,8 @@ structure PyrTour : TSP_TOUR = struct
 end
 
 
-functor PyrGraph(N : NUMERIC) : TSP_GRAPH = struct
+functor PyrGraph(N : NUMERIC) : TSP_GRAPH =
+struct
 
   structure Len = N
   structure Node = PyrNode

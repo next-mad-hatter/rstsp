@@ -5,7 +5,10 @@
  * $Revision$
  *)
 
-functor ThreadedSearchFn (X: sig structure Graph: TSP_GRAPH; structure Store: TSP_STORE where type tour = Graph.tour where type node = Graph.node end) : TSP_SEARCH =
+functor ThreadedSearchFn (X: sig
+  structure Graph: TSP_GRAPH
+  structure Store: TSP_STORE where type tour = Graph.tour where type node = Graph.node where type Len.num = Graph.Len.num
+end) : TSP_SEARCH =
 struct
 
   open X
@@ -14,9 +17,10 @@ struct
   open Thread.Mutex
   open Thread.ConditionVar
   open Store
+  datatype descent = datatype Graph.descent
 
-  val toVector = Tour.toVector
-  val toString = Tour.toString
+  val tourToVector = Tour.toVector
+  val tourToString = Tour.toString
 
   fun synchronized mutex f =
     fn x => (
@@ -80,12 +84,12 @@ struct
                      let
                        val d'' = dist_fn d
                      in
-                       case d' <= d'' of
-                         true => SOME (d', t')
-                       | _ => SOME (d'', tour_fn t)
+                       case Len.compare (d', d'') of
+                         GREATER => SOME (d'', tour_fn t)
+                       | _ => SOME (d', t')
                      end
           end
-        val desc = descend size dist options node
+        val desc = descendants size dist options node
       in
         case desc of
           DESC opts => foldl collect NONE opts

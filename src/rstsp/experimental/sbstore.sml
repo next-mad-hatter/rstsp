@@ -5,7 +5,7 @@
  * $Revision$
  *)
 
-structure SBStore : TSP_STORE =
+functor SBStore(N : NUMERIC) : TSP_STORE =
 struct
 
   structure Node = SBNode
@@ -13,8 +13,10 @@ struct
   structure Tour = SBTour
   type tour = Tour.tour
   type intsset = SBNode.intsset
+  structure Len = N
   open Thread
   open SBUtils
+  open TSPTypes
 
   local
     structure WordPairSetKey = struct
@@ -25,7 +27,7 @@ struct
     structure TypeMap = SplayMapFn(WordPairSetKey)
   end
 
-  datatype status = DONE of (word * (unit -> tour)) option
+  datatype status = DONE of (Len.num * (unit -> tour)) option
                   | PENDING of ConditionVar.conditionVar
 
   (* types store, types store lock, N locks for/and array of N vectors *)
@@ -52,7 +54,7 @@ struct
 
   fun getType ((mem, token, _, _), node) =
   let
-    val tp = (Node.normHash o Node.toHash) node
+    val tp = (Node.normKey o Node.toKey) node
     val res = case TypeMap.find (!mem, tp) of
                 SOME r => r
               | NONE =>

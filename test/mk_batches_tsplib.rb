@@ -8,18 +8,35 @@
 
 require 'json'
 
+MAX_DIM = 500
+MAX_PROBS_PER_DATASET = 20
+
 files = {}
-["tsplib", "dimacs"].each do |dataset|
+["tsplib", "dimacs","vlsi"].each do |dataset|
   files[dataset] = Dir[ File.expand_path(File.dirname(__FILE__)) + "/data/#{dataset}/*.tsp" ]
-                   .take(11).map{|x| File.basename x}
+                   .map{|x|
+                     open(x){|f| f.find{|l| l =~ /DIMENSION[\s:]+(\d+)/}}
+                     dim = if $1 then $1.to_i else nil end
+                     supp = (dim and dim <= MAX_DIM)
+                     if supp
+                       open(x){|f| f.find{|l| l =~ /EDGE_WEIGHT_TYPE[\s:]+(\S+)/}}
+                       supp &&= ["EXPLICIT","EUC_2D","CEIL_2D"].include? $1
+                     end
+                     if supp
+                       open(x){|f| f.find{|l| l =~ /EDGE_WEIGHT_FORMAT[\s:]+(\S+)/}}
+                       supp &&= [nil,"FULL_MATRIX","LOWER_DIAG_ROW","UPPER_DIAG_ROW","FUNCTION"].include? $1
+                     end
+                     [ dim.to_i, File.basename(x), supp ]
+                   }.select{|x| x[2]}.sort.take(MAX_PROBS_PER_DATASET)
 end
 
 res = []
 files.each_key do |dataset|
-  files[dataset].each do |tsp|
-    ([[1,0]] + [[10,0]] + [[10,5]]).each do |iters,rot|
-      ([[:pyramidal,nil]] + [:balanced].product((2..3).to_a)).each do |algo,max|
+  files[dataset].each do |size,tsp,supp|
+    ([[30,0]] + [[30,50]]).each do |iters,rot|
+      ([[:pyramidal,nil]] + [:balanced].product((3..3).to_a)).each do |algo,max|
         if (
+          (rot == 0 and algo == :balanced) or
           (max and algo == :pyramidal) or
           (!max and algo == :balanced))
           next
@@ -29,11 +46,12 @@ files.each_key do |dataset|
           :bin => :mlton,
           :algo => algo,
           :iters => iters,
-          :stale => if iters == 1 then nil else 3 end,
+          :stale => nil,
           :rot => rot,
           :max => max,
           :data => "#{dataset}/#{tsp}",
-          :timeout => 30.0
+          :size => size,
+          :timeout => 120.0
         }
       end
     end
