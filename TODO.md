@@ -39,6 +39,7 @@
 * Source:
     - add flip flop search
     - iter + ff searches: return iterations results (for convergence studies) -> plot
+    - sb iter search: 2*n+1 / even more permutations ?
     - demidenko/relaxed supnick reordering
     - options parser: http://mlton.org/FunctionalRecordUpdate
     - round to nearest integer as option
@@ -49,7 +50,7 @@
     - try nearest neightbour / relaxed demidenko / relaxed supnick instances
     - tsplib input: support more formats
     - tsplib input: allow for empty & comment lines in data section
-    - mlprof
+    - profile!
     - measure threaded storage + simplesearch performance
     - threaded rot/iter search
     - threaded: splay trees -> redblack trees ?
