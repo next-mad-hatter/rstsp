@@ -61,7 +61,7 @@ val _ =
   )
 
 val _ =
-  _export "rstsp_ir_pyr_search": (word * MLton.Pointer.t * word * word * word -> MLton.Pointer.t) -> unit;
+  _export "rstsp_iter_pyr_search": (word * MLton.Pointer.t * word * word * word -> MLton.Pointer.t) -> unit;
   (
     fn (size, dist_fn, max_iters, stale_iters, max_rots) => (
       let
@@ -80,7 +80,7 @@ val _ =
   )
 
 val _ =
-  _export "rstsp_ir_sb_search": (word * MLton.Pointer.t * word * word * word * word -> MLton.Pointer.t) -> unit;
+  _export "rstsp_iter_sb_search": (word * MLton.Pointer.t * word * word * word * word -> MLton.Pointer.t) -> unit;
   (
     fn (size, dist_fn, max_width, max_iters, stale_iters, max_rots) => (
       let

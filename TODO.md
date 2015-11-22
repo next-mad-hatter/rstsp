@@ -17,8 +17,8 @@
     - relaxations
     - generator sandbox
 * Testing:
-    - implement + test 3d euclidean/manhattan instances
-    - try random euclidean instances
+    - convergence studies
+    - implement + test 3d-euclidean/manhattan instances
     - bar plots: combine patterns and color
     - investigate poly timeouts in random/hi (4k+5k)
     - measure memory usage (steady/memusg: how do we script this?)
@@ -39,6 +39,7 @@
 * Source:
     - add flip flop search
     - iter + ff searches: return iterations results (for convergence studies) -> plot
+    - demidenko/relaxed supnick reordering
     - options parser: http://mlton.org/FunctionalRecordUpdate
     - round to nearest integer as option
     - iter search (+1/n) time limits
