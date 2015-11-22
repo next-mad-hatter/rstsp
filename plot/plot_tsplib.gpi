@@ -24,11 +24,21 @@ set style line 4 lc rgb '#9e7c26' pt 10 ps 1.01 lt 7 lw 3.2
 
 set key top left box ls 11 spacing 1.1 horizontal font ", 7" samplen 2
 set datafile missing "t"
-set ylabel 'solution'
 set xtics rotate by 69 right font ", 9"
 #set logscale y
+set ylabel 'solution'
 set bars fullwidth
 
 set output 'out/tsplib_val.pdf'
-plot 'data/tsplib_val_pyramidal_m0_i300_jdef_rall.csv' using ($2):xtic(1) title 'pyramidal/rot/iter300' with histogram lt -1 fs pattern 3 , \
-     'data/tsplib_val_balanced_m3_i500_jdef_r0.csv' using ($2):xtic(1) title 'balanced3/iter500' with histogram lt -1 fs pattern 7
+plot 'data/tsplib_val_pyramidal_m0_i300_jdef_rall.csv' using ($2):xtic(1) title 'pyramidal/rot' with histogram lt -1 fs pattern 3 , \
+     'data/tsplib_val_balanced_m3_i300_jdef_rall.csv' using ($2):xtic(1) title 'balanced/3/rot' with histogram lt -1 fs pattern 7, \
+     'data/tsplib_val_pyramidal_m0_i300_jdef_r0.csv' using ($2):xtic(1) title 'pyramidal' with histogram lt -1 fs pattern 2, \
+     'data/tsplib_val_balanced_m3_i300_jdef_r0.csv' using ($2):xtic(1) title 'balanced/3' with histogram lt -1 fs pattern 1
+
+set output 'out/tsplib_time.pdf'
+set logscale y
+set ylabel 'time (seconds)'
+plot 'data/tsplib_time_pyramidal_m0_i300_jdef_rall.csv' using ($2):xtic(1) title 'pyramidal/rot' with histogram lt -1 fs pattern 3 , \
+     'data/tsplib_time_balanced_m3_i300_jdef_rall.csv' using ($2):xtic(1) title 'balanced/3/rot' with histogram lt -1 fs pattern 7, \
+     'data/tsplib_time_pyramidal_m0_i300_jdef_r0.csv' using ($2):xtic(1) title 'pyramidal' with histogram lt -1 fs pattern 2, \
+     'data/tsplib_time_balanced_m3_i300_jdef_r0.csv' using ($2):xtic(1) title 'balanced/3' with histogram lt -1 fs pattern 1

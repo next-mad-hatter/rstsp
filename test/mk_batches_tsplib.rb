@@ -8,8 +8,8 @@
 
 require 'json'
 
-MAX_DIM = 800
-MAX_PROBS_PER_DATASET = 50
+MAX_DIM = 100
+MAX_PROBS_PER_DATASET = 20
 
 files = {}
 ["tsplib", "dimacs","vlsi"].each do |dataset|
@@ -33,8 +33,8 @@ end
 res = []
 files.each_key do |dataset|
   files[dataset].each do |size,tsp,supp|
-    #([[1,0]] + [[200,0]] + [[200,200]]).each do |iters,rot|
-      ([[:pyramidal,nil]] + [:balanced].product((2..3).to_a)).each do |algo,max|
+    ([[300,0]] + [[300,"all"]]).each do |iters,rot|
+      ([[:pyramidal,nil]] + [:balanced].product((3..3).to_a)).each do |algo,max|
         if (
           (max and algo == :pyramidal) or
           (!max and algo == :balanced))
@@ -44,16 +44,16 @@ files.each_key do |dataset|
           :name => tsp,
           :bin => :mlton,
           :algo => algo,
-          :iters => if algo == :pyramidal then 300 else 500 end,
+          :iters => iters,
           :stale => nil,
-          :rot => if algo == :pyramidal then "all" else 0 end,
+          :rot => rot,
           :max => max,
           :data => "#{dataset}/#{tsp}",
           :size => size,
-          :timeout => 60.0
+          :timeout => 40.0
         }
       end
-    #end
+    end
   end
 end
 puts JSON.pretty_generate(res)

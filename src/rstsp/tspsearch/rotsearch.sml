@@ -7,16 +7,16 @@
 
 (**
  * Given a graph traversal for a TSP of size n,
- * this applies the traversal to up to n TSPs
- * cyclic permutations of the nodes yield.
+ * this applies the traversal to up to n permutations of the TSP.
  *
  * TODO: return rotations' results instead of flushing them to stdout.
+ * TODO: allow for more permutations?
  *)
-functor RotSearchFn(Search: TSP_SEARCH) : TSP_SEARCH =
+functor RotSearchFn(X : sig structure Search: TSP_SEARCH; val perm : word -> word -> word -> word end ) : TSP_SEARCH =
 struct
 
   structure U = Utils
-  structure S = Search
+  structure S = X.Search
 
   structure Len = S.Len
 
@@ -38,10 +38,9 @@ struct
 
   fun search size dist _ _ (max_rot, opts) =
   let
-    fun shift n = fn i => Word.mod (n + i, size)
     fun solve size dist rot opts =
     let
-      val trans = shift rot
+      val trans = X.perm size rot
       val dist' = fn (x,y) => dist(trans x, trans y)
       val sol = #1 ((S.search size dist' NONE false opts) ())
     in

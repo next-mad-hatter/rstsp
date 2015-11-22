@@ -32,9 +32,10 @@ int main(int argc, const char **argv) {
   rstsp_open(argc, argv);
 
   uint32_t prob_size = 10;
+  uint32_t **result;
 
   char *dotfilename = NULL;
-  uint32_t **result = (uint32_t **)rstsp_pyr_search(prob_size, *dst, dotfilename);
+  result = (uint32_t **)rstsp_pyr_search(prob_size, *dst, dotfilename);
   if(result) {
     printf("  > Pyramidal tour: ");
     print_tour(result[1], prob_size);

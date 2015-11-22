@@ -12,7 +12,7 @@
  * while search neighbourhood changes, last best solution is still in scope of next iteration.
  *
  * To this functor we shall provide the inverse of such a reordering function
- * where last best solution maps to (1,..,n,(1)) in the next iteration.
+ * which shall assume last best solution to be (1, ... ,n (1)).
  *
  * TODO: return iterations results instead of flushing them to stdout.
  *)

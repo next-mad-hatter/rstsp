@@ -70,8 +70,8 @@ end
                     .select{|x| x[:iters] == iters}
                     .select{|x| x[:stale] == stale}
                     .select{|x| x[:rot] == rot}
-            #[:val, :time].each do |plot|
-            [:val].each do |plot|
+            [:val, :time].each do |plot|
+            #[:val].each do |plot|
               csv = instances.collect{|tsp|
                 e = d.find{|x| x[:name] == tsp}
                 #puts e.delete_if{|k| [:err,:out,:cmd].include? k}.inspect

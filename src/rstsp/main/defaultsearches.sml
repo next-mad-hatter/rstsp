@@ -15,8 +15,32 @@ struct
   structure PyrSearch = SimpleSearchFn(PyrGraph(N))
   structure SBSearch = SimpleSearchFn(SBGraph(N))
 
-  structure RotPyrSearch = RotSearchFn(PyrSearch)
-  structure RotSBSearch = RotSearchFn(SBSearch)
+  local
+    fun cycle size n = fn i => Word.mod (n + i, size)
+    fun inv_order size i =
+    let
+      val size' = Word.toInt size
+      val i' = Word.toInt i
+      val j = case Int.mod(i',2) of
+                0 => Real.floor (Real.fromInt (size'-i'-1) / Real.fromInt 2)
+              | _ => Real.ceil (Real.fromInt (size'+i'-1) / Real.fromInt 2)
+    in
+      Word.fromInt j
+    end
+  in
+    structure RotPyrSearch = RotSearchFn(
+      struct
+        structure Search = PyrSearch
+        val perm = cycle
+      end
+    )
+    structure RotSBSearch = RotSearchFn(
+      struct
+        structure Search = SBSearch
+        fun perm size n = (cycle size n) o (inv_order size)
+      end
+    )
+  end
 
   local
     fun inv_order _ i = i

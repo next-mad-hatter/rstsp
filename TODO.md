@@ -38,14 +38,12 @@
     - test scripts in fresh clone
     - do we need merge xscales script ?
 * Source:
-    - add flip flop search & fork search
-    - remove rot-sb-search (since it does not make sense)
-    - iter/rot searches: return iterations results (for convergence studies)
-    - sb iter search: two reorderings?
-    - shared lib interface: all searches / search -> search transforms?
+    - add flip flop search
+    - iter + ff searches: return iterations results (for convergence studies)
     - options parser: http://mlton.org/FunctionalRecordUpdate
     - round to nearest integer option
     - iter search (+1/n) time limits
+    - shared lib interface: search transforms worth memory management hassle ?
     - word distance: wrapover cost check
     - compute tree width for info
     - try nearest neightbour / relaxed demidenko / relaxed supnick instances
@@ -54,8 +52,8 @@
     - mlprof
     - measure threaded storage + simplesearch performance
     - threaded rot/iter search
-    - threaded: splay trees -> redblack trees !
-    - threaded: readsafe lazy ?
+    - threaded: splay trees -> redblack trees ?
+    - threaded: threadsafe lazy ?
     - threaded: polyml.profile
     - test simplesearch under multimlton
     - misleading timings / timer stop points
