@@ -45,6 +45,7 @@
     - add flip flop search
     - nearest neighbour/random/demidenko/relaxed supnick starters
     - sb iter search: 2*n+1 / even more permutations ?
+    - iter/rot search: progress feedback
     - options parser: http://mlton.org/FunctionalRecordUpdate
     - round to nearest integer as option
     - iter search (+1/n) time limits

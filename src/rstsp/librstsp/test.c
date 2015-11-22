@@ -114,5 +114,7 @@ int main(int argc, const char **argv) {
    * we might one day also supply a valgrind whitelist.
    */
   rstsp_close();
+
   return 0;
+
 }
