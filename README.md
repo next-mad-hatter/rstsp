@@ -7,7 +7,8 @@
    ```
            ./bin/build.sh
    ```
-   requires a working `mlton` installation.
+   requires a working `mlton` installation.  Built executables and library
+   will be put into `./src/rstsp/build/`.
 
    Building the mingw binary requires a suitable (i.e. featuring gmp)
    cross-compiler environment.
@@ -32,7 +33,7 @@
    At first run, this will also generate random test data,
    which needs significant chunk of space -- about 200MB right now.
 
-   Also takes some time and memory (sometimes over 3GB in our tests).
+   Also takes some time and memory (sometimes well over 3GB in our tests).
 
 ### Plotting test results
 
