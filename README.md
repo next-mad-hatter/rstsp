@@ -24,7 +24,7 @@
    ```
           ./bin/fetch-data.sh
    ```
-   --- which uses `wget`, `tar`, `gunzip` and `lynx` and takes about 60MB,
+   -- which uses `wget`, `tar`, `gunzip` and `lynx` and takes about 60MB,
    plus about 20MB in `./tmp/` which can be cleaned afterwards.
 
    `./bin/data_stats.sh` will list present tsp instances sorted by
@@ -76,7 +76,7 @@
    for build details.
 
    For an example of using rstsp from SML repl,
-   see `./src/rstsp/sample-session-*.sml` --- you will also have to include
+   see `./src/rstsp/sample-session-*.sml` -- you will also have to include
    the library code first, which is done by running the repl in `./src/rstsp/` and
-     * under SML/NJ  : `use "./rstsp/rstsp-smlnj.sml";`
-     * under Poly/ML : `use "./rstsp/rstsp-polyml.sml";`.
+     - under SML/NJ  : `use "./rstsp/rstsp-smlnj.sml";`
+     - under Poly/ML : `use "./rstsp/rstsp-polyml.sml";`.
