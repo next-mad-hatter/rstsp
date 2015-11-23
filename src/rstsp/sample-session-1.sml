@@ -14,8 +14,8 @@ val node_size = SOME 0w3
 val iter_limit = SOME (IntInf.fromInt 10)
 val stale_thresh = SOME (IntInf.fromInt 2)
 val rotations = NONE
-val options = (rotations, (iter_limit, stale_thresh, (node_size)))
-structure Search = NSrch.RotSBSearch
+val options = (iter_limit, stale_thresh, (rotations, node_size))
+structure Search = NSrch.IterRotSBSearch
 
 structure Dist = NatDist
 val inst = TsplibReader.readTSPFile "../../test/data/tsplib/gr17.tsp"

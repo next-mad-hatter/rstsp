@@ -7,14 +7,18 @@
    ```
            ./bin/build.sh
    ```
-   requires a working `mlton` installation.
+   requires a working `mlton` installation.  Built executables and libraries
+   will be put into `./src/rstsp/build/`.
 
-   Building the mingw binary requires a suitable (i.e. featuring gmp)
+   Building mingw binaries requires a suitable (i.e. featuring gmp)
    cross-compiler environment.
 
-   For details, see `./src/rstsp/build_*.sh` and `./src/rstsp/README.md`.
+   If you don't have `exuberant-ctags` installed, simply ignore the ctags error
+   message.
 
-### Getting more test data
+   For more details, see `./src/rstsp/build_*.sh` and `./src/rstsp/README.md`.
+
+### Getting some test data
 
    ```
           ./bin/fetch-data.sh
@@ -24,15 +28,24 @@
 
 ### Running tests
 
+   Try running, say,
+   ```
+   ./src/rstsp/build/rstsp.mlton ./test/data/tsplib/gr17.tsp
+   ```
+   for a sample run and `./src/rstsp/build/rstsp.mlton --help`
+   to see command options.
+
+   To run an extensive test set, execute
+
    ```
           ./bin/test.sh
    ```
-   requires `ruby` & powerbar gem.
+   , which requires `ruby` ≥ 1.9.3 & `powerbar` gem.
 
-   At first run, this will also generate random test data,
+   During its first run, this script will also generate random test data,
    which needs significant chunk of space -- about 200MB right now.
 
-   Also takes some time and memory (sometimes over 3GB in our tests).
+   Also takes some time and memory (sometimes well over 3GB in our tests).
 
 ### Plotting test results
 
@@ -52,5 +65,7 @@
 
 ### Calling rstsp from your code
 
-   See `./src/rstsp/librstsp/test.c`, `./src/rstsp/build_lib.sh` and `./src/rstsp/README.md`.
+   The library interface is very straighforward -- see `./src/rstsp/librstsp/test.c`
+   for example code, `./src/rstsp/build_lib.sh` and `./src/rstsp/README.md`
+   for build details.
 

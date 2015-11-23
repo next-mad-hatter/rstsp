@@ -29,11 +29,28 @@ void print_tour(uint32_t *tour, uint32_t size) {
 
 int main(int argc, const char **argv) {
 
+  /**
+   * Yes, this is important.
+   */
   rstsp_open(argc, argv);
 
   uint32_t prob_size = 10;
+
+  /**
+   * We do not want want to deal with structure alignment for different
+   * platforms, hence a call to search function shall yield:
+   *   - a pointer to tour length;
+   *   - a pointer to tour array (zero-based, closed cycle)
+   *   all packed in a pointer array.
+   */
   uint32_t **result;
 
+  /**
+   * We also want to avoid having to manually manage memory, therefore only
+   * basic searches -- not their combinators -- are exposed through the library.
+   *
+   * What follows is simple pyramidal search.
+   */
   char *dotfilename = NULL;
   result = (uint32_t **)rstsp_pyr_search(prob_size, *dst, dotfilename);
   if(result) {
@@ -45,6 +62,9 @@ int main(int argc, const char **argv) {
     free(result);
   }
 
+  /**
+   * Simple balanced search;  max_width : node size limit.
+   */
   uint32_t max_width = 3;
   result = (uint32_t **)rstsp_sb_search(prob_size, *dst, max_width, dotfilename);
   if(result) {
@@ -56,10 +76,14 @@ int main(int argc, const char **argv) {
     free(result);
   }
 
+  /**
+   * Iterative pyramidal search which considers up to `rotations` cyclic permutations in
+   * each iteration and reorders for next.
+   */
   uint32_t max_iters = 10;
   uint32_t stale_iters = 3;
   uint32_t rotations = prob_size-1;
-  result = (uint32_t **)rstsp_ir_pyr_search(prob_size, *dst, max_iters, stale_iters, rotations);
+  result = (uint32_t **)rstsp_iter_pyr_search(prob_size, *dst, max_iters, stale_iters, rotations);
   if(result) {
     printf("  > Pyramidal/iter/rot tour: ");
     print_tour(result[1], prob_size);
@@ -69,7 +93,11 @@ int main(int argc, const char **argv) {
     free(result);
   }
 
-  result = (uint32_t **)rstsp_ir_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, rotations+1);
+  /**
+   * Iterative balanced search which, additionally to reordering, considers up to `rotations`
+   * "balanced shift"-permutations in each iteration.
+   */
+  result = (uint32_t **)rstsp_iter_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, rotations+1);
   if(result) {
     printf("  > SB/iter/rot tour: ");
     print_tour(result[1], prob_size);
@@ -79,6 +107,14 @@ int main(int argc, const char **argv) {
     free(result);
   }
 
+  /**
+   * Since SML offers garbage collection, the library should be clean from leaks in
+   * userspace.  Please note that valgrind has issues with mlton's memory management
+   * and reports lots of invalid memory accesses.  These messages should be harmless --
+   * we might one day also supply a valgrind whitelist.
+   */
   rstsp_close();
+
   return 0;
+
 }

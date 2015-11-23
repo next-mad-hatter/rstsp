@@ -17,12 +17,15 @@
     - relaxations
     - generator sandbox
 * Testing:
-    - implement + test 3d euclidean/manhattan instances
-    - try random euclidean instances
+    - implement stats -> study iter convergence
+    - implement -> test 3d-euclidean/manhattan instances
+    - implement -> test starting tours options
+    - tsplib med/large instances
+    - test on rs instances
+    - profile everything
     - bar plots: combine patterns and color
     - investigate poly timeouts in random/hi (4k+5k)
     - measure memory usage (steady/memusg: how do we script this?)
-    - better iter search testing
     - batch runner: make progress reporting threaded, total <- sum of time_limits
     - batch runner: make progress bar optional
     - batch runner: write after each test + trap quit/term
@@ -37,8 +40,12 @@
     - test scripts in fresh clone
     - do we need merge xscales script ?
 * Source:
-    - add flip flop search
+    - profile iter+rot searches
     - iter + ff searches: return iterations results (for convergence studies) -> plot
+    - add flip flop search
+    - nearest neighbour/random/demidenko/relaxed supnick starters
+    - sb iter search: 2*n+1 / even more permutations ?
+    - iter/rot search: progress feedback
     - options parser: http://mlton.org/FunctionalRecordUpdate
     - round to nearest integer as option
     - iter search (+1/n) time limits
@@ -48,7 +55,6 @@
     - try nearest neightbour / relaxed demidenko / relaxed supnick instances
     - tsplib input: support more formats
     - tsplib input: allow for empty & comment lines in data section
-    - mlprof
     - measure threaded storage + simplesearch performance
     - threaded rot/iter search
     - threaded: splay trees -> redblack trees ?

@@ -314,40 +314,44 @@
 
 \begin{figure}[htbp]
 \null\hfill%
-\subfloat[low]{%
+\subfloat[higher node size]{%
   \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_low.pdf}
 }\hfill\null
 \null\hfill%
-\subfloat[low]{%
+\subfloat[medium node size]{%
   \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_fast.pdf}
 }\hfill\null\\
 \null\hfill%
-\subfloat[fast]{%
+\subfloat[low node size]{%
   \includegraphics[width=0.59\textwidth]{../plot/out/mlton_time_random_steady.pdf}
 }\hfill\null\\
 \null\hfill%
-\subfloat[medium]{%
+\subfloat[pyramidal vs balanced/m3]{%
   \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_med.pdf}
 }\hfill\null
 \null\hfill%
-\subfloat[hi]{%
+\subfloat[pyramidal vs balanced/m4]{%
   \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_hi.pdf}
 }
 \hfill\null
-\caption{Runtime behaviour (Linux 3.10.17 x86\_64 @ i5-2520M).}
+\caption{Single search running times (Linux 3.10.17 x86\_64 @ i5-2520M).}
 \label{fig:timeGraph}
 \end{figure}
 
 \begin{figure}[htbp]
 \null\hfill%
-\subfloat[random]{%
+\subfloat[random --- tour length]{%
   \includegraphics[width=0.69\textwidth]{../plot/out/random_val.pdf}
 }\hfill\null\\
 \null\hfill%
-\subfloat[tsplib]{%
+\subfloat[tsplib --- tour quality]{%
   \includegraphics[width=0.69\textwidth]{../plot/out/tsplib_val.pdf}
+}\hfill\null\\
+\null\hfill%
+\subfloat[tsplib --- time needed]{%
+  \includegraphics[width=0.69\textwidth]{../plot/out/tsplib_time.pdf}
 }\hfill\null
-\caption{Results.}
+\caption{Benchmarks --- small instances.}
 \label{fig:timeGraph}
 \end{figure}
 

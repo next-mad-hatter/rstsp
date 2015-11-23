@@ -8,7 +8,7 @@
 
 require 'json'
 
-MAX_DIM = 500
+MAX_DIM = 90
 MAX_PROBS_PER_DATASET = 20
 
 files = {}
@@ -33,7 +33,7 @@ end
 res = []
 files.each_key do |dataset|
   files[dataset].each do |size,tsp,supp|
-    ([[30,0]] + [[30,50]]).each do |iters,rot|
+    ([50].product([0,"all"])).each do |iters,rot|
       ([[:pyramidal,nil]] + [:balanced].product((3..3).to_a)).each do |algo,max|
         if (
           (rot == 0 and algo == :balanced) or
@@ -51,7 +51,7 @@ files.each_key do |dataset|
           :max => max,
           :data => "#{dataset}/#{tsp}",
           :size => size,
-          :timeout => 120.0
+          :timeout => 240.0
         }
       end
     end
