@@ -11,13 +11,12 @@ trap "exit 1" INT QUIT TERM
 PROJ_DIR=`realpath ${0%/*}/..`
 TEST_DIR="${PROJ_DIR}/test"
 
-echo -n "Checking ruby version and libraries: "
-$( ruby -e "if RUBY_VERSION >= \"1.9.3\" then print \"OK\" and require \"powerbar\" else exit(1) end" > /dev/null 2>&1 )
+. "${PROJ_DIR}"/bin/check_ruby.sh
+$( ruby -e "require \"powerbar\"" > /dev/null 2>&1 )
 if [ $? -ne 0 ]; then
-  echo "not found"
+  echo "ruby/powerbar not found"
   exit 1
 fi
-echo "ok"
 
 echo "***************************************"
 echo
