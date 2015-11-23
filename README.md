@@ -77,5 +77,5 @@
    For an example of using rstsp from SML repl,
    see `src/rstsp/sample-session-*.sml` --- you will also have to include
    the library code first, which is done by running the repl in `./src/rstsp/` and
-     * under SML/NJ  : `use "./rstsp/rstsp-smlnj.sml";
+     * under SML/NJ  : `use "./rstsp/rstsp-smlnj.sml";`
      * under Poly/ML : `use "./rstsp/rstsp-polyml.sml";`.
