@@ -1,8 +1,10 @@
-# Pyramidal & Relaxed Supnick TSP
 
-## Quick Start Guide
+#                       Pyramidal & Relaxed Supnick TSP
+
+##                           Quick Start Guide
 
 ### Building
+
 
    ```
            ./bin/build.sh
@@ -19,6 +21,7 @@
    For more details, see `./src/rstsp/build_*.sh` and `./src/rstsp/README.md`.
 
 ### Getting some test data
+
    To get sample tsp instances from tsplib, vlsi and dimacs datasets, run
 
    ```
@@ -49,9 +52,11 @@
    During its first run, this script will also generate random test data,
    which needs significant chunk of space -- about 200MB right now.
 
-   Also takes some time and memory (sometimes well over 3GB in our tests).
+   Also takes some time (about 30 minutes on our machine right now) and memory
+   (sometimes well over 3GB in our tests).
 
 ### Plotting test results
+
 
    ```
           ./bin/plot.sh
@@ -60,6 +65,7 @@
    Generated plots will be put to `./plot/out` folder.
 
 ### Packaging
+
 
    ```
           [env VERSION=my-great-build] ./bin/pkg.sh
@@ -78,5 +84,10 @@
    For an example of using rstsp from SML repl,
    see `./src/rstsp/sample-session-*.sml` -- you will also have to include
    the library code first, which is done by running the repl in `./src/rstsp/` and
-     - under SML/NJ  : `use "./rstsp/rstsp-smlnj.sml";`
-     - under Poly/ML : `use "./rstsp/rstsp-polyml.sml";`.
+
+   - under SML/NJ  : `use "./rstsp/rstsp-smlnj.sml";`
+
+   - under Poly/ML : `use "./rstsp/rstsp-polyml.sml";`
+     (you'll have to export smlnj-lib from mlton for Poly/ML
+     to use via `./src/rstsp/polyml/*.sh` scripts first).
+
