@@ -12,13 +12,17 @@
  * TODO: return rotations' results instead of flushing them to stdout.
  * TODO: allow for more permutations?
  *)
-functor RotSearchFn(X : sig structure Search: TSP_SEARCH; val perm : word -> word -> word -> word end ) : TSP_SEARCH =
+functor RotSearchFn(X : sig
+    structure Search: TSP_SEARCH
+    val perm : word -> word -> word -> word
+    val max_perm : word -> word
+  end ) : TSP_SEARCH =
 struct
 
   structure S = X.Search
   (*
-  structure U = Utils
   *)
+  structure U = Utils
 
   structure Len = S.Len
 
@@ -52,15 +56,15 @@ struct
     end
     fun iter size dist rot max_rot sol opts =
       case rot > max_rot of
-        true => sol
+        true => (U.printErr "\n"; sol)
       | false =>
           let
             val sol' = solve size dist rot opts
             (*
-            val _ = U.printErr ("     * Rot yields:  ")
-            val _ = U.printErr ((Len.toString o #1 o valOf) sol')
-            val _ = U.printErr "\n"
             *)
+            val _ = if rot = 0w0 then U.printErr ("Permuting: ") else ()
+            val _ = U.printErr ((Len.toString o #1 o valOf) sol')
+            val _ = U.printErr " "
             val sol'' = case (sol, sol') of
                           (NONE, _) => sol'
                         | (_, NONE) => sol
@@ -68,9 +72,9 @@ struct
           in
             iter size dist (rot+0w1) max_rot sol'' opts
           end
-    val max_rot' = case max_rot of
-                     NONE => size
-                   | SOME m => Word.min (m,size)
+    val max_rot' = case (max_rot, X.max_perm size) of
+                     (NONE,m) => m
+                   | (SOME m,m') => Word.min (m,m')
   in
     fn () => (iter size dist 0w0 max_rot' NONE opts, NONE)
   end

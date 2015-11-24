@@ -54,13 +54,13 @@ struct
                 let
                   val t = S.tourToVector (r ())
                   val first_sol' = if isSome first_sol then first_sol else SOME t
-                  (*
-                  val _ = U.printErr ("     * Iter yields:  ")
+                  val _ = U.printErr ("Iteration:  ")
                   val _ = U.printErr (Len.toString new_len)
+                  (*
                   val _ = U.printErr (" @ ")
                   val _ = U.printErr (tourToString t)
-                  val _ = U.printErr "\n"
                   *)
+                  val _ = U.printErr "\n"
                   val lu = lookup t
                   val d'' = fn (x,y) => d' (lu x, lu y)
                   val ts = case sol of

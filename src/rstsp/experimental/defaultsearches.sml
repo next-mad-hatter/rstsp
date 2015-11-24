@@ -10,73 +10,70 @@ struct
 
   structure PyrSearch : TSP_SEARCH = ThreadedSearchFn(
     struct structure Graph = PyrGraph(N); structure Store = PyrStore(N) end)
+
   structure SBSearch : TSP_SEARCH = ThreadedSearchFn(
     struct structure Graph = SBGraph(N); structure Store = SBStore(N) end)
 
-  local
-    fun cycle size n = fn i => Word.mod (n + i, size)
-    fun inv_order size i =
-    let
-      val size' = Word.toInt size
-      val i' = Word.toInt i
-      val j = case Int.mod(i',2) of
-                0 => Real.floor (Real.fromInt (size'-i'-1) / Real.fromInt 2)
-              | _ => Real.ceil (Real.fromInt (size'+i'-1) / Real.fromInt 2)
-    in
-      Word.fromInt j
-    end
+  fun id _ i = i
+
+  fun cycle size n = fn i => Word.mod (n + i, size)
+
+  fun sb_shuffle size i =
+  let
+    val size' = Word.toInt size
+    val i' = Word.toInt i
+    val j = case Int.mod(i',2) of
+              0 => Real.floor (Real.fromInt (size'-i'-1) / 2.0)
+            | _ => Real.ceil  (Real.fromInt (size'+i'-1) / 2.0)
   in
-    structure RotPyrSearch = RotSearchFn(
-      struct
-        structure Search = PyrSearch
-        val perm = cycle
-      end
-    )
-    structure RotSBSearch = RotSearchFn(
-      struct
-        structure Search = SBSearch
-        fun perm size n = (cycle size n) o (inv_order size)
-      end
-    )
+    Word.fromInt j
   end
 
-  local
-    fun inv_order _ i = i
-  in
-    structure IterPyrSearch = IterSearchFn(
-      struct
-        structure Search = PyrSearch
-        val inv_order = inv_order
-      end)
-    structure IterRotPyrSearch = IterSearchFn(
-      struct
-        structure Search = RotPyrSearch
-        val inv_order = inv_order
-      end)
-  end
-
-  local
-    fun inv_order size i =
-    let
-      val size' = Word.toInt size
-      val i' = Word.toInt i
-      val j = case Int.mod(i',2) of
-                0 => Real.floor (Real.fromInt (size'-i'-1) / Real.fromInt 2)
-              | _ => Real.ceil (Real.fromInt (size'+i'-1) / Real.fromInt 2)
-    in
-      Word.fromInt j
+  structure RotPyrSearch = RotSearchFn(
+    struct
+      structure Search = PyrSearch
+      val perm = cycle
+      fun max_perm size = size-0w1
     end
-  in
-    structure IterSBSearch = IterSearchFn(
-      struct
-        structure Search = SBSearch
-        val inv_order = inv_order
-      end)
-    structure IterRotSBSearch = IterSearchFn(
-      struct
-        structure Search = RotSBSearch
-        val inv_order = inv_order
-      end)
-  end
+  )
+
+  structure RotSBSearch = RotSearchFn(
+    struct
+      structure Search = SBSearch
+      fun perm size n =
+      let
+        val x = Word.mod(n,0w2)
+        val y = Word.div(n,0w2)
+        fun r i = if x = 0w0 then i else size-0w1-i
+      in
+        (cycle size y) o r o (sb_shuffle size)
+      end
+      fun max_perm size = 0w2*(size-0w1)
+    end
+  )
+
+  structure IterPyrSearch = IterSearchFn(
+    struct
+      structure Search = PyrSearch
+      val inv_order = id
+    end)
+
+  structure IterSBSearch = IterSearchFn(
+    struct
+      structure Search = SBSearch
+      val inv_order = sb_shuffle
+    end)
+
+  structure IterRotPyrSearch = IterSearchFn(
+    struct
+      structure Search = RotPyrSearch
+      val inv_order = id
+    end)
+
+  structure IterRotSBSearch = IterSearchFn(
+    struct
+      structure Search = RotSBSearch
+      val inv_order = sb_shuffle
+    end)
 
 end

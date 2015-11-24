@@ -9,6 +9,7 @@
     - complete the source readme
     - wiki / bug tracker ?
     - script via cmake ?
+    - move plot/data/out to plot/out
 * Report:
     - writeup
     - sml support: can the pandoc -> rst way be pretty-fixed?
@@ -41,6 +42,8 @@
     - test scripts in fresh clone
     - do we need merge xscales script ?
 * Source:
+    - sb rot search: 3n permutations?
+    - SBNode.toHash speed + sb_shuffle speed
     - iter + ff searches: return iterations results (for convergence studies) -> plot
     - add flip flop search
     - nearest-neighbour/random/demidenko/relaxed-supnick starters ?
