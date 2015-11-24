@@ -21,28 +21,32 @@ struct
   fun cycle size n = fn i => Word.mod (n + i, size)
 
   fun sb_shuffle size i =
-  let
-    (* FIXME: speedup? *)
-    val size' = Word.toInt size
-    val i' = Word.toInt i
-    val j = case Int.mod(i',2) of
-              0 => Real.floor (Real.fromInt (size'-i'-1) / 2.0)
-            | _ => Real.ceil  (Real.fromInt (size'+i'-1) / 2.0)
-  in
-    Word.fromInt j
-  end
+    case Word.mod(i,0w2) of
+      0w0 => Word.div (size-i-0w1,0w2)
+    | _   => Word.div (size+i,0w2)
 
   structure RotPyrSearch = RotSearchFn(
     struct
       structure Search = PyrSearch
-      val perm = cycle
       fun max_perm size = size-0w1
+      val perm = cycle
     end
   )
 
   structure RotSBSearch = RotSearchFn(
     struct
+      fun max_perm size = 0w2*(size-0w1)
       structure Search = SBSearch
+      fun perm size n =
+      let
+        val x = Word.mod(n,0w2)
+        val y = Word.div(n,0w2)
+        fun f1 i = if x = 0w0 then i else size-0w1-i
+      in
+        (cycle size y) o f1 o (sb_shuffle size)
+      end
+      (*
+      fun max_perm size = 0w3*(size-0w1)
       fun perm size n =
       let
         val x = Word.mod(n,0w3)
@@ -52,7 +56,7 @@ struct
       in
         (cycle size y) o f1 o f2
       end
-      fun max_perm size = 0w3*(size-0w1)
+      *)
     end
   )
 

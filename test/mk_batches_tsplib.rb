@@ -51,7 +51,7 @@ files.each_key do |dataset|
           :max => max,
           :data => "#{dataset}/#{tsp}",
           :size => size,
-          :timeout => 360.0
+          :timeout => 600.0
         }
       end
     end

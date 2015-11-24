@@ -6,11 +6,10 @@
  *)
 
 (**
- * Given a graph traversal for a TSP of size n,
- * this applies the traversal to up to n permutations of the TSP.
+ * Given a graph traversal for a TSP of size n, this applies the traversal to
+ * up to max_perm(n) permutations of the TSP in addition to canonical ordering.
  *
  * TODO: return rotations' results instead of flushing them to stdout.
- * TODO: allow for more permutations?
  *)
 functor RotSearchFn(X : sig
     structure Search: TSP_SEARCH

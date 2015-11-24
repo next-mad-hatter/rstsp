@@ -97,7 +97,7 @@ int main(int argc, const char **argv) {
    * Iterative balanced search which, additionally to reordering, considers up to `rotations`
    * "balanced shift"-permutations in each iteration.
    */
-  result = (uint32_t **)rstsp_iter_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, rotations+1);
+  result = (uint32_t **)rstsp_iter_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, 1+2*rotations);
   if(result) {
     printf("  > SB/iter/rot tour: ");
     print_tour(result[1], prob_size);

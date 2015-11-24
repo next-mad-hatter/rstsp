@@ -31,7 +31,7 @@ struct
       if D.getDim data < 0w2 then print "Empty problem.\n"
       else
         let
-          val (verbose, _, pyramidal, max_node_size, max_iters, stale_thresh, _, _) = opts
+          val (verbose, _, pyramidal, max_node_size, max_iters, stale_thresh, max_rot, _) = opts
           val dist = D.getDist data
           val size = D.getDim data
           val cpu_timer = Timer.startCPUTimer ()
@@ -48,6 +48,7 @@ struct
           print ("      Problem size:  " ^ (U.wordToString size) ^ "\n");
           print ("         Algorithm:  " ^ (if pyramidal then "pyramidal" else "balanced") ^ "\n");
           print ("   Node size limit:  " ^ (if pyramidal orelse max_node_size = NONE then "none" else (U.wordToString o valOf) max_node_size) ^ "\n");
+          print ("         Rotations:  " ^ (if max_rot = NONE then "all" else (U.wordToString o valOf) max_rot) ^ "\n");
           print ("  Iterations limit:  " ^ (if max_iters = NONE then "none" else (IntInf.toString o valOf) max_iters) ^ "\n");
           print ("   Stale threshold:  " ^ (if stale_thresh = NONE then "none" else (IntInf.toString o valOf) stale_thresh) ^ "\n");
           print ("         CPU timer:  " ^ cpu ^ " ms\n");

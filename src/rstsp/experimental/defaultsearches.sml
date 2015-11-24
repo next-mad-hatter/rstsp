@@ -42,11 +42,12 @@ struct
       structure Search = SBSearch
       fun perm size n =
       let
-        val x = Word.mod(n,0w2)
-        val y = Word.div(n,0w2)
-        fun r i = if x = 0w0 then i else size-0w1-i
+        val x = Word.mod(n,0w3)
+        val y = Word.div(n,0w3)
+        fun f1 i = if x = 0w0 then i else size-0w1-i
+        val f2 = if x = 0w1 then fn i => i else sb_shuffle size
       in
-        (cycle size y) o r o (sb_shuffle size)
+        (cycle size y) o f1 o f2
       end
       fun max_perm size = 0w2*(size-0w1)
     end
