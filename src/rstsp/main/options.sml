@@ -78,7 +78,7 @@ struct
     print "                      (zero for unlimited, default: 1, i.e. no local search)\n";
     print "\n";
     print "    -j|--stale num :  maximum number of stale iterations in local search\n";
-    print "                      (zero for unlimited, default: 5)\n";
+    print "                      (zero for unlimited, default: 1)\n";
     print "\n";
     print "  -r|--rot all|num :  maximum number of rotations in local search\n";
     print "                      (\"all\" for all rotations, default: 0)\n";
@@ -202,7 +202,7 @@ struct
             end
     end
 
-    val res = read_next ANY (false, NONE, false, SOME 0w4, SOME (IntInf.fromInt 1), SOME (IntInf.fromInt 5), SOME 0w0, []) args
+    val res = read_next ANY (false, NONE, false, SOME 0w4, SOME (IntInf.fromInt 1), SOME (IntInf.fromInt 1), SOME 0w0, []) args
     val _ = if #8 res = [] then raise Fail "no input files" else ()
   in
     (SOME res)

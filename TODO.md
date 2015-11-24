@@ -43,6 +43,7 @@
     - do we need merge xscales script ?
 * Source:
     - sb rot search: 3n permutations?
+    - iter/stale limit check
     - SBNode.toHash speed + sb_shuffle speed
     - iter + ff searches: return iterations results (for convergence studies) -> plot
     - add flip flop search

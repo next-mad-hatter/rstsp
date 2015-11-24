@@ -40,7 +40,7 @@ struct
   let
     fun lookup t = fn i => Vector.sub (t, Word.toInt (P.inv_order size i))
     fun find d' = #1 ((S.search size d' NONE false opts) ())
-    fun loop (d', sol, iter, iter_limit, old_len, first_sol, stale_count, stale_thresh) =
+    fun loop (d', sol, iter, iter_limit, old_len, stale_count, stale_thresh) =
       case (isSome iter_limit andalso iter > valOf iter_limit, sol) of
         (true, NONE) => NONE
       | (true, SOME t) => SOME (valOf old_len, fn () => t)
@@ -49,11 +49,10 @@ struct
             val res = find d'
           in
             case res of
-              NONE => loop (d', sol, iter+1, SOME (IntInf.fromInt 0), old_len, first_sol, stale_count, stale_thresh)
+              NONE => loop (d', sol, iter+1, SOME (IntInf.fromInt 0), old_len, stale_count, stale_thresh)
             | SOME (new_len,r) =>
                 let
                   val t = S.tourToVector (r ())
-                  val first_sol' = if isSome first_sol then first_sol else SOME t
                   val _ = U.printErr ("Iteration:  ")
                   val _ = U.printErr (Len.toString new_len)
                   (*
@@ -74,18 +73,18 @@ struct
                   U.printErr (tourToString (valOf ts));
                   U.printErr "\n";
                   *)
-                  if ts = first_sol orelse isSome stale_thresh andalso stale_count' >= valOf stale_thresh then
-                    loop (d'', ts, iter+1, SOME (IntInf.fromInt 0), SOME new_len, first_sol', stale_count', stale_thresh)
+                  if isSome stale_thresh andalso stale_count' >= valOf stale_thresh then
+                    loop (d'', ts, iter+1, SOME (IntInf.fromInt 0), SOME new_len, stale_count', stale_thresh)
                   else if isSome old_len andalso Len.compare (new_len,valOf old_len) = GREATER then (
                     U.printErr "WARNING: target increase detected.\n";
-                    loop (d', sol, iter+1, SOME (IntInf.fromInt 0), old_len, first_sol', stale_count', stale_thresh)
+                    loop (d', sol, iter+1, SOME (IntInf.fromInt 0), old_len, stale_count', stale_thresh)
                     )
                   else
-                    loop (d'', ts, iter+1, iter_limit, SOME new_len, first_sol', stale_count', stale_thresh)
+                    loop (d'', ts, iter+1, iter_limit, SOME new_len, stale_count', stale_thresh)
                 end
           end
   in
-    fn () => (loop (dist, NONE, IntInf.fromInt 1, iter_limit, NONE, NONE, IntInf.fromInt 0, stale_thresh), NONE)
+    fn () => (loop (dist, NONE, IntInf.fromInt 1, iter_limit, NONE, IntInf.fromInt 0, stale_thresh), NONE)
   end
 
 end

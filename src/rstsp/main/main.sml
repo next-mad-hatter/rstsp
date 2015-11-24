@@ -149,8 +149,11 @@ struct
             | _ => ()
     val (_, _, _, _, max_iters, stale_thresh, _, files) = valOf opts
     val _ = case (max_iters, stale_thresh) of
-              (NONE, NONE) => U.printErr
-                "WARNING: neither iterations limit nor stale threshold is set.  This might diverge.\n"
+              (NONE, NONE) =>
+              ( U.printErr
+                "WARNING: neither iterations limit nor stale threshold is set.  This will diverge.\n";
+                OS.Process.exit OS.Process.failure
+              )
             | _ => ()
   in
     List.app (processFile (valOf opts)) files
