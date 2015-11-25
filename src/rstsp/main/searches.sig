@@ -20,4 +20,5 @@
   structure IterRotSBSearch : TSP_SEARCH
   structure AdPyrSearch : TSP_SEARCH
   structure AdSBSearch : TSP_SEARCH
+  structure FlipFlopSearch : TSP_SEARCH
  end

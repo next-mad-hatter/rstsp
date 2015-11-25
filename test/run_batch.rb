@@ -65,6 +65,13 @@ class Batch
         if opts[:adapt].class == Fixnum then " -a #{opts[:adapt]}"
                                         else raise FormatError end
       end
+    cmd << case opts[:flips]
+      when nil
+        ""
+      else
+        if opts[:flips].class == Fixnum then " -f #{opts[:flips]}"
+                                        else raise FormatError end
+      end
     cmd << case opts[:rot]
       when nil
         ""

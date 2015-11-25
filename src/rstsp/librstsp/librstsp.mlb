@@ -35,6 +35,7 @@ in
   ../tspsearch/itersearch.sml
   ../tspsearch/rotsearch.sml
   ../tspsearch/adaptivesearch.sml
+  ../tspsearch/flipflopsearch.sml
 
   ../main/searches.sig
   ../main/defaultsearches.sml

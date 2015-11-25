@@ -34,6 +34,7 @@ in
   ../tspsearch/itersearch.sml
   ../tspsearch/rotsearch.sml
   ../tspsearch/adaptivesearch.sml
+  ../tspsearch/flipflopsearch.sml
 
   ../main/options.sml
   ../main/tspread.sml

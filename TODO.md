@@ -5,6 +5,7 @@
 [//]: (# $Rev: 34 $)
 
 * Repo:
+    - rename rstsp -> p4/psb/........tsp
     - automate create-polyml-smlnjlib scripts
     - complete the source readme
     - wiki / bug tracker ?
@@ -13,21 +14,25 @@
 * Report:
     - writeup
     - sml support: can the pandoc -> rst way be pretty-fixed?
+    - compute tree width for info
+    - bar plots: combine patterns and color
 * Research:
+    - sb : better permutations?
+    - study iter convergence
+    - preprocessing? (~rs-sort bad)
     - ≥3D euclidean applies?
     - relaxations
     - generator sandbox
 * Testing:
-    - study iter convergence
+    - test on rs + monge instances
     - implement -> test 3d-euclidean/manhattan instances
-    - implement -> test starting tours options
     - tsplib med/large instances
-    - test on rs instances
-    - compare noniter-sb/nodesize vs iter/rot-sb search
-    - profile everything
-    - bar plots: combine patterns and color
+    - study sb node size effect
     - investigate poly timeouts in random/hi (4k+5k)
     - measure memory usage (steady/memusg: how do we script this?)
+    - profile code
+    - plot hash collisions nrs ?
+* Scripting:
     - batch runner: make progress reporting threaded, total <- sum of time_limits
     - batch runner: make progress bar optional
     - batch runner: write after each test + trap quit/term
@@ -36,27 +41,18 @@
     - batch runner: failed vs timed out stats
     - create_random_data (and more?): write <-> rescue unlink
     - mk_batches & mk_csv : factor out common code
-    - use multiple random instances for target tests ?
-    - plot hash collisions nrs ?
-    - random data: compute hk bounds
-    - test scripts in fresh clone
+    - random data: compute hk bounds ?
     - do we need merge xscales script ?
+    - sometimes test scripts in fresh clone
 * Source:
-    - options parser: http://mlton.org/FunctionalRecordUpdate
-    - round to nearest integer as option
-    - iter search (+1/n) time limits
-    - iter/stale limit check
-    - SBNode.toHash speed + sb_shuffle speed
-    - iter + ff searches: return iterations results (for convergence studies) -> plot
-    - librstsp: adaptive search rate & permutations as function ptrs
-    - add flip flop search
-    - nearest-neighbour/random/demidenko/relaxed-supnick starters ?
-    - sb iter search: 2*n+1 / even more / less / different permutations ?
-    - iter/rot search: some progress feedback
-    - shared lib interface: search transforms worth memory management hassle ?
     - word distance: wrapover cost check
-    - compute tree width for info
-    - try nearest neightbour / relaxed demidenko / relaxed supnick instances
+    - round to nearest integer as option
+    - adaptive search: reuse values when increasing permutations number
+    - iter searches time limits
+    - iter + ff searches: return iterations results rather than print to stderr -> progress feedback ?
+    - librstsp: adaptive search rate & permutations as function ptrs
+    - options parser: http://mlton.org/FunctionalRecordUpdate
+    - shared lib interface: search transforms worth memory management hassle ?
     - tsplib input: support more formats
     - tsplib input: allow for empty & comment lines in data section
     - measure threaded storage + simplesearch performance
@@ -65,12 +61,11 @@
     - threaded: threadsafe lazy ?
     - threaded: polyml.profile
     - test simplesearch under multimlton
-    - misleading timings / timer stop points
+    - misleading timings / timer stop points ?
     - hardwired code creation (node type -> node types list)
     - implement doublekeymap & move the housekeeping from sbgraph
-    - when word is not enough: overwrap check / type option / replace
     - branch cutting ?
-    - mst tour / hk bounds
+    - implement mst tour / bounds computations ?
     - use mlton/polyml make ?
     - add version info to executable/build ?
     - plan/call for 0.1.0 rc1 when interfaces stabilize

@@ -95,4 +95,12 @@ struct
       fun increase rot = 0w1 + (Word.fromInt o Real.ceil) (((Real.fromInt o Word.toInt) rot) * 1.42)
     end)
 
+  structure FlipFlopSearch = FlipFlopSearchFn(
+    struct
+      structure Search' = IterPyrSearch
+      val inv_order' = id
+      structure Search'' = AdSBSearch
+      val inv_order'' = sb_shuffle
+    end)
+
 end

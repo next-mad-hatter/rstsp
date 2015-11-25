@@ -115,7 +115,21 @@ int main(int argc, const char **argv) {
   uint32_t min_rots = 0;
   result = (uint32_t **)rstsp_ad_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, min_rots, max_rots);
   if(result) {
-    printf("  > SB/iter/rot tour: ");
+    printf("  > SB/adaptive tour: ");
+    print_tour(result[1], prob_size);
+    printf("  > Tour length: %" PRIu32 "\n", *result[0]);
+    free(result[1]);
+    free(result[0]);
+    free(result);
+  }
+
+  /**
+   *  A combination of adaptive sb & iterative pyramidal searches.
+   */
+  uint32_t max_flips = 0;
+  result = (uint32_t **)rstsp_ff_search(prob_size, *dst, max_width, max_iters, stale_iters, min_rots, max_rots, max_flips);
+  if(result) {
+    printf("  > SB/flipflop tour: ");
     print_tour(result[1], prob_size);
     printf("  > Tour length: %" PRIu32 "\n", *result[0]);
     free(result[1]);
