@@ -77,13 +77,12 @@ int main(int argc, const char **argv) {
   }
 
   /**
-   * Iterative pyramidal search which considers up to `rotations` cyclic permutations in
+   * Iterative pyramidal search which considers up to n cyclic permutations in
    * each iteration and reorders for next.
    */
   uint32_t max_iters = 10;
   uint32_t stale_iters = 3;
-  uint32_t rotations = prob_size-1;
-  result = (uint32_t **)rstsp_iter_pyr_search(prob_size, *dst, max_iters, stale_iters, rotations);
+  result = (uint32_t **)rstsp_iter_pyr_search(prob_size, *dst, max_iters, stale_iters, prob_size-1);
   if(result) {
     printf("  > Pyramidal/iter/rot tour: ");
     print_tour(result[1], prob_size);
@@ -94,10 +93,10 @@ int main(int argc, const char **argv) {
   }
 
   /**
-   * Iterative balanced search which, additionally to reordering, considers up to `rotations`
+   * Iterative balanced search which, additionally to reordering, considers up to 2*n additional
    * "balanced shift"-permutations in each iteration.
    */
-  result = (uint32_t **)rstsp_iter_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, 1+2*rotations);
+  result = (uint32_t **)rstsp_iter_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, 2*prob_size);
   if(result) {
     printf("  > SB/iter/rot tour: ");
     print_tour(result[1], prob_size);

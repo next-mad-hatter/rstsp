@@ -7,14 +7,18 @@
 
 (**
  * Given a graph traversal for a TSP of size n, this applies the traversal to
- * up to max_perm(n) permutations of the TSP in addition to canonical ordering.
+ * up to max_perm(n) permutations of the TSP -- enumerated by the permute function --
+ * in addition to canonical ordering.
  *
  * TODO: return rotations' results instead of flushing them to stdout.
  *)
 functor RotSearchFn(X : sig
     structure Search: TSP_SEARCH
-    val perm : word -> word -> word -> word
     val max_perm : word -> word
+    (**
+     * We will need problem size & permutation's number here.
+     *)
+    val perm : word -> word -> word -> word
   end ) : TSP_SEARCH =
 struct
 
@@ -38,6 +42,25 @@ struct
 
   val tourToString = TSPUtils.wvToString 0w1
 
+  (* QUICK EXP: sb reordering *)
+  (*
+  *)
+  fun sbPP size dist =
+  let
+    fun wgt j = (Len.toInt o dist) (j,0w0) - (Len.toInt o dist) (j,0w1)
+    fun cmp (i,j) = Int.compare (wgt i, wgt j)
+    val nums = Array.tabulate (Word.toInt size - 2, Word.fromInt)
+    val _ = ArrayQSort.sort cmp nums
+    val res = Array.array (Word.toInt size,0w0)
+    val _ = Array.appi (fn (i,x) => (Array.update (res, Word.toInt (x+0w2), Word.fromInt (i+2)); ())) nums
+    val _ = Array.update (res, 1, 0w1)
+    val _ = U.printErr "\n A: "
+    val _ = Array.app ((fn x => (U.printErr x; U.printErr " ")) o Int.toString o Word.toInt) res
+    val _ = U.printErr "\n"
+  in
+    fn i => Array.sub (res, Word.toInt i)
+  end
+
   fun search size dist _ _ (max_rot, opts) =
   let
     fun solve size dist rot opts =
@@ -45,7 +68,14 @@ struct
       (**
        * We wish the first rotation to yield the initial search.
        *)
-      val trans = if rot = 0w0 then fn i => i else X.perm size rot
+      val trans = case rot of
+                  (*
+                    0w0 => (fn i => i)
+                  | _   => fn i => X.perm size (rot-0w1)
+                  *)
+                    0w0 => (fn i => i)
+                  | 0w1 => sbPP size dist
+                  | _   => X.perm size (rot-0w2)
       val dist' = fn (x,y) => dist(trans x, trans y)
       val sol = #1 ((S.search size dist' NONE false opts) ())
     in
@@ -71,9 +101,10 @@ struct
           in
             iter size dist (rot+0w1) max_rot sol'' opts
           end
-    val max_rot' = case (max_rot, X.max_perm size) of
-                     (NONE,m) => m
-                   | (SOME m,m') => Word.min (m,m')
+    val max_rot' = 0w1 + (case (max_rot, X.max_perm size) of
+                           (NONE,m) => m
+                         | (SOME m,m') => Word.min (m,m')
+                         )
   in
     fn () => (iter size dist 0w0 max_rot' NONE opts, NONE)
   end

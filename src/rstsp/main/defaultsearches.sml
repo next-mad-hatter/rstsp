@@ -16,14 +16,14 @@ struct
 
   structure SBSearch = SimpleSearchFn(SBGraph(N))
 
-  fun id _ i = i
-
-  fun cycle size n = fn i => Word.mod (n + i, size)
-
   fun sb_shuffle size i =
     case Word.mod(i,0w2) of
       0w0 => Word.div (size-i-0w1,0w2)
     | _   => Word.div (size+i,0w2)
+
+  fun id _ i = i
+
+  fun cycle size n = fn i => Word.mod (n + i + 0w1, size)
 
   structure RotPyrSearch = RotSearchFn(
     struct

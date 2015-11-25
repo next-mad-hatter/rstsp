@@ -16,6 +16,7 @@ sig
   val zero : num
   val compare : num * num -> order
   val toString : num -> string
+  val toInt : num -> int
 end
 
 (**
@@ -29,6 +30,7 @@ struct
   val zero = 0.0
   val compare = Real.compare
   val toString = Real.toString
+  val toInt = Real.floor
 end
 
 structure WordNum : NUMERIC =
@@ -38,4 +40,5 @@ struct
   val zero = 0w0
   val compare = Word.compare
   val toString = Utils.wordToString
+  val toInt = Word.toInt
 end
