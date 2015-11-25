@@ -16,10 +16,9 @@ struct
 
   structure SBSearch = SimpleSearchFn(SBGraph(N))
 
-  fun sb_shuffle size i =
-    case Word.mod(i,0w2) of
-      0w0 => Word.div (size-i-0w1,0w2)
-    | _   => Word.div (size+i,0w2)
+  fun sb_shuffle size i = case Word.mod(i,0w2) of
+                            0w0 => Word.div (size-i-0w1,0w2)
+                          | _   => Word.div (size+i,0w2)
 
   fun id _ i = i
 
@@ -29,15 +28,15 @@ struct
     struct
       structure Search = PyrSearch
       fun max_perm size = size-0w1
-      val perm = cycle
+      val permute = cycle
     end
   )
 
   structure RotSBSearch = RotSearchFn(
     struct
-      fun max_perm size = 0w2*(size-0w1)
+      fun max_perm size = 0w2*size
       structure Search = SBSearch
-      fun perm size n =
+      fun permute size n =
       let
         val x = Word.mod(n,0w2)
         val y = Word.div(n,0w2)
@@ -45,18 +44,6 @@ struct
       in
         (cycle size y) o f1 o (sb_shuffle size)
       end
-      (*
-      fun max_perm size = 0w3*(size-0w1)
-      fun perm size n =
-      let
-        val x = Word.mod(n,0w3)
-        val y = Word.div(n,0w3)
-        fun f1 i = if x = 0w0 then i else size-0w1-i
-        val f2 = if x = 0w1 then fn i => i else sb_shuffle size
-      in
-        (cycle size y) o f1 o f2
-      end
-      *)
     end
   )
 
@@ -82,6 +69,31 @@ struct
     struct
       structure Search = RotSBSearch
       val inv_order = sb_shuffle
+    end)
+
+  structure AdPyrSearch = AdSearchFn(
+    struct
+      structure Search = PyrSearch
+      val inv_order = id
+      fun max_perm size = size-0w1
+      val permute = cycle
+      fun increase rot = 0w1 + 0w2*rot
+    end)
+
+  structure AdSBSearch = AdSearchFn(
+    struct
+      structure Search = SBSearch
+      val inv_order = sb_shuffle
+      fun max_perm size = 0w2*size
+      fun permute size n =
+      let
+        val x = Word.mod(n,0w2)
+        val y = Word.div(n,0w2)
+        fun f1 i = if x = 0w0 then i else size-0w1-i
+      in
+        (cycle size y) o f1 o (sb_shuffle size)
+      end
+      fun increase rot = 0w1 + (Word.fromInt o Real.ceil) (((Real.fromInt o Word.toInt) rot) * 1.21)
     end)
 
 end

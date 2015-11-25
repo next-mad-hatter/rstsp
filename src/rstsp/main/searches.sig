@@ -18,4 +18,6 @@
   structure IterSBSearch : TSP_SEARCH
   structure IterRotPyrSearch : TSP_SEARCH
   structure IterRotSBSearch : TSP_SEARCH
+  structure AdPyrSearch : TSP_SEARCH
+  structure AdSBSearch : TSP_SEARCH
  end

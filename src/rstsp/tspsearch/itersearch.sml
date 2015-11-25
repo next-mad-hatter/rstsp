@@ -19,6 +19,7 @@
 functor IterSearchFn(
   P: sig
     structure Search: TSP_SEARCH
+    (* This will generally depend on problem size. *)
     val inv_order: word -> word -> word
   end) : TSP_SEARCH =
 struct
@@ -55,10 +56,6 @@ struct
                   val t = S.tourToVector (r ())
                   val _ = U.printErr ("Iteration:  ")
                   val _ = U.printErr (Len.toString new_len)
-                  (*
-                  val _ = U.printErr (" @ ")
-                  val _ = U.printErr (tourToString t)
-                  *)
                   val _ = U.printErr "\n"
                   val lu = lookup t
                   val d'' = fn (x,y) => d' (lu x, lu y)
@@ -66,13 +63,8 @@ struct
                              NONE => SOME t
                            | SOME t' => SOME (Vector.map (lookup t') t)
                   val stale_count' = if isSome old_len andalso Len.compare (new_len,valOf old_len) = EQUAL then
-                                     stale_count + 1 else stale_count
+                                     stale_count + 1 else IntInf.fromInt 0
                 in
-                  (*
-                  U.printErr ("                     -> ");
-                  U.printErr (tourToString (valOf ts));
-                  U.printErr "\n";
-                  *)
                   if isSome stale_thresh andalso stale_count' >= valOf stale_thresh then
                     loop (d'', ts, iter+1, SOME (IntInf.fromInt 0), SOME new_len, stale_count', stale_thresh)
                   else if isSome old_len andalso Len.compare (new_len,valOf old_len) = GREATER then (

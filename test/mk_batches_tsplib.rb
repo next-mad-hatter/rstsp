@@ -48,6 +48,7 @@ files.each_key do |dataset|
           :iters => iters,
           :stale => nil,
           :rot => rot,
+          :adapt => if algo == :balanced then 2 else nil end,
           :max => max,
           :data => "#{dataset}/#{tsp}",
           :size => size,

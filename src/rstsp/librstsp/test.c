@@ -82,7 +82,8 @@ int main(int argc, const char **argv) {
    */
   uint32_t max_iters = 10;
   uint32_t stale_iters = 3;
-  result = (uint32_t **)rstsp_iter_pyr_search(prob_size, *dst, max_iters, stale_iters, prob_size-1);
+  uint32_t max_rots = prob_size-1;
+  result = (uint32_t **)rstsp_iter_pyr_search(prob_size, *dst, max_iters, stale_iters, max_rots);
   if(result) {
     printf("  > Pyramidal/iter/rot tour: ");
     print_tour(result[1], prob_size);
@@ -96,7 +97,23 @@ int main(int argc, const char **argv) {
    * Iterative balanced search which, additionally to reordering, considers up to 2*n additional
    * "balanced shift"-permutations in each iteration.
    */
-  result = (uint32_t **)rstsp_iter_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, 2*prob_size);
+  max_rots = 2*prob_size;
+  result = (uint32_t **)rstsp_iter_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, max_rots);
+  if(result) {
+    printf("  > SB/iter/rot tour: ");
+    print_tour(result[1], prob_size);
+    printf("  > Tour length: %" PRIu32 "\n", *result[0]);
+    free(result[1]);
+    free(result[0]);
+    free(result);
+  }
+
+  /**
+   *  A variation of the above where number of additional permutations is
+   *  increased at stale iterations.
+   */
+  uint32_t min_rots = 0;
+  result = (uint32_t **)rstsp_ad_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, min_rots, max_rots);
   if(result) {
     printf("  > SB/iter/rot tour: ");
     print_tour(result[1], prob_size);

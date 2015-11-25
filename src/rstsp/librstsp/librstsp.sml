@@ -101,3 +101,25 @@ val _ =
     ) handle _ => MLton.Pointer.null
   )
 
+val _ =
+  _export "rstsp_ad_sb_search": (word * MLton.Pointer.t * word * word * word * word * word -> MLton.Pointer.t) -> unit;
+  (
+    fn (size, dist_fn, max_width, max_iters, stale_iters, min_rots, max_rots) => (
+      let
+        val dist = ExtDist.getDist (size,dist_fn)
+        val max_width' = case max_width of
+                           0w0 => NONE
+                         | _ => SOME max_width
+        val max_iters' = case max_iters of
+                           0w0 => NONE
+                         | m => SOME ((IntInf.fromInt o Word.toInt) m)
+        val stale_iters' = case stale_iters of
+                             0w0 => NONE
+                           | m => SOME ((IntInf.fromInt o Word.toInt) m)
+        val r = #1 ((S.AdSBSearch.search size dist NONE false (max_iters', stale_iters', min_rots, SOME max_rots, max_width')) ())
+      in
+        extractSol S.AdSBSearch.tourToVector r
+      end
+    ) handle _ => MLton.Pointer.null
+  )
+

@@ -18,7 +18,7 @@
     - relaxations
     - generator sandbox
 * Testing:
-    - implement stats -> study iter convergence
+    - study iter convergence
     - implement -> test 3d-euclidean/manhattan instances
     - implement -> test starting tours options
     - tsplib med/large instances
@@ -42,17 +42,17 @@
     - test scripts in fresh clone
     - do we need merge xscales script ?
 * Source:
-    - sb rot search: 3n permutations?
+    - options parser: http://mlton.org/FunctionalRecordUpdate
+    - round to nearest integer as option
+    - iter search (+1/n) time limits
     - iter/stale limit check
     - SBNode.toHash speed + sb_shuffle speed
     - iter + ff searches: return iterations results (for convergence studies) -> plot
+    - librstsp: adaptive search rate & permutations as function ptrs
     - add flip flop search
     - nearest-neighbour/random/demidenko/relaxed-supnick starters ?
     - sb iter search: 2*n+1 / even more / less / different permutations ?
     - iter/rot search: some progress feedback
-    - options parser: http://mlton.org/FunctionalRecordUpdate
-    - round to nearest integer as option
-    - iter search (+1/n) time limits
     - shared lib interface: search transforms worth memory management hassle ?
     - word distance: wrapover cost check
     - compute tree width for info

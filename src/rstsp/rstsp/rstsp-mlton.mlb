@@ -33,6 +33,7 @@ in
   ../tspsearch/simplesearch.sml
   ../tspsearch/itersearch.sml
   ../tspsearch/rotsearch.sml
+  ../tspsearch/adaptivesearch.sml
 
   ../main/options.sml
   ../main/tspread.sml

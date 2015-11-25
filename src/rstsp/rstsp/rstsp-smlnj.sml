@@ -27,6 +27,7 @@ use "tspsearch/tspsearch.sig";
 use "tspsearch/simplesearch.sml";
 use "tspsearch/itersearch.sml";
 use "tspsearch/rotsearch.sml";
+use "tspsearch/adaptivesearch.sml";
 
 use "main/options.sml";
 use "main/tspread.sml";
