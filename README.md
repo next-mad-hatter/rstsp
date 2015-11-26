@@ -52,8 +52,8 @@
    During its first run, this script will also generate random test data,
    which needs significant chunk of space -- about 200MB right now.
 
-   Also takes some time (about 50 minutes on our machine right now) and memory
-   (sometimes well over 3GB in our tests).
+   Also takes some time (at time of writing, about 50 minutes on our machine)
+   and memory (sometimes well over 3GB in our tests).
 
 ### Plotting test results
 

@@ -41,7 +41,7 @@ DATA_DIR = PREFIX + "/plot/data/"
                       .select{|x| x[:max] == max}
                       .select{|x| x[:iters] == iters}
                       .select{|x| x[:stale] == stale}
-                      .select{|x| x[:rot] == rot}
+                      .select{|x| x[:max_rot] == rot}
               [:time, :val].each do |plot|
                 csv = sizes.collect{|sz|
                   e = d.find{|x| x[:size] == sz}

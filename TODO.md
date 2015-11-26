@@ -44,12 +44,12 @@
     - do we need merge xscales script ?
     - sometimes test scripts in fresh clone
 * Source:
+    - adaptive search: reuse values when increasing permutations number
     - word distance: wrapover cost check
     - round to nearest integer as option
-    - adaptive search: reuse values when increasing permutations number
     - iter searches time limits
     - iter + ff searches: return iterations results rather than print to stderr -> progress feedback ?
-    - librstsp: adaptive search rate & permutations as function ptrs
+    - librstsp: adaptive search rate & permutations as function ptrs ?
     - options parser: http://mlton.org/FunctionalRecordUpdate
     - shared lib interface: search transforms worth memory management hassle ?
     - tsplib input: support more formats
