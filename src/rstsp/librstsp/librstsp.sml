@@ -5,7 +5,7 @@
  * $Revision$
  *)
 
-structure S = DefaultSearches(WordNum)
+structure S = DefaultSearches(IntNum)
 structure F = FFIUtils
 
 (**
@@ -18,7 +18,7 @@ let
               NONE => MLton.Pointer.null
             | SOME (len, tour) =>
                 F.exportPtrVector (Vector.fromList [
-                  F.exportWordVector (Vector.fromList [len]),
+                  F.exportLIntVector (Vector.fromList [Int64.fromLarge len]),
                   F.exportWordVector (toVec (tour ()))
                 ])
 in

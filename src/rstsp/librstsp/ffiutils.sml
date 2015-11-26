@@ -60,6 +60,7 @@ structure FFIUtils: FFI_UTILS = struct
   end
   val exportCharVector = vectorExporter 0w1 MLton.Pointer.setWord8
   val exportWordVector = vectorExporter 0w4 MLton.Pointer.setWord32
+  val exportLIntVector = vectorExporter 0w8 MLton.Pointer.setInt64
   val exportPtrVector = vectorExporter
         (C_Size.fromInt (Word.toInt MLton.Pointer.sizeofPointer)) MLton.Pointer.setPointer
 

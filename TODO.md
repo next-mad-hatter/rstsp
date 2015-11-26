@@ -45,9 +45,10 @@
     - sometimes test scripts in fresh clone
 * Source:
     - adaptive search: reuse values when increasing permutations number
-    - word distance: wrapover cost check
     - round to nearest integer as option
     - iter searches time limits
+    - save/load tours [shm]
+    - flipflop( flipflop(ad, pyr), pyrrot ) ?
     - iter + ff searches: return iterations results rather than print to stderr -> progress feedback ?
     - librstsp: adaptive search rate & permutations as function ptrs ?
     - options parser: http://mlton.org/FunctionalRecordUpdate

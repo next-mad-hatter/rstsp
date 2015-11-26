@@ -18,7 +18,7 @@ sig
    *)
   datatype tsplib_inst = EUCLIDEAN_2D_INSTANCE of real vector * real vector
                        | EUCLIDEAN_2D_CEIL_INSTANCE of real vector * real vector
-                       | EXPLICIT_INSTANCE of word vector
+                       | EXPLICIT_INSTANCE of IntNum.num vector
 
   val readTSPFile : string -> tsplib_inst
 
@@ -39,7 +39,7 @@ struct
 
   datatype tsplib_inst = EUCLIDEAN_2D_INSTANCE of real vector * real vector
                        | EUCLIDEAN_2D_CEIL_INSTANCE of real vector * real vector
-                       | EXPLICIT_INSTANCE of word vector
+                       | EXPLICIT_INSTANCE of IntNum.num vector
 
   datatype edge_weight_type = EXPLICIT
                             | EUC_2D
@@ -52,7 +52,7 @@ struct
 
   datatype tsplib_read_inst = EUCL_INST of real array * real array
                             | EUCL_C_INST of real array * real array
-                            | NAT_INST of word array
+                            | NAT_INST of IntNum.num array
                             | ERR of string
 
   datatype expect = CMD | DATA | DONE
@@ -128,7 +128,7 @@ struct
     fun iter (_, []) = ()
       | iter (pos, x::xs) =
         let
-          val x' = U.wordFromString x
+          val x' = IntNum.fromString x
           val x'' = if isSome x' then valOf x' else err "bad entry"
           (* Since full matrix contains unnecessary things already,
            * we might as well check for possibly asymmetric values,
@@ -138,7 +138,7 @@ struct
                     let
                       val y = Array.sub (data, coorTrans pos)
                     in
-                      if y = 0w0 orelse y = x'' then () else err "not a symmetric instance"
+                      if y = 0 orelse y = x'' then () else err "not a symmetric instance"
                     end
                   | _ => ()
         in
@@ -160,7 +160,7 @@ struct
       SOME EXPLICIT =>
         let
           val data' = case data of
-                        NONE => Array.array (Word.toInt (Word.div (dim*(dim+0w1),0w2)),0w0)
+                        NONE => Array.array (Word.toInt (Word.div (dim*(dim+0w1),0w2)),IntNum.fromInt 0)
                       | SOME (NAT_INST ds) => ds
                       | _ => raise Fail "readData/Expl error"
           val expect = readNatLine (line_num, dim, to_read, valOf weight_format, data', line)

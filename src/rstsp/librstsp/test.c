@@ -11,10 +11,18 @@
 #include "rstsp.h"
 
 #ifndef PRIu32
-#define PRIu32 "u"
+#  define PRIu32 "u"
 #endif
 
-uint32_t dst(uint32_t i, uint32_t j) {
+#ifndef PRIi64
+#  if __WORDSIZE == 64
+#    define PRIi64 "li"
+#  else
+#    define PRIi64 "lli"
+#  endif
+#endif
+
+int64_t dst(uint32_t i, uint32_t j) {
   return i+j;
 }
 
@@ -56,7 +64,7 @@ int main(int argc, const char **argv) {
   if(result) {
     printf("  > Pyramidal tour: ");
     print_tour(result[1], prob_size);
-    printf("  > Tour length: %" PRIu32 "\n", *result[0]);
+    printf("  > Tour length: %" PRIi64 "\n", *result[0]);
     free(result[1]);
     free(result[0]);
     free(result);
@@ -70,7 +78,7 @@ int main(int argc, const char **argv) {
   if(result) {
     printf("  > SB tour: ");
     print_tour(result[1], prob_size);
-    printf("  > Tour length: %" PRIu32 "\n", *result[0]);
+    printf("  > Tour length: %" PRIi64 "\n", *result[0]);
     free(result[1]);
     free(result[0]);
     free(result);
@@ -87,7 +95,7 @@ int main(int argc, const char **argv) {
   if(result) {
     printf("  > Pyramidal/iter/rot tour: ");
     print_tour(result[1], prob_size);
-    printf("  > Tour length: %" PRIu32 "\n", *result[0]);
+    printf("  > Tour length: %" PRIi64 "\n", *result[0]);
     free(result[1]);
     free(result[0]);
     free(result);
@@ -102,7 +110,7 @@ int main(int argc, const char **argv) {
   if(result) {
     printf("  > SB/iter/rot tour: ");
     print_tour(result[1], prob_size);
-    printf("  > Tour length: %" PRIu32 "\n", *result[0]);
+    printf("  > Tour length: %" PRIi64 "\n", *result[0]);
     free(result[1]);
     free(result[0]);
     free(result);
@@ -117,7 +125,7 @@ int main(int argc, const char **argv) {
   if(result) {
     printf("  > SB/adaptive tour: ");
     print_tour(result[1], prob_size);
-    printf("  > Tour length: %" PRIu32 "\n", *result[0]);
+    printf("  > Tour length: %" PRIi64 "\n", *result[0]);
     free(result[1]);
     free(result[0]);
     free(result);
@@ -131,7 +139,7 @@ int main(int argc, const char **argv) {
   if(result) {
     printf("  > SB/flipflop tour: ");
     print_tour(result[1], prob_size);
-    printf("  > Tour length: %" PRIu32 "\n", *result[0]);
+    printf("  > Tour length: %" PRIi64 "\n", *result[0]);
     free(result[1]);
     free(result[0]);
     free(result);
