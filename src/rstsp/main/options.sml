@@ -94,6 +94,8 @@ struct
     print "\n";
     print "    -f|--flips num :  combine adaptive balanced search with iterative pyramidal search,\n";
     print "                      limiting flipflops by given number, zero for unlimited\n";
+    print "                      (number of pyramidal iterations will be limited by common limit\n";
+    print "                       as well as balanced permutations limit)\n";
     print "\n";
     print "    -l|--log file  :  if specified, traversal trace (in dot format)\n";
     print "                      will be written to the file -- only valid for single traversals\n";

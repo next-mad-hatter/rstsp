@@ -7,15 +7,19 @@
 
 open Utils
 
-structure NSrch : SEARCHES = DefaultSearches(WordNum)
+structure NSrch : SEARCHES = DefaultSearches(IntNum)
 datatype tsplib_inst = datatype TsplibReader.tsplib_inst
 
 val node_size = SOME 0w3
 val iter_limit = SOME (IntInf.fromInt 10)
 val stale_thresh = SOME (IntInf.fromInt 2)
-val rotations = NONE
-val options = (iter_limit, stale_thresh, (rotations, node_size))
-structure Search = NSrch.IterRotSBSearch
+val rotations = SOME 0w24
+val max_flips = SOME (IntInf.fromInt 20)
+val options = (max_flips,
+               SOME (IntInf.fromInt 1),
+               (iter_limit, stale_thresh, ()),
+               (iter_limit, stale_thresh, 0w0, rotations, node_size))
+structure Search = NSrch.FlipFlopSearch
 
 structure Dist = NatDist
 val inst = TsplibReader.readTSPFile "../../test/data/tsplib/gr17.tsp"
@@ -50,7 +54,7 @@ let
     in
       print ("    Solution valid:  " ^ (if sol_val andalso len_val then "yes" else "NO!") ^ "\n")
     end
-  val _ = print ("Tour Length:  " ^ (wordToString sol_len) ^ "\n")
+  val _ = print ("Tour Length:  " ^ (Dist.Num.toString sol_len) ^ "\n")
   val _ = print ("*********************************\n")
 in
   ()

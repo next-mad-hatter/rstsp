@@ -124,7 +124,12 @@ struct
         | (_,_,_,false) => singlerun (data, opts,
                                   fn (s,d) => S.FlipFlopSearch.search s d log verbose (
                                      max_flips, SOME 1,
-                                     (max_iters, stale_thresh, ()),
+                                     ((
+                                        case (if isSome max_rot then SOME (IntInf.max (IntInf.fromInt 1,(Word.toLargeInt o valOf) max_rot)) else NONE, max_iters) of
+                                          (NONE, m) => m
+                                        | (m, NONE) => m
+                                        | (SOME a, SOME b) => SOME (IntInf.max (a,b))
+                                      ), stale_thresh, ()),
                                      (max_iters, stale_thresh, if isSome min_rot then valOf min_rot else 0w0, max_rot, max_node_size)
                                   ),
                                   S.FlipFlopSearch.tourToString,

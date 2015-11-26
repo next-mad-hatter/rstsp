@@ -8,7 +8,7 @@
 (**
  * Strongly Balanced Tours Graph.
  *
- * FIXME: SBNode and SBTour contain lots of HashedMap housekeeping which
+ * FIXME: SBNode and SBTour contain fair amount of HashedMap housekeeping which
  *        should be factored out into a proper structure.
  *        This also keeps us from using TSPNode/TSPTour signatures -- 
  *        since we have to expose their internals to SBGraph.

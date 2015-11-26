@@ -31,7 +31,7 @@
     - measure memory usage (steady/memusg: how do we script this?)
     - profile code
     - plot hash collisions nrs ?
-* Scripting:
+* Scripts:
     - batch runner: make progress reporting threaded, total <- sum of time_limits
     - batch runner: make progress bar optional
     - batch runner: write after each test + trap quit/term
@@ -41,21 +41,21 @@
     - create_random_data (and more?): write <-> rescue unlink
     - mk_batches & mk_csv : factor out common code
     - random data: compute hk bounds ?
-    - do we need merge xscales script ?
+    - do we need merge xscales script for gnuplot?
     - sometimes test scripts in fresh clone
 * Source:
-    - round to nearest integer as option
-    - iter searches time limits
     - save/load tours [shm]
+    - iter searches time limits
+    - round to nearest integer as option
     - flipflop( flipflop(ad, pyr), pyrrot ) ?
     - iter + ff searches: return iterations results rather than print to stderr -> progress feedback ?
+    - tsplib input: support more formats
+    - tsplib input: allow for empty & comment lines in data section
     - librstsp: adaptive search rate & permutations as function ptrs ?
     - options parser: http://mlton.org/FunctionalRecordUpdate
     - shared lib interface: search transforms worth memory management hassle ?
-    - tsplib input: support more formats
-    - tsplib input: allow for empty & comment lines in data section
     - measure threaded storage + simplesearch performance
-    - threaded rot/iter search
+    - threaded rot/iter search ?
     - threaded: splay trees -> redblack trees ?
     - threaded: threadsafe lazy ?
     - threaded: polyml.profile
