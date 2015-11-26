@@ -10,7 +10,6 @@
     - complete the source readme
     - wiki / bug tracker ?
     - script via cmake ?
-    - move plot/data/out to plot/out
 * Report:
     - writeup
     - sml support: can the pandoc -> rst way be pretty-fixed?

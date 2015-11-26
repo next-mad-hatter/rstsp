@@ -105,7 +105,7 @@ struct
                                fn (s,d) => S.IterRotPyrSearch.search s d log verbose (max_iters, stale_thresh, (max_rot, ())),
                                S.IterRotPyrSearch.tourToString,
                                S.IterRotPyrSearch.tourToVector,
-                               "iterative permuting pyramidal")
+                               "permuting pyramidal")
         | (true,_,true,_) => singlerun (data, opts,
                                 fn (s,d) => S.AdPyrSearch.search s d log verbose (max_iters, stale_thresh, valOf min_rot, max_rot, ()),
                                 S.AdPyrSearch.tourToString,
@@ -115,7 +115,7 @@ struct
                                   fn (s,d) => S.IterRotSBSearch.search s d log verbose (max_iters, stale_thresh, (max_rot, max_node_size)),
                                   S.IterRotSBSearch.tourToString,
                                   S.IterRotSBSearch.tourToVector,
-                                  "iterative permuting balanced")
+                                  "permuting balanced")
         | (_,_,true,true) => singlerun (data, opts,
                                   fn (s,d) => S.AdSBSearch.search s d log verbose (max_iters, stale_thresh, valOf min_rot, max_rot, max_node_size),
                                   S.AdSBSearch.tourToString,

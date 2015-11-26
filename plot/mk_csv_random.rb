@@ -26,7 +26,7 @@ DATA_DIR = PREFIX + "/plot/data/"
   maxs = data.collect{|x| x[:max]}.uniq
   all_iters = data.collect{|x| x[:iters]}.uniq
   stales = data.collect{|x| x[:stale]}.uniq
-  rots = data.collect{|x| x[:rot]}.uniq
+  rots = data.collect{|x| x[:max_rot]}.uniq
 
   log_fields = {:time => :real_time, :val => :val}
   bins.each do |bin|

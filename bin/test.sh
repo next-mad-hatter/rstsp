@@ -31,10 +31,10 @@ for BATCH in steady len low med hi; do
   echo
 done
 
-for BATCH in tsplib; do
-  echo " Batch: ${BATCH}"
-  "${TEST_DIR}"/mk_batches_${BATCH}.rb > "${TEST_DIR}"/batch/${BATCH}.json
-  "${TEST_DIR}"/run_batch.rb "${TEST_DIR}"/log/${BATCH}.json "${TEST_DIR}"/batch/${BATCH}.json
+for BATCH in small; do
+  echo " Batch: tsplib/${BATCH}"
+  "${TEST_DIR}"/mk_batches_tsplib_${BATCH}.rb > "${TEST_DIR}"/batch/tsplib_${BATCH}.json
+  "${TEST_DIR}"/run_batch.rb "${TEST_DIR}"/log/tsplib_${BATCH}.json "${TEST_DIR}"/batch/tsplib_${BATCH}.json
   echo
 done
 echo "***************************************"
