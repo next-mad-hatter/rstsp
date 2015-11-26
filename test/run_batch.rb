@@ -58,14 +58,28 @@ class Batch
         if opts[:stale].class == Fixnum then " -j #{opts[:stale]}"
                                         else raise FormatError end
       end
-    cmd << case opts[:rot]
+    cmd << case opts[:adapt]
+      when nil
+        ""
+      else
+        if opts[:adapt].class == Fixnum then " -a #{opts[:adapt]}"
+                                        else raise FormatError end
+      end
+    cmd << case opts[:max_rot]
       when nil
         ""
       when "all"
         " -r all"
       else
-        if opts[:rot].class == Fixnum then " -r #{opts[:rot]}"
-                                      else raise FormatError end
+        if opts[:max_rot].class == Fixnum then " -r #{opts[:max_rot]}"
+                                          else raise FormatError end
+      end
+    cmd << case opts[:flips]
+      when nil
+        ""
+      else
+        if opts[:flips].class == Fixnum then " -f #{opts[:flips]}"
+                                        else raise FormatError end
       end
     cmd << " " + File.expand_path(File.dirname(__FILE__)) + "/data/"
     cmd << case opts[:data]

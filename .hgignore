@@ -18,8 +18,8 @@ plot/data/mlton_*.csv
 plot/data/poly_*.csv
 plot/data/tsplib_*.csv
 
-test/batch/tsplib.json
-test/batch/*random*.json
+test/batch/tsplib_*.json
+test/batch/random_*.json
 test/log
 test/data/tsplib
 test/data/dimacs

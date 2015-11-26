@@ -32,27 +32,26 @@ end
 
 res = []
 files.each_key do |dataset|
-  files[dataset].each do |size,tsp,supp|
-    ([50].product([0,"all"])).each do |iters,rot|
-      ([[:pyramidal,nil]] + [:balanced].product((3..3).to_a)).each do |algo,max|
-        if (
-          (rot == 0 and algo == :balanced) or
-          (max and algo == :pyramidal) or
-          (!max and algo == :balanced))
-          next
+  files[dataset].each do |size, tsp, supp|
+    ([[50,"all"]]).each do |iters, max_rot|
+      ([[:pyramidal,nil],[:balanced,3]]).each do |algo, max|
+        [[nil,nil],[1,nil],[1,0]].each do |min_rot, flips|
+          next if flips and algo == :pyramidal
+          res << {
+            :name => tsp,
+            :bin => :mlton,
+            :algo => algo,
+            :iters => iters,
+            :stale => nil,
+            :max_rot => max_rot,
+            :adapt => min_rot,
+            :flips => flips,
+            :max => max,
+            :data => "#{dataset}/#{tsp}",
+            :size => size,
+            :timeout => 600.0
+          }
         end
-        res << {
-          :name => tsp,
-          :bin => :mlton,
-          :algo => algo,
-          :iters => iters,
-          :stale => nil,
-          :rot => rot,
-          :max => max,
-          :data => "#{dataset}/#{tsp}",
-          :size => size,
-          :timeout => 240.0
-        }
       end
     end
   end

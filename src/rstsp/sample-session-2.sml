@@ -33,15 +33,9 @@ let
   val (sol', stats) = search ()
   val (sol_len, sol_fn) = valOf sol'
   val sol = sol_fn ()
+
   val _ = print ("*********************************\n")
   val _ = print ("   Solution:  " ^ (Search.tourToString sol) ^ "\n")
-  val _ = case stats of
-            NONE => ()
-          | SOME (nn, nk, hs) => (
-              print (" Node Types:  " ^ (wordToString nk) ^ "\n");
-              print (" Store size:  " ^ (wordToString nn) ^ "\n");
-              print ("Node hashes:  " ^ (wordToString hs) ^ "\n")
-            )
   val _ =
     let
       val sol_vec = Search.tourToVector sol
@@ -58,6 +52,8 @@ end
 
 val _ = TextIO.print;
 val _ = main ()
-val opt = [1, 22, 8, 26, 31, 28, 3, 36, 35, 20, 2, 29, 21, 16, 50, 34, 30, 9, 49, 10, 39, 33, 45, 15, 44, 42, 40, 19, 41, 13, 25, 14, 24, 43, 7, 23, 48, 6, 27, 51, 46, 12, 47, 18, 4, 17, 37, 5, 38, 11, 32, 1]
+val opt = [1, 22, 8, 26, 31, 28, 3, 36, 35, 20, 2, 29, 21, 16, 50, 34, 30, 9, 49, 10,
+           39, 33, 45, 15, 44, 42, 40, 19, 41, 13, 25, 14, 24, 43, 7, 23, 48, 6, 27,
+           51, 46,12, 47, 18, 4, 17, 37, 5, 38, 11, 32, 1]
 val opt_len = LenCheck.tourLength data ((Vector.fromList o (map (fn x => Word.fromInt (x-1)))) opt)
 

@@ -31,15 +31,18 @@ set bars fullwidth
 
 set output 'out/tsplib_val.pdf'
 set yrange [*<0.9:1.2<*]
-plot 'data/tsplib_val_pyramidal_m0_i50_jdef_rall.csv' using ($2):xtic(1) title 'pyramidal/rall/i50' with histogram lt -1 fs pattern 3 , \
-     'data/tsplib_val_balanced_m3_i50_jdef_rall.csv' using ($2):xtic(1) title 'balanced/m3/rall/i50' with histogram lt -1 fs pattern 7 , \
-     'data/tsplib_val_pyramidal_m0_i50_jdef_r0.csv' using ($2):xtic(1) title 'pyramidal/i50' with histogram lt -1 fs pattern 2 #, \
-#     'data/tsplib_val_balanced_m3_i50_jdef_r0.csv' using ($2):xtic(1) title 'balanced/m3/i50' with histogram lt -1 fs pattern 1
+plot 'data/tsplib_small_val_pyramidal_mdef_i50_jdef_rall_adef_fdef.csv' using ($2):xtic(1) title 'pyramidal/rall/i50' with histogram lt -1 fs pattern 3 , \
+     'data/tsplib_small_val_pyramidal_mdef_i50_jdef_rall_a1_fdef.csv' using ($2):xtic(1) title 'pyramidal/rall/a1/i50' with histogram lt -1 fs pattern 9 , \
+     'data/tsplib_small_val_balanced_m3_i50_jdef_rall_adef_fdef.csv' using ($2):xtic(1) title 'balanced/m3/rall/i50' with histogram lt -1 fs pattern 6 , \
+     'data/tsplib_small_val_balanced_m3_i50_jdef_rall_a1_fdef.csv' using ($2):xtic(1) title 'balanced/m3/rall/a1/i50' with histogram lt -1 fs pattern 7 , \
+     'data/tsplib_small_val_balanced_m3_i50_jdef_rall_a1_f0.csv' using ($2):xtic(1) title 'flipflop/m3/rall/a1/i50' with histogram lt -1 fs pattern 2
 
 set output 'out/tsplib_time.pdf'
 set logscale y
-set ylabel 'time (seconds)'
-plot 'data/tsplib_time_pyramidal_m0_i50_jdef_rall.csv' using ($2):xtic(1) title 'pyramidal/rall/i50' with histogram lt -1 fs pattern 3 , \
-     'data/tsplib_time_balanced_m3_i50_jdef_rall.csv' using ($2):xtic(1) title 'balanced/m3/rall/i50' with histogram lt -1 fs pattern 7 , \
-     'data/tsplib_time_pyramidal_m0_i50_jdef_r0.csv' using ($2):xtic(1) title 'pyramidal/i50' with histogram lt -1 fs pattern 2 #, \
-#     'data/tsplib_time_balanced_m3_i50_jdef_r0.csv' using ($2):xtic(1) title 'balanced/m3/i50' with histogram lt -1 fs pattern 1
+set ylabel 'time needed (seconds)'
+plot 'data/tsplib_small_time_pyramidal_mdef_i50_jdef_rall_adef_fdef.csv' using ($2):xtic(1) title 'pyramidal/rall/i50' with histogram lt -1 fs pattern 3 , \
+     'data/tsplib_small_time_pyramidal_mdef_i50_jdef_rall_a1_fdef.csv' using ($2):xtic(1) title 'pyramidal/rall/a1/i50' with histogram lt -1 fs pattern 9 , \
+     'data/tsplib_small_time_balanced_m3_i50_jdef_rall_adef_fdef.csv' using ($2):xtic(1) title 'balanced/m3/rall/i50' with histogram lt -1 fs pattern 6 , \
+     'data/tsplib_small_time_balanced_m3_i50_jdef_rall_a1_fdef.csv' using ($2):xtic(1) title 'balanced/m3/rall/a1/i50' with histogram lt -1 fs pattern 7 , \
+     'data/tsplib_small_time_balanced_m3_i50_jdef_rall_a1_f0.csv' using ($2):xtic(1) title 'flipflop/m3/rall/a1/i50' with histogram lt -1 fs pattern 2
+

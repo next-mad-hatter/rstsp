@@ -12,11 +12,7 @@ PROJ_DIR=`realpath ${0%/*}/..`
 cd "${PROJ_DIR}/plot" || exit 1
 mkdir -p out || exit 1
 
-$( ruby -e "if RUBY_VERSION >= \"1.9.3\" then print \"OK\" else exit(1) end" > /dev/null 2>&1 )
-if [ $? -ne 0 ]; then
-  echo "No suitable ruby installation found."
-  exit 1
-fi
+. "${PROJ_DIR}"/bin/check_ruby.sh
 
 ./plot_num_types.gpi
 

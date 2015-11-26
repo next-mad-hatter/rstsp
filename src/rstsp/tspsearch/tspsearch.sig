@@ -25,7 +25,7 @@ signature TSP_SEARCH = sig
 
   (**
    * Given problem size, distance function, dot file name, statistics wish and any optional parameters
-   * (such as maimum number of intervals per node for SBGraph),
+   * (such as maximum number of intervals per node for SBGraph),
    * returns the traversal function, which, along the tour, can also return
    * statistics such as number of stored nodes, seen node types & unique hashes count.
    *)

@@ -11,13 +11,12 @@ trap "exit 1" INT QUIT TERM
 PROJ_DIR=`realpath ${0%/*}/..`
 TEST_DIR="${PROJ_DIR}/test"
 
-echo -n "Checking ruby version and libraries: "
-$( ruby -e "if RUBY_VERSION >= \"1.9.3\" then print \"OK\" and require \"powerbar\" else exit(1) end" > /dev/null 2>&1 )
+. "${PROJ_DIR}"/bin/check_ruby.sh
+$( ruby -e "require \"powerbar\"" > /dev/null 2>&1 )
 if [ $? -ne 0 ]; then
-  echo "not found"
+  echo "ruby/powerbar not found"
   exit 1
 fi
-echo "ok"
 
 echo "***************************************"
 echo
@@ -32,10 +31,10 @@ for BATCH in steady len low med hi; do
   echo
 done
 
-for BATCH in tsplib; do
-  echo " Batch: ${BATCH}"
-  "${TEST_DIR}"/mk_batches_${BATCH}.rb > "${TEST_DIR}"/batch/${BATCH}.json
-  "${TEST_DIR}"/run_batch.rb "${TEST_DIR}"/log/${BATCH}.json "${TEST_DIR}"/batch/${BATCH}.json
+for BATCH in small; do
+  echo " Batch: tsplib/${BATCH}"
+  "${TEST_DIR}"/mk_batches_tsplib_${BATCH}.rb > "${TEST_DIR}"/batch/tsplib_${BATCH}.json
+  "${TEST_DIR}"/run_batch.rb "${TEST_DIR}"/log/tsplib_${BATCH}.json "${TEST_DIR}"/batch/tsplib_${BATCH}.json
   echo
 done
 echo "***************************************"

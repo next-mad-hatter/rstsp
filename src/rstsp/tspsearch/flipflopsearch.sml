@@ -6,62 +6,59 @@
  *)
 
 (**
- * Given a graph traversal for a TSP, this will apply the search iteratively.
- *
- * Of course, we want to reorder the nodes before each iteration in such a way that
- * while search neighbourhood changes, last best solution is still in scope of next iteration.
- *
- * To this functor we shall provide the inverse of such a reordering function
- * which shall assume last best solution to be (1, ... ,n (1)).
- *
- * TODO: return iterations results instead of flushing them to stdout.
+ * FIXME: can we restrict Search'.Len = Search''.Len here?
+ * TODO: factor out common functionality of this & iterative search (& rot search?)
  *)
-functor IterSearchFn(
+functor FlipFlopSearchFn(
   P: sig
-    structure Search: TSP_SEARCH
-    (* This will generally depend on problem size. *)
-    val inv_order: word -> word -> word
+    structure Search': TSP_SEARCH where type tour = word vector
+    val inv_order' : word -> word -> word
+    structure Search'': TSP_SEARCH where type Len.num = Search'.Len.num where type tour = Search'.tour
+    val inv_order'' : word -> word -> word
   end) : TSP_SEARCH =
 struct
 
   structure U = Utils
-  structure S = P.Search
 
-  structure Len = S.Len
+  structure Len = P.Search'.Len
 
-  type tour = word vector
+  type tour = P.Search'.tour
 
-  type optional_params = IntInf.int option * IntInf.int option * S.optional_params
+  type optional_params = IntInf.int option * IntInf.int option *
+                         P.Search'.optional_params * P.Search''.optional_params
 
   fun tourToVector t = t
 
-  val tourToString = TSPUtils.wvToString 0w1
+  val tourToString = P.Search'.tourToString
 
-  fun search size dist _ _ (iter_limit, stale_thresh, opts) =
+  fun search size dist _ _ (iter_limit, stale_thresh, opts', opts'') =
   let
-    fun lookup t = fn i => Vector.sub (t, Word.toInt (P.inv_order size i))
-    fun find d' = #1 ((S.search size d' NONE false opts) ())
+    fun lookup order t = fn i => Vector.sub (t, Word.toInt (order size i))
+    fun find iter d' = #1 ((case iter mod 2 of
+                              0 => P.Search'.search size d' NONE false opts'
+                            | _ => P.Search''.search size d' NONE false opts''
+                           ) ())
     fun loop (d', sol, iter, iter_limit, old_len, stale_count, stale_thresh) =
       case (isSome iter_limit andalso iter > valOf iter_limit, sol) of
         (true, NONE) => NONE
       | (true, SOME t) => SOME (valOf old_len, fn () => t)
       | (_, _) =>
           let
-            val res = find d'
+            val res = find iter d'
           in
             case res of
               NONE => loop (d', sol, iter+1, SOME (IntInf.fromInt 0), old_len, stale_count, stale_thresh)
             | SOME (new_len,r) =>
                 let
-                  val t = S.tourToVector (r ())
-                  val _ = U.printErr ("Iteration:  ")
+                  val t = (if iter mod 2 = 0 then P.Search'.tourToVector else P.Search''.tourToVector) (r ())
+                  val _ = U.printErr (if iter mod 2 = 0 then "Flip:  " else "Flop:  ")
                   val _ = U.printErr (Len.toString new_len)
                   val _ = U.printErr "\n"
-                  val lu = lookup t
-                  val d'' = fn (x,y) => d' (lu x, lu y)
+                  fun lu iter = lookup (if iter mod 2 = 0 then P.inv_order' else P.inv_order'')
+                  val d'' = fn (x,y) => d' (lu (iter+1) t x, lu (iter+1) t y)
                   val ts = case sol of
                              NONE => SOME t
-                           | SOME t' => SOME (Vector.map (lookup t') t)
+                           | SOME t' => SOME (Vector.map (lu iter t') t)
                   val stale_count' = if isSome old_len andalso Len.compare (new_len,valOf old_len) = EQUAL then
                                      stale_count + 1 else IntInf.fromInt 0
                 in

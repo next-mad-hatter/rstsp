@@ -1,8 +1,10 @@
-# Pyramidal & Relaxed Supnick TSP
 
-## Quick Start Guide
+#                         Pyramidal & Balanced TSP Traversal
+
+##                                 Quick Start Guide
 
 ### Building
+
 
    ```
            ./bin/build.sh
@@ -20,11 +22,16 @@
 
 ### Getting some test data
 
+   To get sample tsp instances from tsplib, vlsi and dimacs datasets, run
+
    ```
           ./bin/fetch-data.sh
    ```
-   uses `wget`, `tar`, `gunzip` and `lynx` and takes about 60MB,
+   -- which uses `wget`, `tar`, `gunzip` and `lynx` and takes about 60MB,
    plus about 20MB in `./tmp/` which can be cleaned afterwards.
+
+   `./bin/data_stats.sh` will list present tsp instances sorted by
+   probelm size (uses `ruby`).
 
 ### Running tests
 
@@ -35,7 +42,7 @@
    for a sample run and `./src/rstsp/build/rstsp.mlton --help`
    to see command options.
 
-   To run an extensive test set, execute
+   To execute an extensive test set, run
 
    ```
           ./bin/test.sh
@@ -45,18 +52,20 @@
    During its first run, this script will also generate random test data,
    which needs significant chunk of space -- about 200MB right now.
 
-   Also takes some time and memory (sometimes well over 3GB in our tests).
+   Also takes some time (at time of writing, about 50 minutes on our machine)
+   and memory (sometimes well over 3GB in our tests).
 
 ### Plotting test results
+
 
    ```
           ./bin/plot.sh
    ```
-   requires `ruby` & `gnuplot`.
-
+   will plot results of previous test run (requires `ruby` & `gnuplot`).
    Generated plots will be put to `./plot/out` folder.
 
 ### Packaging
+
 
    ```
           [env VERSION=my-great-build] ./bin/pkg.sh
@@ -65,7 +74,20 @@
 
 ### Calling rstsp from your code
 
-   The library interface is very straighforward -- see `./src/rstsp/librstsp/test.c`
+   Apart through the rstsp executable, you can call these tour search functions
+   from C as well as from a SML environment.
+
+   The C library interface is very straighforward -- see `./src/rstsp/librstsp/test.c`
    for example code, `./src/rstsp/build_lib.sh` and `./src/rstsp/README.md`
    for build details.
+
+   For an example of using rstsp from SML repl,
+   see `./src/rstsp/sample-session-*.sml` -- you will also have to include
+   the library code first, which is done by running the repl in `./src/rstsp/` and
+
+   - under SML/NJ  : `use "./rstsp/rstsp-smlnj.sml";`
+
+   - under Poly/ML : `use "./rstsp/rstsp-polyml.sml";`
+     (you'll have to export smlnj-lib from mlton for Poly/ML
+     to use via `./src/rstsp/polyml/*.sh` scripts first).
 
