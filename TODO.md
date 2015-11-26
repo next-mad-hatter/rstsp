@@ -44,7 +44,6 @@
     - do we need merge xscales script ?
     - sometimes test scripts in fresh clone
 * Source:
-    - adaptive search: reuse values when increasing permutations number
     - round to nearest integer as option
     - iter searches time limits
     - save/load tours [shm]

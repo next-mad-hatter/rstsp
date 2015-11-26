@@ -102,7 +102,7 @@ struct
                              S.SBSearch.tourToVector,
                              "single balanced")
         | (true,_,false,_) => singlerun (data, opts,
-                               fn (s,d) => S.IterRotPyrSearch.search s d log verbose (max_iters, stale_thresh, (max_rot, ())),
+                               fn (s,d) => S.IterRotPyrSearch.search s d log verbose (max_iters, stale_thresh, (max_rot, 0w0, ())),
                                S.IterRotPyrSearch.tourToString,
                                S.IterRotPyrSearch.tourToVector,
                                "permuting pyramidal")
@@ -112,7 +112,7 @@ struct
                                 S.AdPyrSearch.tourToVector,
                                 "adaptive pyramidal")
         | (_,_,false,true) => singlerun (data, opts,
-                                  fn (s,d) => S.IterRotSBSearch.search s d log verbose (max_iters, stale_thresh, (max_rot, max_node_size)),
+                                  fn (s,d) => S.IterRotSBSearch.search s d log verbose (max_iters, stale_thresh, (max_rot, 0w0, max_node_size)),
                                   S.IterRotSBSearch.tourToString,
                                   S.IterRotSBSearch.tourToVector,
                                   "permuting balanced")
