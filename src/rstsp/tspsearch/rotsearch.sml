@@ -56,7 +56,7 @@ struct
     in
       case sol of
         NONE => NONE
-      | SOME (d,r) => SOME (d, fn () => Vector.map trans (S.tourToVector (r ())))
+      | SOME (d,r) => SOME (d, Lazy.susp (fn () => Vector.map trans (S.tourToVector (r ()))))
     end
 
     fun iter size dist rot offset max_rot sol opts =

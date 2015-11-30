@@ -13,9 +13,9 @@
  *   - descendancy represents the subset relation;
  *
  *   - for terminal nodes, we should be able to compute
- *     a best tour efficiently;
+ *     best tours efficiently;
  *
- *   - for non-terminals, we can choose from best tours
+ *   - for non-terminals, we will choose among tours
  *     (possibly transformed) the particular node's
  *     descendants yield;
  *
@@ -47,7 +47,7 @@ signature TSP_NODE = sig
   (**
    * Pyramidal/SB graph specific: level-agnostic representation.
    * If we were to add other node types, we would have to lift the type.
-   * For now, this will have do.
+   * For now, this will have to do.
    *)
   val normKey: key -> TSPTypes.WordPairSet.set
 

@@ -46,13 +46,17 @@
 * Source:
     - save/load tours [shm]
     - iter searches time limits
+    - flip flop search: ad -> ad+full (min_rot option)
+    - profile iter/rot searches
+    - pyrrot + sbrot flip flop
     - round to nearest integer as option
     - flipflop( flipflop(ad, pyr), pyrrot ) ?
     - iter + ff searches: return iterations results rather than print to stderr -> progress feedback ?
     - tsplib input: support more formats
     - tsplib input: allow for empty & comment lines in data section
-    - librstsp: adaptive search rate & permutations as function ptrs ?
+    - branch cutting ?
     - options parser: http://mlton.org/FunctionalRecordUpdate
+    - librstsp: adaptive search rate & permutations as function ptrs ?
     - shared lib interface: search transforms worth memory management hassle ?
     - measure threaded storage + simplesearch performance
     - threaded rot/iter search ?
@@ -63,7 +67,6 @@
     - misleading timings / timer stop points ?
     - hardwired code creation (node type -> node types list)
     - implement doublekeymap & move the housekeeping from sbgraph
-    - branch cutting ?
     - implement mst tour / bounds computations ?
     - use mlton/polyml make ?
     - add version info to executable/build ?
