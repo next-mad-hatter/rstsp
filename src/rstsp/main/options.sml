@@ -240,7 +240,7 @@ struct
       | TOUR_OUT_FILE =>
         let
           val new_opts =
-            case (in_tour, args) of
+            case (out_tour, args) of
               (NONE, f::_) => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, SOME f, files)
             | (SOME _, _) => raise Fail ("multiple output files requested")
             | (_, []) => raise Fail ("output file name expected")
