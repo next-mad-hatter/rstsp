@@ -45,8 +45,11 @@
     - sometimes test scripts in fresh clone
 * Source:
     - save/load tours [shm]
+    - dotfile -> sb/pyr optional option
     - iter searches time limits
     - flip flop search: ad -> ad+full (min_rot option)
+    - profile pyr search -> try wordhashtable
+    - factor out sb_shuffle
     - profile iter/rot searches
     - pyrrot + sbrot flip flop
     - round to nearest integer as option

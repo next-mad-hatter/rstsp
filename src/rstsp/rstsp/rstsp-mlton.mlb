@@ -35,11 +35,15 @@ in
   ../tspsearch/rotsearch.sml
   ../tspsearch/adaptivesearch.sml
   ../tspsearch/flipflopsearch.sml
+  ../tspsearch/trampsearch.sml
 
   ../main/options.sml
   ../main/tspread.sml
+  ../main/tourread.sml
+  ../main/tourwrite.sml
   ../main/searches.sig
   ../main/defaultsearches.sml
+  ../main/trampsearches.sml
   ../main/settings.sig
   ../main/main.sml
 

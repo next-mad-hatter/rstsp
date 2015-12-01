@@ -117,7 +117,7 @@ struct
         val hasher = N.toHash size
         val memo: (N.key, (Len.num * (unit -> T.tour)) option) HashTable.hash_table =
           HashTable.mkTable
-          (hasher, fn (a,b) => (N.compare (a,b) = EQUAL))
+          (hasher, fn (a,b) => (a=b))
           (Word.toInt (G.HTSize (size,options)), HTMiss)
         val res = trav memo G.root
         val _ = close_log ()
