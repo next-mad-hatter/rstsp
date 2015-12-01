@@ -40,8 +40,9 @@ struct
         end
     | SOME tour' =>
         let
+          val _ = if Vector.length tour' = 1 + Word.toInt size then () else raise Fail "trampoline dimension mismatch"
           fun lookup i = Vector.sub (tour', Word.toInt (P.shuffle size i))
-          fun dist' (x,y) = dist(lookup x, lookup y)
+          fun dist' (x,y) = dist (lookup x, lookup y)
           val (res,stats) = (S.search size dist' dotlog wants_stats opts) ()
         in
           case res of

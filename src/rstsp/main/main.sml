@@ -166,14 +166,17 @@ struct
       val _ = print (" Processing " ^ file ^ ":\n")
       val _ = print ("===================================================\n")
       val inst = (SOME (TsplibReader.readTSPFile file))
-                   handle Fail msg => (U.printErr ("  Input Error: " ^ msg ^ "\n"); NONE)
+                   handle Fail msg => (U.printErr ("  Error: " ^ msg ^ "\n"); NONE)
                         | _ => (U.printErr ("  Could not read file \"" ^ file ^ "\" .\n"); NONE)
     in
-      case inst of
-        NONE => ()
-      | SOME (EXPLICIT_INSTANCE data) => ProcExpl.run opts data
-      | SOME (EUCLIDEAN_2D_INSTANCE data) => ProcEucl2D.run opts data
-      | SOME (EUCLIDEAN_2D_CEIL_INSTANCE data) => ProcEucl2DCeil.run opts data
+      (
+        case inst of
+          NONE => ()
+        | SOME (EXPLICIT_INSTANCE data) => ProcExpl.run opts data
+        | SOME (EUCLIDEAN_2D_INSTANCE data) => ProcEucl2D.run opts data
+        | SOME (EUCLIDEAN_2D_CEIL_INSTANCE data) => ProcEucl2DCeil.run opts data
+      )
+        handle Fail msg => U.printErr ("  Error: " ^ msg ^ "\n")
     end
   end
 

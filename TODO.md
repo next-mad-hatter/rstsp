@@ -23,6 +23,7 @@
     - relaxations
     - generator sandbox
 * Testing:
+    - test tour save/load
     - test on rs + monge instances
     - implement -> test 3d-euclidean/manhattan instances
     - tsplib med/large instances
@@ -44,7 +45,6 @@
     - do we need merge xscales script for gnuplot?
     - sometimes test scripts in fresh clone
 * Source:
-    - save/load tours [shm]
     - dotfile -> sb/pyr optional option
     - iter searches time limits
     - flip flop search: ad -> ad+full (min_rot option)
