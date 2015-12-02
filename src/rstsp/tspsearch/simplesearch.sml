@@ -75,7 +75,7 @@ struct
                              in
                                case Len.compare (d', d'') of
                                  GREATER => SOME (d'', tour_fn t)
-                               | _ => SOME (d', t')
+                               | _ => old_sol
                              end
                   end
                 val desc = G.descendants size dist options node
@@ -116,9 +116,7 @@ struct
       let
         val hasher = N.toHash size
         val memo: (N.key, (Len.num * (unit -> T.tour)) option) HashTable.hash_table =
-          HashTable.mkTable
-          (hasher, fn (a,b) => (N.compare (a,b) = EQUAL))
-          (Word.toInt (G.HTSize (size,options)), HTMiss)
+          HashTable.mkTable (hasher, N.eqKeys) (Word.toInt (G.HTSize (size,options)), HTMiss)
         val res = trav memo G.root
         val _ = close_log ()
         val nk =

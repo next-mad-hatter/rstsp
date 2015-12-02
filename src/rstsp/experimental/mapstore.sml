@@ -18,7 +18,7 @@ struct
     structure MemKey =
     struct
       type ord_key = Node.key
-      val compare = Node.compare
+      val compare = Node.compKeys
     end
   in
     structure MemMap: ORD_MAP = SplayMapFn(MemKey)

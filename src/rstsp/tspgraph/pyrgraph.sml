@@ -22,9 +22,11 @@ struct
 
   type key = node
 
-  fun compare ((l,r), (l',r')) = case Word.compare (l,l') of
-                                   EQUAL => Word.compare (r,r')
-                                 | c => c
+  fun eqKeys ((l,l'), (r,r')) = l = r andalso l' = r'
+
+  fun compKeys ((l,r), (l',r')) = case Word.compare (l,l') of
+                                    EQUAL => Word.compare (r,r')
+                                  | c => c
 
   fun toString (a,b) = "(" ^ U.wordToString a ^ "," ^ U.wordToString b ^ ")"
 

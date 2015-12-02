@@ -32,9 +32,11 @@ struct
 
   type key = word * WordPairSet.set
 
-  fun compare ((w,s), (w',s')) = case Word.compare (w,w') of
-                                   EQUAL => WordPairSet.compare (s,s')
-                                 | c => c
+  fun eqKeys ((w,s), (w',s')) = w = w' andalso WordPairSet.equal (s,s')
+
+  fun compKeys ((w,s), (w',s')) = case Word.compare (w,w') of
+                                    EQUAL => WordPairSet.compare (s,s')
+                                  | c => c
 
   fun toKey (level, ints) = (level, getItems ints)
 

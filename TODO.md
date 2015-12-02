@@ -30,27 +30,29 @@
     - study sb node size effect
     - investigate poly timeouts in random/hi (4k+5k)
     - measure memory usage (steady/memusg: how do we script this?)
-    - profile code
     - plot hash collisions nrs ?
 * Scripts:
     - batch runner: make progress reporting threaded, total <- sum of time_limits
     - batch runner: make progress bar optional
-    - batch runner: write after each test + trap quit/term
     - batch runner: operate on file pairs + name batches
-    - batch runner: rename timeout -> time_limit
+    - batch runner: write after each test / trap quit/term ?
     - batch runner: failed vs timed out stats
+    - batch runner: rename timeout -> time_limit
     - create_random_data (and more?): write <-> rescue unlink
     - mk_batches & mk_csv : factor out common code
     - random data: compute hk bounds ?
     - do we need merge xscales script for gnuplot?
-    - sometimes test scripts in fresh clone
+    - sometimes: test scripts in fresh clone
 * Source:
-    - dotfile -> sb/pyr optional option
+    - rot search: -a = -r -> ?
+    - profile
+    - belperm: dedicated implementation ?
+    - balanced: dedicated implementation ?
+    - dotfile & stats wish -> simplesearch optional option ?
+    - make stats / search return type polymorphic
     - iter searches time limits
     - flip flop search: ad -> ad+full (min_rot option)
-    - profile pyr search -> try wordhashtable
     - factor out sb_shuffle
-    - profile iter/rot searches
     - pyrrot + sbrot flip flop
     - round to nearest integer as option
     - flipflop( flipflop(ad, pyr), pyrrot ) ?
@@ -61,7 +63,8 @@
     - options parser: http://mlton.org/FunctionalRecordUpdate
     - librstsp: adaptive search rate & permutations as function ptrs ?
     - shared lib interface: search transforms worth memory management hassle ?
-    - measure threaded storage + simplesearch performance
+    - try threaded storage + simplesearch
+    - threaded hashtable store
     - threaded rot/iter search ?
     - threaded: splay trees -> redblack trees ?
     - threaded: threadsafe lazy ?
