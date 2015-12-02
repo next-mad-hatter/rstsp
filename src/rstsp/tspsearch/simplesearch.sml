@@ -69,7 +69,7 @@ struct
                     | SOME (d, t) =>
                       case old_sol of
                            NONE => SOME (dist_fn d, tour_fn t)
-                         | SOME (d', t') =>
+                         | SOME (d', _) =>
                              let
                                val d'' = dist_fn d
                              in

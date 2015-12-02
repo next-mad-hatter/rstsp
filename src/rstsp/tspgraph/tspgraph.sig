@@ -38,7 +38,7 @@ signature TSP_NODE = sig
    * SB graph, where those contain suprfluous information
    * for speed reasons.
    *)
-  eqtype key
+  type key
 
   val eqKeys : key * key -> bool
 
