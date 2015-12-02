@@ -90,10 +90,10 @@ signature TSP_GRAPH = sig
    *)
   structure Len : NUMERIC
 
-  structure Node: TSP_NODE where type node = node
-  structure Tour: TSP_TOUR where type tour = tour
+  structure Node : TSP_NODE where type node = node
+  structure Tour : TSP_TOUR where type tour = tour
 
-  val root: node
+  val root : node
 
   (**
    * Given a node, best tour from the set it represents can either be
@@ -119,13 +119,13 @@ signature TSP_GRAPH = sig
    * This shall compute the descendants and ascendent transfomations --
    * we will generally want to know problem size and distance function here.
    *)
-  val descendants: word -> (word * word -> Len.num) -> optional_params ->
-                   node -> descent
+  val descendants : word -> (word * word -> Len.num) -> optional_params ->
+                    node -> descent
 
   (**
    * In case a hash table is to be used for memoization, we would like to
    * have a guess as to initial table size.
    *)
-  val HTSize: word * optional_params -> word
+  val HTSize : word * optional_params -> word
 
 end

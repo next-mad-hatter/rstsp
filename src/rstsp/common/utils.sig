@@ -41,7 +41,7 @@ sig
 
   val revVector : 'a vector -> 'a vector
 
-  val swap: 'a * 'b -> 'b * 'a
+  val swap : 'a * 'b -> 'b * 'a
 
   val power : word * word -> word
 
