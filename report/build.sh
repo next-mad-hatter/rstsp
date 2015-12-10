@@ -17,11 +17,11 @@ pandoc -f rst -t latex ../doc/sml-support.rst  > sml-support.tex
 ctags -Ra .
 
 #
-# Two latex runs should be enough for references to settle.
+# Three (sic!) latex runs should be enough for references to settle.
 #
 cd "${REPORT_DIR}"
-pdflatex -shell-escape "${SUBMISSION}".tex || exit 1
+lualatex -shell-escape "${SUBMISSION}".tex || exit 1
 biber "${SUBMISSION}".bcf
-pdflatex "${SUBMISSION}".tex
-exec pdflatex "${SUBMISSION}".tex
+lualatex "${SUBMISSION}".tex
+exec lualatex "${SUBMISSION}".tex
 

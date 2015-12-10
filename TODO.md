@@ -12,9 +12,11 @@
     - script via cmake ?
 * Report:
     - writeup
-    - sml support: can the pandoc -> rst way be pretty-fixed?
     - compute tree width for info
     - bar plots: combine patterns and color
+    - metapost vs tikz vs asymptote ?
+    - gnuplot vs matplotlib vs pgf ?
+    - sml support: can the pandoc -> rst way be pretty-fixed?
 * Research:
     - sb : better permutations?
     - study iter convergence

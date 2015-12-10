@@ -5,15 +5,25 @@
 % $Rev: 34 $
 %
 
-%\documentclass[10pt,a4paper,twoside,openright]{scrartcl}
-\documentclass[10pt,a4paper]{scrartcl}
-\usepackage{extsizes}
-\usepackage[utf8]{inputenc}
-\usepackage[english,ngerman]{babel}
-\usepackage[T1]{fontenc}
-\usepackage{fix-cm}
-\usepackage{lmodern}
-\usepackage{lipsum}
+\documentclass{scrartcl}
+\KOMAoptions{fontsize=11pt}
+%\KOMAoptions{BCOR=0.25mm}
+%\usepackage[left=3.1cm, right=3.1cm]{geometry}
+
+\usepackage{mathdesign}
+\usepackage[no-math]{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+%\setmainfont[Numbers=OldStyle]{Latin Modern Roman}
+\setmainfont[Numbers=OldStyle]{CMU Serif}
+%\setmainfont[Numbers=OldStyle]{EB Garamond}
+%\setmainfont[Numbers=OldStyle]{Gentium}
+\setmonofont{CMU Typewriter Text}
+\setsansfont{CMU Sans Serif}
+\newfontfamily\CodeFont[Scale=0.85]{DejaVu Sans Mono}
+%\newfontfamily\CodeFont[Scale=0.85]{Consolas}
+%\newfontfamily\CodeFont[Scale=0.85]{Anonymous Pro}
+
+\usepackage[english,ngerman,russian]{babel}
 
 \usepackage{commath}
 \usepackage{amsfonts}
@@ -21,16 +31,21 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 
+\usepackage{kantlipsum}
+\usepackage{blindtext}
+
 \usepackage{caption}
 \usepackage{ragged2e}
 
-%\usepackage[left=3.1cm, right=3.1cm]{geometry}
 \usepackage{graphicx}
 %\usepackage[export]{adjustbox}
-
-\usepackage{epstopdf}
-\epstopdfDeclareGraphicsRule{.tif}{png}{.png}{convert #1 \OutputFile}
-\AppendGraphicsExtensions{.tif}
+%\usepackage{epstopdf}
+%\epstopdfDeclareGraphicsRule{.tif}{png}{.png}{convert #1 \OutputFile}
+%\AppendGraphicsExtensions{.tif}
+\usepackage{luamplib}
+\usepackage{etoolbox}
+\preto\mplibcode{\center\leavevmode}
+\appto\endmplibcode{\endcenter}
 
 \usepackage{float}
 \usepackage{subfig}
@@ -42,11 +57,10 @@
 \definecolor{codegreen}{rgb}{0,0.3,0}
 \definecolor{codered}{rgb}{0.3,0,0}
 \definecolor{Gray}{gray}{0.9}
-\usepackage[scaled]{beramono}
 \usepackage{listings}
 \usepackage{needspace}
 \lstset{%
-  basicstyle=\footnotesize\ttfamily,
+  basicstyle=\CodeFont\small, %\footnotesize\ttfamily,
   frame=single, %line/leftline/single
   aboveskip=\topsep,
   belowskip=\topsep,
@@ -141,7 +155,80 @@
 \clearpage
 
 \section{Theory}
+
+\dictum[Anonymous]{Forecasting is the art of saying
+what is going to happen and then to explain
+why it didn’t.}
+
 \subsection{Motivation}
+
+\selectlanguage{russian}
+
+Ад еюж зальы атквюе лыгимуз. Эа фалля ийжквюы
+аппэльлььантюр квюо. Кюм новум зэнтынтиаэ мэдиокретатым ыт, квуй эи лебыр
+граэкы атоморюм, фырре мэльиорэ вяш ед. Мальюизчыт эффикеэнди дытыррюизщэт
+ад еюж, ючю экз эзшэ путант, зыд ты квюод золэт долорэж. Хаж адипижкй
+конкыптам нэ.
+
+Вяш дэбыт ютенам зигнёфэрумквюы ан, прё нэ адвыржаряюм конклььюжионэмквуэ
+витюпэраторебуз, ан про натюм фиэрэнт. Йн аффэрт граэкы тамквюам шэа, вяш
+трётанё чадипжкёнг ат, нэ квуй путант хонэзтатёз ентырпрытаряш. Нэ хёнк
+витюпэраторебуз шэа, эю омнеж мовэт рыкючабо эож. Татион компрэхэнжам ут
+зыд. Ан векж эзшэ бландит. Эним порро эи еюж.
+
+Польский язык \foreignlanguage{polish}{(język polski, polszczyzna)} —
+язык поляков, относящийся к лехитской подгруппе 
+западнославянской группы славянской ветви индоевропейской языковой семьи.
+Проверка. Очень длинная строка для проверки переносов: дезоксирибонуклеиновый тест.
+\par
+\selectlanguage{english}
+Default fight flight affinity 1234567890
+{\bfseries Hello Привет Mäx} {\scshape Привет Mäx} {\em Привет Mäx} {\scshape \bfseries Yes}
+\par
+{\sffamily sans
+{\bfseries Hello Привет Mäx} {\scshape Привет Mäx} {\em Привет Mäx} {\scshape \bfseries Yes}
+}
+Let
+\[ f(x) = \alpha \mathrm A B \gamma 1234567890; \; \Phi_k\left(\big\{ \{a_1,b_1\}, \ldots ,\{a_p,b_p\} \big\} \right) \]
+denote shortest (in total length) balanced paths set containing points $1 \ldots k$
+with $a_i, b_i$ being the paths' endpoints
+and
+\[ B\left(\big\{ \{a_1,b_1\}, \ldots ,\{a_p,b_p\} \big\}\right) = \bigcup_i\{a_i,b_i\}.\]
+
+\begin{figure}[htbp]
+\centering%
+\begin{mplibcode}
+  beginfig(0)
+    pair p[];
+    p1 = (0,0); p2 = (100,0); p3 = (200,0); p4 = (300,0); p5 = (400,0);
+    pair c[];
+    c1 = (50,20); c2 = (210,30); c3 = (250,-10); c4 = (100,-20);
+    path a;
+    a = p1 .. controls c1 ..
+        p2 .. controls c2 ..
+        p4 ..
+        p5 .. controls c3 ..
+        p3 ..  controls c4 ..
+        cycle ;
+    for i = 1 upto length a:
+      dotlabel.top(decimal i, p[i]);
+      drawarrow subpath (i-1,i) of a withcolor 0.4;
+    endfor
+  endfig;
+\end{mplibcode}
+\ 
+\caption{Ha!}
+\end{figure}
+
+\selectlanguage{russian}
+\blindmathpaper
+\blindmathtrue
+\blindtext
+\blinditemize
+\blindenumerate
+\blinddescription
+\kant[1]
+
 \subsubsection{Monge matrices}
 \subsubsection{Pyramidal tours and polynomial time}
 \subsection{Continuation}
@@ -159,6 +246,7 @@
 \subsubsection{Euclidean TSP in higher dimensions?}
 \subsubsection{Special cases?}
 \subsection{Dynamic programming and concurrency}
+
 %\input{problem1.tex}
 
 %%
@@ -170,7 +258,7 @@
 %with $a_i, b_i$ being the paths' endpoints
 %and
 %\[ B\left(\big\{ \{a_1,b_1\}, \ldots ,\{a_p,b_p\} \big\}\right) = \bigcup_i\{a_i,b_i\}.\]
-%Then following holds:
+%%Then following holds:
 %\begin{enumerate}
 %  \item
 %\[
@@ -360,8 +448,8 @@
 \section{Platform/Compiler Support}
 %\clearpage
 \section{Shared Library Interface}
-%\label{app:p1code}
-%\input{problem1app.tex}
+\label{app:p1code}
+\input{testapp.tex}
 \section{Code Index}
 \lstlistoflistings%
 \section{References}

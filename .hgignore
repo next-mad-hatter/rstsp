@@ -11,6 +11,10 @@ doc/sketches
 src/rstsp/build
 src/rstsp/win32
 src/rstsp/polyml/*.sml
+src/lkh-2.0.7
+src/concorde
+src/tspsol
+src/norm
 src/belperm
 
 plot/**.pdf
@@ -26,7 +30,6 @@ test/data/dimacs
 test/data/vlsi
 test/data/world
 test/data/random
-test/ext
 
 tmp
 
