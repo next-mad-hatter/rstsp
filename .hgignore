@@ -5,8 +5,9 @@ report/sml-support.tex
 
 tags
 
-doc/ext
 doc/sketches
+doc/ext
+doc/tex
 
 src/rstsp/build
 src/rstsp/win32

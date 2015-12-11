@@ -20,7 +20,7 @@ ctags -Ra .
 # Three (sic!) latex runs should be enough for references to settle.
 #
 cd "${REPORT_DIR}"
-lualatex -shell-escape "${SUBMISSION}".tex || exit 1
+lualatex -shell-escape -interaction=nonstopmode "${SUBMISSION}".tex || exit 1
 biber "${SUBMISSION}".bcf
 lualatex "${SUBMISSION}".tex
 exec lualatex "${SUBMISSION}".tex

@@ -6,16 +6,18 @@
 
 * Repo:
     - rename rstsp -> p4/psb/........tsp
+    - docs/src/etc: check balanced/strongly balanced naming
     - automate create-polyml-smlnjlib scripts
     - complete the source readme
     - wiki / bug tracker ?
     - script via cmake ?
 * Report:
     - writeup
-    - compute tree width for info
+    - compute tree width (bfs?) for info
     - bar plots: combine patterns and color
     - metapost vs tikz vs asymptote ?
     - gnuplot vs matplotlib vs pgf ?
+    - dot2tex ?
     - sml support: can the pandoc -> rst way be pretty-fixed?
 * Research:
     - sb : better permutations?
@@ -25,12 +27,13 @@
     - relaxations
     - generator sandbox
 * Testing:
-    - test tour save/load
-    - test on rs + monge instances
-    - implement -> test 3d-euclidean/manhattan instances
+    - test on rs instances
     - tsplib med/large instances
+    - implement -> test 3d-euclidean/manhattan instances
+    - implement -> test atsp instances
+    - combine trampoline w/ other heuristics ?
     - study sb node size effect
-    - investigate poly timeouts in random/hi (4k+5k)
+    - investigate polyml timeouts in random/hi (4k+5k)
     - measure memory usage (steady/memusg: how do we script this?)
     - plot hash collisions nrs ?
 * Scripts:
@@ -47,16 +50,18 @@
     - sometimes: test scripts in fresh clone
 * Source:
     - rot search: -a = -r -> ?
-    - profile
+    - bfs ?
     - belperm: dedicated implementation ?
+    - implement atsp ?
     - balanced: dedicated implementation ?
-    - dotfile & stats wish -> simplesearch optional option ?
-    - make stats / search return type polymorphic
-    - iter searches time limits
+    - dotfile -> simplesearch optional option ?
     - flip flop search: ad -> ad+full (min_rot option)
+    - profile
+    - make stats / search return type polymorphic
+    - iter searches: implement time limits
     - factor out sb_shuffle
     - pyrrot + sbrot flip flop
-    - round to nearest integer as option
+    - add rounding to nearest integer as binarys option (now available only per REPL)
     - flipflop( flipflop(ad, pyr), pyrrot ) ?
     - iter + ff searches: return iterations results rather than print to stderr -> progress feedback ?
     - tsplib input: support more formats

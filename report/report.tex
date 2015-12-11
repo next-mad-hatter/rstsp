@@ -17,8 +17,10 @@
 \setmainfont[Numbers=OldStyle]{CMU Serif}
 %\setmainfont[Numbers=OldStyle]{EB Garamond}
 %\setmainfont[Numbers=OldStyle]{Gentium}
-\setmonofont{CMU Typewriter Text}
 \setsansfont{CMU Sans Serif}
+%\setsansfont{Droid Sans}
+\setmonofont{CMU Typewriter Text}
+%\setmonofont{Droid Sans Mono}
 \newfontfamily\CodeFont[Scale=0.85]{DejaVu Sans Mono}
 %\newfontfamily\CodeFont[Scale=0.85]{Consolas}
 %\newfontfamily\CodeFont[Scale=0.85]{Anonymous Pro}
@@ -30,9 +32,6 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
-
-\usepackage{kantlipsum}
-\usepackage{blindtext}
 
 \usepackage{caption}
 \usepackage{ragged2e}
@@ -52,15 +51,18 @@
 \usepackage{sidecap}
 \usepackage[bottom]{footmisc}
 
-\usepackage{color}
+\usepackage{xcolor}
+\definecolor{Gray}{gray}{0.9}
+\definecolor{blue}{rgb}{0,0,0.3}
+\definecolor{green}{rgb}{0,0.3,0}
 \definecolor{codeblue}{rgb}{0,0,0.3}
 \definecolor{codegreen}{rgb}{0,0.3,0}
 \definecolor{codered}{rgb}{0.3,0,0}
-\definecolor{Gray}{gray}{0.9}
+
 \usepackage{listings}
 \usepackage{needspace}
 \lstset{%
-  basicstyle=\CodeFont\small, %\footnotesize\ttfamily,
+  basicstyle=\CodeFont\footnotesize, %\footnotesize\ttfamily,
   frame=single, %line/leftline/single
   aboveskip=\topsep,
   belowskip=\topsep,
@@ -77,6 +79,11 @@
   \lstinputlisting[caption={\texttt{\detokenize{#2}}},#1]{#2}%
 }
 
+\usepackage{kantlipsum}
+\usepackage{blindtext}
+\usepackage{marginnote}
+\newcommand{\annotation}[1]{\marginpar{\small\itshape\color{green}#1}}
+
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{color, colortbl}
@@ -84,9 +91,8 @@
 \usepackage{varwidth}
 \usepackage{pgfplotstable}
 
-\definecolor{blue}{rgb}{0,0,0.32}
 \usepackage[pdfauthor={M. Deineko},
-            pdfproducer={pdflatex},
+            pdfproducer={lualatex},
             pdfcreator={LaTeX},
             colorlinks=true,
             linkcolor=blue,
@@ -156,14 +162,11 @@
 
 \section{Theory}
 
-\dictum[Anonymous]{Forecasting is the art of saying
-what is going to happen and then to explain
-why it didn’t.}
+\dictum[Steve Wozniak]{Never trust a computer you can't throw out a window.}
 
 \subsection{Motivation}
 
 \selectlanguage{russian}
-
 Ад еюж зальы атквюе лыгимуз. Эа фалля ийжквюы
 аппэльлььантюр квюо. Кюм новум зэнтынтиаэ мэдиокретатым ыт, квуй эи лебыр
 граэкы атоморюм, фырре мэльиорэ вяш ед. Мальюизчыт эффикеэнди дытыррюизщэт
@@ -189,6 +192,7 @@ Default fight flight affinity 1234567890
 {\bfseries Hello Привет Mäx} {\scshape Привет Mäx} {\em Привет Mäx} {\scshape \bfseries Yes}
 }
 Let
+\annotation{What is this?}
 \[ f(x) = \alpha \mathrm A B \gamma 1234567890; \; \Phi_k\left(\big\{ \{a_1,b_1\}, \ldots ,\{a_p,b_p\} \big\} \right) \]
 denote shortest (in total length) balanced paths set containing points $1 \ldots k$
 with $a_i, b_i$ being the paths' endpoints
@@ -220,7 +224,6 @@ and
 \caption{Ha!}
 \end{figure}
 
-\selectlanguage{russian}
 \blindmathpaper
 \blindmathtrue
 \blindtext
