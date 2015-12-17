@@ -13,14 +13,15 @@
 \usepackage{mathdesign}
 \usepackage[no-math]{fontspec}
 \defaultfontfeatures{Ligatures=TeX}
-%\setmainfont[Numbers=OldStyle]{Latin Modern Roman}
-\setmainfont[Numbers=OldStyle]{CMU Serif}
-%\setmainfont[Numbers=OldStyle]{EB Garamond}
+\setmainfont[Numbers=OldStyle]{Latin Modern Roman}
+%\setmainfont[Numbers=OldStyle]{CMU Serif}
 %\setmainfont[Numbers=OldStyle]{Gentium}
-\setsansfont{CMU Sans Serif}
+%\setmainfont[Numbers=OldStyle]{EB Garamond}
+\setsansfont[Numbers=OldStyle]{CMU Sans Serif}
 %\setsansfont{Droid Sans}
-\setmonofont{CMU Typewriter Text}
-%\setmonofont{Droid Sans Mono}
+%\setmonofont{CMU Typewriter Text}
+\setmonofont{Droid Sans Mono}
+%\setmonofont{DejaVu Sans Mono}
 \newfontfamily\CodeFont[Scale=0.85]{DejaVu Sans Mono}
 %\newfontfamily\CodeFont[Scale=0.85]{Consolas}
 %\newfontfamily\CodeFont[Scale=0.85]{Anonymous Pro}
@@ -31,7 +32,21 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{amsmath}
+
 \usepackage{amsthm}
+\usepackage{thmtools}
+\usepackage{etoolbox}
+\usepackage{changepage}
+
+\declaretheorem[style=definition,name=Definition]{define}
+\declaretheorem[style=plain]{theorem}
+\declaretheorem[sibling=theorem]{lemma}
+%\BeforeBeginEnvironment{theorem}{\begin{adjustwidth}{1cm}{1cm}}
+%\AfterEndEnvironment{theorem}{\endadjustwidth}
+%\AfterEndEnvironment{define}{\noindent\ignorespaces}
+%\makeatletter
+%\def\@endtheorem{\endtrivlist}%
+%\makeatother
 
 \usepackage{caption}
 \usepackage{ragged2e}
@@ -45,7 +60,7 @@
 \usepackage{etoolbox}
 \preto\mplibcode{\center\leavevmode}
 \appto\endmplibcode{\endcenter}
-
+\usepackage{wrapfig}
 \usepackage{float}
 \usepackage{subfig}
 \usepackage{sidecap}
@@ -79,8 +94,8 @@
   \lstinputlisting[caption={\texttt{\detokenize{#2}}},#1]{#2}%
 }
 
-\usepackage{kantlipsum}
-\usepackage{blindtext}
+%\usepackage{kantlipsum}
+%\usepackage{blindtext}
 \usepackage{marginnote}
 \newcommand{\annotation}[1]{\marginpar{\small\itshape\color{green}#1}}
 
@@ -97,10 +112,11 @@
             colorlinks=true,
             linkcolor=blue,
             urlcolor=blue,
+            citecolor=blue,
             linktoc=section,
             unicode=true
             ]{hyperref}
-\hypersetup{pdftitle=TSP on Relaxed Supnick Matrices}
+\hypersetup{pdftitle=Two Exponential Neighbourhoods}
 
 \usepackage[title,page,toc]{appendix}
 \newcommand*{\Appendixautorefname}{Appendix}
@@ -128,12 +144,13 @@
   \newpage
 }
 
-\usepackage[backend=biber]{biblatex}
+\usepackage[backend=biber,style=alphabetic]{biblatex}
+\usepackage{csquotes}
 %\usepackage[fixlanguage]{babelbib}
 \addbibresource{references.bib}
 \usepackage[nottoc]{tocbibind}
 
-%\usepackage[toc]{multitoc}
+\usepackage[toc]{multitoc}
 \usepackage[subfigure]{tocloft}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 
@@ -144,11 +161,18 @@
 
 \selectlanguage{english}
 
-\title{TSP on Relaxed Supnick Matrices}
-\subtitle{Theory and Implementation}
+\title{Two Exponential Neighbourhoods}
+\subtitle{Pyramidal and strongly balanced Traveling Salesman Problem and heuristics --- theory and implementation}
 \input{authors.tex}
 \date{\today}
 \maketitle
+
+\begin{abstract}
+  Pyramidal tours form a well known polynomially solvable subclass of TSP\@.
+  In this paper, we present first implementation of a related tours family,
+  show extension of both to local search heuristics and compare results thus obtained.
+\end{abstract}
+
 \thispagestyle{empty}
 
 %\setlength{\cftbeforetoctitleskip}{-2em}
@@ -161,44 +185,52 @@
 \clearpage
 
 \section{Theory}
+\dictum[Honore de Balzac]{To get a traveling salesman drunk is the height of impossibility.}
 
-\dictum[Steve Wozniak]{Never trust a computer you can't throw out a window.}
+\subsection{Notation}
 
-\subsection{Motivation}
+\annotation{What should be the prerequisites?}
+In this paper we shall follow canonical definition of TSP as a minimization problem
+on a complete, directed graph with node set $\{1,2,\ldots,n\} \cong {\mathbb Z}_n \equiv {\mathbb Z}/n{\mathbb Z}$,
+tour set being $S_n$,
+where one can associate permutations
+$\left( \begin{smallmatrix}
+    1 & 2 & \cdots & n \\
+    k_1 & k_2 & \cdots &  k_n
+ \end{smallmatrix} \right)
+ \in S_n
+$ with tours $\left( k_1, k_2, \ldots ,k_n, k_1 \right)$,
+and tour length of $\tau = \left( k_1, \ldots, k_n, k_1 \right)$ given by
+$\operatorname{len}(\tau) = \sum_{i \in {\mathbb Z}_n} C_{i,i+1}$,
+where $C$ is a distance matrix given either explicitly or by some metric.
+Henceforth we shall consider only non-negative distance instances.
 
-\selectlanguage{russian}
-Ад еюж зальы атквюе лыгимуз. Эа фалля ийжквюы
-аппэльлььантюр квюо. Кюм новум зэнтынтиаэ мэдиокретатым ыт, квуй эи лебыр
-граэкы атоморюм, фырре мэльиорэ вяш ед. Мальюизчыт эффикеэнди дытыррюизщэт
-ад еюж, ючю экз эзшэ путант, зыд ты квюод золэт долорэж. Хаж адипижкй
-конкыптам нэ.
+\subsection{Pyramidal tours}
 
-Вяш дэбыт ютенам зигнёфэрумквюы ан, прё нэ адвыржаряюм конклььюжионэмквуэ
-витюпэраторебуз, ан про натюм фиэрэнт. Йн аффэрт граэкы тамквюам шэа, вяш
-трётанё чадипжкёнг ат, нэ квуй путант хонэзтатёз ентырпрытаряш. Нэ хёнк
-витюпэраторебуз шэа, эю омнеж мовэт рыкючабо эож. Татион компрэхэнжам ут
-зыд. Ан векж эзшэ бландит. Эним порро эи еюж.
+\annotation{Who was first?}
+Pyramidal tours constitute a classic example of a TSP class where an
+optimum solution for an exponential tours set (also, a neighbourhood) can
+be found in polynomial time \cite{bellman,lawler,gilmore}.
 
-Польский язык \foreignlanguage{polish}{(język polski, polszczyzna)} —
-язык поляков, относящийся к лехитской подгруппе 
-западнославянской группы славянской ветви индоевропейской языковой семьи.
-Проверка. Очень длинная строка для проверки переносов: дезоксирибонуклеиновый тест.
-\par
-\selectlanguage{english}
-Default fight flight affinity 1234567890
-{\bfseries Hello Привет Mäx} {\scshape Привет Mäx} {\em Привет Mäx} {\scshape \bfseries Yes}
-\par
-{\sffamily sans
-{\bfseries Hello Привет Mäx} {\scshape Привет Mäx} {\em Привет Mäx} {\scshape \bfseries Yes}
-}
-Let
-\annotation{What is this?}
-\[ f(x) = \alpha \mathrm A B \gamma 1234567890; \; \Phi_k\left(\big\{ \{a_1,b_1\}, \ldots ,\{a_p,b_p\} \big\} \right) \]
-denote shortest (in total length) balanced paths set containing points $1 \ldots k$
-with $a_i, b_i$ being the paths' endpoints
-and
-\[ B\left(\big\{ \{a_1,b_1\}, \ldots ,\{a_p,b_p\} \big\}\right) = \bigcup_i\{a_i,b_i\}.\]
+\begin{define}
+  A path $\pi = \left( k_1, \ldots, k_m \right)$ is called {\bfseries simple}
+  if it consists only of distinct nodes, except, possibly, end nodes $k_1$ and $k_m$.
+  In case where $k_1 = k_m$ we shall call such a path {\bfseries closed}.
+\end{define}
+\begin{define}[Pyramidal Tour]
+  A simple path $\pi = \left( k_1, \ldots, k_p, l_1, \ldots, l_q \right), \; p+q \geq 1,$
+  is called {\bfseries pyramidal} if
+  $k_i < k_j, l_i > l_j \; \forall i < j$.
+  A (simple) closed path is called a {\bfseries tour}.
+\end{define}
+\noindent
+Since all tours associated with $S_n$ have the form $\left(1, k_1, \ldots,
+k_p, n, l_1, \ldots, l_q, 1 \right)$, it follows that the number of all
+such tours is $2^{n-2}$.  Also note how the graph of such a permutation
+considered a function ${\mathbb Z}_n \rightarrow {\mathbb Z}_n$ resembles a
+pyramid.
 
+\annotation{Here a nice figure of a pyramidal tour and a pyramid shall be.}
 \begin{figure}[htbp]
 \centering%
 \begin{mplibcode}
@@ -216,39 +248,122 @@ and
         cycle ;
     for i = 1 upto length a:
       dotlabel.top(decimal i, p[i]);
-      drawarrow subpath (i-1,i) of a withcolor 0.4;
+      drawarrow subpath (i-1,i) of a withcolor 0.2;
     endfor
   endfig;
 \end{mplibcode}
 \ 
-\caption{Ha!}
+\caption{A pyramidal tour over $K_5$.}
 \end{figure}
 
-\blindmathpaper
-\blindmathtrue
-\blindtext
-\blinditemize
-\blindenumerate
-\blinddescription
-\kant[1]
-
-\subsubsection{Monge matrices}
 \subsubsection{Pyramidal tours and polynomial time}
-\subsection{Continuation}
-\subsubsection{Relaxed Supnick matrices}
+
+It turns out that for this particular exponential neighbourhood a simple dynamic programming
+scheme delivers a polynomial solution.
+\annotation{Is there any difference at all between sTSP and aTSP here?}
+(For simplicity, we shall consider symmetric TSP (sTSP).)
+For a sTSP of size $n$, let
+\begin{align*}
+  \Phi\left(i,j\right) \ldots \; & \text{shortest pyramidal path} \left(i,k_1,\ldots,k_p,j\right) \\
+                      & \text{s.t.} \; \left\{ k_1,\ldots,k_p \right\} = \left\{ k,\ldots,n \right\} \\
+                      & \text{where} \; k = \max\left\{i,j\right\}+1.
+\end{align*}
+One can easily see that $\Phi(1,1)$ is the optimum of all pyramidal tours in $S_n$ (one-based).
+\[
+  \Phi\left(i,n\right) = \left(i,n\right) \; \text{and} \; \Phi\left(n,j\right) = \left(n,j\right).
+\]
+\annotation{A construction illustration would be in order here.}
+Now note that one can build an arbitrary pyramidal path by considering nodes' positions in increasing order:
+given a partial tour (a pyramidal path) $\left(1,\ldots,i,j,\ldots,1\right)$ which increases to $i$ and
+decreases from $j$, the next element ($\max\left\{i,j\right\}+1$) has to lie adjacent to $i$ or $j$.
+Since every pyramidal tour over $K_n$ can be constructed in this manner, it follows that
+\begin{gather*}
+  \Phi\left(i,j\right) = \argmin_{\tau \in T}\operatorname{len}\left(\tau\right) \\
+  \text{where} \; T = \left\{ \left( i,k \right) \oplus \Phi(k,j), \Phi(i,k) \oplus \left( k,j \right) \right\} \\
+  \text{and} \; \oplus \; \ldots \; \text{path concatenation}.
+\end{gather*}
+We hence arrive at
+\begin{theorem}
+  For $K_n$, amongst $2^{n-3}$ pyramidal tours an optimum can be found in $\mathcal O(n^2)$ steps.
+\end{theorem}
+\begin{proof}
+  For $K_n$, computing the optimum now requires computing not more than $\Phi\left(i,j\right)$
+  for all pairs $\left(i,j\right)$.
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.79\textwidth]{../plot/out/trace_pyr.pdf}
+\caption{A trace of our implementation's pyramidal search graph traversal.}
+\end{figure}
+
+\subsubsection{Local search heuristic}
+
+\annotation{Demidenko conditions: is a description necessary/interesting?}
+While determining if a given TSP instance is pyramidal is NP-hard \cite{baki},
+a number of polynomially testable classes which are pyramidally solvable exist \cite{baki,gilmore} ---
+still, those are not widely common.
+
+Pyramidal search can also be extended to a local search heuristic:
+note first how the tour obtained depends on node numbering.
+Now let $\operatorname{pyr}(C)$ denote best pyramidal tour given a distance matrix $C$
+and, given a tour $\tau$, $\sigma_\tau \left(C\right)$ be the permutation associated with $\tau$
+applied to rows and columns of $C$ (i.e. renumbering of nodes).
+Let
+\[
+  h_C \; : \;
+    \tau \mapsto \left(
+      \sigma_{\tau}^{-1} \circ
+      \operatorname{pyr} \circ
+      \sigma_{\tau}
+    \right)
+    \left( C \right).
+\]
+Then $h_C\left(\left(1,2,\ldots,n\right)\right) = \operatorname{pyr}\left(C\right)$.
+Since $\left(1,2,\ldots,n,1\right)$ is a pyramidal tour,
+we have $\operatorname{len} \circ h_C \circ h_C \leq \operatorname{len} \circ h_C$.
+In this way, iterating from $\left(1,2,\ldots,n\right)$ to a fixed point of $h_c$ yields a
+local search heuristic.
+
+It had been shown \cite{belperm} that we can significantly improve on this by enhancing
+$\operatorname{pyr}$ to choose from $n$ shortest pyramidal tours obtained by applying
+cyclic permutations to initial node ordering.
+
+\subsection{Strongly balanced tours}
 \subsubsection{Strongly balanced tours and linear time}
+\subsubsection{Local search heuristics}
+
+%\blindmathpaper
+%\blindmathtrue
+%\blindtext
+%\blinditemize
+%\blindenumerate
+%\blinddescription
+%\kant[1]
 
 \section{Implementation}
-\subsection{Synthetic benchmarks and runtime behaviour}
-\subsection{Local search extension}
-\subsection{TSPLIB benchmarks}
+\subsection{Description}
+\subsubsection{Brief design overview}
+\subsubsection{Compiler, REPL, OS support}
+\subsection{Benchmarks}
+\subsubsection{Runtime behaviour}
+\subsubsection{TSPLIB instances}
 
-\section{Areas for further research}
-\subsection{Applicability}
-\subsubsection{Relaxed instances?}
-\subsubsection{Euclidean TSP in higher dimensions?}
-\subsubsection{Special cases?}
-\subsection{Dynamic programming and concurrency}
+\section{Conclusions}
+
+%\begin{figure}[htbp]
+\begin{wrapfigure}{r}{0.5\textwidth}
+\centering
+\includegraphics[width=0.54\textwidth]{./tsp.png}
+\caption*{\captionsize \url{https://xkcd.com/399/}}
+%\end{figure}
+\end{wrapfigure}
+
+\subsection{Lessons learned}
+\subsubsection{Results compared}
+\subsection{Areas for further research}
+\subsubsection{Applicability and unexplored instance classes}
+\subsubsection{Dynamic programming and concurrency}
 
 %\input{problem1.tex}
 
