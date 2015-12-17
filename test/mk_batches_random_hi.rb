@@ -11,8 +11,8 @@ require 'json'
 res = []
 set = []
 
-(4000..5500).step(500) do |i| set << [:mlton,i] end
-(4000..5500).step(500) do |i| set << [:poly,i] end
+(6500..7500).step(500) do |i| set << [:mlton,i] end
+#(4000..5500).step(500) do |i| set << [:poly,i] end
 set.each do |bin,size|
   ([[:pyramidal,nil]] + [:balanced].product((3..4).to_a)).each do |algo_max|
     algo, max = *algo_max

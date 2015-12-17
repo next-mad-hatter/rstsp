@@ -28,7 +28,7 @@ struct
                                     EQUAL => Word.compare (r,r')
                                   | c => c
 
-  fun toString (a,b) = "(" ^ U.wordToString a ^ "," ^ U.wordToString b ^ ")"
+  fun toString (a,b) = "(" ^ U.wordToString (a+0w1) ^ "," ^ U.wordToString (b+0w1) ^ ")"
 
   fun toKey x = x
 
@@ -71,6 +71,11 @@ struct
 
   type optional_params = unit
 
+  (**
+   * For asymmetric TSP, we'd have to replace this with id.
+   *)
+  fun sym_sort (a,b) = if a>b then (b,a) else (a,b)
+
   fun descendants size dist _ (i,j) =
     case (i > size orelse j > size orelse i=j andalso i <> 0w0,
           i = size-0w1 orelse j = size-0w1) of
@@ -79,10 +84,10 @@ struct
     | (_,_) =>
         let
           val k = Word.max (i,j) + 0w1
-          val kj = ((k,j),
+          val kj = (sym_sort (k,j),
                     fn d => Len.+ (d, dist (i,k)),
                     fn t => Lazy.susp (fn () => Vector.concat [Vector.fromList [i], t ()]))
-          val ik = ((i,k),
+          val ik = (sym_sort (i,k),
                     fn d => Len.+ (d, dist (k,j)),
                     fn t => Lazy.susp (fn () => Vector.concat [t (), Vector.fromList [j]]))
         in

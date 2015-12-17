@@ -319,10 +319,13 @@ Let
     \right)
     \left( C \right).
 \]
-Then $h_C\left(\left(1,2,\ldots,n\right)\right) = \operatorname{pyr}\left(C\right)$.
+Then $h_C\left(\left(1,2,\ldots,n,1\right)\right) = \operatorname{pyr}\left(C\right)$.
 Since $\left(1,2,\ldots,n,1\right)$ is a pyramidal tour,
-we have $\operatorname{len} \circ h_C \circ h_C \leq \operatorname{len} \circ h_C$.
-In this way, iterating from $\left(1,2,\ldots,n\right)$ to a fixed point of $h_c$ yields a
+\[
+  \operatorname{len} \circ h_C \leq \operatorname{len}
+\]
+holds everywhere.
+In this way, iterating from $\left(1,2,\ldots,n,1\right)$ to a fixed point of $h_C$ yields a
 local search heuristic.
 
 It had been shown \cite{belperm} that we can significantly improve on this by enhancing
