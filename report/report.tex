@@ -118,7 +118,7 @@
             ]{hyperref}
 \hypersetup{pdftitle=Two Exponential Neighbourhoods}
 
-\usepackage[title,page,toc]{appendix}
+\usepackage[title,page,titletoc]{appendix}
 \newcommand*{\Appendixautorefname}{Appendix}
 \usepackage{cleveref}
 
@@ -150,7 +150,7 @@
 \addbibresource{references.bib}
 \usepackage[nottoc]{tocbibind}
 
-\usepackage[toc]{multitoc}
+%\usepackage[toc]{multitoc}
 \usepackage[subfigure]{tocloft}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 
@@ -622,8 +622,20 @@ Potentially fruitful approaches: tuple spaces, message passing languages, etc
 %\cite{example}
 %
 
+%\appendix
+%\addcontentsline{toc}{chapter}{Appendices}
+%\makeatletter
+%\addtocontents{toc}{\let\protect\l@chapter\protect\l@section}
+%\makeatother
+%\chapter{First Appendix}
+%\chapter{Second Appendix}
+
 \clearpage
 \begin{appendices}
+
+\makeatletter
+\addtocontents{toc}{\let\protect\l@chapter\protect\l@section}
+\makeatother
 
 %\section{Code Index}
 %\lstlistoflistings%
