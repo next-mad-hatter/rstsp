@@ -16,7 +16,7 @@ pandoc -f rst -t latex ../doc/sml-support.rst  > sml-support.tex
 ctags -Ra .
 
 ../src/rstsp/build/rstsp.mlton -o /dev/null -t p ../test/data/random/random.5 -l ../plot/data/trace_pyr.dot
-../src/rstsp/build/rstsp.mlton -o /dev/null -t b ../test/data/random/random.5 -l ../plot/data/trace_bal.dot
+../src/rstsp/build/rstsp.mlton -o /dev/null -t b -m 2 ../test/data/random/random.8 -l ../plot/data/trace_bal.dot
 dot -Tpdf ../plot/data/trace_pyr.dot -o ../plot/out/trace_pyr.pdf
 dot -Tpdf ../plot/data/trace_bal.dot -o ../plot/out/trace_bal.pdf
 

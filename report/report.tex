@@ -20,7 +20,7 @@
 \setsansfont[Numbers=OldStyle]{CMU Sans Serif}
 %\setsansfont{Droid Sans}
 %\setmonofont{CMU Typewriter Text}
-\setmonofont{Droid Sans Mono}
+\setmonofont[Scale=0.9]{Droid Sans Mono}
 %\setmonofont{DejaVu Sans Mono}
 \newfontfamily\CodeFont[Scale=0.85]{DejaVu Sans Mono}
 %\newfontfamily\CodeFont[Scale=0.85]{Consolas}
@@ -185,7 +185,8 @@
 \clearpage
 
 \section{Theory}
-\dictum[Honore de Balzac]{To get a traveling salesman drunk is the height of impossibility.}
+%\dictum[Honore de Balzac]{To get a traveling salesman drunk is the height of impossibility.}
+\dictum[Sherlock Holmes]{"Nothing clears up a case so much as stating it to another person.}
 
 \subsection{Notation}
 
@@ -293,11 +294,11 @@ We hence arrive at
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.79\textwidth]{../plot/out/trace_pyr.pdf}
-\caption{A trace of our implementation's pyramidal search graph traversal.}
+\includegraphics[width=0.59\textwidth]{../plot/out/trace_pyr.pdf}
+\caption{A trace of our implementation's pyramidal search graph traversal over $K_5$.}
 \end{figure}
 
-\subsubsection{Local search heuristic}
+\subsubsection{Local search heuristics}
 
 \annotation{Demidenko conditions: is a description necessary/interesting?}
 While determining if a given TSP instance is pyramidal is NP-hard \cite{baki},
@@ -333,40 +334,187 @@ $\operatorname{pyr}$ to choose from $n$ shortest pyramidal tours obtained by app
 cyclic permutations to initial node ordering.
 
 \subsection{Strongly balanced tours}
+\annotation{TODO}
+
+Balanced and strongly balanced tours.
+Description will refer to pyramidal case.
+Definition via construction.
+Our implementation is first.
+Also, have to have nice pictures.
+
 \subsubsection{Strongly balanced tours and linear time}
+\annotation{TODO}
+
+Number of tours is $\Omega(2^n)$.
+Dynamic programming recursion follows from construction.
+Tree width is capped for a given maximum node size, hence linear time \cite{fpneighb}.
+Experiment: tree area grows fast (shown in \autoref{tbl:nodeTypes}),
+tree width not computed (BFS would make this natural).
+
+\setlength{\aboverulesep}{0pt}
+\setlength{\belowrulesep}{0pt}
+\renewcommand{\tabcolsep}{9pt}
+\setlength{\extrarowheight}{1.1ex}
+\newcolumntype{g}{>{\columncolor{Gray}}c}
+
+\begin{table}[htpb]
+\centering
+    \mbox{%
+      \pgfplotstabletypeset[
+        col sep=space,
+        std=-10:10,
+        every head row/.style={output empty row},
+        every head row/.style={%
+          before row={\toprule},
+          after row={\midrule}
+        },
+        display columns/0/.style={%
+          column name={\bfseries Node size limit},
+          column type={g}
+        },
+        display columns/1/.style={%
+          column name={\bfseries Node types},
+          column type={r}
+        },
+        display columns/2/.style={%
+          column name={\bfseries Stable at size},
+          column type={g}
+        },
+        every last row/.style={after row=\bottomrule},
+        %multicolumn names,
+      ]{../plot/data/num\string_types.csv}%
+    }
+\caption{Node types encountered.}%
+\label{tbl:nodeTypes}%
+\end{table}
+
+\begin{figure}[htbp]
+\makebox[\textwidth][c]{%
+  \includegraphics[width=1.21\textwidth]{../plot/out/trace_bal.pdf}
+}
+\caption{%
+  A trace of our implementation's strongly balanced search graph traversal over $K_8$.  Here, maximum node size is 2.
+}
+\end{figure}
+
 \subsubsection{Local search heuristics}
+\annotation{TODO}
 
-%\blindmathpaper
-%\blindmathtrue
-%\blindtext
-%\blinditemize
-%\blindenumerate
-%\blinddescription
-%\kant[1]
+Applicability: Relaxed Supnick matrices with additional property.
+Heuristics concept same as in pyramidal case, permutations adjusted.
+Adaptive search seems better than always choosing from $2n+1$ str.-balanced-cyclic permutations.
+Sources: \cite{fpclass}.
 
+\clearpage
 \section{Implementation}
-\subsection{Description}
-\subsubsection{Brief design overview}
-\subsubsection{Compiler, REPL, OS support}
-\subsection{Benchmarks}
-\subsubsection{Runtime behaviour}
-\subsubsection{TSPLIB instances}
+\dictum[Edward V Berard]{Walking on water and developing software from a specification are easy if both are frozen.}
 
+\subsection{Brief overview}
+\annotation{TODO}
+
+Written in {\ttfamily Standard ML}.
+Usable via REPL, standalone executable or shared library.
+Tested under multiple software (see \autoref{app:compiler}) and OS/hardware platforms --
+Linux (amd64) and Windows (x86) (MinGW-crosscompiled).
+
+General dynamic programming results implementation via search graph traversal (simple depth first search),
+sacrificing performance for ease of extendibility (provide LOC count).
+BFS might have been somewhat faster, but for our research dfs is enough.
+Memoization via hash tables.
+
+This project's sources are available
+\href{https://bitbucket.org/mad_hatter/rstsp/}{online}\footnote{\url{https://bitbucket.org/mad_hatter/rstsp/}}.
+
+\subsection{Runtime behaviour}
+\annotation{TODO}
+
+Clearly pronounced linear runtime for str.~balanced search, apparently heavy overhead penalty.
+Pyramidal faster but str.~balanced eventually takes over.
+See \autoref{fig:benchRAND}.
+
+\begin{figure}[htbp]
+\null\hfill%
+\subfloat[higher node sizes]{%
+  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_low.pdf}
+}\hfill\null
+\null\hfill%
+\subfloat[medium node sizes]{%
+  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_fast.pdf}
+}\hfill\null\\
+\null\hfill%
+\subfloat[low node sizes]{%
+  \includegraphics[width=0.59\textwidth]{../plot/out/mlton_time_random_steady.pdf}
+}\hfill\null\\
+\null\hfill%
+\subfloat[pyramidal vs str.~balanced/m3]{%
+  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_med.pdf}
+}\hfill\null
+\null\hfill%
+\subfloat[pyramidal vs str.~balanced/m4]{%
+  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_hi.pdf}
+}
+\hfill\null
+\caption{Single traversal running times (Linux 3.10.17 ({\ttfamily x86\_64}) @ i5-2520M).}
+\label{fig:benchRAND}
+\end{figure}
+
+\subsection{Tour benchmarks}
+
+\annotation{TODO}
+Describe results, add Relaxed Supnick matrices (!), prettier histograms, plot iterations behavior?.
+See \autoref{fig:benchTSPLIB}.
+
+\begin{figure}[htbp]
+\null\hfill%
+\subfloat[random --- tour length]{%
+  \includegraphics[width=0.69\textwidth]{../plot/out/random_val.pdf}
+}\hfill\null\\
+\null\hfill%
+\subfloat[tsplib \& vlsi --- tour quality]{%
+  \includegraphics[width=0.69\textwidth]{../plot/out/tsplib_val.pdf}
+}\hfill\null\\
+\null\hfill%
+\subfloat[tsplib \& vlsi --- time needed]{%
+  \includegraphics[width=0.69\textwidth]{../plot/out/tsplib_time.pdf}
+}\hfill\null
+\caption{Benchmarks --- small instances.}
+\label{fig:benchTSPLIB}
+\end{figure}
+
+\clearpage
 \section{Conclusions}
+\dictum[Arthur Bloch]{Enough research will tend to support your conclusions.}
 
-%\begin{figure}[htbp]
-\begin{wrapfigure}{r}{0.5\textwidth}
+\subsection{Results obtained}
+\annotation{TODO}
+First implementation of str.~balanced search.
+Some benchmarks.
+Preprocessing no gain.
+
+\begin{figure}[htbp]
+%\begin{wrapfigure}{r}{0.5\textwidth}
 \centering
 \includegraphics[width=0.54\textwidth]{./tsp.png}
-\caption*{\captionsize \url{https://xkcd.com/399/}}
-%\end{figure}
-\end{wrapfigure}
+\caption*{\captionsize Source: \small \url{https://xkcd.com/399/}.}
+%\end{wrapfigure}
+\end{figure}
 
-\subsection{Lessons learned}
-\subsubsection{Results compared}
 \subsection{Areas for further research}
-\subsubsection{Applicability and unexplored instance classes}
-\subsubsection{Dynamic programming and concurrency}
+\annotation{TODO}
+
+Heuristics better for aTSP\@?
+Untested: other metrics or higher dimensions, dedicated implementations' performance.
+Further heuristics combinations.
+Branch cutting.
+Different permutations set for str.~balanced tours?
+
+\subsection{Dynamic programming algorithms and concurrency}
+\annotation{TODO}
+
+Dedicated implementations (pyramidal: bottom up easy) fast, but not always feasible (str.~balanced: machine-generated).
+Naive concurrency (see the {\ttfamily experimental} code) not easily applicable in general case (dense search tree).
+Potentially fruitful approaches: tuple spaces, message passing languages, etc
+(PolyML/Linda?, manticore, jocaml, mythryl, aliceml, clojure/clotilde, scala/akka, $\ldots$).
 
 %\input{problem1.tex}
 
@@ -475,106 +623,29 @@ cyclic permutations to initial node ordering.
 %
 
 \clearpage
+\begin{appendices}
 
+%\section{Code Index}
+%\lstlistoflistings%
+
+\section{Compiler Support}
+\label{app:compiler}
 \input{sml-support.tex}
 
-\setlength{\aboverulesep}{0pt}
-\setlength{\belowrulesep}{0pt}
-\renewcommand{\tabcolsep}{9pt}
-\setlength{\extrarowheight}{1.1ex}
-\newcolumntype{g}{>{\columncolor{Gray}}c}
-
-%\begin{table}[hpb]
-\begin{figure}[htbp]
-\centering
-  \null\hfill%
-  \subfloat[numbers]{%
-    \mbox{%
-      \pgfplotstabletypeset[
-        col sep=space,
-        std=-10:10,
-        every head row/.style={output empty row},
-        every head row/.style={%
-          before row={\toprule},
-          after row={\midrule}
-        },
-        display columns/0/.style={%
-          column name={\bfseries Node size limit},
-          column type={g}
-        },
-        display columns/1/.style={%
-          column name={\bfseries Node types},
-          column type={r}
-        },
-        display columns/2/.style={%
-          column name={\bfseries Stable at size},
-          column type={g}
-        },
-        every last row/.style={after row=\bottomrule},
-        %multicolumn names,
-      ]{../plot/data/num\string_types.csv}%
-    }
-  }
-  \hfill\null
-\caption{Node types encountered.}%
-\label{fig:nodeTypes}%
-%\end{table}
-\end{figure}
-
-\begin{figure}[htbp]
-\null\hfill%
-\subfloat[higher node sizes]{%
-  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_low.pdf}
-}\hfill\null
-\null\hfill%
-\subfloat[medium node sizes]{%
-  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_fast.pdf}
-}\hfill\null\\
-\null\hfill%
-\subfloat[low node sizes]{%
-  \includegraphics[width=0.59\textwidth]{../plot/out/mlton_time_random_steady.pdf}
-}\hfill\null\\
-\null\hfill%
-\subfloat[pyramidal vs balanced/m3]{%
-  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_med.pdf}
-}\hfill\null
-\null\hfill%
-\subfloat[pyramidal vs balanced/m4]{%
-  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_hi.pdf}
-}
-\hfill\null
-\caption{Single traversal running times (Linux 3.10.17 x86\_64 @ i5-2520M).}
-\label{fig:timeGraph}
-\end{figure}
-
-\begin{figure}[htbp]
-\null\hfill%
-\subfloat[random --- tour length]{%
-  \includegraphics[width=0.69\textwidth]{../plot/out/random_val.pdf}
-}\hfill\null\\
-\null\hfill%
-\subfloat[tsplib --- tour quality]{%
-  \includegraphics[width=0.69\textwidth]{../plot/out/tsplib_val.pdf}
-}\hfill\null\\
-\null\hfill%
-\subfloat[tsplib --- time needed]{%
-  \includegraphics[width=0.69\textwidth]{../plot/out/tsplib_time.pdf}
-}\hfill\null
-\caption{Benchmarks --- small instances.}
-\label{fig:timeGraph}
-\end{figure}
-
-\clearpage
-\begin{appendices}
-\section{Platform/Compiler Support}
-%\clearpage
 \section{Shared Library Interface}
-\label{app:p1code}
-\input{testapp.tex}
-\section{Code Index}
-\lstlistoflistings%
+\label{app:so}
+
+\needspace{5\baselineskip}
+\mylisting[
+  caption={[FFI usage example]FFI usage example.},
+  firstline=8,fontadjust,language=C,
+  label=lst:so]{../src/rstsp/librstsp/test.c}
+
+%\input{testapp.tex}
+
 \section{References}
 \printbibliography%
+
 \end{appendices}
 
 \end{document}

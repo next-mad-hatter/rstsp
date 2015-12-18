@@ -72,7 +72,7 @@ struct
   type optional_params = unit
 
   (**
-   * For asymmetric TSP, we'd have to replace this with id.
+   * For symmetric TSP, (a,b) is same as (b,a).
    *)
   fun sym_sort (a,b) = if a>b then (b,a) else (a,b)
 

@@ -32,6 +32,7 @@
     - implement -> test 3d-euclidean/manhattan instances
     - implement -> test atsp instances
     - combine trampoline w/ other heuristics ?
+    - compare to concorde/lkh on random instances
     - study sb node size effect
     - investigate polyml timeouts in random/hi (4k+5k)
     - measure memory usage (steady/memusg: how do we script this?)
@@ -49,12 +50,12 @@
     - do we need merge xscales script for gnuplot?
     - sometimes: test scripts in fresh clone
 * Source:
+    - implement bfs
+    - make dotfile optional parameter to simplesearch (=dfs) & bfs
     - rot search: -a = -r -> ?
-    - bfs ?
     - belperm: dedicated implementation ?
-    - implement atsp ?
     - balanced: dedicated implementation ?
-    - dotfile -> simplesearch optional option ?
+    - implement atsp ?
     - flip flop search: ad -> ad+full (min_rot option)
     - profile
     - make stats / search return type polymorphic
