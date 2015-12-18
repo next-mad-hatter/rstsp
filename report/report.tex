@@ -407,7 +407,9 @@ Sources: \cite{fpclass}.
 
 \clearpage
 \section{Implementation}
-\dictum[Edward V Berard]{Walking on water and developing software from a specification are easy if both are frozen.}
+%\dictum[Edward V Berard]{Walking on water and developing software from a specification are easy if both are frozen.}
+%\dictum[L. Peter Deutsch]{To iterate is human, to recurse divine.}
+\dictum[Donald Knuth]{You’re bound to be unhappy if you optimize everything.}
 
 \subsection{Brief overview}
 \annotation{TODO}
@@ -422,6 +424,7 @@ sacrificing performance for ease of extendibility (provide LOC count).
 BFS might have been somewhat faster, but for our research dfs is enough.
 Memoization via hash tables.
 
+\annotation{Rename repo?}
 This project's sources are available
 \href{https://bitbucket.org/mad_hatter/rstsp/}{online}\footnote{\url{https://bitbucket.org/mad_hatter/rstsp/}}.
 
@@ -431,6 +434,7 @@ This project's sources are available
 Clearly pronounced linear runtime for str.~balanced search, apparently heavy overhead penalty.
 Pyramidal faster but str.~balanced eventually takes over.
 See \autoref{fig:benchRAND}.
+Memory usage?
 
 \begin{figure}[htbp]
 \null\hfill%
