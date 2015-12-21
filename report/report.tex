@@ -334,22 +334,92 @@ $\operatorname{pyr}$ to choose from $n$ shortest pyramidal tours obtained by app
 cyclic permutations to initial node ordering.
 
 \subsection{Strongly balanced tours}
-\annotation{TODO}
 
-Balanced and strongly balanced tours.
-Description will refer to pyramidal case.
-Definition via construction.
-Our implementation is first.
-Also, have to have nice pictures.
+\annotation{Balanced tours interesting?}
+Another class of sTSP is the {\em Relaxed Supnick TSP} \/(RS-TSP), which is
+obtained by restricting considered instances via a simple four-point
+condition:
+\[
+  c_{ik} + c_{jl} \leq c_{il} + c_{jk} \quad \forall \; 1 \leq i < j < k < l \leq n,
+\]
+where $\left(c_{ij}\right)$ is the distance matrix.
+
+While it has been shown that RS-TSP is NP-hard, an exponential subset of
+said problem which is polynomially solvable has also been found.  Herein we
+present first implementation of the solution, which bears distinct similarity
+to pyramidal TSP.
+
+\annotation{Add supplementary pictures/explanation.}
+We shall define our neighbourhood through explicit tour construction.  For brevity,
+let $\left[a,b\right]$ describe a (simple) path $\left<a,\ldots,b\right>$.
+\begin{define}[Strongly Balanced Tour]
+  Consider following family of path sets:
+  \begin{itemize}
+    \item $\mathcal T_1 = \left\{\left<1\right>\right\};$
+    \item $\mathcal T_n = \bigcup_{\tau \in \mathcal T_{n-1}}
+      \left(
+      \left\{
+          \operatorname{add}\left(\tau,n\right),
+          \operatorname{app}\left(\tau,n\right)
+      \right\} \cup
+      \operatorname{merge}\left(\tau,n\right)
+      \right)
+    $
+    where
+    \begin{align*}
+      \operatorname{add}\left(\tau,n\right) = & \; \tau \cup \left\{\left<n\right>\right\}; \\
+      \operatorname{app}\left(\tau,n\right) = & \;
+        \tau \setminus \left\{\left[a_1,a_2\right]\right\}
+        \cup \left\{\left<n\right>\oplus\left[a_1,a_2\right]\right\} \\
+        & \; \text{for} \; \tau = \left\{ \left[a_i,a_{i+1}\right] \right\}_{i \in I}
+        \text{and} \; a_1 = \min_{k \in I \cup 1+I}\left\{a_k\right\}, \\
+      \operatorname{merge}\left(\tau,n\right) = & \;
+        \left\{
+          \tau \setminus \left\{\left[a_1,a_2\right],\left[a_3,a_4\right]\right\}
+          \cup \left\{\left[a_2,a_1\right]\oplus\left<n\right>\oplus\left[a_3,a_4\right]\right\}
+        \right\} \\
+        & \; \text{for} \; \tau, a_1 \; \text{as above,}
+          \; a_3 = \min_{\substack{k \in I \cup 1+I\\\ k \neq 1, k \neq 2}}\left\{a_k\right\}.
+    \end{align*}
+    Here multiple appearances of $[.,.]$ notation with same indexes refer to same paths.
+    Also note how $\operatorname{merge}\left(\tau,n\right)$ is empty if there is no $a_3$
+    satisfying the constraints.
+
+  \end{itemize}
+  An element of $\mathcal T_n$ is said to be {\bfseries strongly balanced}.
+  A tour $\left<k_1,\ldots,k_n,k_1\right>$ is said to be {\bfseries strongly balanced} if
+  $\left<k_1,\ldots,k_n\right> \in {\mathcal T}_n$.
+\end{define}
 
 \subsubsection{Strongly balanced tours and linear time}
-\annotation{TODO}
 
-Number of tours is $\Omega(2^n)$.
-Dynamic programming recursion follows from construction.
-Tree width is capped for a given maximum node size, hence linear time \cite{fpneighb}.
-Experiment: tree area grows fast (shown in \autoref{tbl:nodeTypes}),
-tree width not computed (BFS would make this natural).
+\annotation{Interesting?}
+It can subsequently be shown that the set of strongly balanced tours contains optimal solution
+to TSP restricted to Relaxed Supnick matrices which additionaly satisfy
+\[
+  c_{il} + c_{jk} + c_{km} \geq c_{ik} + c_{jm} + c_{kl}
+  \quad \forall i < j < k < l < m
+\]
+and that this condition can be checked in quadratic time.
+
+\annotation{Details?}
+If we further restrict this set by
+\[
+  c_{ji} + c_{kl} \leq c_{jl} + c_{ki} \quad \forall i<j, \; j+h \leq k < l
+\]
+for a given constant $h$, then we can show that the optimum can be found
+amongst balanced tours for which number of paths of each element of $\mathcal T$
+does not exceed $h/2 + 1$, and for such families size of ${\mathcal T}_n$ is bounded
+by a constant for given $h$ \cite{fpneighb,fpclass}.
+
+Number of unique node types, which presents upper bound for tree width, can
+be seen in \autoref{tbl:nodeTypes}.  A breadth-first search implementation
+could be used to naturally compute the tree width.
+
+\annotation{Show how number of tours is $\Omega(2^n)$.}
+Noting how the definition of strongly balanced tours naturally
+yields a dynamic programming recursion, this results in a linear time
+solution for the given exponential neighbourhood.
 
 \setlength{\aboverulesep}{0pt}
 \setlength{\belowrulesep}{0pt}
@@ -377,14 +447,14 @@ tree width not computed (BFS would make this natural).
           column type={r}
         },
         display columns/2/.style={%
-          column name={\bfseries Stable at size},
+          column name={\bfseries Stable at depth},
           column type={g}
         },
         every last row/.style={after row=\bottomrule},
         %multicolumn names,
       ]{../plot/data/num\string_types.csv}%
     }
-\caption{Node types encountered.}%
+\caption{Number of node types encountered.  This seems to closely reflect the tree width -- and thus runtime -- growth.}%
 \label{tbl:nodeTypes}%
 \end{table}
 
@@ -398,14 +468,25 @@ tree width not computed (BFS would make this natural).
 \end{figure}
 
 \subsubsection{Local search heuristics}
-\annotation{TODO}
 
-Applicability: Relaxed Supnick matrices with additional property.
-Heuristics concept same as in pyramidal case, permutations adjusted.
-Adaptive search seems better than always choosing from $2n+1$ str.-balanced-cyclic permutations.
-Sources: \cite{fpclass}.
+Having constructed a linear solution to an exponential problem class, quite
+naturally the question arises whether this would constitute a good heuristic
+in general case.
+\annotation{Check: $\mu$ prepended or appended?}
+To try and answer this, we have taken the same path as in pyramidal case.
+Note that to account for strongly balanced tours structure, we have to
+\begin{itemize}
+  \item replace $\sigma_\tau$ by $\sigma_\tau \circ \sigma_\mu$
+        in fixed point iteration, where $\mu = \left<\ldots,5,3,1,2,4,\ldots\right> \in S_n$;
+  \item also apply $\mu$ (we also added $\mu$ mirrored)
+        before considering cyclic permutations while also considering the identity permutation.
+\end{itemize}
 
-\clearpage
+Results of our experiments are presented in next section
+(where {\em adaptive search} \/refers to number of considered permutations growing at stale iterations
+and {\em flipflop search} \/refers to alterating between pyramidal and strongly balanced search in each iteration).
+
+%\clearpage
 \section{Implementation}
 %\dictum[Edward V Berard]{Walking on water and developing software from a specification are easy if both are frozen.}
 %\dictum[L. Peter Deutsch]{To iterate is human, to recurse divine.}
@@ -415,26 +496,28 @@ Sources: \cite{fpclass}.
 \annotation{TODO}
 
 Written in {\ttfamily Standard ML}.
-Usable via REPL, standalone executable or shared library.
+Usable via SML REPL, standalone executable or shared library.
 Tested under multiple software (see \autoref{app:compiler}) and OS/hardware platforms --
 Linux (amd64) and Windows (x86) (MinGW-crosscompiled).
 
-General dynamic programming results implementation via search graph traversal (simple depth first search),
-sacrificing performance for ease of extendibility (provide LOC count).
-BFS might have been somewhat faster, but for our research dfs is enough.
+\annotation{Tradeoff illustration: provide LOC count?}
+General dynamic programming results implementation via search graph traversal (simple depth-first search),
+making a tradeoff between performance and extendibility.
+BFS could be somewhat faster, but for our research dfs is enough.
 Memoization via hash tables.
 
-\annotation{Rename repo?}
+\annotation{Can we rename repo?}
 This project's sources are available
 \href{https://bitbucket.org/mad_hatter/rstsp/}{online}\footnote{\url{https://bitbucket.org/mad_hatter/rstsp/}}.
 
 \subsection{Runtime behaviour}
 \annotation{TODO}
+\annotation{Describe \autoref{fig:benchRAND}.}
 
 Clearly pronounced linear runtime for str.~balanced search, apparently heavy overhead penalty.
 Pyramidal faster but str.~balanced eventually takes over.
 See \autoref{fig:benchRAND}.
-Memory usage?
+Memory usage not seriously measured, since bottleneck here is runtime.
 
 \begin{figure}[htbp]
 \null\hfill%
@@ -465,8 +548,13 @@ Memory usage?
 \subsection{Tour benchmarks}
 
 \annotation{TODO}
-Describe results, add Relaxed Supnick matrices (!), prettier histograms, plot iterations behavior?.
-See \autoref{fig:benchTSPLIB}.
+Describe results, add Relaxed Supnick matrices benchmarks (!),
+prettier (also, split) histograms?, plot iterations behavior? -- see \autoref{fig:benchTSPLIB}.
+
+In what limited testing we have done, pyramidal still performs better.
+
+For str.~balanced: adaptive search seems to perform better
+than always choosing from $2n+1$ specific permutations.
 
 \begin{figure}[htbp]
 \null\hfill%
@@ -485,7 +573,7 @@ See \autoref{fig:benchTSPLIB}.
 \label{fig:benchTSPLIB}
 \end{figure}
 
-\clearpage
+%\clearpage
 \section{Conclusions}
 \dictum[Arthur Bloch]{Enough research will tend to support your conclusions.}
 
@@ -493,7 +581,7 @@ See \autoref{fig:benchTSPLIB}.
 \annotation{TODO}
 First implementation of str.~balanced search.
 Some benchmarks.
-Preprocessing no gain.
+Preprocessing offers no gain.
 
 \begin{figure}[htbp]
 %\begin{wrapfigure}{r}{0.5\textwidth}
@@ -506,7 +594,7 @@ Preprocessing no gain.
 \subsection{Areas for further research}
 \annotation{TODO}
 
-Heuristics better for aTSP\@?
+Are these heuristics better for aTSP\@?
 Untested: other metrics or higher dimensions, dedicated implementations' performance.
 Further heuristics combinations.
 Branch cutting.
@@ -634,7 +722,7 @@ Potentially fruitful approaches: tuple spaces, message passing languages, etc
 %\chapter{First Appendix}
 %\chapter{Second Appendix}
 
-\clearpage
+%\clearpage
 \begin{appendices}
 
 \makeatletter
