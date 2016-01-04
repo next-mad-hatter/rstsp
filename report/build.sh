@@ -30,6 +30,8 @@ if [ $STATUS -ne 0 ]; then
   exit 1
 fi
 biber -q "${SUBMISSION}".bcf
+makeindex "${SUBMISSION}".idx
+makeglossaries "${SUBMISSION}"
 lualatex -shell-escape -interaction=batchmode -file-line-error "${SUBMISSION}".tex
 texfot lualatex -shell-escape "${SUBMISSION}".tex
 

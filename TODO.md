@@ -50,6 +50,7 @@
     - do we need merge xscales script for gnuplot?
     - sometimes: test scripts in fresh clone
 * Source:
+    - pyrgraph: test & cleanup symmetric case
     - implement bfs
     - make dotfile optional parameter to simplesearch (=dfs) & bfs
     - rot search: -a = -r -> ?
@@ -60,7 +61,8 @@
     - profile
     - make stats / search return type polymorphic
     - iter searches: implement time limits
-    - factor out sb_shuffle
+    - factor out sb_shuffle, rename to supnick_perm?
+    - factor default+threaded searches?
     - pyrrot + sbrot flip flop
     - add rounding to nearest integer as binarys option (now available only per REPL)
     - flipflop( flipflop(ad, pyr), pyrrot ) ?

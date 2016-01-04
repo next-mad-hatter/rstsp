@@ -72,27 +72,65 @@ struct
   type optional_params = unit
 
   (**
-   * For symmetric TSP, (a,b) is same as (b,a).
+   * Asymmetric case
    *)
-  fun sym_sort (a,b) = if a>b then (b,a) else (a,b)
-
+  (*
   fun descendants size dist _ (i,j) =
-    case (i > size orelse j > size orelse i=j andalso i <> 0w0,
-          i = size-0w1 orelse j = size-0w1) of
-      (true,_) => TERM NONE
-    | (_,true) => TERM (SOME (dist (i,j), Lazy.susp (fn () => Vector.fromList [i,j])))
-    | (_,_) =>
-        let
-          val k = Word.max (i,j) + 0w1
-          val kj = (sym_sort (k,j),
-                    fn d => Len.+ (d, dist (i,k)),
-                    fn t => Lazy.susp (fn () => Vector.concat [Vector.fromList [i], t ()]))
-          val ik = (sym_sort (i,k),
-                    fn d => Len.+ (d, dist (k,j)),
-                    fn t => Lazy.susp (fn () => Vector.concat [t (), Vector.fromList [j]]))
-        in
-          DESC [ik, kj]
-        end
+      case (i > size orelse j > size orelse i=j andalso i <> 0w0,
+            i = size-0w1 orelse j = size-0w1) of
+        (true,_) => TERM NONE
+      | (_,true) => TERM (SOME (dist (i,j), Lazy.susp (fn () => Vector.fromList [i,j])))
+      | (_,_) =>
+          let
+            val k = Word.max (i,j) + 0w1
+            val kj = ((k,j),
+                      fn d => Len.+ (d, dist (i,k)),
+                      fn t => Lazy.susp (fn () => Vector.concat [Vector.fromList [i], t ()]))
+            val ik = ((i,k),
+                      fn d => Len.+ (d, dist (k,j)),
+                      fn t => Lazy.susp (fn () => Vector.concat [t (), Vector.fromList [j]]))
+          in
+            DESC [ik, kj]
+          end
+   *)
+
+  (**
+   * Symmetric case
+   *
+   * FIXME: test this
+   *)
+
+  fun appToPath (v,i) =
+    if Vector.sub (v,0) < Vector.sub (v, (Vector.length v) - 1) then
+      Vector.concat [v, Vector.fromList [i]]
+    else
+      Vector.concat [Vector.fromList [i], v]
+
+  (*
+  fun orderPath v =
+    if Vector.sub (v,0) <= Vector.sub (v, (Vector.length v) - 1) then v
+    else Utils.revVector v
+  *)
+
+  (* assumes i<j or i=j=0 *)
+  fun descendants size dist _ (i,j) =
+      case (j >= size orelse i=j andalso i <> 0w0, j = size-0w1) of
+        (true,_) => TERM NONE
+      | (_,true) => TERM (SOME (dist (i,j), Lazy.susp (fn () => Vector.fromList [i,j])))
+      | (_,_) =>
+          let
+            val k = j + 0w1
+            val kj = ((j,k),
+                      fn d => Len.+ (d, dist (i,k)),
+                      fn t => Lazy.susp (fn () => appToPath (t (), i)))
+            val ik = ((i,k),
+                      fn d => Len.+ (d, dist (k,j)),
+                      fn t => Lazy.susp (fn () => appToPath (t (), j)))
+          in
+            DESC [ik, kj]
+          end
+  (*
+   *)
 
   fun HTSize (size,_) = (size+0w1) * (size+0w1)
 

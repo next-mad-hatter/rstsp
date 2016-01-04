@@ -39,6 +39,8 @@ tmp
 *~
 *.swp
 
+*.mpx
+
 *.aux
 *.dvi
 *.log
@@ -48,5 +50,9 @@ tmp
 *.bbl
 *.blg
 *.bcf
+*.ind
+*.idx
+*.ilg
+*.ing
 *.run.xml
 

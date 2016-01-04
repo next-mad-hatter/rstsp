@@ -1,5 +1,5 @@
 
-#                         Pyramidal & Balanced TSP Traversal
+#                         Pyramidal & Strongly Balanced TSP Traversal
 
 ##                                 Quick Start Guide
 

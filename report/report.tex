@@ -5,7 +5,7 @@
 % $Rev: 34 $
 %
 
-\documentclass{scrartcl}
+\documentclass[index=totoc,bibliography=totoc]{scrartcl}
 \KOMAoptions{fontsize=11pt}
 %\KOMAoptions{BCOR=0.25mm}
 %\usepackage[left=3.1cm, right=3.1cm]{geometry}
@@ -26,13 +26,27 @@
 %\newfontfamily\CodeFont[Scale=0.85]{Consolas}
 %\newfontfamily\CodeFont[Scale=0.85]{Anonymous Pro}
 
-\usepackage[english,ngerman,russian]{babel}
+\usepackage{luatextra}
 
-\usepackage{commath}
+\usepackage[english,ngerman,russian]{babel}
+\usepackage{csquotes}
+
+% as of now, xindy is broken on my machine right
+\usepackage{imakeidx}
+\indexsetup{level=\chapter,toclevel=chapter}
+\makeindex
+
+\usepackage[backend=biber,style=alphabetic]{biblatex}
+%\usepackage[fixlanguage]{babelbib}
+\addbibresource{references.bib}
+\usepackage[nottoc]{tocbibind}
+
+\usepackage{amsmath}
+%\usepackage{unicode-math}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{amsmath}
 
+\usepackage{commath}
 \usepackage{amsthm}
 \usepackage{thmtools}
 \usepackage{etoolbox}
@@ -106,18 +120,6 @@
 \usepackage{varwidth}
 \usepackage{pgfplotstable}
 
-\usepackage[pdfauthor={M. Deineko},
-            pdfproducer={lualatex},
-            pdfcreator={LaTeX},
-            colorlinks=true,
-            linkcolor=blue,
-            urlcolor=blue,
-            citecolor=blue,
-            linktoc=section,
-            unicode=true
-            ]{hyperref}
-\hypersetup{pdftitle=Two Exponential Neighbourhoods}
-
 \usepackage[title,page,titletoc]{appendix}
 \newcommand*{\Appendixautorefname}{Appendix}
 \usepackage{cleveref}
@@ -144,18 +146,24 @@
   \newpage
 }
 
-\usepackage[backend=biber,style=alphabetic]{biblatex}
-\usepackage{csquotes}
-%\usepackage[fixlanguage]{babelbib}
-\addbibresource{references.bib}
-\usepackage[nottoc]{tocbibind}
-
-%\usepackage[toc]{multitoc}
+\usepackage[toc]{multitoc}
 \usepackage[subfigure]{tocloft}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
+
+\usepackage[pdfauthor={M. Deineko},
+            pdfproducer={lualatex},
+            pdfcreator={LaTeX},
+            colorlinks=true,
+            linkcolor=blue,
+            urlcolor=blue,
+            citecolor=blue,
+            linktoc=section,
+            unicode=true
+            ]{hyperref}
+\hypersetup{pdftitle=Two Exponential Neighbourhoods}
 
 \begin{document}
 
@@ -188,7 +196,22 @@
 %\dictum[Honore de Balzac]{To get a traveling salesman drunk is the height of impossibility.}
 \dictum[Sherlock Holmes]{Nothing clears up a case so much as stating it to another person.}
 
-\subsection{Notation}
+\subsection{Introduction}
+
+Usually yes yes yes Traveling Salesman Problem (also: TSP)
+\index{TSP|see{Traveling Salesman Problem}}
+\blockquote{%
+  \index{Traveling Salesman Problem|(}
+  A traveling merchant (or salesman) wishes to visit a given number of cities
+  and return to the origin.
+  Assuming that distance between the cities is known and does not change,
+  what would be the shortes route?
+  \index{Traveling Salesman Problem|)}
+}
+
+So how come
+
+\subsection{Definitions and Notation}
 
 \annotation{What should be the prerequisites?}
 In this paper we shall follow canonical definition of TSP as a minimization problem
@@ -205,6 +228,8 @@ and tour length of $\tau = \left( k_1, \ldots, k_n, k_1 \right)$ given by
 $\operatorname{len}(\tau) = \sum_{i \in {\mathbb Z}_n} C_{i,i+1}$,
 where $C$ is a distance matrix given either explicitly or by some metric.
 Henceforth we shall consider only non-negative distance instances.
+
+\subsection{Exponential neighbourhoods and local search}
 
 \subsection{Pyramidal tours}
 
@@ -332,6 +357,8 @@ local search heuristic.
 It had been shown \cite{belperm} that we can significantly improve on this by enhancing
 $\operatorname{pyr}$ to choose from $n$ shortest pyramidal tours obtained by applying
 cyclic permutations to initial node ordering.
+
+\subsection{Four point conditions exponential neighbourhoods}
 
 \subsection{Strongly balanced tours}
 
@@ -747,10 +774,10 @@ Potentially fruitful approaches: tuple spaces, message passing languages, etc
 
 %\input{testapp.tex}
 
-\section{References}
-\printbibliography%
-
 \end{appendices}
+
+\printindex
+\printbibliography%
 
 \end{document}
 
