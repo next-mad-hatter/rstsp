@@ -28,7 +28,7 @@ set.each do |bin,size|
       :max => max,
       :size => size,
       :data => "random/random.#{size}",
-      :timeout => 120.0
+      :timeout => 240.0
     }
   end
 end

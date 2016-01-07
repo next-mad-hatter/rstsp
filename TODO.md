@@ -12,13 +12,15 @@
     - wiki / bug tracker ?
     - script via cmake ?
 * Report:
-    - writeup
+    - writeup (see FIXMEs)
     - compute tree width (bfs?) for info
     - bar plots: combine patterns and color
     - metapost vs tikz vs asymptote ?
     - gnuplot vs matplotlib vs pgf ?
     - dot2tex ?
     - sml support: can the pandoc -> rst way be pretty-fixed?
+* Slides:
+    - compose
 * Research:
     - sb : better permutations?
     - study iter convergence
@@ -51,6 +53,7 @@
     - sometimes: test scripts in fresh clone
 * Source:
     - pyrgraph: test & cleanup symmetric case
+    - default searches: cleanup sb permutations
     - implement bfs
     - make dotfile optional parameter to simplesearch (=dfs) & bfs
     - rot search: -a = -r -> ?

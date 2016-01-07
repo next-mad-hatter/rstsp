@@ -5,6 +5,7 @@
 % $Rev: 34 $
 %
 
+%\documentclass[titlepage,index=totoc,bibliography=totoc]{scrartcl}
 \documentclass[index=totoc,bibliography=totoc]{scrartcl}
 \KOMAoptions{fontsize=11pt}
 %\KOMAoptions{BCOR=0.25mm}
@@ -47,6 +48,8 @@
 \usepackage{amssymb}
 
 \usepackage{commath}
+\usepackage{mathtools}
+
 \usepackage{amsthm}
 \usepackage{thmtools}
 \usepackage{etoolbox}
@@ -55,6 +58,7 @@
 \declaretheorem[style=definition,name=Definition]{define}
 \declaretheorem[style=plain]{theorem}
 \declaretheorem[sibling=theorem]{lemma}
+\declaretheorem[style=remark]{remark}
 %\BeforeBeginEnvironment{theorem}{\begin{adjustwidth}{1cm}{1cm}}
 %\AfterEndEnvironment{theorem}{\endadjustwidth}
 %\AfterEndEnvironment{define}{\noindent\ignorespaces}
@@ -146,7 +150,9 @@
   \newpage
 }
 
-\usepackage[toc]{multitoc}
+\usepackage{abstract}
+
+%\usepackage[toc]{multitoc}
 \usepackage[subfigure]{tocloft}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 
@@ -165,78 +171,185 @@
             ]{hyperref}
 \hypersetup{pdftitle=Two Exponential Neighbourhoods}
 
+\let\defstyle\itshape
+%\def\defstyle{\itshape}
+
 \begin{document}
 
 \selectlanguage{english}
 
 \title{Two Exponential Neighbourhoods}
-\subtitle{Pyramidal and strongly balanced Traveling Salesman Problem and heuristics --- theory and implementation}
+\subtitle{Pyramidal and strongly balanced traveling salesman problem and heuristics --- theory and implementation}
+% FIXME: supervisor format ?
+% FIXME: title pic / multitoc ?
+% FIXME: twosided / book format ?
 \input{authors.tex}
 \date{\today}
+
+% FIXME: titlepage / spacing ?
 \maketitle
 
+% FIXME: better wording / tours family ?
 \begin{abstract}
-  Pyramidal tours form a well known polynomially solvable subclass of TSP\@.
-  In this paper, we present first implementation of a related tours family,
-  show extension of both to local search heuristics and compare results thus obtained.
+  Pyramidal tours constitute a well known polynomially solvable case of TSP\@.
+  In this paper we present a first implementation of a related tours family,
+  show extension of both solutions to local search heuristics and compare results thus obtained.
 \end{abstract}
 
 \thispagestyle{empty}
 
 %\setlength{\cftbeforetoctitleskip}{-2em}
 \tocloftpagestyle{empty}
-\tableofcontents
 \afterpage{\blankpage}
+\clearpage
+\tableofcontents
 
 %\setlength{\parindent}{0cm}
 
 \clearpage
-
-\section{Theory}
-%\dictum[Honore de Balzac]{To get a traveling salesman drunk is the height of impossibility.}
 \dictum[Sherlock Holmes]{Nothing clears up a case so much as stating it to another person.}
+\section{Introduction}
 
-\subsection{Introduction}
-
-Usually yes yes yes Traveling Salesman Problem (also: TSP)
+The {\defstyle traveling salesman problem (TSP)} can be colloquially stated as follows:
 \index{TSP|see{Traveling Salesman Problem}}
 \blockquote{%
   \index{Traveling Salesman Problem|(}
-  A traveling merchant (or salesman) wishes to visit a given number of cities
-  and return to the origin.
-  Assuming that distance between the cities is known and does not change,
-  what would be the shortes route?
+  A traveling merchant (or salesman) wishes to visit each city from a given
+  list exactly once, starting from and returning to a select one of the cities
+  given.  Assuming that distances between the cities are known and not
+  subject to change, what would be the shortest route for him to take?
   \index{Traveling Salesman Problem|)}
 }
+This well studied problem in combinatorial optimization is known to be
+NP-hard \cite{Karp72}; hence, one is interested in efficiently solvable
+cases as well as useful heuristics, of which a good number exists.
 
-So how come
+In this paper we look at two large sets of feasible solutions over which
+the TSP can be solved in polynomial time and extension of these to
+iterative heuristics.  For this, we need to establish some basic
+definitions first.
 
-\subsection{Definitions and Notation}
+\subsection{Definitions and notation}
 
-\annotation{What should be the prerequisites?}
-In this paper we shall follow canonical definition of TSP as a minimization problem
-on a complete, directed graph with node set $\{1,2,\ldots,n\} \cong {\mathbb Z}_n \equiv {\mathbb Z}/n{\mathbb Z}$,
-tour set being $S_n$,
-where one can associate permutations
-$\left( \begin{smallmatrix}
+The TSP, as most mathematical problems, can be modeled in a number of often
+equivalent or similar ways, depending on what aspects of the problem are
+relevant to the task at hand --- which, for a problem as extensively studied
+as this one, results in a great number of common terms which from author to
+author can differ ever so slightly.
+
+Hence we need to establish a set of definitions which we shall try to keep
+precise enough to be able to convey this paper's content clearly,
+while also simple enough so as not to distract from it.
+
+\begin{define}[Cities, paths and tours]
+Given some $n \in \mathbb{N} \left(n \geq 2\right)$,
+let \[\mathcal{N} \coloneqq \mathcal{N}_n \coloneqq \left\{1,\ldots,n\right\}.\]
+We will refer to elements of $\mathcal{N}$ as {\defstyle cities}.
+A non-empty tuple $\left(p_1,p_2,\ldots,p_m\right)$
+of cities is called a {\defstyle path} (of {\defstyle length} $m-1$ {\defstyle over} $\mathcal{N}$);
+it is called {\defstyle simple} if it contains distinct entries only, with
+possible exception of its {\defstyle end points} $p_1$ and $p_m$, i.e. if
+\[\left|\left\{p_1,p_2,\ldots,p_{m-1}\right\}\right| =
+\left|\left\{p_2,p_3,\ldots,p_{m}\right\}\right| = m-1.\]  We shall refer to
+a path with distinct end points as an {\defstyle open} path, one with
+equal end points --- a {\defstyle closed} one, or a {\defstyle cycle}.
+An open path of length $1$ is also called an {\defstyle edge};
+a simple cycle of length $n$ is called a {\defstyle tour}.
+Let also $\mathcal{T}_n$ denote the set of all tours over $\mathcal{N}_n$.
+\end{define}
+
+\begin{define}[Distances and cost]
+Given a $n \in \mathbb{N} \left(n \geq 2\right)$ and a matrix $C =
+\left(c_{ij}\right) \in ~ \mathbb{R}^{n \times n}$, which we shall call
+{\defstyle cost} (or {\defstyle distance) matrix}, we will refer to its
+elements as {\defstyle distances} or {\defstyle weights}.
+Now let \[
+%  \operatorname{len} A \xrightarrow[\pi \mapsto \operatorname{len}(\pi)]{} B.
+  \operatorname{len}_C: \bigcup_{k \in \mathbb{N}, k \geq 2}\mathcal{N}^k \to \mathbb{R}, \quad
+  \left(p_1,p_2,\ldots,p_m\right) \mapsto \sum_{k=1}^{m-1} c_{p_k p_{k+1}}.
+\]
+For a path $\pi$ over $\mathcal{N} = \mathcal{N}_n$ we then call $\operatorname{len}_C\left(\pi\right)$ {\defstyle cost} of $\pi$.
+An edge's cost is also called its {\defstyle weight} (which agrees with the definition above).
+\end{define}
+
+\begin{define}[Traveling salesman problem]
+  Given a $n \in \mathbb{N} \left(n \geq 2\right)$,
+  $M \subseteq~\mathbb{R}^{n \times n}$ and
+  $T \subseteq \mathcal{T}_n$, we define {\defstyle traveling salesman problem}
+  ({\defstyle over $(M,T)$}, also {\defstyle TSP}) to be the map
+\[
+  \operatorname{TSP}_{M,T}: M \to T, \quad
+  C \mapsto \argmin_{\tau \in T} \operatorname{len}_C \tau.
+\]
+We call $n$ the TSP's {\defstyle dimension}.
+If $M$ is a subset of symmetric matrices (over $\mathbb{R}$), the TSP is called {\defstyle symmetric (sTSP)},
+otherwise --- {\defstyle asymmetric (aTSP)}.
+\end{define}
+
+\begin{remark}
+Frequently, the TSP is defined via a map which provides the sets $M$ and $T$ for every dimension $n$.
+We make no such requirement --- however, such an extension is usually easily established from context.
+\end{remark}
+
+\begin{remark}
+Whenever the sets $M,T$ from above definition are established elsewhere, they are usually omitted from notation.
+\end{remark}
+
+\begin{remark}
+Often, the TSP is defined to be the symmetric version (aTSP can also be
+reduced to sTSP of double dimension).  We shall make no such assumption
+without a prior notice.
+\end{remark}
+
+\begin{remark}
+Since $\operatorname{TSP}_{T,M}\left(C\right) = \operatorname{TSP}_{T,M}\left(C + \lambda J\right)$
+holds true for all $\lambda \in \mathbb{R}$ and $C \in M$,
+where $J$ is matrix of ones (of suitable dimension), we can always assume
+\[
+  c_{ij} \geq 0 \quad \forall i,j \in \mathcal{N}
+\]
+and shall do so henceforth.
+\end{remark}
+
+We will make extensive use of path {\defstyle concatenation}, which we define to be the following map (used as infix operator):
+\begin{define}
+\[
+  \oplus: {\left( \bigcup_{k \in \mathbb{N}}\mathbb{N}^k \right)}^2 \to \bigcup_{k \in \mathbb{N}}\mathbb{N}^k,
+  \quad \left(\left(r_1,\ldots,r_l\right), \left(s_1,\ldots,s_m\right)\right) \mapsto \left(r_1,\ldots,r_l,s_1,\ldots,s_m\right).
+\]
+\end{define}
+
+We will also sometimes need to view tours as maps on $\mathcal{N}$ or
+$\mathbb{R}^{n \times n}$.  For this, we note that there is a natural
+bijection between tours in $\mathcal{T}_n$ and permutations on
+$\mathcal{N}_n$ (or, by same argument, paths of length $n-1$).
+\begin{define}
+Given a set $\mathcal{N}$ of $n$ cities, let $\mathcal{S}_n$ be the symmetric group (on $\mathcal{N}$).
+We define $\sigma_{\bullet}$ to be the map
+\[
+  \mathcal{T}_n \to \mathcal{S}_n,
+  \quad \pi = \left(p_1,p_2,\ldots,p_n,p_1\right) \mapsto
+  \sigma_\pi \coloneqq
+  \left( \begin{smallmatrix}
     1 & 2 & \cdots & n \\
-    k_1 & k_2 & \cdots &  k_n
- \end{smallmatrix} \right)
- \in S_n
-$ with tours $\left( k_1, k_2, \ldots ,k_n, k_1 \right)$,
-and tour length of $\tau = \left( k_1, \ldots, k_n, k_1 \right)$ given by
-$\operatorname{len}(\tau) = \sum_{i \in {\mathbb Z}_n} C_{i,i+1}$,
-where $C$ is a distance matrix given either explicitly or by some metric.
-Henceforth we shall consider only non-negative distance instances.
+    p_1 & p_2 & \cdots &  p_n
+  \end{smallmatrix} \right).
+\]
+\end{define}
 
-\subsection{Exponential neighbourhoods and local search}
+\subsection{Exponential neighbourhoods and local search heuristics}
+
+\clearpage
+\section{Two Neighbourhoods}
+%\dictum[Honore de Balzac]{To get a traveling salesman drunk is the height of impossibility.}
+\dictum[L. Peter Deutsch]{To iterate is human, to recurse divine.}
 
 \subsection{Pyramidal tours}
 
 \annotation{Who was first?}
 Pyramidal tours constitute a classic example of a TSP class where an
 optimum solution for an exponential tours set (also, a neighbourhood) can
-be found in polynomial time \cite{bellman,lawler,gilmore}.
+be found in polynomial time \cite{bellman,gilmore}.
 
 \begin{define}
   A path $\pi = \left( k_1, \ldots, k_m \right)$ is called {\bfseries simple}
@@ -513,10 +626,9 @@ Results of our experiments are presented in next section
 (where {\em adaptive search} \/refers to number of considered permutations growing at stale iterations
 and {\em flipflop search} \/refers to alterating between pyramidal and strongly balanced search in each iteration).
 
-%\clearpage
+\clearpage
 \section{Implementation}
 %\dictum[Edward V Berard]{Walking on water and developing software from a specification are easy if both are frozen.}
-%\dictum[L. Peter Deutsch]{To iterate is human, to recurse divine.}
 \dictum[Donald Knuth]{You’re bound to be unhappy if you optimize everything.}
 
 \subsection{Brief overview}
@@ -600,7 +712,7 @@ than always choosing from $2n+1$ specific permutations.
 \label{fig:benchTSPLIB}
 \end{figure}
 
-%\clearpage
+\clearpage
 \section{Conclusions}
 \dictum[Arthur Bloch]{Enough research will tend to support your conclusions.}
 
@@ -749,7 +861,7 @@ Potentially fruitful approaches: tuple spaces, message passing languages, etc
 %\chapter{First Appendix}
 %\chapter{Second Appendix}
 
-%\clearpage
+\clearpage
 \begin{appendices}
 
 \makeatletter
@@ -758,6 +870,10 @@ Potentially fruitful approaches: tuple spaces, message passing languages, etc
 
 %\section{Code Index}
 %\lstlistoflistings%
+
+\section{Recursion and Time Complexity}
+
+\section{Sample SML REPL Session}
 
 \section{Compiler Support}
 \label{app:compiler}
@@ -776,7 +892,7 @@ Potentially fruitful approaches: tuple spaces, message passing languages, etc
 
 \end{appendices}
 
-\printindex
+%\printindex
 \printbibliography%
 
 \end{document}

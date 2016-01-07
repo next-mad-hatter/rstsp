@@ -58,7 +58,7 @@ struct
   let
     val lg = (Real.fromInt o Word.toInt) size;
     val lg' = (Math.ln lg) / (Math.ln 2.0)
-    val base = (Word.fromInt o Real.ceil) lg'
+    val base = (Word.fromInt o Real.ceil o Math.pow ) (2.0,Real.realCeil lg')
     val ps = WordPairSet.listItems ints
     val bs = ListPair.map (fn ((x,y),(x',_)) => (level-x+x',level-y)) (ps, (0w0,0w0)::ps)
     val flat = (foldl (fn ((x,y), l) => y::x::l) []) bs
