@@ -255,7 +255,7 @@ a path with distinct end points as an {\defstyle open} path, one with
 equal end points --- a {\defstyle closed} one, or a {\defstyle cycle}.
 An open path of length $1$ is also called an {\defstyle edge};
 a simple cycle of length $n$ is called a {\defstyle tour}.
-Let also $\mathcal{T}_n$ denote the set of all tours over $\mathcal{N}_n$.
+We additionally denote by $\mathcal{T}_n$ set of all tours over $\mathcal{N}_n$.
 \end{define}
 
 \begin{define}[Distances and cost]
@@ -265,10 +265,11 @@ Given a $n \in \mathbb{N} \left(n \geq 2\right)$ and a matrix $C =
 elements as {\defstyle distances} or {\defstyle weights}.
 Now let \[
 %  \operatorname{len} A \xrightarrow[\pi \mapsto \operatorname{len}(\pi)]{} B.
-  \operatorname{len}_C: \bigcup_{k \in \mathbb{N}, k \geq 2}\mathcal{N}^k \to \mathbb{R}, \quad
+%  \operatorname{len}_C: \bigcup_{k \in \mathbb{N}, k \geq 2}\mathcal{N}^k \to \mathbb{R}, \quad
+  \mathfrak{w}_C: \bigcup_{k \in \mathbb{N}, k \geq 2}\mathcal{N}^k \to \mathbb{R}, \quad
   \left(p_1,p_2,\ldots,p_m\right) \mapsto \sum_{k=1}^{m-1} c_{p_k p_{k+1}}.
 \]
-For a path $\pi$ over $\mathcal{N} = \mathcal{N}_n$ we then call $\operatorname{len}_C\left(\pi\right)$ {\defstyle cost} of $\pi$.
+For a path $\pi$ over $\mathcal{N} = \mathcal{N}_n$ we then call $\mathfrak{w}_C\left(\pi\right)$ {\defstyle cost} of $\pi$.
 An edge's cost is also called its {\defstyle weight} (which agrees with the definition above).
 \end{define}
 
@@ -279,7 +280,7 @@ An edge's cost is also called its {\defstyle weight} (which agrees with the defi
   ({\defstyle over $(M,T)$}, also {\defstyle TSP}) to be the map
 \[
   \operatorname{TSP}_{M,T}: M \to T, \quad
-  C \mapsto \argmin_{\tau \in T} \operatorname{len}_C \tau.
+  C \mapsto \argmin_{\tau \in T} \mathfrak{w}_C\left(\tau\right).
 \]
 We call $n$ the TSP's {\defstyle dimension}.
 If $M$ is a subset of symmetric matrices (over $\mathbb{R}$), the TSP is called {\defstyle symmetric (sTSP)},
@@ -292,13 +293,19 @@ We make no such requirement --- however, such an extension is usually easily est
 \end{remark}
 
 \begin{remark}
+Also not unusual is a variation of TSP which returns the cost of optimal tour along with or instead of such a tour;
+transitions between these definitions are usually trivial.
+\end{remark}
+
+\begin{remark}
 Whenever the sets $M,T$ from above definition are established elsewhere, they are usually omitted from notation.
 \end{remark}
 
 \begin{remark}
-Often, the TSP is defined to be the symmetric version (aTSP can also be
-reduced to sTSP of double dimension).  We shall make no such assumption
-without a prior notice.
+Often, the TSP is defined to be the symmetric version
+\annotation{Reduction remark necessary / wording?}
+(aTSP can also be reduced to sTSP of double dimension).
+We shall make no such assumption without a prior notice.
 \end{remark}
 
 \begin{remark}
@@ -325,24 +332,33 @@ bijection between tours in $\mathcal{T}_n$ and permutations on
 $\mathcal{N}_n$ (or, by same argument, paths of length $n-1$).
 \begin{define}
 Given a set $\mathcal{N}$ of $n$ cities, let $\mathcal{S}_n$ be the symmetric group (on $\mathcal{N}$).
-We define $\sigma_{\bullet}$ to be the map
+We define $\mathfrak{s}_{\bullet}$ (using argument-in-subscript notation for reasons of legibility) to be the map
 \[
   \mathcal{T}_n \to \mathcal{S}_n,
-  \quad \pi = \left(p_1,p_2,\ldots,p_n,p_1\right) \mapsto
-  \sigma_\pi \coloneqq
+  \quad \tau = \left(p_1,p_2,\ldots,p_n,p_1\right) \mapsto
+  \mathfrak{s}_\tau \coloneqq
   \left( \begin{smallmatrix}
     1 & 2 & \cdots & n \\
     p_1 & p_2 & \cdots &  p_n
-  \end{smallmatrix} \right).
+  \end{smallmatrix} \right),
 \]
+which is clearly bijective.  We shall call its inverse $\mathfrak{t}_{\bullet}$ (again, in argument-in-subscript notation),
+reserving the notation $\mathfrak{s}_{\tau}^{-1}$ for the
+permutation inverse to $\mathfrak{s}_{\tau}$.
+A tour $\tau = \mathfrak{t}_{\mathfrak{s}_{\tau}}$ and permutation $\mathfrak{s}_{\tau}$ are said to be {\defstyle associated} with each other.
 \end{define}
+
+\begin{remark}
+  \annotation{TODO}
+  Cost invariance under circular permutations, action of $\mathcal{S}_n$ on $\mathbb{R}^{n \times n}$.
+\end{remark}
 
 \subsection{Exponential neighbourhoods and local search heuristics}
 
 \clearpage
-\section{Two Neighbourhoods}
-%\dictum[Honore de Balzac]{To get a traveling salesman drunk is the height of impossibility.}
 \dictum[L. Peter Deutsch]{To iterate is human, to recurse divine.}
+%\dictum[Honore de Balzac]{To get a traveling salesman drunk is the height of impossibility.}
+\section{Two Neighbourhoods}
 
 \subsection{Pyramidal tours}
 
@@ -417,7 +433,7 @@ given a partial tour (a pyramidal path) $\left(1,\ldots,i,j,\ldots,1\right)$ whi
 decreases from $j$, the next element ($\max\left\{i,j\right\}+1$) has to lie adjacent to $i$ or $j$.
 Since every pyramidal tour over $K_n$ can be constructed in this manner, it follows that
 \begin{gather*}
-  \Phi\left(i,j\right) = \argmin_{\tau \in T}\operatorname{len}\left(\tau\right) \\
+  \Phi\left(i,j\right) = \argmin_{\tau \in T}\mathfrak{w}\left(\tau\right) \\
   \text{where} \; T = \left\{ \left( i,k \right) \oplus \Phi(k,j), \Phi(i,k) \oplus \left( k,j \right) \right\} \\
   \text{and} \; \oplus \; \ldots \; \text{path concatenation}.
 \end{gather*}
@@ -627,9 +643,9 @@ Results of our experiments are presented in next section
 and {\em flipflop search} \/refers to alterating between pyramidal and strongly balanced search in each iteration).
 
 \clearpage
-\section{Implementation}
-%\dictum[Edward V Berard]{Walking on water and developing software from a specification are easy if both are frozen.}
 \dictum[Donald Knuth]{You’re bound to be unhappy if you optimize everything.}
+%\dictum[Edward V Berard]{Walking on water and developing software from a specification are easy if both are frozen.}
+\section{Implementation}
 
 \subsection{Brief overview}
 \annotation{TODO}
@@ -713,8 +729,8 @@ than always choosing from $2n+1$ specific permutations.
 \end{figure}
 
 \clearpage
-\section{Conclusions}
 \dictum[Arthur Bloch]{Enough research will tend to support your conclusions.}
+\section{Conclusions}
 
 \subsection{Results obtained}
 \annotation{TODO}
