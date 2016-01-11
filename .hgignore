@@ -3,6 +3,8 @@ syntax: glob
 report/report.pdf
 report/sml-support.tex
 report/tsp.png
+report/slides.pdf
+report/handout.pdf
 
 tags
 
@@ -19,7 +21,7 @@ src/tspsol
 src/norm
 src/belperm
 
-plot/**.pdf
+plot/build/*
 plot/data/mlton_*.csv
 plot/data/poly_*.csv
 plot/data/tsplib_*.csv
@@ -41,6 +43,7 @@ tmp
 
 *.mpx
 
+*.bm
 *.aux
 *.dvi
 *.log

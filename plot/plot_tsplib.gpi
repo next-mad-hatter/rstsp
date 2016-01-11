@@ -29,7 +29,7 @@ set xtics rotate by 69 right font ", 9"
 set ylabel 'solution'
 set bars fullwidth
 
-set output 'out/tsplib_val.pdf'
+set output 'build/tsplib_val.pdf'
 set yrange [*<0.9:1.2<*]
 plot 'data/tsplib_small_val_pyramidal_mdef_i0_jdef_rall_adef_fdef.csv' using ($2):xtic(1) title 'pyramidal/rall/i0' with histogram lt -1 fs pattern 3 , \
      'data/tsplib_small_val_pyramidal_mdef_i0_jdef_rall_a2_fdef.csv' using ($2):xtic(1) title 'pyramidal/rall/a2/i0' with histogram lt -1 fs pattern 9 , \
@@ -38,7 +38,7 @@ plot 'data/tsplib_small_val_pyramidal_mdef_i0_jdef_rall_adef_fdef.csv' using ($2
      'data/tsplib_small_val_balanced_m3_i0_jdef_r8_a2_f0.csv' using ($2):xtic(1) title 'flipflop/m3/r8/a2/i0' with histogram lt -1 fs pattern 1 , \
      'data/tsplib_small_val_balanced_m3_i0_jdef_rall_a2_f0.csv' using ($2):xtic(1) title 'flipflop/m3/rall/a2/i0' with histogram lt -1 fs pattern 2
 
-set output 'out/tsplib_time.pdf'
+set output 'build/tsplib_time.pdf'
 set logscale y
 set ylabel 'time needed (seconds)'
 plot 'data/tsplib_small_time_pyramidal_mdef_i0_jdef_rall_adef_fdef.csv' using ($2):xtic(1) title 'pyramidal/rall/i0' with histogram lt -1 fs pattern 3 , \

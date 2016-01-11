@@ -40,7 +40,7 @@ struct
   in
     (
       fn (node, node') => log ("\"" ^ N.toString node ^ "\" -> \"" ^ N.toString node' ^ "\";\n"),
-      fn (node, tour) => log ("\"" ^ N.toString node ^ "\" [xlabel = \"" ^ T.toString tour ^ "\"]; \n"),
+      fn (node, tour) => log ("\"" ^ N.toString node ^ "\" [xlabel = \"" ^ T.toString tour ^ "\"];\n"),
       fn () => (log "}\n"; TextIO.closeOut dotfile)
     )
   end

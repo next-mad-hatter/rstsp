@@ -1,0 +1,92 @@
+%
+% $Author$
+% $File$
+% $Date$
+% $Revision$
+%
+
+\documentclass[
+  size=12pt,
+  style=paintings,
+%%  style=klope,
+%%  style=jefka,
+%%  style=aggie,
+  paper=screen,
+%%  orient=portrait,
+%%  mode=handout,
+%%  display=slidesnotes,
+  pauseslide,
+  nopagebreaks,
+  fleqn
+]{powerdot}
+
+%% paintings palettes: Syndics (the default), Skater , GoldenGate , Lamentation , HolyWood , Europa , Moitessier , MayThird , PearlEarring and Charon
+%% klope palettes: Spring , PastelFlower , BlueWater and BlackWhite
+%% jefka palettes: brown (the default), seagreen , blue and white
+%\pdsetup{palette=BlackWhite}
+%\pdsetup{palette=white}
+
+\pdsetup{
+  lf=two exponential neighbourhoods,
+  rf=why not,
+  trans=Wipe,
+  theslide=slide~\arabic{slide},
+  list={itemsep=6pt}
+}
+
+\title{Two Exponential Neighbourhoods}
+\newcommand{\mailto}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
+\author{Maksym~Deineko \\ {\small \mailto{max.deineko@gmail.com} }}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+%\usepackage[T1]{fontenc}
+%\usepackage[T2A]{fontenc}
+%\usepackage{microtype}
+
+%\usepackage{fix-cm}
+%\usepackage{lmodern}
+
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
+%\usepackage{amsmath}
+
+%\usepackage{mathdesign}
+
+\usepackage{amsthm}
+
+\begin{document}
+
+\maketitle
+
+\begin{slide}{Overview}
+  \begin{itemize}[type=1]
+    \item One\pause
+    \item Two.
+  \end{itemize}
+\end{slide}
+
+\section{Introduction}
+
+\begin{slide}{TSP}
+  \begin{equation}\label{binomium}
+    (a+b)^n=\sum_{k=0}^n{n\choose k}a^{n-k}b^k
+  \end{equation}\pause
+  We will prove formula (\ref{binomium}) on the blackboard.\\
+\end{slide}
+
+\begin{note}{Note}
+  Some note.
+\end{note}
+
+\section[template=wideslide,tocsection=hidden]{Hidden section}
+
+\begin{wideslide}{Yes}
+  \begin{center}
+    \includegraphics[width=0.80\textwidth]{./test.eps}
+  \end{center}
+\end{wideslide}
+
+\end{document}
+\endinput

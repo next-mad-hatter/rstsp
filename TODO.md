@@ -21,6 +21,8 @@
     - sml support: can the pandoc -> rst way be pretty-fixed?
 * Slides:
     - compose
+    - handout
+    - tsplib results: single histogram a la http://pandas.pydata.org/pandas-docs/stable/visualization.html : matplotlib/bokeh/ggplot/vincent/seaborn ?
 * Research:
     - sb : better permutations?
     - study iter convergence
@@ -52,6 +54,7 @@
     - do we need merge xscales script for gnuplot?
     - sometimes: test scripts in fresh clone
 * Source:
+    - dotlog: invalid dir -> catch exception
     - pyrgraph: test & cleanup symmetric case
     - default searches: cleanup sb permutations
     - implement bfs

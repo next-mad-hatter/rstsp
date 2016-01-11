@@ -448,7 +448,7 @@ We hence arrive at
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.59\textwidth]{../plot/out/trace_pyr.pdf}
+\includegraphics[width=0.59\textwidth]{../plot/build/trace_pyr.pdf}
 \caption{A trace of our implementation's pyramidal search graph traversal over $K_5$.}
 \end{figure}
 
@@ -616,7 +616,7 @@ solution for the given exponential neighbourhood.
 
 \begin{figure}[htbp]
 \makebox[\textwidth][c]{%
-  \includegraphics[width=1.21\textwidth]{../plot/out/trace_bal.pdf}
+  \includegraphics[width=1.21\textwidth]{../plot/build/trace_bal.pdf}
 }
 \caption{%
   A trace of our implementation's strongly balanced search graph traversal over $K_8$.  Here, maximum node size is 2.
@@ -677,23 +677,23 @@ Memory usage not seriously measured, since bottleneck here is runtime.
 \begin{figure}[htbp]
 \null\hfill%
 \subfloat[higher node sizes]{%
-  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_low.pdf}
+  \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_low.pdf}
 }\hfill\null
 \null\hfill%
 \subfloat[medium node sizes]{%
-  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_fast.pdf}
+  \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_fast.pdf}
 }\hfill\null\\
 \null\hfill%
 \subfloat[low node sizes]{%
-  \includegraphics[width=0.59\textwidth]{../plot/out/mlton_time_random_steady.pdf}
+  \includegraphics[width=0.59\textwidth]{../plot/build/mlton_time_random_steady.pdf}
 }\hfill\null\\
 \null\hfill%
 \subfloat[pyramidal vs str.~balanced/m3]{%
-  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_med.pdf}
+  \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_med.pdf}
 }\hfill\null
 \null\hfill%
 \subfloat[pyramidal vs str.~balanced/m4]{%
-  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_hi.pdf}
+  \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_hi.pdf}
 }
 \hfill\null
 \caption{Single traversal running times (Linux 3.10.17 ({\ttfamily x86\_64}) @ i5-2520M).}
@@ -714,15 +714,15 @@ than always choosing from $2n+1$ specific permutations.
 \begin{figure}[htbp]
 \null\hfill%
 \subfloat[random --- tour length]{%
-  \includegraphics[width=0.69\textwidth]{../plot/out/random_val.pdf}
+  \includegraphics[width=0.69\textwidth]{../plot/build/random_val.pdf}
 }\hfill\null\\
 \null\hfill%
 \subfloat[tsplib \& vlsi --- tour quality]{%
-  \includegraphics[width=0.69\textwidth]{../plot/out/tsplib_val.pdf}
+  \includegraphics[width=0.69\textwidth]{../plot/build/tsplib_val.pdf}
 }\hfill\null\\
 \null\hfill%
 \subfloat[tsplib \& vlsi --- time needed]{%
-  \includegraphics[width=0.69\textwidth]{../plot/out/tsplib_time.pdf}
+  \includegraphics[width=0.69\textwidth]{../plot/build/tsplib_time.pdf}
 }\hfill\null
 \caption{Benchmarks --- small instances.}
 \label{fig:benchTSPLIB}

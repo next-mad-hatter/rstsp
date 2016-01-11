@@ -96,11 +96,9 @@ struct
 
   (**
    * Symmetric case
-   *
-   * FIXME: test this
    *)
 
-  fun appToPath (v,i) =
+  fun appToPath (v,i:word) =
     if Vector.sub (v,0) < Vector.sub (v, (Vector.length v) - 1) then
       Vector.concat [v, Vector.fromList [i]]
     else
