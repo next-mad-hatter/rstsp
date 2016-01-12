@@ -21,6 +21,8 @@
     - dot2tex ?
     - sml support: can the pandoc -> rst way be pretty-fixed?
 * Slides:
+    - throw out things
+    - complete plots & illustrations
     - rerun tests with proper cooling
     - gnuplot: better captions
     - add overlays
