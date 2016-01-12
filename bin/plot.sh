@@ -24,8 +24,19 @@ mkdir -p build || exit 1
 
 ../src/rstsp/build/rstsp.mlton -o /dev/null -t p ../test/data/random/random.5 -l ./data/trace_pyr.dot > /dev/null
 ../src/rstsp/build/rstsp.mlton -o /dev/null -t b -m 2 ../test/data/random/random.8 -l ./data/trace_bal.dot > /dev/null
-for FMT in pdf eps; do
+#for FMT in pdf eps; do
+COLOR=#796045
   for TYPE in apyr pyr bal; do
-    dot -T${FMT} ./data/trace_${TYPE}.dot -o ./build/trace_${TYPE}.${FMT}
+    dot -Tpdf ./data/trace_${TYPE}.dot -o ./build/trace_${TYPE}.pdf
+    dot -Nfontname="Candara" -Nfontcolor=${COLOR} -Ecolor=${COLOR} -Ncolor=${COLOR} -Teps ./data/trace_${TYPE}.dot -o ./build/trace_${TYPE}.eps
   done
+#done
+
+cd ./build
+for file in {tsplib,mlton}*.pdf; do
+  pdf2ps ${file}
+done
+
+for file in ../mp/*.mp; do
+  mpost ${file}
 done

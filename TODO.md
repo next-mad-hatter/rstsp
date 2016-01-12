@@ -12,6 +12,7 @@
     - wiki / bug tracker ?
     - script via cmake ?
 * Report:
+    - TUG logo
     - writeup (see FIXMEs)
     - compute tree width (bfs?) for info
     - bar plots: combine patterns and color
@@ -21,6 +22,7 @@
     - sml support: can the pandoc -> rst way be pretty-fixed?
 * Slides:
     - compose
+    - graphviz font
     - handout
     - tsplib results: single histogram a la http://pandas.pydata.org/pandas-docs/stable/visualization.html : matplotlib/bokeh/ggplot/vincent/seaborn ?
 * Research:
