@@ -11,6 +11,7 @@
     - complete the source readme
     - wiki / bug tracker ?
     - script via cmake ?
+    - report: "build what" option
 * Report:
     - TUG logo
     - writeup (see FIXMEs)

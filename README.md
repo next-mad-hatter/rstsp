@@ -64,6 +64,13 @@
    will plot results of previous test run (requires `ruby` & `gnuplot`).
    Generated plots will be put to `./plot/out` folder.
 
+### Generating report
+
+   Having created the plots, run
+   ```
+   ./report/build.sh
+   ```
+
 ### Packaging
 
 
