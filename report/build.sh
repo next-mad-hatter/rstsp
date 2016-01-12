@@ -39,4 +39,5 @@ if [ $STATUS -ne 0 ]; then
 fi
 latex -shell-escape -interaction=batchmode -file-line-error slides.tex
 texfot latex -shell-escape slides.tex
-dvipdf slides.dvi
+dvips slides.dvi
+ps2pdf slides.ps

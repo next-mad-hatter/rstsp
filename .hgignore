@@ -3,6 +3,7 @@ syntax: glob
 report/report.pdf
 report/sml-support.tex
 report/tsp.png
+report/slides.ps
 report/slides.pdf
 report/handout.pdf
 

@@ -24,7 +24,9 @@
     - compose
     - graphviz font
     - handout
+    - second set with exact definitions ?
     - tsplib results: single histogram a la http://pandas.pydata.org/pandas-docs/stable/visualization.html : matplotlib/bokeh/ggplot/vincent/seaborn ?
+    - tug: aspect ratio, vga/dp (,wlan) available ?
 * Research:
     - sb : better permutations?
     - study iter convergence

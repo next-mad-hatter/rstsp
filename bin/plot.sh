@@ -40,3 +40,5 @@ done
 for file in ../mp/*.mp; do
   mpost ${file}
 done
+# FIXME: ugly
+convert ../data/sketch.png -negate -background ${COLOR} -alpha Shape -density 150 bal.eps
