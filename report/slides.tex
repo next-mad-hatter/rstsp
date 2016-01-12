@@ -17,6 +17,7 @@
 %%  display=slidesnotes,
   pauseslide,
   nopagebreaks,
+  hlsections,
   fleqn
 ]{powerdot}
 
@@ -423,7 +424,7 @@
     \begin{quote}
     {\small \itshape
       a minimum cost set of paths through cities larger than $m$
-      which complements given intervals to single cycle.
+      which complements given intervals to a single cycle.
     }
     \end{quote}
   \item
@@ -466,18 +467,95 @@
 
 \section[template=wideslide]{Implementation}
 
-\begin{slide}[toc=,bm=]{Overview}
-\tableofcontents[content=currentsection,type=1]
+\begin{slide}[toc=Key Features]{Implementation: Key Features}
+  \begin{itemize}
+  \item
+  Standard ML w/ smlnj-lib.
+  \item
+  Usable via
+  \begin{itemize}
+    \item REPL;
+    \item standalone executable;
+    \item shared library.
+  \end{itemize}
+  \item
+  Tested under Linux/amd64, MinGW cross-compiled/x86.
+  %\begin{itemize}
+  %  \item Linux/amd64;
+  %  \item MinGW cross-compiled/x86;
+  %\end{itemize}
+  \item
+  Builds via MLton, Poly/ML, SML/NJ.
+  %\begin{itemize}
+  %  \item MLton;
+  %  \item Poly/ML;
+  %  \item SML/NJ.
+  %\end{itemize}
+  \item
+  Available under
+  \begin{quote}
+    \hspace{3.4em} \url{http://bitbucket.org/mad_hatter/rstsp/}.
+  \end{quote}
+  \end{itemize}
+\end{slide}
+
+% TODO: use onslide?
+\begin{slide}[toc=Running Time]{Running Time: Steady Set}
+  \begin{figure}[H]
+    \centering
+      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_steady.ps}
+  \end{figure}
+\end{slide}
+\begin{slide}[toc=]{Running Time: Fast Set}
+  \begin{figure}[H]
+    \centering
+      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_fast.ps}
+  \end{figure}
+\end{slide}
+\begin{slide}[toc=]{Pyramidal vs S.\ B.\ Time}
+  \begin{figure}[H]
+    \centering
+      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_low.ps}
+  \end{figure}
+\end{slide}
+\begin{slide}[toc=]{Pyramidal vs S.\ B.\ Time}
+  \begin{figure}[H]
+    \centering
+      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_med.ps}
+  \end{figure}
+\end{slide}
+\begin{slide}[toc=]{Pyramidal vs S.\ B.\ Time}
+  \begin{figure}[H]
+    \centering
+      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_hi.ps}
+  \end{figure}
+\end{slide}
+
+\begin{slide}[toc=Tours Computed]{Synthetic Results}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.86\textwidth]{../plot/build/random_val.ps}
+  \end{figure}
+\end{slide}
+
+\begin{slide}[toc=]{TSPLIB Results}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.86\textwidth]{../plot/build/tsplib_val.ps}
+    \caption{{\todo TODO:} readable boxplot with outliers, convergence speed?}
+  \end{figure}
 \end{slide}
 
 \section[template=wideslide]{Conclusions}
 
-\begin{slide}[toc=]{Template}
+\begin{slide}[toc=Recap]{Recap}
+\tableofcontents[content=all,type=0]
+\end{slide}
+
+\begin{slide}{Areas for Further Research}
   \begin{itemize}
   \item
   Something
-  \begin{equation}
-  \end{equation}
   \end{itemize}
 \end{slide}
 
@@ -485,13 +563,7 @@
   Some note.
 \end{note}
 
-\begin{wideslide}[toc=]{Yes}
-  \begin{center}
-%%    \includegraphics[width=0.80\textwidth]{./test.eps}
-%%    \includegraphics[width=0.50\textwidth]{../plot/build/trace_apyr.eps}
-    \includegraphics[width=0.69\textwidth]{../plot/build/tsplib_time.ps}
-  \end{center}
-\end{wideslide}
+\section[template=wideslide]{Your Questions}
 
 \end{document}
 \endinput

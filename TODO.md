@@ -21,11 +21,13 @@
     - dot2tex ?
     - sml support: can the pandoc -> rst way be pretty-fixed?
 * Slides:
-    - compose
-    - graphviz font
-    - handout
-    - second set with exact definitions ?
-    - tsplib results: single histogram a la http://pandas.pydata.org/pandas-docs/stable/visualization.html : matplotlib/bokeh/ggplot/vincent/seaborn ?
+    - rerun tests with proper cooling
+    - gnuplot: better captions
+    - add overlays
+    - graphviz font ?
+    - handouts ?
+    - second slides set with exact definitions ?
+    - tsplib results: histboxplot with outliers -- matplotlib/bokeh/ggplot/vincent/seaborn ?
     - tug: aspect ratio, vga/dp (,wlan) available ?
 * Research:
     - sb : better permutations?
