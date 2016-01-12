@@ -18,7 +18,7 @@ struct
       end
     end
   in
-    structure WordPairSet: ORD_SET = SplaySetFn(WordPairKey)
+    structure WordPairSet : ORD_SET = SplaySetFn(WordPairKey)
   end
 
   local
@@ -27,7 +27,7 @@ struct
       val compare = WordPairSet.compare
     end
   in
-    structure WordPairSetSet = SplaySetFn(WordPairSetKey)
+    structure WordPairSetSet : ORD_SET = SplaySetFn(WordPairSetKey)
   end
 
 end

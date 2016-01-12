@@ -8,7 +8,7 @@
 (**
  * Strongly Balanced Tours Graph.
  *
- * FIXME: SBNode and SBTour contain lots of HashedMap housekeeping which
+ * FIXME: SBNode and SBTour contain fair amount of HashedMap housekeeping which
  *        should be factored out into a proper structure.
  *        This also keeps us from using TSPNode/TSPTour signatures -- 
  *        since we have to expose their internals to SBGraph.
@@ -32,9 +32,11 @@ struct
 
   type key = word * WordPairSet.set
 
-  fun compare ((w,s), (w',s')) = case Word.compare (w,w') of
-                                   EQUAL => WordPairSet.compare (s,s')
-                                 | c => c
+  fun eqKeys ((w,s), (w',s')) = w = w' andalso WordPairSet.equal (s,s')
+
+  fun compKeys ((w,s), (w',s')) = case Word.compare (w,w') of
+                                    EQUAL => WordPairSet.compare (s,s')
+                                  | c => c
 
   fun toKey (level, ints) = (level, getItems ints)
 
@@ -56,7 +58,7 @@ struct
   let
     val lg = (Real.fromInt o Word.toInt) size;
     val lg' = (Math.ln lg) / (Math.ln 2.0)
-    val base = (Word.fromInt o Real.ceil) lg'
+    val base = (Word.fromInt o Real.ceil o Math.pow ) (2.0,Real.realCeil lg')
     val ps = WordPairSet.listItems ints
     val bs = ListPair.map (fn ((x,y),(x',_)) => (level-x+x',level-y)) (ps, (0w0,0w0)::ps)
     val flat = (foldl (fn ((x,y), l) => y::x::l) []) bs

@@ -31,7 +31,7 @@ struct
       if D.getDim data < 0w2 then print "Empty problem.\n"
       else
         let
-          val (verbose, _, pyramidal, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, _) = opts
+          val (verbose, _, pyramidal, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, _) = opts
           val dist = D.getDist data
           val size = D.getDim data
           val cpu_timer = Timer.startCPUTimer ()
@@ -43,8 +43,10 @@ struct
           val cpu_stop = Timer.checkCPUTimer cpu_timer
           val cpu = (IntInf.toString o (foldl op+ 0) o (map Time.toMilliseconds)) [#sys cpu_stop, #usr cpu_stop]
           val real = (IntInf.toString o Time.toMilliseconds) real_stop
+          val _ = if out_tour = NONE then () else TourWriter.writeTourFile 0w1 (valOf out_tour) (toVec sol)
         in
-          print ("          Solution:  " ^ (toStr sol) ^ "\n");
+          print ("        Trampoline:  " ^ (if in_tour = NONE then "none" else valOf in_tour) ^ "\n");
+          print ("          Solution:  " ^ (if isSome out_tour then ("written to " ^ valOf out_tour) else toStr sol) ^ "\n");
           print ("      Problem size:  " ^ (U.wordToString size) ^ "\n");
           print ("            Method:  " ^ method ^ "\n");
           print ("SB Node size limit:  " ^ (if pyramidal orelse max_node_size = NONE then "none" else (U.wordToString o valOf) max_node_size) ^ "\n");
@@ -80,11 +82,12 @@ struct
       end
 
   local
-    structure S : SEARCHES = DefaultSearches(D.Num)
+    structure S : SEARCHES = TrampSearches(DefaultSearches(D.Num))
   in
     fun run opts data =
     let
-      val (verbose, log, pyramidal, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, _) = opts
+      val (verbose, log, pyramidal, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, _, _) = opts
+      val init_tour = if isSome in_tour then TourReader.readTourFile (valOf in_tour) else NONE
     in
         case (pyramidal,
               isSome max_iters andalso valOf max_iters = IntInf.fromInt 1 andalso max_rot = SOME 0w0,
@@ -92,41 +95,46 @@ struct
               max_flips = SOME (IntInf.fromInt 0)
              ) of
           (true,true,_,_) => singlerun (data, opts,
-                            fn (s,d) => S.PyrSearch.search s d log verbose (),
+                            fn (s,d) => S.PyrSearch.search s d log verbose (init_tour, ()),
                             S.PyrSearch.tourToString,
                             S.PyrSearch.tourToVector,
                             "single pyramidal")
         | (false,true,_,_) => singlerun (data, opts,
-                             fn (s,d) => S.SBSearch.search s d log verbose max_node_size,
+                             fn (s,d) => S.SBSearch.search s d log verbose (init_tour, max_node_size),
                              S.SBSearch.tourToString,
                              S.SBSearch.tourToVector,
                              "single balanced")
         | (true,_,false,_) => singlerun (data, opts,
-                               fn (s,d) => S.IterRotPyrSearch.search s d log verbose (max_iters, stale_thresh, (max_rot, ())),
+                               fn (s,d) => S.IterRotPyrSearch.search s d log verbose (init_tour, (max_iters, stale_thresh, (max_rot, 0w0, ()))),
                                S.IterRotPyrSearch.tourToString,
                                S.IterRotPyrSearch.tourToVector,
                                "permuting pyramidal")
         | (true,_,true,_) => singlerun (data, opts,
-                                fn (s,d) => S.AdPyrSearch.search s d log verbose (max_iters, stale_thresh, valOf min_rot, max_rot, ()),
+                                fn (s,d) => S.AdPyrSearch.search s d log verbose (init_tour, (max_iters, stale_thresh, valOf min_rot, max_rot, ())),
                                 S.AdPyrSearch.tourToString,
                                 S.AdPyrSearch.tourToVector,
                                 "adaptive pyramidal")
         | (_,_,false,true) => singlerun (data, opts,
-                                  fn (s,d) => S.IterRotSBSearch.search s d log verbose (max_iters, stale_thresh, (max_rot, max_node_size)),
+                                  fn (s,d) => S.IterRotSBSearch.search s d log verbose (init_tour, (max_iters, stale_thresh, (max_rot, 0w0, max_node_size))),
                                   S.IterRotSBSearch.tourToString,
                                   S.IterRotSBSearch.tourToVector,
                                   "permuting balanced")
         | (_,_,true,true) => singlerun (data, opts,
-                                  fn (s,d) => S.AdSBSearch.search s d log verbose (max_iters, stale_thresh, valOf min_rot, max_rot, max_node_size),
+                                  fn (s,d) => S.AdSBSearch.search s d log verbose (init_tour, (max_iters, stale_thresh, valOf min_rot, max_rot, max_node_size)),
                                   S.AdSBSearch.tourToString,
                                   S.AdSBSearch.tourToVector,
                                   "adaptive balanced")
         | (_,_,_,false) => singlerun (data, opts,
-                                  fn (s,d) => S.FlipFlopSearch.search s d log verbose (
+                                  fn (s,d) => S.FlipFlopSearch.search s d log verbose (init_tour, (
                                      max_flips, SOME 1,
-                                     (max_iters, stale_thresh, ()),
+                                     ((
+                                        case (if isSome max_rot then SOME (IntInf.max (IntInf.fromInt 1,(Word.toLargeInt o valOf) max_rot)) else NONE, max_iters) of
+                                          (NONE, m) => m
+                                        | (m, NONE) => m
+                                        | (SOME a, SOME b) => SOME (IntInf.max (a,b))
+                                      ), stale_thresh, ()),
                                      (max_iters, stale_thresh, if isSome min_rot then valOf min_rot else 0w0, max_rot, max_node_size)
-                                  ),
+                                  )),
                                   S.FlipFlopSearch.tourToString,
                                   S.FlipFlopSearch.tourToVector,
                                   "flipflop")
@@ -158,14 +166,17 @@ struct
       val _ = print (" Processing " ^ file ^ ":\n")
       val _ = print ("===================================================\n")
       val inst = (SOME (TsplibReader.readTSPFile file))
-                   handle Fail msg => (U.printErr ("  Input Error: " ^ msg ^ "\n"); NONE)
+                   handle Fail msg => (U.printErr ("  Error: " ^ msg ^ "\n"); NONE)
                         | _ => (U.printErr ("  Could not read file \"" ^ file ^ "\" .\n"); NONE)
     in
-      case inst of
-        NONE => ()
-      | SOME (EXPLICIT_INSTANCE data) => ProcExpl.run opts data
-      | SOME (EUCLIDEAN_2D_INSTANCE data) => ProcEucl2D.run opts data
-      | SOME (EUCLIDEAN_2D_CEIL_INSTANCE data) => ProcEucl2DCeil.run opts data
+      (
+        case inst of
+          NONE => ()
+        | SOME (EXPLICIT_INSTANCE data) => ProcExpl.run opts data
+        | SOME (EUCLIDEAN_2D_INSTANCE data) => ProcEucl2D.run opts data
+        | SOME (EUCLIDEAN_2D_CEIL_INSTANCE data) => ProcEucl2DCeil.run opts data
+      )
+        handle Fail msg => U.printErr ("  Error: " ^ msg ^ "\n")
     end
   end
 
@@ -175,7 +186,7 @@ struct
     val _ = case isSome opts of
               false => OS.Process.exit OS.Process.failure
             | _ => ()
-    val (_, _, _, _, max_iters, stale_thresh, _, _, _, files) = valOf opts
+    val (_, _, _, _, max_iters, stale_thresh, _, _, _, _, _, files) = valOf opts
     val _ = case (max_iters, stale_thresh) of
               (NONE, NONE) =>
               ( U.printErr

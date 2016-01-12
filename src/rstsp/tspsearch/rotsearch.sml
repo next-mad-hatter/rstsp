@@ -30,17 +30,19 @@ struct
 
   (**
    * Additionally to any parameters to the initial search,
-   * we need a number of permutations to perform, NONE if
-   * all permutations are wanted.
+   * we need the number of permutations to perform, NONE if
+   * all permutations are wanted -- and permutations offset
+   * (for adaptive search).
    *)
-  type optional_params = word option * S.optional_params
+  type optional_params = word option * word * S.optional_params
 
   fun tourToVector t = t
 
   val tourToString = TSPUtils.wvToString 0w1
 
-  fun search size dist _ _ (max_rot, opts) =
+  fun search size dist _ _ (max_rot, offset, opts) =
   let
+
     fun solve size dist rot opts =
     let
       (**
@@ -54,9 +56,10 @@ struct
     in
       case sol of
         NONE => NONE
-      | SOME (d,r) => SOME (d, fn () => Vector.map trans (S.tourToVector (r ())))
+      | SOME (d,r) => SOME (d, Lazy.susp (fn () => Vector.map trans (S.tourToVector (r ()))))
     end
-    fun iter size dist rot max_rot sol opts =
+
+    fun iter size dist rot offset max_rot sol opts =
       case rot > max_rot of
         true => (U.printErr "\n"; sol)
       | false =>
@@ -69,14 +72,17 @@ struct
                           (NONE, _) => sol'
                         | (_, NONE) => sol
                         | (SOME (l,_), SOME (l',_)) => if Len.compare(l,l') = LESS then sol else sol'
+            val rot' = if rot = 0w0 then 0w1+offset else rot+0w1
           in
-            iter size dist (rot+0w1) max_rot sol'' opts
+            iter size dist rot' offset max_rot sol'' opts
           end
+
     val max_rot' = case (max_rot, X.max_perm size) of
                      (NONE,m) => m
                    | (SOME m,m') => Word.min (m,m')
+
   in
-    fn () => (iter size dist 0w0 max_rot' NONE opts, NONE)
+    fn () => (iter size dist 0w0 offset max_rot' NONE opts, NONE)
   end
 
 end

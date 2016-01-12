@@ -5,7 +5,7 @@
  * $Revision$
  *)
 
-structure S = DefaultSearches(WordNum)
+structure S = DefaultSearches(IntNum)
 structure F = FFIUtils
 
 (**
@@ -18,7 +18,7 @@ let
               NONE => MLton.Pointer.null
             | SOME (len, tour) =>
                 F.exportPtrVector (Vector.fromList [
-                  F.exportWordVector (Vector.fromList [len]),
+                  F.exportLIntVector (Vector.fromList [Int64.fromLarge len]),
                   F.exportWordVector (toVec (tour ()))
                 ])
 in
@@ -72,7 +72,7 @@ val _ =
         val stale_iters' = case stale_iters of
                              0w0 => NONE
                            | m => SOME ((IntInf.fromInt o Word.toInt) m)
-        val r = #1 ((S.IterRotPyrSearch.search size dist NONE false (max_iters', stale_iters', (SOME max_rots, ()))) ())
+        val r = #1 ((S.IterRotPyrSearch.search size dist NONE false (max_iters', stale_iters', (SOME max_rots, 0w0, ()))) ())
       in
         extractSol S.IterRotPyrSearch.tourToVector r
       end
@@ -94,7 +94,7 @@ val _ =
         val stale_iters' = case stale_iters of
                              0w0 => NONE
                            | m => SOME ((IntInf.fromInt o Word.toInt) m)
-        val r = #1 ((S.IterRotSBSearch.search size dist NONE false (max_iters', stale_iters', (SOME max_rots, max_width'))) ())
+        val r = #1 ((S.IterRotSBSearch.search size dist NONE false (max_iters', stale_iters', (SOME max_rots, 0w0, max_width'))) ())
       in
         extractSol S.IterRotSBSearch.tourToVector r
       end

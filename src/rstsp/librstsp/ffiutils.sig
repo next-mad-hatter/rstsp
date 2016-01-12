@@ -19,6 +19,8 @@ signature FFI_UTILS = sig
 
   val exportWordVector : word vector -> MLton.Pointer.t
 
+  val exportLIntVector : Int64.int vector -> MLton.Pointer.t
+
   val exportPtrVector : MLton.Pointer.t vector -> MLton.Pointer.t
 
   val importWordVector : MLton.Pointer.t * C_Size.word -> word vector

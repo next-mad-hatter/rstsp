@@ -13,9 +13,9 @@
  *   - descendancy represents the subset relation;
  *
  *   - for terminal nodes, we should be able to compute
- *     a best tour efficiently;
+ *     best tours efficiently;
  *
- *   - for non-terminals, we can choose from best tours
+ *   - for non-terminals, we will choose among tours
  *     (possibly transformed) the particular node's
  *     descendants yield;
  *
@@ -30,7 +30,7 @@ signature TSP_NODE = sig
   (**
    * We usually want to see one-based representation here.
    *)
-  val toString: node -> string
+  val toString : node -> string
 
   (**
    * The key to be used for memoization -- this does not
@@ -38,25 +38,27 @@ signature TSP_NODE = sig
    * SB graph, where those contain suprfluous information
    * for speed reasons.
    *)
-  eqtype key
+  type key
 
-  val compare: key * key -> order
+  val eqKeys : key * key -> bool
 
-  val toKey: node -> key
+  val compKeys : key * key -> order
+
+  val toKey : node -> key
 
   (**
    * Pyramidal/SB graph specific: level-agnostic representation.
    * If we were to add other node types, we would have to lift the type.
-   * For now, this will have do.
+   * For now, this will have to do.
    *)
-  val normKey: key -> TSPTypes.WordPairSet.set
+  val normKey : key -> TSPTypes.WordPairSet.set
 
   (**
    * In case a hash table is to be used for memoization,
    * we'll need a hashing function -- which, in general,
    * will depend on problem size.
    *)
-  val toHash: word -> key -> word
+  val toHash : word -> key -> word
 
 end
 
@@ -65,7 +67,7 @@ signature TSP_TOUR = sig
 
   type tour
 
-  val toString: tour -> string
+  val toString : tour -> string
 
   (**
    * A tour does not necessarily have to be connected.
@@ -73,7 +75,7 @@ signature TSP_TOUR = sig
    * it is reasonable to expect such a condition to hold --
    * such as on the root node.
    *)
-  val toVector: tour -> word vector
+  val toVector : tour -> word vector
 
 end
 
@@ -88,10 +90,10 @@ signature TSP_GRAPH = sig
    *)
   structure Len : NUMERIC
 
-  structure Node: TSP_NODE where type node = node
-  structure Tour: TSP_TOUR where type tour = tour
+  structure Node : TSP_NODE where type node = node
+  structure Tour : TSP_TOUR where type tour = tour
 
-  val root: node
+  val root : node
 
   (**
    * Given a node, best tour from the set it represents can either be
@@ -117,13 +119,13 @@ signature TSP_GRAPH = sig
    * This shall compute the descendants and ascendent transfomations --
    * we will generally want to know problem size and distance function here.
    *)
-  val descendants: word -> (word * word -> Len.num) -> optional_params ->
-                   node -> descent
+  val descendants : word -> (word * word -> Len.num) -> optional_params ->
+                    node -> descent
 
   (**
    * In case a hash table is to be used for memoization, we would like to
    * have a guess as to initial table size.
    *)
-  val HTSize: word * optional_params -> word
+  val HTSize : word * optional_params -> word
 
 end

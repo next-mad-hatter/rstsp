@@ -35,6 +35,15 @@ mlton \
 
 echo "***************************************"
 echo
+echo " Building MLton (allocation-profiled) executable"
+echo
+mlton \
+    -profile alloc \
+    -output "${BUILD_DIR}"/rstsp.alloc \
+            ./rstsp/rstsp-mlton.mlb
+
+echo "***************************************"
+echo
 echo " Building MLton (traced) executable"
 echo
 mlton \

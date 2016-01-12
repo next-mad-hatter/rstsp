@@ -29,11 +29,15 @@ use "tspsearch/itersearch.sml";
 use "tspsearch/rotsearch.sml";
 use "tspsearch/adaptivesearch.sml";
 use "tspsearch/flipflopsearch.sml";
+use "tspsearch/trampsearch.sml";
 
 use "main/options.sml";
 use "main/tspread.sml";
+use "main/tourread.sml";
+use "main/tourwrite.sml";
 use "main/searches.sig";
 use "main/defaultsearches.sml";
+use "main/trampsearches.sml";
 use "main/settings.sig";
 use "main/main.sml";
 

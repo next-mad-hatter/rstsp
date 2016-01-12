@@ -11,10 +11,18 @@
 #include "rstsp.h"
 
 #ifndef PRIu32
-#define PRIu32 "u"
+#  define PRIu32 "u"
 #endif
 
-uint32_t dst(uint32_t i, uint32_t j) {
+#ifndef PRIi64
+#  if __WORDSIZE == 64
+#    define PRIi64 "li"
+#  else
+#    define PRIi64 "lli"
+#  endif
+#endif
+
+int64_t dst(uint32_t i, uint32_t j) {
   return i+j;
 }
 
@@ -39,11 +47,11 @@ int main(int argc, const char **argv) {
   /**
    * We do not want want to deal with structure alignment for different
    * platforms, hence a call to search function shall yield:
-   *   - a pointer to tour length;
-   *   - a pointer to tour array (zero-based, closed cycle)
+   *   - a pointer to tour length (int64);
+   *   - a pointer to tour array (zero-based, closed cycle, word32)
    *   all packed in a pointer array.
    */
-  uint32_t **result;
+  Pointer *result;
 
   /**
    * We also want to avoid having to manually manage memory, therefore only
@@ -52,13 +60,17 @@ int main(int argc, const char **argv) {
    * What follows is simple pyramidal search.
    */
   char *dotfilename = NULL;
-  result = (uint32_t **)rstsp_pyr_search(prob_size, *dst, dotfilename);
+  int64_t *len;
+  uint32_t *tour;
+  result = (Pointer *)rstsp_pyr_search(prob_size, *dst, dotfilename);
   if(result) {
+    len = (int64_t *)result[0];
+    tour = (uint32_t *)result[1];
     printf("  > Pyramidal tour: ");
-    print_tour(result[1], prob_size);
-    printf("  > Tour length: %" PRIu32 "\n", *result[0]);
-    free(result[1]);
-    free(result[0]);
+    print_tour(tour, prob_size);
+    printf("  > Tour length: %" PRIi64 "\n", *len);
+    free(tour);
+    free(len);
     free(result);
   }
 
@@ -66,13 +78,15 @@ int main(int argc, const char **argv) {
    * Simple balanced search;  max_width : node size limit.
    */
   uint32_t max_width = 3;
-  result = (uint32_t **)rstsp_sb_search(prob_size, *dst, max_width, dotfilename);
+  result = (Pointer *)rstsp_sb_search(prob_size, *dst, max_width, dotfilename);
   if(result) {
+    len = (int64_t *)result[0];
+    tour = (uint32_t *)result[1];
     printf("  > SB tour: ");
-    print_tour(result[1], prob_size);
-    printf("  > Tour length: %" PRIu32 "\n", *result[0]);
-    free(result[1]);
-    free(result[0]);
+    print_tour(tour, prob_size);
+    printf("  > Tour length: %" PRIi64 "\n", *len);
+    free(tour);
+    free(len);
     free(result);
   }
 
@@ -83,13 +97,15 @@ int main(int argc, const char **argv) {
   uint32_t max_iters = 10;
   uint32_t stale_iters = 3;
   uint32_t max_rots = prob_size-1;
-  result = (uint32_t **)rstsp_iter_pyr_search(prob_size, *dst, max_iters, stale_iters, max_rots);
+  result = (Pointer *)rstsp_iter_pyr_search(prob_size, *dst, max_iters, stale_iters, max_rots);
   if(result) {
+    len = (int64_t *)result[0];
+    tour = (uint32_t *)result[1];
     printf("  > Pyramidal/iter/rot tour: ");
-    print_tour(result[1], prob_size);
-    printf("  > Tour length: %" PRIu32 "\n", *result[0]);
-    free(result[1]);
-    free(result[0]);
+    print_tour(tour, prob_size);
+    printf("  > Tour length: %" PRIi64 "\n", *len);
+    free(tour);
+    free(len);
     free(result);
   }
 
@@ -98,13 +114,15 @@ int main(int argc, const char **argv) {
    * "balanced shift"-permutations in each iteration.
    */
   max_rots = 2*prob_size;
-  result = (uint32_t **)rstsp_iter_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, max_rots);
+  result = (Pointer *)rstsp_iter_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, max_rots);
   if(result) {
+    len = (int64_t *)result[0];
+    tour = (uint32_t *)result[1];
     printf("  > SB/iter/rot tour: ");
-    print_tour(result[1], prob_size);
-    printf("  > Tour length: %" PRIu32 "\n", *result[0]);
-    free(result[1]);
-    free(result[0]);
+    print_tour(tour, prob_size);
+    printf("  > Tour length: %" PRIi64 "\n", *len);
+    free(tour);
+    free(len);
     free(result);
   }
 
@@ -113,13 +131,15 @@ int main(int argc, const char **argv) {
    *  increased at stale iterations.
    */
   uint32_t min_rots = 0;
-  result = (uint32_t **)rstsp_ad_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, min_rots, max_rots);
+  result = (Pointer *)rstsp_ad_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, min_rots, max_rots);
   if(result) {
+    len = (int64_t *)result[0];
+    tour = (uint32_t *)result[1];
     printf("  > SB/adaptive tour: ");
-    print_tour(result[1], prob_size);
-    printf("  > Tour length: %" PRIu32 "\n", *result[0]);
-    free(result[1]);
-    free(result[0]);
+    print_tour(tour, prob_size);
+    printf("  > Tour length: %" PRIi64 "\n", *len);
+    free(tour);
+    free(len);
     free(result);
   }
 
@@ -127,13 +147,15 @@ int main(int argc, const char **argv) {
    *  A combination of adaptive sb & iterative pyramidal searches.
    */
   uint32_t max_flips = 0;
-  result = (uint32_t **)rstsp_ff_search(prob_size, *dst, max_width, max_iters, stale_iters, min_rots, max_rots, max_flips);
+  result = (Pointer *)rstsp_ff_search(prob_size, *dst, max_width, max_iters, stale_iters, min_rots, max_rots, max_flips);
   if(result) {
+    len = (int64_t *)result[0];
+    tour = (uint32_t *)result[1];
     printf("  > SB/flipflop tour: ");
-    print_tour(result[1], prob_size);
-    printf("  > Tour length: %" PRIu32 "\n", *result[0]);
-    free(result[1]);
-    free(result[0]);
+    print_tour(tour, prob_size);
+    printf("  > Tour length: %" PRIi64 "\n", *len);
+    free(tour);
+    free(len);
     free(result);
   }
 

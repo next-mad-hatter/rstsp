@@ -33,10 +33,11 @@ end
 res = []
 files.each_key do |dataset|
   files[dataset].each do |size, tsp, supp|
-    ([[50,"all"]]).each do |iters, max_rot|
+    ([[0,8],[0,"all"]]).each do |iters, max_rot|
       ([[:pyramidal,nil],[:balanced,3]]).each do |algo, max|
-        [[nil,nil],[1,nil],[1,0]].each do |min_rot, flips|
+        [[nil,nil],[2,nil],[2,0]].each do |min_rot, flips|
           next if flips and algo == :pyramidal
+          next if max_rot != "all" and not flips
           res << {
             :name => tsp,
             :bin => :mlton,

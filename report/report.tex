@@ -5,48 +5,97 @@
 % $Rev: 34 $
 %
 
-%\documentclass[10pt,a4paper,twoside,openright]{scrartcl}
-\documentclass[10pt,a4paper]{scrartcl}
-\usepackage{extsizes}
-\usepackage[utf8]{inputenc}
-\usepackage[english,ngerman]{babel}
-\usepackage[T1]{fontenc}
-\usepackage{fix-cm}
-\usepackage{lmodern}
-\usepackage{lipsum}
+%\documentclass[titlepage,index=totoc,bibliography=totoc]{scrartcl}
+\documentclass[index=totoc,bibliography=totoc]{scrartcl}
+\KOMAoptions{fontsize=11pt}
+%\KOMAoptions{BCOR=0.25mm}
+%\usepackage[left=3.1cm, right=3.1cm]{geometry}
 
-\usepackage{commath}
+\usepackage{mathdesign}
+\usepackage[no-math]{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont[Numbers=OldStyle]{Latin Modern Roman}
+%\setmainfont[Numbers=OldStyle]{CMU Serif}
+%\setmainfont[Numbers=OldStyle]{Gentium}
+%\setmainfont[Numbers=OldStyle]{EB Garamond}
+\setsansfont[Numbers=OldStyle]{CMU Sans Serif}
+%\setsansfont{Droid Sans}
+%\setmonofont{CMU Typewriter Text}
+\setmonofont[Scale=0.9]{Droid Sans Mono}
+%\setmonofont{DejaVu Sans Mono}
+\newfontfamily\CodeFont[Scale=0.85]{DejaVu Sans Mono}
+%\newfontfamily\CodeFont[Scale=0.85]{Consolas}
+%\newfontfamily\CodeFont[Scale=0.85]{Anonymous Pro}
+
+\usepackage{luatextra}
+
+\usepackage[english,ngerman,russian]{babel}
+\usepackage{csquotes}
+
+% as of now, xindy is broken on my machine right
+\usepackage{imakeidx}
+\indexsetup{level=\chapter,toclevel=chapter}
+\makeindex
+
+\usepackage[backend=biber,style=alphabetic]{biblatex}
+%\usepackage[fixlanguage]{babelbib}
+\addbibresource{references.bib}
+\usepackage[nottoc]{tocbibind}
+
+\usepackage{amsmath}
+%\usepackage{unicode-math}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{amsmath}
+
+\usepackage{commath}
+\usepackage{mathtools}
+
 \usepackage{amsthm}
+\usepackage{thmtools}
+\usepackage{etoolbox}
+\usepackage{changepage}
+
+\declaretheorem[style=definition,name=Definition]{define}
+\declaretheorem[style=plain]{theorem}
+\declaretheorem[sibling=theorem]{lemma}
+\declaretheorem[style=remark]{remark}
+%\BeforeBeginEnvironment{theorem}{\begin{adjustwidth}{1cm}{1cm}}
+%\AfterEndEnvironment{theorem}{\endadjustwidth}
+%\AfterEndEnvironment{define}{\noindent\ignorespaces}
+%\makeatletter
+%\def\@endtheorem{\endtrivlist}%
+%\makeatother
 
 \usepackage{caption}
 \usepackage{ragged2e}
 
-%\usepackage[left=3.1cm, right=3.1cm]{geometry}
 \usepackage{graphicx}
 %\usepackage[export]{adjustbox}
-
-\usepackage{epstopdf}
-\epstopdfDeclareGraphicsRule{.tif}{png}{.png}{convert #1 \OutputFile}
-\AppendGraphicsExtensions{.tif}
-
+%\usepackage{epstopdf}
+%\epstopdfDeclareGraphicsRule{.tif}{png}{.png}{convert #1 \OutputFile}
+%\AppendGraphicsExtensions{.tif}
+\usepackage{luamplib}
+\usepackage{etoolbox}
+\preto\mplibcode{\center\leavevmode}
+\appto\endmplibcode{\endcenter}
+\usepackage{wrapfig}
 \usepackage{float}
 \usepackage{subfig}
 \usepackage{sidecap}
 \usepackage[bottom]{footmisc}
 
-\usepackage{color}
+\usepackage{xcolor}
+\definecolor{Gray}{gray}{0.9}
+\definecolor{blue}{rgb}{0,0,0.3}
+\definecolor{green}{rgb}{0,0.3,0}
 \definecolor{codeblue}{rgb}{0,0,0.3}
 \definecolor{codegreen}{rgb}{0,0.3,0}
 \definecolor{codered}{rgb}{0.3,0,0}
-\definecolor{Gray}{gray}{0.9}
-\usepackage[scaled]{beramono}
+
 \usepackage{listings}
 \usepackage{needspace}
 \lstset{%
-  basicstyle=\footnotesize\ttfamily,
+  basicstyle=\CodeFont\footnotesize, %\footnotesize\ttfamily,
   frame=single, %line/leftline/single
   aboveskip=\topsep,
   belowskip=\topsep,
@@ -63,6 +112,11 @@
   \lstinputlisting[caption={\texttt{\detokenize{#2}}},#1]{#2}%
 }
 
+%\usepackage{kantlipsum}
+%\usepackage{blindtext}
+\usepackage{marginnote}
+\newcommand{\annotation}[1]{\marginpar{\small\itshape\color{green}#1}}
+
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{color, colortbl}
@@ -70,19 +124,7 @@
 \usepackage{varwidth}
 \usepackage{pgfplotstable}
 
-\definecolor{blue}{rgb}{0,0,0.32}
-\usepackage[pdfauthor={M. Deineko},
-            pdfproducer={pdflatex},
-            pdfcreator={LaTeX},
-            colorlinks=true,
-            linkcolor=blue,
-            urlcolor=blue,
-            linktoc=section,
-            unicode=true
-            ]{hyperref}
-\hypersetup{pdftitle=TSP on Relaxed Supnick Matrices}
-
-\usepackage[title,page,toc]{appendix}
+\usepackage[title,page,titletoc]{appendix}
 \newcommand*{\Appendixautorefname}{Appendix}
 \usepackage{cleveref}
 
@@ -108,10 +150,7 @@
   \newpage
 }
 
-\usepackage[backend=biber]{biblatex}
-%\usepackage[fixlanguage]{babelbib}
-\addbibresource{references.bib}
-\usepackage[nottoc]{tocbibind}
+\usepackage{abstract}
 
 %\usepackage[toc]{multitoc}
 \usepackage[subfigure]{tocloft}
@@ -120,154 +159,423 @@
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 
+\usepackage[pdfauthor={M. Deineko},
+            pdfproducer={lualatex},
+            pdfcreator={LaTeX},
+            colorlinks=true,
+            linkcolor=blue,
+            urlcolor=blue,
+            citecolor=blue,
+            linktoc=section,
+            unicode=true
+            ]{hyperref}
+\hypersetup{pdftitle=Two Exponential Neighbourhoods}
+
+\let\defstyle\itshape
+%\def\defstyle{\itshape}
+
 \begin{document}
 
 \selectlanguage{english}
 
-\title{TSP on Relaxed Supnick Matrices}
-\subtitle{Theory and Implementation}
+\title{Two Exponential Neighbourhoods}
+\subtitle{Pyramidal and strongly balanced traveling salesman problem and heuristics --- theory and implementation}
+% FIXME: supervisor format ?
+% FIXME: title pic / multitoc ?
+% FIXME: twosided / book format ?
 \input{authors.tex}
 \date{\today}
+
+% FIXME: titlepage / spacing ?
 \maketitle
+
+% FIXME: better wording / tours family ?
+\begin{abstract}
+  Pyramidal tours constitute a well known polynomially solvable case of TSP\@.
+  In this paper we present a first implementation of a related tours family,
+  show extension of both solutions to local search heuristics and compare results thus obtained.
+\end{abstract}
+
 \thispagestyle{empty}
 
 %\setlength{\cftbeforetoctitleskip}{-2em}
 \tocloftpagestyle{empty}
-\tableofcontents
 \afterpage{\blankpage}
+\clearpage
+\tableofcontents
 
 %\setlength{\parindent}{0cm}
 
 \clearpage
+\dictum[Sherlock Holmes]{Nothing clears up a case so much as stating it to another person.}
+\section{Introduction}
 
-\section{Theory}
-\subsection{Motivation}
-\subsubsection{Monge matrices}
-\subsubsection{Pyramidal tours and polynomial time}
-\subsection{Continuation}
-\subsubsection{Relaxed Supnick matrices}
-\subsubsection{Strongly balanced tours and linear time}
+The {\defstyle traveling salesman problem (TSP)} can be colloquially stated as follows:
+\index{TSP|see{Traveling Salesman Problem}}
+\blockquote{%
+  \index{Traveling Salesman Problem|(}
+  A traveling merchant (or salesman) wishes to visit each city from a given
+  list exactly once, starting from and returning to a select one of the cities
+  given.  Assuming that distances between the cities are known and not
+  subject to change, what would be the shortest route for him to take?
+  \index{Traveling Salesman Problem|)}
+}
+This well studied problem in combinatorial optimization is known to be
+NP-hard \cite{Karp72}; hence, one is interested in efficiently solvable
+cases as well as useful heuristics, of which a good number exists.
 
-\section{Implementation}
-\subsection{Synthetic benchmarks and runtime behaviour}
-\subsection{Local search extension}
-\subsection{TSPLIB benchmarks}
+In this paper we look at two large sets of feasible solutions over which
+the TSP can be solved in polynomial time and extension of these to
+iterative heuristics.  For this, we need to establish some basic
+definitions first.
 
-\section{Areas for further research}
-\subsection{Applicability}
-\subsubsection{Relaxed instances?}
-\subsubsection{Euclidean TSP in higher dimensions?}
-\subsubsection{Special cases?}
-\subsection{Dynamic programming and concurrency}
-%\input{problem1.tex}
+\subsection{Definitions and notation}
 
-%%
-%% BS
-%%
-%Let
-%\[ \Phi_k\left(\big\{ \{a_1,b_1\}, \ldots ,\{a_p,b_p\} \big\} \right) \]
-%denote shortest (in total length) balanced paths set containing points $1 \ldots k$
-%with $a_i, b_i$ being the paths' endpoints
-%and
-%\[ B\left(\big\{ \{a_1,b_1\}, \ldots ,\{a_p,b_p\} \big\}\right) = \bigcup_i\{a_i,b_i\}.\]
-%Then following holds:
-%\begin{enumerate}
-%  \item
-%\[
-%  \Phi_k\left(\big\{ \{a_1\}, \ldots , \{a_k\} \big\} \right) =
-%  \left\{ \left< a_1 \right> , \ldots , \left< a_k \right> \right\}
-%\]
-%  \item
-%\[
-%  \Phi_k\left(\big\{ s_1, \ldots , s_p, \{k\} \big\} \right) =
-%  \Phi_{k-1}\left(\big\{ s_1, \ldots , s_p \big\}\right) \cup
-%  \left\{\left<k\right>\right\}
-%\]
-%  \item
-%\[
-%  \Phi_k\left(\big\{ s_1, \ldots , s_p, \{r,k\} \big\} \right) =
-%  append\left(\Phi^{*},z^{\ast},k\right)
-%\]
-%where
-%\[
-%  \Phi^{*} = \Phi_{k-1}\left(\big\{ s_1, \ldots , s_p, \{r,z^{*}\} \big\} \right)
-%\]
-%\[
-%  z^{*} = \argmin_{z \in [1,\ldots,m]}{
-%    \left(
-%      length \;
-%      \Phi_{k-1}\left(\big\{ s_1, \ldots , s_p, \{r,z\} \big\} \right)
-%      + d(z,k)
-%    \right)
-%  }
-%\]
-%\[
-%  m = \min B\left(\{s_1, \ldots ,s_p\}\right) \cup \{k\} - 1
-%\]
-%  \item
-%\[
-%  \Phi_k\left(\left\{ s_1, \ldots , s_p \right\} \right) =
-%  \;\text{with}\;
-%  k \notin B\left({s_1,\ldots,s_p}\right)
-%\]
-%is then chosen from two possible solutions:
-%\begin{enumerate}
-%  \item
-%\[
-%  merge\left(\Phi_{q^{*}},z^{*},z^{**},k\right)
-%\]
-%where
-%\[
-%  \Phi_{q^{*}} = \Phi_{k-1}\left(\big\{ s_1, \ldots , s_{q^{*}-1},
-%  \{z^{*},a^{*}\}, \{b^{*},z^{**}\}, s_{q^{*}+1}, \ldots, s_p \big\} \right)
-%\]
-%\[
-%  s_{q^{*}} = \{a^{*},b^{*}\}
-%\]
-%\[
-%  (q^{*}, z^{*},z^{**}) = \argmin_{
-%    \substack{q \in [1,p] \\\
-%              z^\prime \in [1,\ldots,m-1] \\\
-%              z^{\prime\prime} \in [z^\prime+1, m-1]}}{
-%    \mkern-18mu \Phi_{k-1}\left(\big\{ s_1, \ldots , s_{q-1},
-%    \{z^{\prime},a\}, \{b,z^{\prime\prime}\},
-%    s_{q+1}, \ldots ,s_p \big\} \right)
-%    \! + \! d(z^\prime,a) \! + \! d(z^{\prime\prime},b)
-%  }
-%\]
-%\[
-%  m = \min B\left(\{s_1,\ldots,s_p\}\right)
-%\]
-%  \item
-%\[
-%  merge\left(\Phi^{*},z^{*},z^{**},k\right)
-%\]
-%for
-%\[
-%  s_p = \{m,r\}, m = \min B\left(\{s_1,\ldots,s_p\}\right), m \neq r
-%\]
-%where
-%\[
-%  \Phi^{*} = \Phi_{k-1}\left(\big\{ s_1, \ldots , s_{p-1}, \{z^{*},m\}, \{r,z^{**}\} \big\} \right)
-%\]
-%\[
-%  (z^{*},z^{**}) = \argmin_{\substack{z^\prime \in [1,\ldots,m-1] \\\
-%  z^{\prime\prime} \in [m+1, \min B\left(\{s_1,\ldots,s_{p-1}\}\right)-1]}}{
-%    \mkern-28mu \mkern-18mu
-%    \Phi_{k-1}\left(\big\{ s_1, \ldots , s_{p-1},
-%    \{z^{\prime},m\}, \{r,z^{\prime\prime}\} \big\} \right)
-%    + d(z^\prime,m) + d(z^{\prime\prime},r)
-%  }
-%\]
-%\end{enumerate}
-%\end{enumerate}
-%
-%\cite{example}
-%
+The TSP, as most mathematical problems, can be modeled in a number of often
+equivalent or similar ways, depending on what aspects of the problem are
+relevant to the task at hand --- which, for a problem as extensively studied
+as this one, results in a great number of common terms which from author to
+author can differ ever so slightly.
+
+Hence we need to establish a set of definitions which we shall try to keep
+precise enough to be able to convey this paper's content clearly,
+while also simple enough so as not to distract from it.
+
+\begin{define}[Cities, paths and tours]
+Given some $n \in \mathbb{N} \left(n \geq 2\right)$,
+let \[\mathcal{N} \coloneqq \mathcal{N}_n \coloneqq \left\{1,\ldots,n\right\}.\]
+We will refer to elements of $\mathcal{N}$ as {\defstyle cities}.
+A non-empty tuple $\left(p_1,p_2,\ldots,p_m\right)$
+of cities is called a {\defstyle path} (of {\defstyle length} $m-1$ {\defstyle over} $\mathcal{N}$);
+it is called {\defstyle simple} if it contains distinct entries only, with
+possible exception of its {\defstyle end points} $p_1$ and $p_m$, i.e. if
+\[\left|\left\{p_1,p_2,\ldots,p_{m-1}\right\}\right| =
+\left|\left\{p_2,p_3,\ldots,p_{m}\right\}\right| = m-1.\]  We shall refer to
+a path with distinct end points as an {\defstyle open} path, one with
+equal end points --- a {\defstyle closed} one, or a {\defstyle cycle}.
+An open path of length $1$ is also called an {\defstyle edge};
+a simple cycle of length $n$ is called a {\defstyle tour}.
+We additionally denote by $\mathcal{T}_n$ set of all tours over $\mathcal{N}_n$.
+\end{define}
+
+\begin{define}[Distances and cost]
+Given a $n \in \mathbb{N} \left(n \geq 2\right)$ and a matrix $C =
+\left(c_{ij}\right) \in ~ \mathbb{R}^{n \times n}$, which we shall call
+{\defstyle cost} (or {\defstyle distance) matrix}, we will refer to its
+elements as {\defstyle distances} or {\defstyle weights}.
+Now let \[
+%  \operatorname{len} A \xrightarrow[\pi \mapsto \operatorname{len}(\pi)]{} B.
+%  \operatorname{len}_C: \bigcup_{k \in \mathbb{N}, k \geq 2}\mathcal{N}^k \to \mathbb{R}, \quad
+  \mathfrak{w}_C: \bigcup_{k \in \mathbb{N}, k \geq 2}\mathcal{N}^k \to \mathbb{R}, \quad
+  \left(p_1,p_2,\ldots,p_m\right) \mapsto \sum_{k=1}^{m-1} c_{p_k p_{k+1}}.
+\]
+For a path $\pi$ over $\mathcal{N} = \mathcal{N}_n$ we then call $\mathfrak{w}_C\left(\pi\right)$ {\defstyle cost} of $\pi$.
+An edge's cost is also called its {\defstyle weight} (which agrees with the definition above).
+\end{define}
+
+\begin{define}[Traveling salesman problem]
+  Given a $n \in \mathbb{N} \left(n \geq 2\right)$,
+  $M \subseteq~\mathbb{R}^{n \times n}$ and
+  $T \subseteq \mathcal{T}_n$, we define {\defstyle traveling salesman problem}
+  ({\defstyle over $(M,T)$}, also {\defstyle TSP}) to be the map
+\[
+  \operatorname{TSP}_{M,T}: M \to T, \quad
+  C \mapsto \argmin_{\tau \in T} \mathfrak{w}_C\left(\tau\right).
+\]
+We call $n$ the TSP's {\defstyle dimension}.
+If $M$ is a subset of symmetric matrices (over $\mathbb{R}$), the TSP is called {\defstyle symmetric (sTSP)},
+otherwise --- {\defstyle asymmetric (aTSP)}.
+\end{define}
+
+\begin{remark}
+Frequently, the TSP is defined via a map which provides the sets $M$ and $T$ for every dimension $n$.
+We make no such requirement --- however, such an extension is usually easily established from context.
+\end{remark}
+
+\begin{remark}
+Also not unusual is a variation of TSP which returns the cost of optimal tour along with or instead of such a tour;
+transitions between these definitions are usually trivial.
+\end{remark}
+
+\begin{remark}
+Whenever the sets $M,T$ from above definition are established elsewhere, they are usually omitted from notation.
+\end{remark}
+
+\begin{remark}
+Often, the TSP is defined to be the symmetric version
+\annotation{Reduction remark necessary / wording?}
+(aTSP can also be reduced to sTSP of double dimension).
+We shall make no such assumption without a prior notice.
+\end{remark}
+
+\begin{remark}
+Since $\operatorname{TSP}_{T,M}\left(C\right) = \operatorname{TSP}_{T,M}\left(C + \lambda J\right)$
+holds true for all $\lambda \in \mathbb{R}$ and $C \in M$,
+where $J$ is matrix of ones (of suitable dimension), we can always assume
+\[
+  c_{ij} \geq 0 \quad \forall i,j \in \mathcal{N}
+\]
+and shall do so henceforth.
+\end{remark}
+
+We will make extensive use of path {\defstyle concatenation}, which we define to be the following map (used as infix operator):
+\begin{define}
+\[
+  \oplus: {\left( \bigcup_{k \in \mathbb{N}}\mathbb{N}^k \right)}^2 \to \bigcup_{k \in \mathbb{N}}\mathbb{N}^k,
+  \quad \left(\left(r_1,\ldots,r_l\right), \left(s_1,\ldots,s_m\right)\right) \mapsto \left(r_1,\ldots,r_l,s_1,\ldots,s_m\right).
+\]
+\end{define}
+
+We note that there is a natural
+bijection between tours in $\mathcal{T}_n$ and cyclic permutations on
+$\mathcal{N}_n$ (or, by same argument, paths of length $n-1$).
+
+We will also sometimes need to view tours as somewhat different maps on
+$\mathcal{N}$ or $\mathbb{R}^{n \times n}$.
+\begin{define}
+Given a set $\mathcal{N}$ of $n$ cities, let $\mathcal{S}_n$ be the symmetric group (on $\mathcal{N}$).
+We define $\mathfrak{s}_{\bullet}$ (using argument-in-subscript notation for reasons of legibility) to be the map
+\[
+  \mathcal{T}_n \to \mathcal{S}_n,
+  \quad \tau = \left(p_1,p_2,\ldots,p_n,p_1\right) \mapsto
+  \mathfrak{s}_\tau \coloneqq
+  \left( \begin{smallmatrix}
+    1 & 2 & \cdots & n \\
+    p_1 & p_2 & \cdots &  p_n
+  \end{smallmatrix} \right).
+\]
+A tour $\tau = \mathfrak{t}_{\mathfrak{s}_{\tau}}$ and permutation $\mathfrak{s}_{\tau}$ are said to be {\defstyle associated} with each other.
+\end{define}
+
+\begin{remark}
+  \annotation{TODO}
+  Cost invariance under circular permutations, tour representations vs
+  symmetric group, action of $\mathcal{S}_n$ on $\mathbb{R}^{n \times n}$.
+\end{remark}
+
+\subsection{Exponential neighbourhoods and local search heuristics}
 
 \clearpage
+\dictum[L. Peter Deutsch]{To iterate is human, to recurse divine.}
+%\dictum[Honore de Balzac]{To get a traveling salesman drunk is the height of impossibility.}
+\section{Two Neighbourhoods}
 
-\input{sml-support.tex}
+\subsection{Pyramidal tours}
+
+\annotation{Who was first?}
+Pyramidal tours constitute a classic example of a TSP class where an
+optimum solution for an exponential tours set (also, a neighbourhood) can
+be found in polynomial time \cite{bellman,gilmore}.
+
+\begin{define}
+  A path $\pi = \left( k_1, \ldots, k_m \right)$ is called {\bfseries simple}
+  if it consists only of distinct nodes, except, possibly, end nodes $k_1$ and $k_m$.
+  In case where $k_1 = k_m$ we shall call such a path {\bfseries closed}.
+\end{define}
+\begin{define}[Pyramidal Tour]
+  A simple path $\pi = \left( k_1, \ldots, k_p, l_1, \ldots, l_q \right), \; p+q \geq 1,$
+  is called {\bfseries pyramidal} if
+  $k_i < k_j, l_i > l_j \; \forall i < j$.
+  A (simple) closed path is called a {\bfseries tour}.
+\end{define}
+\noindent
+Since all tours associated with $S_n$ have the form $\left(1, k_1, \ldots,
+k_p, n, l_1, \ldots, l_q, 1 \right)$, it follows that the number of all
+such tours is $2^{n-2}$.  Also note how the graph of such a permutation
+considered a function ${\mathbb Z}_n \rightarrow {\mathbb Z}_n$ resembles a
+pyramid.
+
+\annotation{Here a nice figure of a pyramidal tour and a pyramid shall be.}
+\begin{figure}[htbp]
+\centering%
+\begin{mplibcode}
+  beginfig(0)
+    pair p[];
+    p1 = (0,0); p2 = (100,0); p3 = (200,0); p4 = (300,0); p5 = (400,0);
+    pair c[];
+    c1 = (50,20); c2 = (210,30); c3 = (250,-10); c4 = (100,-20);
+    path a;
+    a = p1 .. controls c1 ..
+        p2 .. controls c2 ..
+        p4 ..
+        p5 .. controls c3 ..
+        p3 ..  controls c4 ..
+        cycle ;
+    for i = 1 upto length a:
+      dotlabel.top(decimal i, p[i]);
+      drawarrow subpath (i-1,i) of a withcolor 0.2;
+    endfor
+  endfig;
+\end{mplibcode}
+\ 
+\caption{A pyramidal tour over $K_5$.}
+\end{figure}
+
+\subsubsection{Pyramidal tours and polynomial time}
+
+It turns out that for this particular exponential neighbourhood a simple dynamic programming
+scheme delivers a polynomial solution.
+\annotation{Is there any difference at all between sTSP and aTSP here?}
+(For simplicity, we shall consider symmetric TSP (sTSP).)
+For a sTSP of size $n$, let
+\begin{align*}
+  \Phi\left(i,j\right) \ldots \; & \text{shortest pyramidal path} \left(i,k_1,\ldots,k_p,j\right) \\
+                      & \text{s.t.} \; \left\{ k_1,\ldots,k_p \right\} = \left\{ k,\ldots,n \right\} \\
+                      & \text{where} \; k = \max\left\{i,j\right\}+1.
+\end{align*}
+One can easily see that $\Phi(1,1)$ is the optimum of all pyramidal tours in $S_n$ (one-based).
+\[
+  \Phi\left(i,n\right) = \left(i,n\right) \; \text{and} \; \Phi\left(n,j\right) = \left(n,j\right).
+\]
+\annotation{A construction illustration would be in order here.}
+Now note that one can build an arbitrary pyramidal path by considering nodes' positions in increasing order:
+given a partial tour (a pyramidal path) $\left(1,\ldots,i,j,\ldots,1\right)$ which increases to $i$ and
+decreases from $j$, the next element ($\max\left\{i,j\right\}+1$) has to lie adjacent to $i$ or $j$.
+Since every pyramidal tour over $K_n$ can be constructed in this manner, it follows that
+\begin{gather*}
+  \Phi\left(i,j\right) = \argmin_{\tau \in T}\mathfrak{w}\left(\tau\right) \\
+  \text{where} \; T = \left\{ \left( i,k \right) \oplus \Phi(k,j), \Phi(i,k) \oplus \left( k,j \right) \right\} \\
+  \text{and} \; \oplus \; \ldots \; \text{path concatenation}.
+\end{gather*}
+We hence arrive at
+\begin{theorem}
+  For $K_n$, amongst $2^{n-3}$ pyramidal tours an optimum can be found in $\mathcal O(n^2)$ steps.
+\end{theorem}
+\begin{proof}
+  For $K_n$, computing the optimum now requires computing not more than $\Phi\left(i,j\right)$
+  for all pairs $\left(i,j\right)$.
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.59\textwidth]{../plot/build/trace_pyr.pdf}
+\caption{A trace of our implementation's pyramidal search graph traversal over $K_5$.}
+\end{figure}
+
+\subsubsection{Local search heuristics}
+
+\annotation{Demidenko conditions: is a description necessary/interesting?}
+While determining if a given TSP instance is pyramidal is NP-hard \cite{baki},
+a number of polynomially testable classes which are pyramidally solvable exist \cite{baki,gilmore} ---
+still, those are not widely common.
+
+Pyramidal search can also be extended to a local search heuristic:
+note first how the tour obtained depends on node numbering.
+Now let $\operatorname{pyr}(C)$ denote best pyramidal tour given a distance matrix $C$
+and, given a tour $\tau$, $\sigma_\tau \left(C\right)$ be the permutation associated with $\tau$
+applied to rows and columns of $C$ (i.e. renumbering of nodes).
+Let
+\[
+  h_C \; : \;
+    \tau \mapsto \left(
+      \sigma_{\tau}^{-1} \circ
+      \operatorname{pyr} \circ
+      \sigma_{\tau}
+    \right)
+    \left( C \right).
+\]
+Then $h_C\left(\left(1,2,\ldots,n,1\right)\right) = \operatorname{pyr}\left(C\right)$.
+Since $\left(1,2,\ldots,n,1\right)$ is a pyramidal tour,
+\[
+  \operatorname{len} \circ h_C \leq \operatorname{len}
+\]
+holds everywhere.
+In this way, iterating from $\left(1,2,\ldots,n,1\right)$ to a fixed point of $h_C$ yields a
+local search heuristic.
+
+It had been shown \cite{belperm} that we can significantly improve on this by enhancing
+$\operatorname{pyr}$ to choose from $n$ shortest pyramidal tours obtained by applying
+cyclic permutations to initial node ordering.
+
+\subsection{Four point conditions exponential neighbourhoods}
+
+\subsection{Strongly balanced tours}
+
+\annotation{Balanced tours interesting?}
+Another class of sTSP is the {\em Relaxed Supnick TSP} \/(RS-TSP), which is
+obtained by restricting considered instances via a simple four-point
+condition:
+\[
+  c_{ik} + c_{jl} \leq c_{il} + c_{jk} \quad \forall \; 1 \leq i < j < k < l \leq n,
+\]
+where $\left(c_{ij}\right)$ is the distance matrix.
+
+While it has been shown that RS-TSP is NP-hard, an exponential subset of
+said problem which is polynomially solvable has also been found.  Herein we
+present first implementation of the solution, which bears distinct similarity
+to pyramidal TSP.
+
+\annotation{Add supplementary pictures/explanation.}
+We shall define our neighbourhood through explicit tour construction.  For brevity,
+let $\left[a,b\right]$ describe a (simple) path $\left<a,\ldots,b\right>$.
+\begin{define}[Strongly Balanced Tour]
+  Consider following family of path sets:
+  \begin{itemize}
+    \item $\mathcal T_1 = \left\{\left<1\right>\right\};$
+    \item $\mathcal T_n = \bigcup_{\tau \in \mathcal T_{n-1}}
+      \left(
+      \left\{
+          \operatorname{add}\left(\tau,n\right),
+          \operatorname{app}\left(\tau,n\right)
+      \right\} \cup
+      \operatorname{merge}\left(\tau,n\right)
+      \right)
+    $
+    where
+    \begin{align*}
+      \operatorname{add}\left(\tau,n\right) = & \; \tau \cup \left\{\left<n\right>\right\}; \\
+      \operatorname{app}\left(\tau,n\right) = & \;
+        \tau \setminus \left\{\left[a_1,a_2\right]\right\}
+        \cup \left\{\left<n\right>\oplus\left[a_1,a_2\right]\right\} \\
+        & \; \text{for} \; \tau = \left\{ \left[a_i,a_{i+1}\right] \right\}_{i \in I}
+        \text{and} \; a_1 = \min_{k \in I \cup 1+I}\left\{a_k\right\}, \\
+      \operatorname{merge}\left(\tau,n\right) = & \;
+        \left\{
+          \tau \setminus \left\{\left[a_1,a_2\right],\left[a_3,a_4\right]\right\}
+          \cup \left\{\left[a_2,a_1\right]\oplus\left<n\right>\oplus\left[a_3,a_4\right]\right\}
+        \right\} \\
+        & \; \text{for} \; \tau, a_1 \; \text{as above,}
+          \; a_3 = \min_{\substack{k \in I \cup 1+I\\\ k \neq 1, k \neq 2}}\left\{a_k\right\}.
+    \end{align*}
+    Here multiple appearances of $[.,.]$ notation with same indexes refer to same paths.
+    Also note how $\operatorname{merge}\left(\tau,n\right)$ is empty if there is no $a_3$
+    satisfying the constraints.
+
+  \end{itemize}
+  An element of $\mathcal T_n$ is said to be {\bfseries strongly balanced}.
+  A tour $\left<k_1,\ldots,k_n,k_1\right>$ is said to be {\bfseries strongly balanced} if
+  $\left<k_1,\ldots,k_n\right> \in {\mathcal T}_n$.
+\end{define}
+
+\subsubsection{Strongly balanced tours and linear time}
+
+\annotation{Interesting?}
+It can subsequently be shown that the set of strongly balanced tours contains optimal solution
+to TSP restricted to Relaxed Supnick matrices which additionaly satisfy
+\[
+  c_{il} + c_{jk} + c_{km} \geq c_{ik} + c_{jm} + c_{kl}
+  \quad \forall i < j < k < l < m
+\]
+and that this condition can be checked in quadratic time.
+
+\annotation{Details?}
+If we further restrict this set by
+\[
+  c_{ji} + c_{kl} \leq c_{jl} + c_{ki} \quad \forall i<j, \; j+h \leq k < l
+\]
+for a given constant $h$, then we can show that the optimum can be found
+amongst balanced tours for which number of paths of each element of $\mathcal T$
+does not exceed $h/2 + 1$, and for such families size of ${\mathcal T}_n$ is bounded
+by a constant for given $h$ \cite{fpneighb,fpclass}.
+
+Number of unique node types, which presents upper bound for tree width, can
+be seen in \autoref{tbl:nodeTypes}.  A breadth-first search implementation
+could be used to naturally compute the tree width.
+
+\annotation{Show how number of tours is $\Omega(2^n)$.}
+Noting how the definition of strongly balanced tours naturally
+yields a dynamic programming recursion, this results in a linear time
+solution for the given exponential neighbourhood.
 
 \setlength{\aboverulesep}{0pt}
 \setlength{\belowrulesep}{0pt}
@@ -275,11 +583,8 @@
 \setlength{\extrarowheight}{1.1ex}
 \newcolumntype{g}{>{\columncolor{Gray}}c}
 
-%\begin{table}[hpb]
-\begin{figure}[htbp]
+\begin{table}[htpb]
 \centering
-  \null\hfill%
-  \subfloat[numbers]{%
     \mbox{%
       \pgfplotstabletypeset[
         col sep=space,
@@ -298,75 +603,209 @@
           column type={r}
         },
         display columns/2/.style={%
-          column name={\bfseries Stable at size},
+          column name={\bfseries Stable at depth},
           column type={g}
         },
         every last row/.style={after row=\bottomrule},
         %multicolumn names,
       ]{../plot/data/num\string_types.csv}%
     }
-  }
-  \hfill\null
-\caption{Node types encountered.}%
-\label{fig:nodeTypes}%
-%\end{table}
+\caption{Number of node types encountered.  This seems to closely reflect the tree width -- and thus runtime -- growth.}%
+\label{tbl:nodeTypes}%
+\end{table}
+
+\begin{figure}[htbp]
+\makebox[\textwidth][c]{%
+  \includegraphics[width=1.21\textwidth]{../plot/build/trace_bal.pdf}
+}
+\caption{%
+  A trace of our implementation's strongly balanced search graph traversal over $K_8$.  Here, maximum node size is 2.
+}
 \end{figure}
+
+\subsubsection{Local search heuristics}
+
+Having constructed a linear solution to an exponential problem class, quite
+naturally the question arises whether this would constitute a good heuristic
+in general case.
+\annotation{Check: $\mu$ prepended or appended?}
+To try and answer this, we have taken the same path as in pyramidal case.
+Note that to account for strongly balanced tours structure, we have to
+\begin{itemize}
+  \item replace $\sigma_\tau$ by $\sigma_\tau \circ \sigma_\mu$
+        in fixed point iteration, where $\mu = \left<\ldots,5,3,1,2,4,\ldots\right> \in S_n$;
+  \item also apply $\mu$ (we also added $\mu$ mirrored)
+        before considering cyclic permutations while also considering the identity permutation.
+\end{itemize}
+
+Results of our experiments are presented in next section
+(where {\em adaptive search} \/refers to number of considered permutations growing at stale iterations
+and {\em flipflop search} \/refers to alterating between pyramidal and strongly balanced search in each iteration).
+
+\clearpage
+\dictum[Donald Knuth]{You’re bound to be unhappy if you optimize everything.}
+%\dictum[Edward V Berard]{Walking on water and developing software from a specification are easy if both are frozen.}
+\section{Implementation}
+
+\subsection{Brief overview}
+\annotation{TODO}
+
+Written in {\ttfamily Standard ML}.
+Usable via SML REPL, standalone executable or shared library.
+Tested under multiple software (see \autoref{app:compiler}) and OS/hardware platforms --
+Linux (amd64) and Windows (x86) (MinGW-crosscompiled).
+
+\annotation{Tradeoff illustration: provide LOC count?}
+General dynamic programming results implementation via search graph traversal (simple depth-first search),
+making a tradeoff between performance and extendibility.
+BFS could be somewhat faster, but for our research dfs is enough.
+Memoization via hash tables.
+
+\annotation{Can we rename repo?}
+This project's sources are available
+\href{https://bitbucket.org/mad_hatter/rstsp/}{online}\footnote{\url{https://bitbucket.org/mad_hatter/rstsp/}}.
+
+\subsection{Runtime behaviour}
+\annotation{TODO}
+\annotation{Describe \autoref{fig:benchRAND}.}
+
+Clearly pronounced linear runtime for str.~balanced search, apparently heavy overhead penalty.
+Pyramidal faster but str.~balanced eventually takes over.
+See \autoref{fig:benchRAND}.
+Memory usage not seriously measured, since bottleneck here is runtime.
 
 \begin{figure}[htbp]
 \null\hfill%
 \subfloat[higher node sizes]{%
-  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_low.pdf}
+  \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_low.pdf}
 }\hfill\null
 \null\hfill%
 \subfloat[medium node sizes]{%
-  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_fast.pdf}
+  \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_fast.pdf}
 }\hfill\null\\
 \null\hfill%
 \subfloat[low node sizes]{%
-  \includegraphics[width=0.59\textwidth]{../plot/out/mlton_time_random_steady.pdf}
+  \includegraphics[width=0.59\textwidth]{../plot/build/mlton_time_random_steady.pdf}
 }\hfill\null\\
 \null\hfill%
-\subfloat[pyramidal vs balanced/m3]{%
-  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_med.pdf}
+\subfloat[pyramidal vs str.~balanced/m3]{%
+  \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_med.pdf}
 }\hfill\null
 \null\hfill%
-\subfloat[pyramidal vs balanced/m4]{%
-  \includegraphics[width=0.49\textwidth]{../plot/out/mlton_time_random_hi.pdf}
+\subfloat[pyramidal vs str.~balanced/m4]{%
+  \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_hi.pdf}
 }
 \hfill\null
-\caption{Single traversal running times (Linux 3.10.17 x86\_64 @ i5-2520M).}
-\label{fig:timeGraph}
+\caption{Single traversal running times (Linux 3.10.17 ({\ttfamily x86\_64}) @ i5-2520M).}
+\label{fig:benchRAND}
 \end{figure}
+
+\subsection{Tour benchmarks}
+
+\annotation{TODO}
+Describe results, add Relaxed Supnick matrices benchmarks (!),
+prettier (also, split) histograms?, plot iterations behavior? -- see \autoref{fig:benchTSPLIB}.
+
+In what limited testing we have done, pyramidal still performs better.
+
+For str.~balanced: adaptive search seems to perform better
+than always choosing from $2n+1$ specific permutations.
 
 \begin{figure}[htbp]
 \null\hfill%
 \subfloat[random --- tour length]{%
-  \includegraphics[width=0.69\textwidth]{../plot/out/random_val.pdf}
+  \includegraphics[width=0.69\textwidth]{../plot/build/random_val.pdf}
 }\hfill\null\\
 \null\hfill%
-\subfloat[tsplib --- tour quality]{%
-  \includegraphics[width=0.69\textwidth]{../plot/out/tsplib_val.pdf}
+\subfloat[tsplib \& vlsi --- tour quality]{%
+  \includegraphics[width=0.69\textwidth]{../plot/build/tsplib_val.pdf}
 }\hfill\null\\
 \null\hfill%
-\subfloat[tsplib --- time needed]{%
-  \includegraphics[width=0.69\textwidth]{../plot/out/tsplib_time.pdf}
+\subfloat[tsplib \& vlsi --- time needed]{%
+  \includegraphics[width=0.69\textwidth]{../plot/build/tsplib_time.pdf}
 }\hfill\null
 \caption{Benchmarks --- small instances.}
-\label{fig:timeGraph}
+\label{fig:benchTSPLIB}
 \end{figure}
 
 \clearpage
+\dictum[Arthur Bloch]{Enough research will tend to support your conclusions.}
+\section{Conclusions}
+
+\subsection{Results obtained}
+\annotation{TODO}
+First implementation of str.~balanced search.
+Some benchmarks.
+Preprocessing offers no gain.
+
+\begin{figure}[htbp]
+%\begin{wrapfigure}{r}{0.5\textwidth}
+\centering
+\includegraphics[width=0.54\textwidth]{./tsp.png}
+\caption*{\captionsize Source: \small \url{https://xkcd.com/399/}.}
+%\end{wrapfigure}
+\end{figure}
+
+\subsection{Areas for further research}
+\annotation{TODO}
+
+Are these heuristics better for aTSP\@?
+Untested: other metrics or higher dimensions, dedicated implementations' performance.
+Further heuristics combinations.
+Branch cutting.
+Different permutations set for str.~balanced tours?
+
+\subsection{Dynamic programming algorithms and concurrency}
+\annotation{TODO}
+
+Dedicated implementations (pyramidal: bottom up easy) fast, but not always feasible (str.~balanced: machine-generated).
+Naive concurrency (see the {\ttfamily experimental} code) not easily applicable in general case (dense search tree).
+Potentially fruitful approaches: tuple spaces, message passing languages, etc
+(PolyML/Linda?, manticore, jocaml, mythryl, aliceml, clojure/clotilde, scala/akka, $\ldots$).
+
+%\input{problem1.tex}
+
+%\appendix
+%\addcontentsline{toc}{chapter}{Appendices}
+%\makeatletter
+%\addtocontents{toc}{\let\protect\l@chapter\protect\l@section}
+%\makeatother
+%\chapter{First Appendix}
+%\chapter{Second Appendix}
+
+\clearpage
 \begin{appendices}
-\section{Platform/Compiler Support}
-%\clearpage
+
+\makeatletter
+\addtocontents{toc}{\let\protect\l@chapter\protect\l@section}
+\makeatother
+
+%\section{Code Index}
+%\lstlistoflistings%
+
+\section{Recursion and Time Complexity}
+
+\section{Sample SML REPL Session}
+
+\section{Compiler Support}
+\label{app:compiler}
+\input{sml-support.tex}
+
 \section{Shared Library Interface}
-%\label{app:p1code}
-%\input{problem1app.tex}
-\section{Code Index}
-\lstlistoflistings%
-\section{References}
-\printbibliography%
+\label{app:so}
+
+\needspace{5\baselineskip}
+\mylisting[
+  caption={[FFI usage example]FFI usage example.},
+  firstline=8,fontadjust,language=C,
+  label=lst:so]{../src/rstsp/librstsp/test.c}
+
+%\input{testapp.tex}
+
 \end{appendices}
+
+%\printindex
+\printbibliography%
 
 \end{document}
 

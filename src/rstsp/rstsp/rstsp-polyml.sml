@@ -7,6 +7,7 @@
 
 use "rstsp/rstsp-polyml-common.sml";
 use "main/defaultsearches.sml";
+use "main/trampsearches.sml";
 use "main/settings.sig";
 use "main/main.sml";
 

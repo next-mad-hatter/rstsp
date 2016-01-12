@@ -51,7 +51,7 @@ struct
             | SOME (new_len,r) =>
                 let
                   val t = (if iter mod 2 = 0 then P.Search'.tourToVector else P.Search''.tourToVector) (r ())
-                  val _ = U.printErr (if iter mod 2 = 0 then "Flip:  " else "Flop:  ")
+                  val _ = U.printErr (if iter mod 2 = 0 then "Flop:  " else "Flip:  ")
                   val _ = U.printErr (Len.toString new_len)
                   val _ = U.printErr "\n"
                   fun lu iter = lookup (if iter mod 2 = 0 then P.inv_order' else P.inv_order'')

@@ -1,0 +1,593 @@
+%
+% $Author$
+% $File$
+% $Date$
+% $Revision$
+%
+
+\documentclass[
+  size=10pt,
+%%  style=paintings,
+  style=klope,
+%%  style=jefka,
+%%  style=aggie,
+  paper=screen,
+%%  orient=portrait,
+%%  mode=handout,
+%%  display=slidesnotes,
+  pauseslide,
+  nopagebreaks,
+  hlsections,
+  fleqn
+]{powerdot}
+
+%% paintings palettes: Syndics (the default), Skater , GoldenGate , Lamentation , HolyWood , Europa , Moitessier , MayThird , PearlEarring and Charon
+%% klope palettes: Spring , PastelFlower , BlueWater and BlackWhite
+%% jefka palettes: brown (the default), seagreen , blue and white
+%\pdsetup{palette=BlackWhite}
+%\pdsetup{palette=white}
+
+\pdsetup{
+  itemize={labelsep=0.2cm},
+  lf=two exponential neighbourhoods,
+%%  rf=why not,
+  trans=Wipe,
+  theslide=slide~\arabic{slide},
+  list={itemsep=6pt}
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+%\usepackage[T1]{fontenc}
+%\usepackage[T2A]{fontenc}
+%\usepackage{microtype}
+
+%\usepackage{fix-cm}
+%\usepackage{lmodern}
+%\usepackage{mathdesign}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\usepackage{commath}
+\usepackage{mathtools}
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+%% possible with powerdot?
+%\usepackage{wrapfig}
+%\usepackage{floatflt}
+\usepackage{xcolor}
+\usepackage{siunitx}
+\usepackage{booktabs}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\let\defstyle\itshape
+\definecolor{red}{rgb}{0.5,0.1,0}
+\def\todo{\color{red}}
+% FIXME: automate?
+\def\eqitspace{\vspace{-5mm}}
+
+\title{Two Exponential Neighbourhoods}
+\newcommand{\mailto}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
+\author{Maksym~Deineko \\ {\small \mailto{max.deineko@gmail.com} }}
+
+\begin{document}
+
+\maketitle
+
+\section[template=wideslide,tocsection=false,slide=false]{Overview}
+
+\begin{slide}[toc=,bm=]{Overview}
+\tableofcontents[content=all,type=1]
+\end{slide}
+
+\section[template=wideslide]{Introduction}
+
+\begin{slide}[toc=]{Paths and Cities}
+\begin{itemize}
+  \item
+  Cities:
+  \begin{equation}
+    %\text{Cities:} \quad
+    \mathcal{N} \coloneqq \mathcal{N}_n \coloneqq \left\{1,\ldots,n\right\}
+    \quad (n \in \mathbb{N}).
+  \end{equation}%\pause
+  \eqitspace
+  \item
+  Paths:
+  \begin{equation}
+    %\text{Paths:} \quad
+    \left(p_1,p_2,\ldots,p_m\right) \in \bigcup_{k \in \mathbb{N}}\mathcal{N}^k
+    \eqqcolon \mathcal{P}_n \;(\text{{\todo TODO: }vs ,,} \mathcal{P}_\mathcal{N}\text{''?}) %\supseteq \mathcal{T}_n.
+    %\quad \text{(length, end points, simple, open, closed)}
+  \end{equation}%\pause
+   (length, end points, simple, open, closed).
+  \item
+  Path concatenation:
+  \begin{equation}
+    \oplus: {\left( \mathcal{P}_n \cup 2^{\mathcal{P}_n} \right)}^2 \to \mathcal{P}_n \cup 2^{\mathcal{P}_n}
+  \end{equation}%\pause
+  (for paths: common definition, for sets: element-wise).
+\end{itemize}
+\end{slide}
+
+\begin{slide}[toc=]{Costs and Tours}
+\begin{itemize}
+  \item
+  Cost matrix:
+  \begin{equation}
+    C = \left(c_{ij}\right) \in~\mathbb{R}^{n \times n},
+    \quad n \in \mathbb{N} \left(n \geq 2\right).
+  \end{equation}
+  \eqitspace
+  \item
+  Path cost:
+  \begin{equation}
+    \mathfrak{w}_C: \bigcup_{k \in \mathbb{N}, k \geq 2}\mathcal{N}^k \to \mathbb{R}, \quad
+    \left(p_1,p_2,\ldots,p_m\right) \mapsto \sum_{k=1}^{m-1} c_{p_k p_{k+1}}.
+  \end{equation}
+  \eqitspace
+  \item
+  Tours: $\mathcal{P}_n \supset \mathcal{T}_n \sim \mathcal{S}_n$ (via fixed starting city).
+  \item
+  Associated permutation:
+  \begin{equation}
+  \tau = \left(p_1, p_2, \ldots, p_n, p_1 \right)
+  \; \sim \;
+  \mathfrak{s}_\tau \coloneqq
+  \begin{pmatrix}
+    1 & 2 & \cdots & n \\
+    p_1 & p_2 & \cdots &  p_n
+  \end{pmatrix}.
+  \end{equation}
+\end{itemize}
+\end{slide}
+
+\begin{slide}{Traveling Salesman Problem}
+\begin{itemize}
+  \item
+  Traveling Salesman Problem:
+  \begin{equation}
+    \operatorname{TSP}_{M,T}: M \to T, \quad
+    C \mapsto \argmin_{\tau \in T} \mathfrak{w}_C\left(\tau\right)
+    \qquad \text{for} \; M \subseteq~\mathbb{R}^{n \times n}, T \subseteq \mathcal{T}_n.
+  \end{equation}
+  \eqitspace
+  \item
+  Variations:
+  \begin{itemize}
+  \item return cost along with (instead of) tour;
+  \item $M, T$ as maps from $\mathbb{N}$;
+  \item (s)TSP vs (a)TSP;
+  \item here: $c_{ij} \geq 0$;
+  \item $\mathcal{S}_n$ vs $\mathcal{T}_n$.
+  \end{itemize}
+  \item
+  Classes/cases: restrictions to subsets of $(\mathbb{R}^{n \times n}, \mathcal{T}_n)$.
+  \item
+  NP-hard in general case.
+\end{itemize}
+\end{slide}
+
+\begin{slide}{Exponential Neighbourhoods}
+\begin{itemize}
+  \item
+  Neighbourhood:
+  \begin{equation}
+    F: \mathcal{T}_n \to 2^{\mathcal{T}_n};
+  \end{equation}
+  exponential neighbourhood:
+  $\left\vert F(\tau) \right\vert = \Omega(2^n) \qquad \forall \tau \in \mathcal{T}_n$.
+  %\end{equation}
+  \item
+  Local Search:
+  \begin{equation}
+    l: \tau \mapsto \operatorname{TSP}_{M,F(\tau)};
+    \qquad \text{(sometimes: anytime heuristic)}.
+  \end{equation}
+  \eqitspace
+  \item
+  Iterative Local Search:
+  \begin{align}
+    \text{compute fixed point of}
+    \quad
+    \tau \mapsto
+    \begin{cases}
+      \tau \quad & \text{if} \; \mathfrak{w}\left(l\left(\tau\right)\right) = \mathfrak{w}\left(\tau\right),
+      \\
+      l\left(\tau\right) & \text{otherwise};
+    \end{cases}
+  \end{align}
+  termination conditions may vary.
+  \item
+  {\todo TODO:} illustrate?
+\end{itemize}
+\end{slide}
+
+\begin{slide}[toc=,bm=]{Overview}
+\tableofcontents[content=currentsection,type=1]
+\end{slide}
+
+\section[template=wideslide]{Theory}
+
+\begin{slide}[toc=Pyramidal Tours]{Motivation: Pyramidal Tours}
+\begin{itemize}
+  \item
+  Pyramidal path:
+  \begin{align}
+  \left( p_1, \ldots, p_k, q_1, \ldots, q_m \right) \quad \text{s.t.} \quad
+  \begin{cases}
+  k+m \geq 1, & \\
+  p_i < p_{i+1} \; & \forall i \in \mathcal{N}_{k-1},\\
+  q_j > q_{j+1} \; & \forall j \in \mathcal{N}_{m-1}.
+  \end{cases}
+  \end{align}
+  %\eqitspace
+  \item
+  Neighbourhood $\operatorname{Pyr}\left(\tau\right):$
+  tours associated with of $\mathfrak{s}_\pi \circ \mathfrak{s}_\tau$
+  for all pyramidal tours $\pi$.
+  \begin{figure}[H]
+    \centering
+    %\includegraphics[width=0.49\textwidth]{../plot/build/pyr.1}
+    \includegraphics[width=0.54\textwidth]{../plot/build/pyr.2}
+    \caption{%
+      Connected plot of $\mathfrak{s}_\pi$'s
+      (acting on $\pi$)
+      graph resembles a pyramid
+      for a pyramidal $\pi$.
+    }
+  \end{figure}
+\end{itemize}
+\end{slide}
+
+\begin{slide}[toc=]{Pyramidal Tours: Recurse!}
+%  \begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.34\textwidth]{../plot/build/pyr.2}
+%    \caption{TODO: elaborate.}
+%  \end{figure}
+\begin{itemize}
+  \item
+  %All pyramidal tours:
+  %\begin{equation}
+  %  42.
+  %\end{equation}
+  %\item
+  Dynamic programming ({\todo TODO:} illustrate/blackboard?):
+  \begin{align}
+    \Phi_C\left(i,j\right) \coloneqq \; & \text{minimum cost pyramidal path} \left(i,p_1,\ldots,p_m,j\right) \\
+    \text{s.t.} \; & \left\{ p_1,\ldots,p_m \right\} = \left\{ k,\ldots,n \right\}
+    \text{with} \; k = \max\left\{i,j\right\}+1.
+  \end{align}
+  \eqitspace
+  \item
+  It then follows:
+    \begin{align}
+    \Phi_C\left(i,n\right) \; = \; & \left(i,n\right), \quad \forall i \in \mathcal{N};
+    \\
+    \Phi_C\left(n,j\right) \; = \; & \left(n,j\right) \quad \forall j \in \mathcal{N};
+    \\
+    \Phi_C\left(i,j\right) \; = \; & \argmin_{\tau \in \left\{\tau\prime, \tau\prime\prime\right\}}
+    \mathfrak{w}_C\left(\tau\right)
+    \quad \text{for} \; i,j < n \quad \text{with}
+    \\
+    & \tau\prime \; = \; \left(i\right) \oplus \Phi\left(k,j\right),
+    \;
+    \tau\prime\prime \; = \; \Phi\left(i,k\right) \oplus \left(j\right),
+    \\
+    & k = \max\left\{i,j\right\}+1;
+    \\
+    \Phi_C\left(1,1\right) \; = \; &
+    \operatorname{TSP}_{\mathbb{R}^{n \times n},\operatorname{Pyr\left(1,2,\ldots,n,1\right)}}\left(C\right).
+    \end{align}
+    {\todo TODO:} organize better / remove altogether?
+\end{itemize}
+\end{slide}
+
+\begin{slide}[toc=]{Pyramidal Tours: Recursion Graph}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.80\textwidth]{../plot/build/trace_apyr.eps}
+    \caption{Pyramidal aTSP: recursion graph.}
+  \end{figure}
+\end{slide}
+
+% FIXME: how to escape comma?
+\begin{slide}[toc=Dynamic Programming${,}$ Recursion and Time Complexity]{Pyramidal Tours: Quadratic Time}
+  %\begin{figure}
+  %  %\centering
+  %  \includegraphics[width=0.20\textwidth]{../plot/build/trace_apyr.eps}
+  %  \caption{Pyramidal aTSP: recursion graph.}
+  %\end{figure}
+  \begin{itemize}
+  \item
+  Dynamic programming solution $\rightarrow$ DFS.
+  \item
+  Quadratic time assuming:
+  \begin{itemize}
+    \item memoization: add subset of $\Phi$'s graph to its arguments and result;
+    \item constant time memory access (practice: good hash not always obvious);
+    \item constant time tour construction;
+    \item constant time tour comparison (compute cost in $\Phi$).
+  \end{itemize}
+  \item
+  BFS: linear space overhead.
+  \item
+  Bottom-up computation:
+  \begin{itemize}
+    \item
+    none better asymptotically;
+    \item
+    referential transparency becomes bulky $\rightarrow$ error-prone;
+    \item
+    not always feasible (see next section).
+  \end{itemize}
+  \end{itemize}
+\end{slide}
+
+\begin{slide}[toc=]{Pyramidal Tours: Local Search}
+  \begin{itemize}
+  \item
+    Local Search: extend neighbourhood via circular permutations:
+    \begin{equation}
+      \operatorname{Pyr}\left(\tau\right)
+      \quad \Rightarrow \quad
+      \bigcup_{\sigma \in \left<\sigma^\ast\right>}\sigma\left(\operatorname{Pyr}\left(\tau\right)\right),
+      \quad \sigma^\ast = \left(1\;2\;\cdots\;n\right).
+    \end{equation}
+  \eqitspace
+  \item
+  {\todo TODO:} illustrate?
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{Strongly Balanced Tours}
+  \begin{itemize}
+  \item
+  {\todo TODO:} mention four point conditions, pyramidal and balanced tours.
+  \item
+  Relaxed Supnick TSP: NP-hard.
+  \item
+  Strongly Balanced Tours:
+    \begin{itemize}
+    \item symmetric TSP;
+    \item exponential subset of RS-TSP;
+    \item polynomially solvable;
+    \item first implementation: herein.
+    \end{itemize}
+  \end{itemize}
+\end{slide}
+
+\begin{slide}[toc=]{S.\ B.\ Tours: Construction}
+  \begin{itemize}
+    \item
+    Partial path: set of (unoriented) paths $[a,b] = \left(a,\ldots,b\right)$.
+    \item
+    Recursive construction:
+    \begin{align}
+      \mathcal{B}_1 = & \left\{\left(1\right)\right\};
+      \\
+      \mathcal{B}_m = & \bigcup_{\tau \in \mathcal{B}_{m-1}}
+        \left(
+        \left\{
+            \operatorname{add}\left(\tau,m\right),
+            \operatorname{append}\left(\tau,m\right)
+        \right\} \cup
+        \operatorname{merge}\left(\tau,m\right)
+        \right)
+    \end{align}
+    %where
+    %\begin{align}
+    %  \operatorname{add}\left(\tau,m\right) = & \; \tau \cup \left\{\left(m\right)\right\}; \\
+    %  \operatorname{append}\left(\tau,m\right) = & \;
+    %    \tau \setminus \left\{\left[m_1,m_2\right]\right\}
+    %    \cup \left\{\left(m\right)\oplus\left[m_1,m_2\right]\right\} \\
+    %    & \; \text{for} \; \tau = \left\{ \left[m_i,m_{i+1}\right] \right\}_{i \in I}
+    %    \text{and} \; m_1 = \min_{k \in I \cup 1+I}\left\{m_k\right\}, \\
+    %  \operatorname{merge}\left(\tau,n\right) = & \;
+    %    \left\{
+    %      \tau \setminus \left\{\left[m_1,m_2\right],\left[m_3,m_4\right]\right\}
+    %      \cup \left\{\left[m_2,m_1\right]\oplus\left<n\right>\oplus\left[m_3,m_4\right]\right\}
+    %    \right\} \\
+    %    & \; \text{for} \; \tau, m_1 \; \text{as above,}
+    %      \; m_3 = \min_{\substack{k \in I \cup 1+I\\\ k \neq 1, k \neq 2}}\left\{m_k\right\}.
+    %\end{align}
+    %Here multiple appearances of $[.,.]$ notation with same indexes refer to same paths.
+    %Also note how $\operatorname{merge}\left(\tau,m\right)$ is empty if there is no $m_3$
+    %satisfying the constraints.
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.37\textwidth]{../plot/build/bal.eps}
+    \caption{%
+      {\todo TODO:} illustrate.
+    }
+  \end{figure}
+  \item
+  \end{itemize}
+\end{slide}
+
+\begin{slide}[toc=]{S.B.\ Tours: Time Complexity}
+  \begin{itemize}
+  \item
+    S.\ B.\ recursion node $N$:
+    \begin{equation}
+    \left(m \in \mathbb{N}, \;
+      \left\{ \text{(unoriented) pairs} \; [a_i,b_i] \right\} \right).
+    \end{equation}
+    % FIXME
+    \vspace{-5mm}
+  \item
+    Compute, for $N$,
+    \begin{quote}
+    {\small \itshape
+      a minimum cost set of paths through cities larger than $m$
+      which complements given intervals to a single cycle.
+    }
+    \end{quote}
+  \item
+    Number of intervals bounded $\;\Rightarrow\; \mathcal{O}\left(n^d\right)$;
+    conjecture: $\;\mathcal{O}\left(n\right)$. % (stable node set characteristic).
+    {\small
+    \begin{table}[htpb]
+    \centering
+    \begin{tabular}{cSc}
+      \toprule
+      {\bfseries Node size, $\leq$ } &
+      {\bfseries Characteristic size, $\leq$} &
+      {\bfseries Depth } \\
+      \midrule
+      %2 &     16 &  7 \\
+      3 &    121 & 13 \\
+      4 &   1074 & 20 \\
+      5 &  10387 & 28 \\
+      6 & 107176 & 37 \\
+      \bottomrule
+    \end{tabular}
+    \end{table}
+    }
+  \item
+  Local Search: good extension?
+  \end{itemize}
+\end{slide}
+
+\begin{slide}[toc=]{S.\ B.\ Tours: Recursion Graph}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{../plot/build/trace_bal.eps}
+    \caption{Strongly balanced (s)TSP: recursion graph.}
+  \end{figure}
+\end{slide}
+
+\begin{slide}[toc=,bm=]{Overview}
+\tableofcontents[content=currentsection,type=1]
+\end{slide}
+
+\section[template=wideslide]{Implementation}
+
+\begin{slide}[toc=Key Features]{Implementation: Key Features}
+  \begin{itemize}
+  \item
+  Standard ML w/ smlnj-lib.
+  \item
+  Usable via
+  \begin{itemize}
+    \item REPL;
+    \item standalone executable;
+    \item shared library.
+  \end{itemize}
+  \item
+  Tested under Linux/amd64, MinGW cross-compiled/x86.
+  %\begin{itemize}
+  %  \item Linux/amd64;
+  %  \item MinGW cross-compiled/x86;
+  %\end{itemize}
+  \item
+  Builds via MLton, Poly/ML, SML/NJ.
+  %\begin{itemize}
+  %  \item MLton;
+  %  \item Poly/ML;
+  %  \item SML/NJ.
+  %\end{itemize}
+  \item
+  Available under
+  \begin{quote}
+    \hspace{3.4em} \url{http://bitbucket.org/mad_hatter/rstsp/}.
+  \end{quote}
+  \end{itemize}
+\end{slide}
+
+% TODO: use onslide?
+\begin{slide}[toc=Running Time]{Running Time: Steady Set}
+  \begin{figure}[H]
+    \centering
+      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_steady.ps}
+  \end{figure}
+\end{slide}
+\begin{slide}[toc=]{Running Time: Fast Set}
+  \begin{figure}[H]
+    \centering
+      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_fast.ps}
+  \end{figure}
+\end{slide}
+\begin{slide}[toc=]{Pyramidal vs S.\ B.\ Time}
+  \begin{figure}[H]
+    \centering
+      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_low.ps}
+  \end{figure}
+\end{slide}
+\begin{slide}[toc=]{Pyramidal vs S.\ B.\ Time}
+  \begin{figure}[H]
+    \centering
+      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_med.ps}
+  \end{figure}
+\end{slide}
+\begin{slide}[toc=]{Pyramidal vs S.\ B.\ Time}
+  \begin{figure}[H]
+    \centering
+      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_hi.ps}
+  \end{figure}
+\end{slide}
+
+\begin{slide}[toc=Tours Computed]{Synthetic Results}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.86\textwidth]{../plot/build/random_val.ps}
+  \end{figure}
+\end{slide}
+
+\begin{slide}[toc=]{TSPLIB Results}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.86\textwidth]{../plot/build/tsplib_val.ps}
+    \caption{{\todo TODO:} readable boxplot with outliers, convergence speed?}
+  \end{figure}
+\end{slide}
+
+\section[template=wideslide]{Conclusions}
+
+\begin{slide}[toc=Recap]{Recap}
+\tableofcontents[content=all,type=0]
+\end{slide}
+
+\begin{slide}{Areas for Further Research}
+{\small
+
+  \begin{itemize}
+  \item
+  Open Tasks:
+    \begin{itemize}
+    \item implement BFS;
+    \item generate \& benchmark RS-TSP instances.
+    \end{itemize}
+  \item
+  Open Questions:
+    \begin{itemize}
+    \item better LS extension for S.\ B. tours;
+    \item combine with other neighbourhoods / starting tours?
+    \item other metrics?
+    \item pyramidal search: test on aTSP;
+    \item \ldots
+    \end{itemize}
+  \item
+  Concurrency and Computation Models:
+    \begin{itemize}
+    \item tuple spaces (Linda, Clotilde, \ldots)
+    \item lightweight (a)syncronous models (Mythryl, Clojure, Erlang, AliceML \ldots)
+    \item \ldots
+    \end{itemize}
+  \end{itemize}
+
+}
+\end{slide}
+
+%\begin{note}{Note}
+%  Some note.
+%\end{note}
+
+\section[template=wideslide]{Your Questions}
+
+\end{document}
+\endinput

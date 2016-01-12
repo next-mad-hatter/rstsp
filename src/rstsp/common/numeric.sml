@@ -15,8 +15,10 @@ sig
   val + : num * num -> num
   val zero : num
   val compare : num * num -> order
-  val toString : num -> string
+  val fromInt : int -> num
   val toInt : num -> int
+  val fromString : string -> num option
+  val toString : num -> string
 end
 
 (**
@@ -29,16 +31,20 @@ struct
   val op+ = Real.+
   val zero = 0.0
   val compare = Real.compare
-  val toString = Real.toString
+  val fromInt = Real.fromInt
   val toInt = Real.floor
+  val fromString = Real.fromString
+  val toString = Real.toString
 end
 
-structure WordNum : NUMERIC =
+structure IntNum : NUMERIC =
 struct
-  type num = Word.word
-  val op+ = Word.+
-  val zero = 0w0
-  val compare = Word.compare
-  val toString = Utils.wordToString
-  val toInt = Word.toInt
+  type num = IntInf.int
+  val op+ = IntInf.+
+  val zero = IntInf.fromInt 0
+  val compare = IntInf.compare
+  val fromInt = IntInf.fromInt
+  val toInt = IntInf.toInt
+  val fromString = IntInf.fromString
+  val toString = IntInf.toString
 end

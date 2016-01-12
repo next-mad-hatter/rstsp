@@ -20,6 +20,8 @@ sig
    *   * word option        : if SOME: starting rotations number for adaptive search, in NONE: no adaptive search
    *   * word option        : rotations limit
    *   * IntInf.int option  : flipflops limit
+   *   * string option      : input tour file
+   *   * string option      : output tour file
    *   * string list        : filenames
    *  ) option              : in case of bad args
    *
@@ -30,6 +32,7 @@ sig
                         bool * word option *
                         IntInf.int option * IntInf.int option *
                         word option * word option * IntInf.int option *
+                        string option * string option *
                         string list) option
 
 end
@@ -47,7 +50,11 @@ struct
 
   exception Usage
 
-  datatype expect = ANY | ALGO | LOG | MAX_NODE_SIZE | MAX_ITERS | STALE_THRESH | MIN_ROT | MAX_ROT | MAX_FLIPS
+  datatype expect = ANY | ALGO | LOG | MAX_NODE_SIZE
+                  | MAX_ITERS | STALE_THRESH
+                  | MIN_ROT | MAX_ROT
+                  | MAX_FLIPS
+                  | TOUR_IN_FILE | TOUR_OUT_FILE
 
   fun expect "-t" = ALGO
     | expect "--type" = ALGO
@@ -65,6 +72,10 @@ struct
     | expect "--adaptve" = MIN_ROT
     | expect "-f" = MAX_FLIPS
     | expect "--flips" = MAX_FLIPS
+    | expect "-s" = TOUR_IN_FILE
+    | expect "--start" = TOUR_IN_FILE
+    | expect "-o" = TOUR_OUT_FILE
+    | expect "--out" = TOUR_OUT_FILE
     | expect _ = ANY
 
   fun printUsage cmd_name = (
@@ -94,11 +105,17 @@ struct
     print "\n";
     print "    -f|--flips num :  combine adaptive balanced search with iterative pyramidal search,\n";
     print "                      limiting flipflops by given number, zero for unlimited\n";
+    print "                      (number of pyramidal iterations will be limited by common limit\n";
+    print "                       as well as balanced permutations limit)\n";
     print "\n";
     print "    -l|--log file  :  if specified, traversal trace (in dot format)\n";
     print "                      will be written to the file -- only valid for single traversals\n";
     print "\n";
     print "    -v|--verbose   :  print additional info (such as store statistics)\n";
+    print "\n";
+    print "   -s|--start file :  read starting tour from given file\n";
+    print "\n";
+    print "    -o|--out file  :  write found tour to given file\n";
     print "\n";
     print "    --             :  options terminator\n";
     print "\n";
@@ -112,7 +129,7 @@ struct
 
     fun read_next expects opts args =
     let
-      val (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, files) = opts
+      val (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files) = opts
     in
       case expects of
         ALGO =>
@@ -120,8 +137,8 @@ struct
           val new_opts =
             case (String.isPrefix (hd args) "pyramidal",
                   String.isPrefix (hd args) "balanced") of
-              (true,_) => (verbose, log, true, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, files)
-            | (_,true) => (verbose, log, false, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, files)
+              (true,_) => (verbose, log, true, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files)
+            | (_,true) => (verbose, log, false, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files)
             | _ => raise Fail ("unknown algorithm: " ^ hd args)
         in
           read_next ANY new_opts (tl args)
@@ -130,7 +147,7 @@ struct
         let
           val new_opts =
             case log of
-              NONE => (verbose, SOME (hd args), pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, files)
+              NONE => (verbose, SOME (hd args), pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files)
             | SOME l =>
                 case l = hd args of
                   true => opts
@@ -142,8 +159,8 @@ struct
         let
           val new_opts =
             case U.wordFromString (hd args) of
-              SOME 0w0 => (verbose, log, pyr, NONE, max_iters, stale_thresh, min_rot, max_rot, max_flips, files)
-            | SOME m => (verbose, log, pyr, SOME m, max_iters, stale_thresh, min_rot, max_rot, max_flips, files)
+              SOME 0w0 => (verbose, log, pyr, NONE, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files)
+            | SOME m => (verbose, log, pyr, SOME m, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files)
             | _ => raise Fail ("invalid maximum intervals number")
         in
           read_next ANY new_opts (tl args)
@@ -155,8 +172,8 @@ struct
               SOME m =>
                 (
                   case m = IntInf.fromInt 0 of
-                    true => (verbose, log, pyr, max_node_size, NONE, stale_thresh, min_rot, max_rot, max_flips, files)
-                  | false => (verbose, log, pyr, max_node_size, SOME m, stale_thresh, min_rot, max_rot, max_flips, files)
+                    true => (verbose, log, pyr, max_node_size, NONE, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files)
+                  | false => (verbose, log, pyr, max_node_size, SOME m, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files)
                 )
             | NONE => raise Fail ("invalid maximum intervals number")
         in
@@ -169,8 +186,8 @@ struct
               SOME m =>
                 (
                   case m = IntInf.fromInt 0 of
-                    true => (verbose, log, pyr, max_node_size, max_iters, NONE, min_rot, max_rot, max_flips, files)
-                  | false => (verbose, log, pyr, max_node_size, max_iters, SOME m, min_rot, max_rot, max_flips, files)
+                    true => (verbose, log, pyr, max_node_size, max_iters, NONE, min_rot, max_rot, max_flips, in_tour, out_tour, files)
+                  | false => (verbose, log, pyr, max_node_size, max_iters, SOME m, min_rot, max_rot, max_flips, in_tour, out_tour, files)
                 )
             | NONE => raise Fail ("invalid stale intervals number")
         in
@@ -180,7 +197,7 @@ struct
         let
           val new_opts =
             case (U.wordFromString o hd) args of
-              SOME m => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, SOME m, max_rot, max_flips, files)
+              SOME m => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, SOME m, max_rot, max_flips, in_tour, out_tour, files)
             | NONE => raise Fail ("invalid adaptive rotations number")
         in
           read_next ANY new_opts (tl args)
@@ -189,9 +206,9 @@ struct
         let
           val new_opts =
             case hd args of
-              "all" => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, NONE, max_flips, files)
+              "all" => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, NONE, max_flips, in_tour, out_tour, files)
             | str => case U.wordFromString str of
-                       SOME m => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, SOME m, max_flips, files)
+                       SOME m => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, SOME m, max_flips, in_tour, out_tour, files)
                      | NONE => raise Fail ("invalid maximum rotations number")
         in
           read_next ANY new_opts (tl args)
@@ -203,10 +220,30 @@ struct
               SOME m =>
                 (
                   case m = IntInf.fromInt 0 of
-                    true => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, NONE, files)
-                  | false => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, SOME m, files)
+                    true => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, NONE, in_tour, out_tour, files)
+                  | false => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, SOME m, in_tour, out_tour, files)
                 )
             | NONE => raise Fail ("invalid flips limit")
+        in
+          read_next ANY new_opts (tl args)
+        end
+      | TOUR_IN_FILE =>
+        let
+          val new_opts =
+            case (in_tour, args) of
+              (NONE, f::_) => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, SOME f, out_tour, files)
+            | (SOME _, _) => raise Fail ("multiple input files requested")
+            | (_, []) => raise Fail ("input file name expected")
+        in
+          read_next ANY new_opts (tl args)
+        end
+      | TOUR_OUT_FILE =>
+        let
+          val new_opts =
+            case (out_tour, args) of
+              (NONE, f::_) => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, SOME f, files)
+            | (SOME _, _) => raise Fail ("multiple output files requested")
+            | (_, []) => raise Fail ("output file name expected")
         in
           read_next ANY new_opts (tl args)
         end
@@ -217,7 +254,7 @@ struct
           | ["--help"] => (printUsage cmd_name; OS.Process.exit OS.Process.success)
           | _ =>
             let
-              val (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, files) = opts
+              val (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files) = opts
             in
               case (expect (hd args), hd args) of
                 (ALGO,_) => read_next ALGO opts (tl args)
@@ -228,19 +265,21 @@ struct
               | (MIN_ROT,_) => read_next MIN_ROT opts (tl args)
               | (MAX_ROT,_) => read_next MAX_ROT opts (tl args)
               | (MAX_FLIPS,_) => read_next MAX_FLIPS opts (tl args)
-              | (_,"--") => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, files @ (tl args))
-              | (_,"-v") => read_next ANY (true, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, files) (tl args)
-              | (_,"--verbose") => read_next ANY (true, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, files) (tl args)
+              | (TOUR_IN_FILE,_) => read_next TOUR_IN_FILE opts (tl args)
+              | (TOUR_OUT_FILE,_) => read_next TOUR_OUT_FILE opts (tl args)
+              | (_,"--") => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files @ (tl args))
+              | (_,"-v") => read_next ANY (true, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files) (tl args)
+              | (_,"--verbose") => read_next ANY (true, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files) (tl args)
               | (_,"-h") => raise Usage
               | (_,"--help") => raise Usage
               | (_,f) => case String.isPrefix "-" f andalso size f > 1 of
                            true => raise Usage
-                         | _ => read_next ANY (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, files @ [f]) (tl args)
+                         | _ => read_next ANY (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files @ [f]) (tl args)
             end
     end
 
-    val res = read_next ANY (false, NONE, false, SOME 0w4, SOME (IntInf.fromInt 1), SOME (IntInf.fromInt 1), NONE, SOME 0w0, SOME (IntInf.fromInt 0), []) args
-    val _ = if #10 res = [] then raise Fail "no input files" else ()
+    val res = read_next ANY (false, NONE, false, SOME 0w4, SOME (IntInf.fromInt 1), SOME (IntInf.fromInt 1), NONE, SOME 0w0, SOME (IntInf.fromInt 0), NONE, NONE, []) args
+    val _ = if #12 res = [] then raise Fail "no input files" else ()
   in
     (SOME res)
   end

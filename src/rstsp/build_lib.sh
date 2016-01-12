@@ -45,18 +45,6 @@ mlton ${MLTON_OPTS} \
       "${SRC_DIR}"/librstsp/librstsp.mlb || exit 1
 echo "done."
 
-cd "${LIB_DIR}"
-if ! mlton ${WIN_TARGET} > /dev/null; then
-  echo " No crosscompiler found."
-else
-  echo -n " Building rstsp.dll      "
-  mlton ${MLTON_OPTS} ${WIN_TARGET} \
-        -format library -libname rstsp \
-        -output "${LIB_DIR}"/rstsp.dll \
-        "${SRC_DIR}"/librstsp/librstsp.mlb || exit 1
-  echo "done."
-fi
-
 echo -n " Building test           "
 ${LIN_GCC} \
       -I"${INC_DIR}" -L"${LIB_DIR}" \
@@ -68,4 +56,35 @@ echo
 echo " Running test:"
 env LD_LIBRARY_PATH="${LIB_DIR}" "${BUILD_DIR}"/test || exit 1
 echo
+
+cd "${LIB_DIR}"
+if ! mlton ${WIN_TARGET} > /dev/null; then
+  echo " No crosscompiler found."
+else
+  echo -n " Building rstsp.dll      "
+  mlton ${MLTON_OPTS} ${WIN_TARGET} \
+        -format library -libname rstsp \
+        -output "${LIB_DIR}"/rstsp.dll \
+        "${SRC_DIR}"/librstsp/librstsp.mlb || exit 1
+  echo "done."
+
+  echo -n " Building test.exe       "
+  ${WIN_GCC} \
+        -I"${INC_DIR}" -L"${LIB_DIR}" \
+        -o "${BUILD_DIR}"/test.exe \
+        -lrstsp \
+        "${SRC_DIR}"/librstsp/test.c || exit 1
+  echo "done."
+  echo
+
+  ## FIXME: wtf
+  #echo " Running test:"
+  #PATH="${PATH}":"${WIN_DIR}":"${LIB_DIR}"
+  #WINEDLLPATH="${WINEDLLPATH}":"${WIN_DIR}":"${LIB_DIR}"
+  #echo $PATH
+  #echo $WINEDLLPATH
+  #wine "${BUILD_DIR}"/test.exe # || exit 1
+  #echo
+fi
+
 echo "***************************************"

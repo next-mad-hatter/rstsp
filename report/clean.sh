@@ -13,6 +13,8 @@ rm -f -- *.output \
          pg_*.pdf doc_data.txt \
          *.aux *.log *.toc *.out *.lol \
          *.bcf *.bbl *.blg *.run.xml \
-         *.dvi
+         *.ind *.idx *.ilg *.ing \
+         *.dvi *.ps #\
+         #tsp.png
 #rm -f -- plots/*converted-to.png
 

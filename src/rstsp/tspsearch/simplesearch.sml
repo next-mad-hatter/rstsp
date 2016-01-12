@@ -40,7 +40,7 @@ struct
   in
     (
       fn (node, node') => log ("\"" ^ N.toString node ^ "\" -> \"" ^ N.toString node' ^ "\";\n"),
-      fn (node, tour) => log ("\"" ^ N.toString node ^ "\" [xlabel = \"" ^ T.toString tour ^ "\"]; \n"),
+      fn (node, tour) => log ("\"" ^ N.toString node ^ "\" [xlabel = \"" ^ T.toString tour ^ "\"];\n"),
       fn () => (log "}\n"; TextIO.closeOut dotfile)
     )
   end
@@ -69,13 +69,13 @@ struct
                     | SOME (d, t) =>
                       case old_sol of
                            NONE => SOME (dist_fn d, tour_fn t)
-                         | SOME (d', t') =>
+                         | SOME (d', _) =>
                              let
                                val d'' = dist_fn d
                              in
                                case Len.compare (d', d'') of
                                  GREATER => SOME (d'', tour_fn t)
-                               | _ => SOME (d', t')
+                               | _ => old_sol
                              end
                   end
                 val desc = G.descendants size dist options node
@@ -116,9 +116,7 @@ struct
       let
         val hasher = N.toHash size
         val memo: (N.key, (Len.num * (unit -> T.tour)) option) HashTable.hash_table =
-          HashTable.mkTable
-          (hasher, fn (a,b) => (N.compare (a,b) = EQUAL))
-          (Word.toInt (G.HTSize (size,options)), HTMiss)
+          HashTable.mkTable (hasher, N.eqKeys) (Word.toInt (G.HTSize (size,options)), HTMiss)
         val res = trav memo G.root
         val _ = close_log ()
         val nk =

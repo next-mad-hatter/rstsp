@@ -2,21 +2,31 @@ syntax: glob
 
 report/report.pdf
 report/sml-support.tex
+report/tsp.png
+report/slides.ps
+report/slides.pdf
+report/handout.pdf
 
 tags
 
-doc/ext
 doc/sketches
+doc/ext
+doc/tex
 
 src/rstsp/build
 src/rstsp/win32
 src/rstsp/polyml/*.sml
+src/lkh-2.0.7
+src/concorde
+src/tspsol
+src/norm
 src/belperm
 
-plot/**.pdf
+plot/build/*
 plot/data/mlton_*.csv
 plot/data/poly_*.csv
 plot/data/tsplib_*.csv
+plot/data/trace_*.dot
 
 test/batch/tsplib_*.json
 test/batch/random_*.json
@@ -26,13 +36,15 @@ test/data/dimacs
 test/data/vlsi
 test/data/world
 test/data/random
-test/ext
 
 tmp
 
 *~
 *.swp
 
+*.mpx
+
+*.bm
 *.aux
 *.dvi
 *.log
@@ -42,5 +54,9 @@ tmp
 *.bbl
 *.blg
 *.bcf
+*.ind
+*.idx
+*.ilg
+*.ing
 *.run.xml
 

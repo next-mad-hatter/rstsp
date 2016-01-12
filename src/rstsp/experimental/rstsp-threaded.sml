@@ -12,6 +12,7 @@ use "experimental/pyrstore.sml";
 use "experimental/sbstore.sml";
 use "experimental/threadedsearch.sml";
 use "experimental/defaultsearches.sml";
+use "main/trampsearches.sml";
 use "main/settings.sig";
 use "main/main.sml";
 

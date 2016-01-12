@@ -14,9 +14,9 @@
 structure NatDist : DISTANCE =
 struct
 
-  structure Num = WordNum
+  structure Num = IntNum
 
-  type dist = word vector
+  type dist = IntInf.int vector
 
   fun getDim v = Word.div(Utils.wordSqrt(0w1+0w8*(Word.fromInt (Vector.length v)))-0w1,0w2)
 
@@ -52,7 +52,7 @@ end
 structure Eucl2DCeilDist : DISTANCE =
 struct
 
-  structure Num = WordNum
+  structure Num = IntNum
 
   type dist = real vector * real vector
 
@@ -63,7 +63,7 @@ struct
     val dx = Vector.sub (xs, Word.toInt i) - Vector.sub (xs, Word.toInt j)
     val dy = Vector.sub (ys, Word.toInt i) - Vector.sub (ys, Word.toInt j)
   in
-    (Word.fromInt o (Real.toInt IEEEReal.TO_POSINF) o Math.sqrt) (dx*dx+dy*dy)
+    ((Real.toLargeInt IEEEReal.TO_POSINF) o Math.sqrt) (dx*dx+dy*dy)
   end
 
 end
@@ -74,7 +74,7 @@ end
 structure Eucl2DNNDist : DISTANCE =
 struct
 
-  structure Num = WordNum
+  structure Num = IntNum
 
   type dist = real vector * real vector
 
@@ -85,7 +85,7 @@ struct
     val dx = Vector.sub (xs, Word.toInt i) - Vector.sub (xs, Word.toInt j)
     val dy = Vector.sub (ys, Word.toInt i) - Vector.sub (ys, Word.toInt j)
   in
-    (Word.fromInt o (Real.toInt IEEEReal.TO_NEAREST) o Math.sqrt) (dx*dx+dy*dy)
+    ((Real.toLargeInt IEEEReal.TO_NEAREST) o Math.sqrt) (dx*dx+dy*dy)
   end
 
 end
