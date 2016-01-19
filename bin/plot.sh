@@ -41,4 +41,7 @@ for file in ../mp/*.mp; do
   mpost ${file}
 done
 # FIXME: ugly
-convert ../data/sketch.png -negate -background ${COLOR} -alpha Shape -density 150 bal.eps
+convert ../data/sketch.png -negate -background ${COLOR} -fill '#FFF3BF' -alpha Shape -density 150 bal.eps
+#convert ../data/sketch.png -negate -background ${COLOR} -alpha Shape bal.bmp
+#mkbitmap -f 2 -s 2 -g -t 0.50 bal.bmp -o bal.pgm
+#potrace bal.bmp -e -o bal.eps

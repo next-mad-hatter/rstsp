@@ -6,7 +6,8 @@
 %
 
 \documentclass[
-  size=10pt,
+%%  size=10pt,
+  size=8pt,
 %%  style=paintings,
   style=klope,
 %%  style=jefka,
@@ -27,7 +28,7 @@
 %\pdsetup{palette=BlackWhite}
 %\pdsetup{palette=white}
 
-\pdsetup{
+\pdsetup{%
   itemize={labelsep=0.2cm},
   lf=two exponential neighbourhoods,
 %%  rf=why not,
@@ -53,6 +54,20 @@
 \usepackage{commath}
 \usepackage{mathtools}
 \usepackage{amsthm}
+\usepackage{thmtools}
+\declaretheorem[style=definition,name=Definition,thmbox=L]{define}
+\declaretheorem[style=plain]{theorem}
+\declaretheorem[sibling=theorem]{lemma}
+\declaretheorem[style=remark]{remark}
+%% FIXME: framing possible with thmtools?
+%\usepackage[framemethod=pstricks]{mdframed}
+%\surroundwithmdframed[outerlinewidth=2,roundcorner=10pt]{define}
+%\usepackage{pstricks}
+%\usepackage{fancybox}
+%\usepackage{fancyvrb}
+
+%\usepackage{minted}
+%\usepackage{verbments}
 
 \usepackage{graphicx}
 %% possible with powerdot?
@@ -63,13 +78,14 @@
 \usepackage{booktabs}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
-\let\defstyle\itshape
+\let\defstyle\itshape%
 \definecolor{red}{rgb}{0.5,0.1,0}
 \def\todo{\color{red}}
 % FIXME: automate?
 \def\eqitspace{\vspace{-5mm}}
 
-\title{Two Exponential Neighbourhoods}
+%\title{Two Exponential Neighbourhoods {\small for the TSP and related heuristics}}
+\title{Two Exponential Neighbourhoods for the TSP and related heuristics}
 \newcommand{\mailto}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
 \author{Maksym~Deineko \\ {\small \mailto{max.deineko@gmail.com} }}
 
@@ -85,98 +101,141 @@
 
 \section[template=wideslide]{Introduction}
 
-\begin{slide}[toc=]{Paths and Cities}
+\begin{slide}[toc=]{Cities, Paths and Tours}
 \begin{itemize}
   \item
   Cities:
   \begin{equation}
     %\text{Cities:} \quad
     \mathcal{N} \coloneqq \mathcal{N}_n \coloneqq \left\{1,\ldots,n\right\}
-    \quad (n \in \mathbb{N}).
+    \quad (n \in \mathbb{N}, \; n \geq 2).
   \end{equation}%\pause
-  \eqitspace
+  \eqitspace%
   \item
   Paths:
   \begin{equation}
     %\text{Paths:} \quad
     \left(p_1,p_2,\ldots,p_m\right) \in \bigcup_{k \in \mathbb{N}}\mathcal{N}^k
-    \eqqcolon \mathcal{P}_n \;(\text{{\todo TODO: }vs ,,} \mathcal{P}_\mathcal{N}\text{''?}) %\supseteq \mathcal{T}_n.
+    %\eqqcolon \mathcal{P}_n \;(\text{{\todo TODO: }vs ,,} \mathcal{P}_\mathcal{N}\text{''?}) %\supseteq \mathcal{T}_n.
+    \eqqcolon \mathcal{P}_n;
     %\quad \text{(length, end points, simple, open, closed)}
   \end{equation}%\pause
-   (length, end points, simple, open, closed).
+  \eqitspace%
+  \begin{itemize}
   \item
-  Path concatenation:
-  \begin{equation}
-    \oplus: {\left( \mathcal{P}_n \cup 2^{\mathcal{P}_n} \right)}^2 \to \mathcal{P}_n \cup 2^{\mathcal{P}_n}
-  \end{equation}%\pause
-  (for paths: common definition, for sets: element-wise).
+    non-empty;
+  \item
+    walking  length: $m-1$;
+  \item
+    end points: $p_1, p_m$;
+  \item
+    simple: $\lvert \left\{p_1,\ldots,p_{m-1}\right\} \rvert =
+             \lvert \left\{p_2,\ldots,p_{m}\right\} \rvert = m-1$;
+  \item
+    closed: $p_1 = p_m, \; m > 1$;
+    open otherwise;
+  \item
+    edge: open path of walking length 1;
+  \item
+    cycle: closed path;
+  \item
+    tour: simple cycle of walking length $n$,
+    \begin{equation}\mathcal{T}_n \ldots \text{set of all tours (over }\mathcal{N}\text{)}.\end{equation}
+  \end{itemize}
 \end{itemize}
 \end{slide}
 
-\begin{slide}[toc=]{Costs and Tours}
+\begin{slide}[toc=]{Path Operations}
 \begin{itemize}
   \item
-  Cost matrix:
-  \begin{equation}
-    C = \left(c_{ij}\right) \in~\mathbb{R}^{n \times n},
-    \quad n \in \mathbb{N} \left(n \geq 2\right).
-  \end{equation}
-  \eqitspace
-  \item
-  Path cost:
-  \begin{equation}
-    \mathfrak{w}_C: \bigcup_{k \in \mathbb{N}, k \geq 2}\mathcal{N}^k \to \mathbb{R}, \quad
-    \left(p_1,p_2,\ldots,p_m\right) \mapsto \sum_{k=1}^{m-1} c_{p_k p_{k+1}}.
-  \end{equation}
-  \eqitspace
-  \item
-  Tours: $\mathcal{P}_n \supset \mathcal{T}_n \sim \mathcal{S}_n$ (via fixed starting city).
-  \item
-  Associated permutation:
-  \begin{equation}
-  \tau = \left(p_1, p_2, \ldots, p_n, p_1 \right)
-  \; \sim \;
-  \mathfrak{s}_\tau \coloneqq
-  \begin{pmatrix}
-    1 & 2 & \cdots & n \\
-    p_1 & p_2 & \cdots &  p_n
-  \end{pmatrix}.
-  \end{equation}
+  Path concatenation (single reduction, notation extended to element-wise):
+  \begin{align}
+    \begin{split}
+    \oplus \; : & \; {\left( \mathcal{P}_n \cup 2^{\mathcal{P}_n} \right)}^2 \to \mathcal{P}_n \cup 2^{\mathcal{P}_n} \quad \text{(infix)},
+    \\
+    p \oplus q \coloneqq &
+    \begin{cases}
+      \left(p_1,\ldots,p_m,q_1,\ldots,q_k\right),
+      & p = \left(p_1,\ldots,p_m\right) \in \mathcal{P}_n, \\
+      & q = \left(q_1,\ldots,q_k\right) \in \mathcal{P}_n, \\
+      & p_m \neq q_1;
+      \\
+      \left(p_1,\ldots,p_{m-1},q_1,\ldots,q_k\right),
+      & p = \left(p_1,\ldots,p_m\right) \in \mathcal{P}_n, \\
+      & q = \left(q_1,\ldots,q_k\right) \in \mathcal{P}_n, \\
+      & p_m = q_1;
+      \\
+      \left\{p^\prime \oplus q \; \vert \; p^\prime \in p\right\},
+      & p \notin \mathcal{P}_n, q \in \mathcal{P}_n;
+      \\
+      \left\{p \oplus q^\prime \; \vert \; q^\prime \in q\right\},
+      & p \in \mathcal{P}_n, q \notin \mathcal{P}_n;
+      \\
+      \left\{p^\prime \oplus q^\prime \; \vert \; p^\prime \in p, q^\prime \in q\right\},
+      & p \notin \mathcal{P}_n, q \notin \mathcal{P}_n.
+    \end{cases}
+    \end{split}
+  \end{align}%\pause
+  %\item Non-reducing version: $+$.
+  \item Path reversal:
+    \begin{equation}
+      \operatorname{rev} : \mathcal{P}_n \to \mathcal{P}_n, \;
+      %\begin{cases}
+      %\operatorname{rev}\left(\left(p\right)\right) \coloneqq \left(p\right)
+      %\\
+      %\operatorname{rev}\left(\left(p\right) + q\right) \coloneqq \operatorname{rev}\left(q\right) + \left(p\right)
+      %\end{cases}
+      \left(p_1,p_2,\ldots,p_{m-1},p_m\right) \mapsto \left(p_m,p_{m-1},\ldots,p_2,p_1\right).
+    \end{equation}
 \end{itemize}
 \end{slide}
 
 \begin{slide}{Traveling Salesman Problem}
 \begin{itemize}
   \item
+  Cost matrix: $C = \left(c_{ij}\right) \in~\mathbb{R}^{n \times n},
+    \quad n \in \mathbb{N} \left(n \geq 2\right)$.
+  \item
+  Path cost:
+  \vspace{-2mm}
+  \begin{equation}
+    \omega_C: \mathcal{P}_n \to \mathbb{R}, \quad
+    \left(p_1,p_2,\ldots,p_m\right) \mapsto \sum_{k=1}^{m-1} c_{p_k p_{k+1}}.
+  \end{equation}
+  \eqitspace%
+  \item
   Traveling Salesman Problem:
   \begin{equation}
-    \operatorname{TSP}_{M,T}: M \to T, \quad
-    C \mapsto \argmin_{\tau \in T} \mathfrak{w}_C\left(\tau\right)
-    \qquad \text{for} \; M \subseteq~\mathbb{R}^{n \times n}, T \subseteq \mathcal{T}_n.
+  %\begin{align}
+    %\begin{split}
+    \operatorname{TSP}_{M,T} : M \to T, \; C \mapsto \argmin_{\tau \in T} \omega_C\left(\tau\right),
+    %\end{split}
+  %\end{align}
   \end{equation}
-  \eqitspace
+  given $M \subseteq \mathbb{R}^{n \times n}, T \subseteq \mathcal{T}_n, \; T \neq \varnothing$.
   \item
   Variations:
   \begin{itemize}
   \item return cost along with (instead of) tour;
   \item $M, T$ as maps from $\mathbb{N}$;
-  \item (s)TSP vs (a)TSP;
-  \item here: $c_{ij} \geq 0$;
-  \item $\mathcal{S}_n$ vs $\mathcal{T}_n$.
+  \item $(M, T)$: TSP case/class, omitted where justified;
+  \item (s)TSP vs (a)TSP\@;
+  \item here: $M \subseteq \mathbb{R}^{n \times n}_{\geq 0}$.
   \end{itemize}
-  \item
-  Classes/cases: restrictions to subsets of $(\mathbb{R}^{n \times n}, \mathcal{T}_n)$.
+  \vspace{-2mm}
   \item
   NP-hard in general case.
 \end{itemize}
 \end{slide}
 
-\begin{slide}{Exponential Neighbourhoods}
+\begin{slide}{Exponential Neighbourhoods \& Local Search}
 \begin{itemize}
   \item
   Neighbourhood:
   \begin{equation}
-    F: \mathcal{T}_n \to 2^{\mathcal{T}_n};
+    F: \mathcal{T}_n \to 2^{\mathcal{T}_n}
+    %\setminus \varnothing;
+    \quad \left(\text{we demand}\; \tau \in F\left(\tau\right) \; \forall \tau \in \mathcal{T}_n\right);
   \end{equation}
   exponential neighbourhood:
   $\left\vert F(\tau) \right\vert = \Omega(2^n) \qquad \forall \tau \in \mathcal{T}_n$.
@@ -184,10 +243,12 @@
   \item
   Local Search:
   \begin{equation}
-    l: \tau \mapsto \operatorname{TSP}_{M,F(\tau)};
-    \qquad \text{(sometimes: anytime heuristic)}.
+    %l_C: \tau \mapsto \operatorname{TSP}_{M,\left\{\tau\right\} \cup F(\tau)}\left(C\right);
+    l_C: \tau \mapsto \operatorname{TSP}_{M,F(\tau)}\left(C\right);
+    %\qquad \text{(sometimes: descending ,,anytime'' heuristic)}.
   \end{equation}
-  \eqitspace
+  sometimes: non-ascending ,,anytime'' heuristic.
+  %\eqitspace%
   \item
   Iterative Local Search:
   \begin{align}
@@ -195,9 +256,9 @@
     \quad
     \tau \mapsto
     \begin{cases}
-      \tau \quad & \text{if} \; \mathfrak{w}\left(l\left(\tau\right)\right) = \mathfrak{w}\left(\tau\right),
+      \tau \quad & \text{if} \; \omega_C\left(l_C\left(\tau\right)\right) = \omega_C\left(\tau\right),
       \\
-      l\left(\tau\right) & \text{otherwise};
+      l_C\left(\tau\right) & \text{otherwise};
     \end{cases}
   \end{align}
   termination conditions may vary.
@@ -206,7 +267,49 @@
 \end{itemize}
 \end{slide}
 
-\begin{slide}[toc=,bm=]{Overview}
+\begin{slide}{Tours and Permutations}
+\begin{itemize}
+  \item
+  Associated permutation:
+  \begin{align}
+  \begin{split}
+    \sigma_\bullet :
+    \mathcal{T}_n \to \; & \mathcal{S}_n, \quad
+    \tau = \left(p_1, p_2, \ldots, p_n, p_1 \right)
+    \mapsto
+  \sigma_\tau \coloneqq
+  \begin{pmatrix}
+    1 & 2 & \cdots & n \\
+    p_1 & p_2 & \cdots &  p_n
+  \end{pmatrix},
+  \\
+  & \mathcal{S}_n \ldots \text{symmetric group (on }\mathcal{N} \text{)}.
+  \end{split}
+  \end{align}
+\eqitspace%
+\item
+  Equivalence:
+  \begin{align}
+    \tau \sim \tau^\prime
+    %\Leftrightarrow
+    \;:\;
+    &
+    \sigma_\tau = \sigma_{\tau^\prime} \circ \rho
+    \quad \text{for some}\; \rho \in \left<\left(1 \; 2 \; \cdots \; n \right)\right>;
+    \\
+    \tau \sim \tau^\prime
+    \;\rightarrow\;
+    &
+    \omega_C\left(\tau\right) = \omega_C\left(\tau^\prime\right)
+    \quad \forall C \in \mathbb{R}^{n \times n}.
+  \end{align}
+  \eqitspace%
+  \item
+  Reduction $\mathcal{T}_n \to \mathcal{T}_n/{\sim}$ (e.g.\ single starting city $p_1$) possible.
+\end{itemize}
+\end{slide}
+
+\begin{slide}[toc=,bm=]{Recap}
 \tableofcontents[content=currentsection,type=1]
 \end{slide}
 
@@ -217,27 +320,27 @@
   \item
   Pyramidal path:
   \begin{align}
-  \left( p_1, \ldots, p_k, q_1, \ldots, q_m \right) \quad \text{s.t.} \quad
+  \text{simple} \; \left( p_1, \ldots, p_k, q_1, \ldots, q_m \right) \; \text{with} \;
   \begin{cases}
   k+m \geq 1, & \\
   p_i < p_{i+1} \; & \forall i \in \mathcal{N}_{k-1},\\
   q_j > q_{j+1} \; & \forall j \in \mathcal{N}_{m-1}.
   \end{cases}
   \end{align}
-  %\eqitspace
+  %\eqitspace%
   \item
-  Neighbourhood $\operatorname{Pyr}\left(\tau\right):$
-  tours associated with of $\mathfrak{s}_\pi \circ \mathfrak{s}_\tau$
-  for all pyramidal tours $\pi$.
+  All pyramidal tours: neighbourhood $\operatorname{Pyr}$ %\left(\tau\right):$
+  of % via
+  $\tau^\ast = \left(1, 2, \ldots, n, 1\right)$.
   \begin{figure}[H]
     \centering
     %\includegraphics[width=0.49\textwidth]{../plot/build/pyr.1}
     \includegraphics[width=0.54\textwidth]{../plot/build/pyr.2}
     \caption{%
-      Connected plot of $\mathfrak{s}_\pi$'s
-      (acting on $\pi$)
-      graph resembles a pyramid
-      for a pyramidal $\pi$.
+      For a pyramidal tour $\tau$,
+      connected plot of $\sigma_\tau$'s
+      (acting on $\tau$)
+      graph resembles a pyramid (here: $n = 5$).
     }
   \end{figure}
 \end{itemize}
@@ -262,7 +365,7 @@
     \text{s.t.} \; & \left\{ p_1,\ldots,p_m \right\} = \left\{ k,\ldots,n \right\}
     \text{with} \; k = \max\left\{i,j\right\}+1.
   \end{align}
-  \eqitspace
+  \eqitspace%
   \item
   It then follows:
     \begin{align}
@@ -296,7 +399,7 @@
 \end{slide}
 
 % FIXME: how to escape comma?
-\begin{slide}[toc=Dynamic Programming${,}$ Recursion and Time Complexity]{Pyramidal Tours: Quadratic Time}
+\begin{slide}[toc=Dynamic Programming${,}$ Recursion and Complexity]{Pyramidal Tours: Quadratic Time}
   %\begin{figure}
   %  %\centering
   %  \includegraphics[width=0.20\textwidth]{../plot/build/trace_apyr.eps}
@@ -308,7 +411,7 @@
   \item
   Quadratic time assuming:
   \begin{itemize}
-    \item memoization: add subset of $\Phi$'s graph to its arguments and result;
+    \item memoization (sic!): add subset of $\Phi$'s graph to its arguments and result;
     \item constant time memory access (practice: good hash not always obvious);
     \item constant time tour construction;
     \item constant time tour comparison (compute cost in $\Phi$).
@@ -325,22 +428,6 @@
     \item
     not always feasible (see next section).
   \end{itemize}
-  \end{itemize}
-\end{slide}
-
-\begin{slide}[toc=]{Pyramidal Tours: Local Search}
-  \begin{itemize}
-  \item
-    Local Search: extend neighbourhood via circular permutations:
-    \begin{equation}
-      \operatorname{Pyr}\left(\tau\right)
-      \quad \Rightarrow \quad
-      \bigcup_{\sigma \in \left<\sigma^\ast\right>}\sigma\left(\operatorname{Pyr}\left(\tau\right)\right),
-      \quad \sigma^\ast = \left(1\;2\;\cdots\;n\right).
-    \end{equation}
-  \eqitspace
-  \item
-  {\todo TODO:} illustrate?
   \end{itemize}
 \end{slide}
 
@@ -453,6 +540,25 @@
   \end{itemize}
 \end{slide}
 
+%\begin{slide}[toc=]{S.\ B.\ Tours: Local Search}
+%    %\psset{cornersize=absolute,linearc=.5\baselineskip}
+%    %\psframebox{%
+%      \begin{define}[Something]
+%        Yes.
+%      \end{define}
+%    %}
+%    %\begin{theorem}
+%    %  No.
+%    %\end{theorem}
+%    %\begin{proof}
+%    %  Prove this.
+%    %\end{proof}
+%    %\begin{whoot}
+%    %  Prove this.
+%    %\end{whoot}
+%    {\todo TODO}
+%\end{slide}
+
 \begin{slide}[toc=]{S.\ B.\ Tours: Recursion Graph}
   \begin{figure}[H]
     \centering
@@ -461,7 +567,84 @@
   \end{figure}
 \end{slide}
 
-\begin{slide}[toc=,bm=]{Overview}
+\begin{slide}{Tours and Permutations: Tour Sets as Neighbourhoods}
+  \begin{itemize}
+  \item
+  Associated permutation:
+  \begin{align}
+  \begin{split}
+    \sigma_\bullet & :
+    \mathcal{T}_n \to \; \mathcal{S}_n, \quad
+    \tau = \left(p_1, p_2, \ldots, p_n, p_1 \right)
+    \mapsto
+  \sigma_\tau \coloneqq
+  \begin{pmatrix}
+    1 & 2 & \cdots & n \\
+    p_1 & p_2 & \cdots &  p_n
+  \end{pmatrix},
+  \\
+  \pi & \coloneqq \left(\sigma_{\bullet}\right)^{-1}.
+  \end{split}
+  \end{align}
+  \eqitspace%
+  \item
+  Tour $\tau^\prime \; \rightarrow$ permutation of cities, acts on tours via $\tau \mapsto \pi\left(\sigma_\tau \circ \sigma_{\tau^\prime}\right)$.
+  \item
+    Tour sets as neighbourhoods:
+    \begin{equation}
+      \tau^\ast \in T \subseteq \mathcal{T}_n
+      \; \rightarrow \;
+      \text{neighbourhood} \;
+      F_T : \tau \mapsto
+      \pi \left(
+        \left\{ \sigma_{\tau} \circ \sigma_{\tau^\ast}^{-1} \circ \sigma_{\tau^\prime} \mid \tau^{\prime} \in T\right\}
+      \right);
+    \end{equation}
+    i.e.\ $T$ as permutations of $\tau^\ast \; \rightarrow $ permutations of $\tau$;
+    here
+    \begin{equation*}
+      \tau \in F_T\left(\tau\right) \; \forall \tau \in \mathcal{T}_n, \; F_T\left(\tau^\ast\right) = T
+    \end{equation*} hold true.
+  \item
+  {\todo TODO:} describe solving reordered TSP?  illustrate?
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{Local Search and Flowers}
+  \begin{itemize}
+  \item
+    Flower: extend set of tours $T$ via permutations in $S \subseteq \mathcal{S}_n$:
+    \begin{equation}
+      \mathcal{F}\left(S,T\right) \coloneqq \pi\left(\left\{ s \circ \sigma_\tau \mid s \in S, \tau \in T\right\}\right);
+    \end{equation}
+  choose best tour from $\lvert S \rvert$ candidates.
+  %\eqitspace%
+  \item
+    Pyramidal ILS:
+    \begin{equation}
+      F_{\mathcal{F}\left(S,T\right)}, \;
+      T = \operatorname{Pyr}, \;
+      S = \left<\sigma^\ast\right>, \;
+      \sigma^\ast = \left(1\;2\;\cdots\;n\right).
+    \end{equation}
+  \eqitspace%
+  \item
+  Strongly balanced ILS:
+    \begin{equation}
+      \text{e.g.} \; S = \left<\sigma^\ast\right>\mu \;,\;
+      \mu =
+      \begin{pmatrix}
+        1 & \cdots & n \\
+        \ldots & \; 5 \; 3 \; 1 \; 2 \; 4 \; & \ldots
+      \end{pmatrix};
+    \end{equation}
+    better set possible?
+  \item
+  {\todo TODO:} illustrate?
+  \end{itemize}
+\end{slide}
+
+\begin{slide}[toc=,bm=]{Recap}
 \tableofcontents[content=currentsection,type=1]
 \end{slide}
 
