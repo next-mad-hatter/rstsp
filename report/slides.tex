@@ -145,7 +145,7 @@
 \begin{slide}[toc=]{Path Operations}
 \begin{itemize}
   \item
-  Path concatenation (single reduction, notation extended to element-wise):
+  Path concatenation:
   \begin{align}
     \begin{split}
     \oplus \; : & \; {\left( \mathcal{P}_n \cup 2^{\mathcal{P}_n} \right)}^2 \to \mathcal{P}_n \cup 2^{\mathcal{P}_n} \quad \text{(infix)},
@@ -173,12 +173,14 @@
     \end{cases}
     \end{split}
   \end{align}
+  (single reduction, notation extended to element-wise).
   \item Path reversal:
     \begin{equation}
       \operatorname{rev} : \mathcal{P}_n \to \mathcal{P}_n, \;
       \left(p_1,p_2,\ldots,p_{m-1},p_m\right) \mapsto \left(p_m,p_{m-1},\ldots,p_2,p_1\right).
     \end{equation}
 \end{itemize}
+\board
 \end{slide}
 
 \begin{slide}{Traveling Salesman Problem}
@@ -246,9 +248,8 @@
     \end{cases}
   \end{align}
   termination conditions may vary.
-  \item
-  \board
 \end{itemize}
+\board
 \end{slide}
 
 \begin{slide}{Tours and Permutations}
@@ -420,8 +421,8 @@
     \item
     not always feasible (see next section).
   \end{itemize}
-  \item \board
   \end{itemize}
+\board
 \end{slide}
 
 \begin{slide}[toc=Strongly Balanced Tours]{Strongly Balanced Tours: Motivation}
@@ -508,9 +509,8 @@
   \item
     Neighbourhood of $\tau^\ast =
       \left( \ldots \; 5 \; 3 \; 1 \; 2 \; 4 \; \ldots \right).$
-  \item
-    \board
   \end{itemize}
+  \board
 \end{slide}
 
 \begin{slide}[toc=]{S.B.\ Tours: Dynamic Programming}
@@ -613,9 +613,8 @@
     \begin{equation*}
       \tau \in F_T\left(\tau\right) \; \forall \tau \in \mathcal{T}_n, \; F_T\left(\tau^\ast\right) = T
     \end{equation*} hold true.
-  \item
-    \board
   \end{itemize}
+  \board
 \end{slide}
 
 \begin{slide}{Local Search and Flowers}
@@ -646,9 +645,8 @@
       \end{pmatrix};
     \end{equation}
     better set possible?
-  \item
-    \board
   \end{itemize}
+  \board
 \end{slide}
 
 \begin{slide}[toc=,bm=]{Recap}

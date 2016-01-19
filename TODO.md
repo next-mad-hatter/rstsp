@@ -23,12 +23,11 @@
     - sml support: can the pandoc -> rst way be pretty-fixed?
 * Slides:
     - throw out things
-    - complete plots & illustrations
-    - add overlays
+    - complete illustrations
     - rerun tests with proper cooling
-    - plots: better captions, font shape?
-    - handouts ?
-    - second slides set with exact definitions ?
+    - plots: font shapes ?
+    - add overlays
+    - handouts + notes ?
     - tug: aspect ratio, vga/dp (,wlan) available ?
 * Research:
     - sb : better permutations?
