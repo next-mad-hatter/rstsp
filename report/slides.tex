@@ -1,4 +1,4 @@
-%
+%;
 % $Author$
 % $File$
 % $Date$
@@ -79,12 +79,13 @@
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \let\defstyle\itshape%
-\definecolor{red}{rgb}{0.5,0.1,0}
+\definecolor{red}{rgb}{0.6,0.1,0}
+\definecolor{green}{rgb}{0.68,0.74,0.38}
 \def\todo{\color{red}}
+\def\board{{\color{green} [Illustrate/Board?]}}
 % FIXME: automate?
 \def\eqitspace{\vspace{-5mm}}
 
-%\title{Two Exponential Neighbourhoods {\small for the TSP and related heuristics}}
 \title{Two Exponential Neighbourhoods for the TSP and related heuristics}
 \newcommand{\mailto}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
 \author{Maksym~Deineko \\ {\small \mailto{max.deineko@gmail.com} }}
@@ -106,20 +107,16 @@
   \item
   Cities:
   \begin{equation}
-    %\text{Cities:} \quad
     \mathcal{N} \coloneqq \mathcal{N}_n \coloneqq \left\{1,\ldots,n\right\}
     \quad (n \in \mathbb{N}, \; n \geq 2).
-  \end{equation}%\pause
+  \end{equation}
   \eqitspace%
   \item
   Paths:
   \begin{equation}
-    %\text{Paths:} \quad
     \left(p_1,p_2,\ldots,p_m\right) \in \bigcup_{k \in \mathbb{N}}\mathcal{N}^k
-    %\eqqcolon \mathcal{P}_n \;(\text{{\todo TODO: }vs ,,} \mathcal{P}_\mathcal{N}\text{''?}) %\supseteq \mathcal{T}_n.
     \eqqcolon \mathcal{P}_n;
-    %\quad \text{(length, end points, simple, open, closed)}
-  \end{equation}%\pause
+  \end{equation}
   \eqitspace%
   \begin{itemize}
   \item
@@ -175,16 +172,10 @@
       & p \notin \mathcal{P}_n, q \notin \mathcal{P}_n.
     \end{cases}
     \end{split}
-  \end{align}%\pause
-  %\item Non-reducing version: $+$.
+  \end{align}
   \item Path reversal:
     \begin{equation}
       \operatorname{rev} : \mathcal{P}_n \to \mathcal{P}_n, \;
-      %\begin{cases}
-      %\operatorname{rev}\left(\left(p\right)\right) \coloneqq \left(p\right)
-      %\\
-      %\operatorname{rev}\left(\left(p\right) + q\right) \coloneqq \operatorname{rev}\left(q\right) + \left(p\right)
-      %\end{cases}
       \left(p_1,p_2,\ldots,p_{m-1},p_m\right) \mapsto \left(p_m,p_{m-1},\ldots,p_2,p_1\right).
     \end{equation}
 \end{itemize}
@@ -206,11 +197,7 @@
   \item
   Traveling Salesman Problem:
   \begin{equation}
-  %\begin{align}
-    %\begin{split}
     \operatorname{TSP}_{M,T} : M \to T, \; C \mapsto \argmin_{\tau \in T} \omega_C\left(\tau\right),
-    %\end{split}
-  %\end{align}
   \end{equation}
   given $M \subseteq \mathbb{R}^{n \times n}, T \subseteq \mathcal{T}_n, \; T \neq \varnothing$.
   \item
@@ -243,12 +230,9 @@
   \item
   Local Search:
   \begin{equation}
-    %l_C: \tau \mapsto \operatorname{TSP}_{M,\left\{\tau\right\} \cup F(\tau)}\left(C\right);
     l_C: \tau \mapsto \operatorname{TSP}_{M,F(\tau)}\left(C\right);
-    %\qquad \text{(sometimes: descending ,,anytime'' heuristic)}.
   \end{equation}
   sometimes: non-ascending ,,anytime'' heuristic.
-  %\eqitspace%
   \item
   Iterative Local Search:
   \begin{align}
@@ -263,7 +247,7 @@
   \end{align}
   termination conditions may vary.
   \item
-  {\todo TODO:} illustrate?
+  \board
 \end{itemize}
 \end{slide}
 
@@ -327,15 +311,13 @@
   q_j > q_{j+1} \; & \forall j \in \mathcal{N}_{m-1}.
   \end{cases}
   \end{align}
-  %\eqitspace%
+  \eqitspace%
   \item
-  All pyramidal tours: neighbourhood $\operatorname{Pyr}$ %\left(\tau\right):$
-  of % via
+  All pyramidal tours: neighbourhood $\operatorname{Pyr}_n$ of
   $\tau^\ast = \left(1, 2, \ldots, n, 1\right)$.
   \begin{figure}[H]
     \centering
-    %\includegraphics[width=0.49\textwidth]{../plot/build/pyr.1}
-    \includegraphics[width=0.54\textwidth]{../plot/build/pyr.2}
+    \includegraphics[width=0.48\textwidth]{../plot/build/pyr.2}
     \caption{%
       For a pyramidal tour $\tau$,
       connected plot of $\sigma_\tau$'s
@@ -347,77 +329,87 @@
 \end{slide}
 
 \begin{slide}[toc=]{Pyramidal Tours: Recurse!}
-%  \begin{figure}[H]
-%    \centering
-%    \includegraphics[width=0.34\textwidth]{../plot/build/pyr.2}
-%    \caption{TODO: elaborate.}
-%  \end{figure}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\textwidth]{../plot/build/pyr.3}
+    \caption{$\operatorname{Pyr}_n$: city-at-a-time construction.}
+  \end{figure}
 \begin{itemize}
   \item
-  %All pyramidal tours:
-  %\begin{equation}
-  %  42.
-  %\end{equation}
-  %\item
-  Dynamic programming ({\todo TODO:} illustrate/blackboard?):
+    Construction:
   \begin{align}
-    \Phi_C\left(i,j\right) \coloneqq \; & \text{minimum cost pyramidal path} \left(i,p_1,\ldots,p_m,j\right) \\
-    \text{s.t.} \; & \left\{ p_1,\ldots,p_m \right\} = \left\{ k,\ldots,n \right\}
-    \text{with} \; k = \max\left\{i,j\right\}+1.
+    \begin{split}
+    V\left(i,j\right) & : \mathcal{N}_n^2 \to 2^{\mathcal{P}_n}, \\
+    \left(i,j\right) & \mapsto \; \text{all pyramidal paths} \left(i,p_1,\ldots,p_m,j\right)
+    \\
+    & \qquad \text{with} \; \left\{ p_1,\ldots,p_m \right\} = \left\{ k,\ldots,n \right\},
+    \; \text{where} \; k = \max\left\{i,j\right\}+1.
+    \\
+    \Rightarrow \;
+    V\left(i,j\right) & =
+    \begin{cases}
+      \left\{\left(i,j\right)\right\}, & n \in \left\{i,j\right\},
+      \\
+      \left(i\right) \oplus V\left(k,j\right)
+      \;\bigcup\;
+      V\left(i,k\right) \oplus \left(j\right)
+      & \text{otherwise ($k$ as above)};
+    \end{cases}
+    \\
+    V\left(1,1\right) & \ldots \text{all pyramidal tours in} \; \mathcal{T}_n.
+    \end{split}
   \end{align}
-  \eqitspace%
-  \item
-  It then follows:
-    \begin{align}
-    \Phi_C\left(i,n\right) \; = \; & \left(i,n\right), \quad \forall i \in \mathcal{N};
-    \\
-    \Phi_C\left(n,j\right) \; = \; & \left(n,j\right) \quad \forall j \in \mathcal{N};
-    \\
-    \Phi_C\left(i,j\right) \; = \; & \argmin_{\tau \in \left\{\tau\prime, \tau\prime\prime\right\}}
-    \mathfrak{w}_C\left(\tau\right)
-    \quad \text{for} \; i,j < n \quad \text{with}
-    \\
-    & \tau\prime \; = \; \left(i\right) \oplus \Phi\left(k,j\right),
-    \;
-    \tau\prime\prime \; = \; \Phi\left(i,k\right) \oplus \left(j\right),
-    \\
-    & k = \max\left\{i,j\right\}+1;
-    \\
-    \Phi_C\left(1,1\right) \; = \; &
-    \operatorname{TSP}_{\mathbb{R}^{n \times n},\operatorname{Pyr\left(1,2,\ldots,n,1\right)}}\left(C\right).
-    \end{align}
-    {\todo TODO:} organize better / remove altogether?
 \end{itemize}
 \end{slide}
 
-\begin{slide}[toc=]{Pyramidal Tours: Recursion Graph}
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.80\textwidth]{../plot/build/trace_apyr.eps}
-    \caption{Pyramidal aTSP: recursion graph.}
-  \end{figure}
+\begin{slide}[toc=]{Pyramidal Tours: Dynamic Programming Solution}
+\begin{itemize}
+  \item
+    Best pyramidal tour:
+    \begin{align}
+    \begin{split}
+      \Phi_C\left(i,j\right) & \coloneqq \; \text{lowest cost path in} \; V\left(i,j\right).
+    \\
+    \Rightarrow \;
+    \Phi_C\left(i,j\right) & =
+    \begin{cases}
+      \left(i,j\right), & n \in \left\{i,j\right\}, \\
+      \argmin \omega_C \text{ over }
+      \left\{
+      \left(i\right) \oplus \Phi_C\left(k,j\right)
+      ,
+      \Phi_C\left(i,k\right) \oplus \left(j\right)
+      \right\}
+      & \text{o.w.\ ($k$ a.a.)};
+    \end{cases}
+    \\
+    \Phi_C\left(1,1\right) & = \operatorname{TSP_{\mathbb{R}^{n \times n},\operatorname{Pyr}_n}}\left(C\right).
+    \end{split}
+  \end{align}
+\end{itemize}
+\vspace{-3mm}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.59\textwidth]{../plot/build/trace_apyr.eps}
+  \caption{Pyramidal aTSP: recursion tree.}
+\end{figure}
 \end{slide}
 
 % FIXME: how to escape comma?
 \begin{slide}[toc=Dynamic Programming${,}$ Recursion and Complexity]{Pyramidal Tours: Quadratic Time}
-  %\begin{figure}
-  %  %\centering
-  %  \includegraphics[width=0.20\textwidth]{../plot/build/trace_apyr.eps}
-  %  \caption{Pyramidal aTSP: recursion graph.}
-  %\end{figure}
   \begin{itemize}
   \item
   Dynamic programming solution $\rightarrow$ DFS.
   \item
   Quadratic time assuming:
   \begin{itemize}
-    \item memoization (sic!): add subset of $\Phi$'s graph to its arguments and result;
+    \item memoization (sic!): compute subset of $\Phi$'s graph;
     \item constant time memory access (practice: good hash not always obvious);
-    \item constant time tour construction;
+    \item constant time tour (re)construction;
     \item constant time tour comparison (compute cost in $\Phi$).
   \end{itemize}
   \item
-  BFS: linear space overhead.
+  BFS: linear space overhead (tail recursion).
   \item
   Bottom-up computation:
   \begin{itemize}
@@ -489,10 +481,9 @@
     \centering
     \includegraphics[width=0.37\textwidth]{../plot/build/bal.eps}
     \caption{%
-      {\todo TODO:} illustrate.
+      {\board TODO:} illustrate.
     }
   \end{figure}
-  \item
   \end{itemize}
 \end{slide}
 
@@ -540,30 +531,11 @@
   \end{itemize}
 \end{slide}
 
-%\begin{slide}[toc=]{S.\ B.\ Tours: Local Search}
-%    %\psset{cornersize=absolute,linearc=.5\baselineskip}
-%    %\psframebox{%
-%      \begin{define}[Something]
-%        Yes.
-%      \end{define}
-%    %}
-%    %\begin{theorem}
-%    %  No.
-%    %\end{theorem}
-%    %\begin{proof}
-%    %  Prove this.
-%    %\end{proof}
-%    %\begin{whoot}
-%    %  Prove this.
-%    %\end{whoot}
-%    {\todo TODO}
-%\end{slide}
-
 \begin{slide}[toc=]{S.\ B.\ Tours: Recursion Graph}
   \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{../plot/build/trace_bal.eps}
-    \caption{Strongly balanced (s)TSP: recursion graph.}
+    \caption{Strongly balanced (s)TSP: recursion tree.}
   \end{figure}
 \end{slide}
 
@@ -606,7 +578,8 @@
       \tau \in F_T\left(\tau\right) \; \forall \tau \in \mathcal{T}_n, \; F_T\left(\tau^\ast\right) = T
     \end{equation*} hold true.
   \item
-  {\todo TODO:} describe solving reordered TSP?  illustrate?
+  {\todo TODO:} describe solving reordered TSP?
+  \board illustrate?
   \end{itemize}
 \end{slide}
 
@@ -618,12 +591,11 @@
       \mathcal{F}\left(S,T\right) \coloneqq \pi\left(\left\{ s \circ \sigma_\tau \mid s \in S, \tau \in T\right\}\right);
     \end{equation}
   choose best tour from $\lvert S \rvert$ candidates.
-  %\eqitspace%
   \item
     Pyramidal ILS:
     \begin{equation}
       F_{\mathcal{F}\left(S,T\right)}, \;
-      T = \operatorname{Pyr}, \;
+      T = \operatorname{Pyr}_n, \;
       S = \left<\sigma^\ast\right>, \;
       \sigma^\ast = \left(1\;2\;\cdots\;n\right).
     \end{equation}
@@ -662,34 +634,29 @@
     \item shared library.
   \end{itemize}
   \item
-  Tested under Linux/amd64, MinGW cross-compiled/x86.
-  %\begin{itemize}
-  %  \item Linux/amd64;
-  %  \item MinGW cross-compiled/x86;
-  %\end{itemize}
-  \item
   Builds via MLton, Poly/ML, SML/NJ.
-  %\begin{itemize}
-  %  \item MLton;
-  %  \item Poly/ML;
-  %  \item SML/NJ.
-  %\end{itemize}
+  \item
+  Tested under Linux/{\ttfamily amd64}, Windows/{\ttfamily x86}.
+  \item
+    Times measured here:
+    Linux 3.10.17/{\ttfamily amd64} @ i5-2520M.
   \item
   Available under
-  \begin{quote}
-    \hspace{3.4em} \url{http://bitbucket.org/mad_hatter/rstsp/}.
-  \end{quote}
+  %\begin{quote}
+    %\hspace{3.4em}
+    \url{http://bitbucket.org/mad_hatter/rstsp/}.
+  %\end{quote}
   \end{itemize}
 \end{slide}
 
 % TODO: use onslide?
-\begin{slide}[toc=Running Time]{Running Time: Steady Set}
+\begin{slide}[toc=Measured Time]{Measured Time}
   \begin{figure}[H]
     \centering
       \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_steady.ps}
   \end{figure}
 \end{slide}
-\begin{slide}[toc=]{Running Time: Fast Set}
+\begin{slide}[toc=]{Measured Time}
   \begin{figure}[H]
     \centering
       \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_fast.ps}
@@ -724,7 +691,7 @@
 \begin{slide}[toc=]{TSPLIB Results}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{../plot/build/tsplib_val.eps}
+    \includegraphics[width=0.74\textwidth]{../plot/build/tsplib_val.eps}
     %TODO: convergence speed?
     \caption{Benchmark: 14 TSPLIB instances, sizes $\leq 100$.}
   \end{figure}
@@ -743,7 +710,7 @@
   \item
   Open Tasks:
     \begin{itemize}
-    \item implement BFS;
+      \item implement BFS $\rightarrow$ confirm complexity conjecture for small sizes;
     \item generate \& benchmark RS-TSP instances.
     \end{itemize}
   \item

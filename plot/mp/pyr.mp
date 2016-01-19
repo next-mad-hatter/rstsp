@@ -63,4 +63,46 @@ beginfig(2)
   endfor
 endfig;
 
+beginfig(3)
+  numeric u;
+  u = 1.69mm;
+  dx = 5u;
+  dy = 1.4u;
+  %796045
+  drawoptions(withcolor (121/255,96/255,69/255));
+  for i = 0 upto 7:
+    z[i] = (i * dx, i * dy);
+  endfor
+  y[2] := 3*dy;
+  y[3] := 5*dy;
+  y[4] := 8.2*dy;
+  y[5] := 5*dy;
+  y[6] := 2*dy;
+  y[7] := 0*dy;
+  z[8] = (4*dx,3.5*dy);
+  string l[];
+  l[0] = "1";
+  l[1] = "2";
+  l[2] = "4";
+  l[3] = "";
+  l[4] = "n";
+  l[5] = "";
+  l[6] = "3";
+  l[7] = "1";
+  l[8] = "5";
+  for i = 0,1,2,4,6,7,8:
+    draw (x[i],y[i]) withpen pencircle scaled 0.70;
+    xdotlabel.top(l[i], z[i]) withpen pencircle scaled 3.14;
+  endfor
+  for i = 0,1,6:
+    draw z[i]--z[i+1] withpen pencircle scaled 0.69;
+  endfor
+  for i = 2,6:
+    draw z[i]--z[4] withpen pencircle scaled 0.69 dashed withdots scaled 1.2;
+    draw z[i]--z[4] withpen pencircle scaled 0.69 dashed withdots scaled 1.2;
+  endfor
+  drawarrow z[8]--(1/3[z[2],z[4]]) withpen pencircle scaled 0.69 dashed evenly scaled 0.8;
+  drawarrow z[8]--(1/3[z[6],z[4]]) withpen pencircle scaled 0.69 dashed evenly scaled 0.8;
+endfig;
+
 end;

@@ -11,10 +11,12 @@ reset
 set terminal pdfcairo
 set termoption dashed monochrome
 
-set style line 11 lc rgb '#808080' lt 1
+#set style line 11 lc rgb '#808080' lt 1
+set style line 11 lc rgb '#796045' lt 1
 set border 3 back ls 11
 set tics nomirror
-set style line 12 lc rgb'#808080' lt 0 lw 1
+#set style line 12 lc rgb'#808080' lt 0 lw 1
+set style line 12 lc rgb '#796045' lt 0 lw 1
 set grid back ls 12
 
 set style line 1 lc rgb '#8b1a0e' pt 4 ps 1.01 lt 1 lw 3.2
@@ -22,18 +24,19 @@ set style line 2 lc rgb '#5e9c36' pt 6 ps 1.01 lt 3 lw 3.2
 set style line 3 lc rgb '#3e3c76' pt 12 ps 1.01 lt 5 lw 3.2
 set style line 4 lc rgb '#9e7c26' pt 10 ps 1.01 lt 7 lw 3.2
 
-set key top left box ls 11 spacing 1.1
+set key top left box ls 11 spacing 1.1 tc rgb '#796045'
 set datafile missing "t"
 
 set output 'build/random_val.pdf'
-set xlabel 'problem size'
-set ylabel 'tour length'
-plot 'data/mlton_val_len_balanced_m3_i1_jdef_r0.csv' using 1:($2) title 'balanced (-m 3)' w l ls 1, \
+set xlabel 'problem size' tc rgb '#796045'
+set ylabel 'tour length' tc rgb '#796045'
+set tics tc rgb '#796045'
+plot 'data/mlton_val_len_pyramidal_m0_i1_jdef_r0.csv' using 1:($2) title 'pyramidal' w l ls 3, \
+     'data/mlton_val_len_balanced_m3_i1_jdef_r0.csv' using 1:($2) title 'balanced (-m 3)' w l ls 1, \
      'data/mlton_val_len_balanced_m3_i200_jdef_rall.csv' using 1:($2) title 'balanced (-m 3 -i 200 -r all)' w l ls 2, \
-     'data/mlton_val_len_pyramidal_m0_i1_jdef_r0.csv' using 1:($2) title 'pyramidal' w l ls 3, \
      'data/mlton_val_len_pyramidal_m0_i200_jdef_rall.csv' using 1:($2) title 'pyramidal (-i 200 -r all)' w l ls 4, \
-     'data/mlton_val_len_pyramidal_m0_i200_jdef_r0.csv' using 1:($2) title 'pyramidal (-i 200 -r 0)' w l ls 5, \
-     'data/mlton_val_len_balanced_m3_i200_jdef_r0.csv' using 1:($2) title 'balanced (-m 3 -i 200 -r 0)' w l ls 6
+     'data/mlton_val_len_balanced_m3_i200_jdef_r0.csv' using 1:($2) title 'balanced (-m 3 -i 200 -r 0)' w l ls 6, \
+     'data/mlton_val_len_pyramidal_m0_i200_jdef_r0.csv' using 1:($2) title 'pyramidal (-i 200 -r 0)' w l ls 5
 
 bins = "mlton poly"
 do for [bi = 1:words(bins)] {
@@ -43,28 +46,28 @@ do for [bi = 1:words(bins)] {
   set ylabel 'time needed (seconds)'
 
   set output 'build/'.bin.'_time_random_steady.pdf'
-  plot 'data/'.bin.'_time_steady_balanced_m3_i1_jdef_r0.csv' using 1:($2) title 'max = 3' w l ls 1, \
-       'data/'.bin.'_time_steady_balanced_m2_i1_jdef_r0.csv' using 1:($2) title 'max = 2' w l ls 2, \
+  plot 'data/'.bin.'_time_steady_balanced_m3_i1_jdef_r0.csv' using 1:($2) title 's.b., M = 3' w l ls 1, \
+       'data/'.bin.'_time_steady_balanced_m2_i1_jdef_r0.csv' using 1:($2) title 's.b., M = 2' w l ls 2, \
        'data/'.bin.'_time_steady_pyramidal_m0_i1_jdef_r0.csv' using 1:($2) title 'pyramidal' w l ls 4
 
   set output 'build/'.bin.'_time_random_fast.pdf'
-  plot 'data/'.bin.'_time_steady_balanced_m4_i1_jdef_r0.csv' using 1:($2) title 'max = 4' w l ls 1, \
-       'data/'.bin.'_time_steady_balanced_m3_i1_jdef_r0.csv' using 1:($2) title 'max = 3' w l ls 2, \
-       'data/'.bin.'_time_steady_balanced_m2_i1_jdef_r0.csv' using 1:($2) title 'max = 2' w l ls 3
+  plot 'data/'.bin.'_time_steady_balanced_m4_i1_jdef_r0.csv' using 1:($2) title 's.b., M = 4' w l ls 1, \
+       'data/'.bin.'_time_steady_balanced_m3_i1_jdef_r0.csv' using 1:($2) title 's.b., M = 3' w l ls 2, \
+       'data/'.bin.'_time_steady_balanced_m2_i1_jdef_r0.csv' using 1:($2) title 's.b., M = 2' w l ls 3
 
   set output 'build/'.bin.'_time_random_low.pdf'
-  plot 'data/'.bin.'_time_low_balanced_m6_i1_jdef_r0.csv' using 1:($2) title 'max = 6' w lp ls 1, \
-       'data/'.bin.'_time_low_balanced_m5_i1_jdef_r0.csv' using 1:($2) title 'max = 5' w lp ls 2, \
-       'data/'.bin.'_time_low_balanced_m4_i1_jdef_r0.csv' using 1:($2) title 'max = 4' w lp ls 3
+  plot 'data/'.bin.'_time_low_balanced_m6_i1_jdef_r0.csv' using 1:($2) title 's.b., M = 6' w lp ls 1, \
+       'data/'.bin.'_time_low_balanced_m5_i1_jdef_r0.csv' using 1:($2) title 's.b., M = 5' w lp ls 2, \
+       'data/'.bin.'_time_low_balanced_m4_i1_jdef_r0.csv' using 1:($2) title 's.b., M = 4' w lp ls 3
 
   set output 'build/'.bin.'_time_random_med.pdf'
-  plot 'data/'.bin.'_time_med_balanced_m3_i1_jdef_r0.csv' using 1:($2) title 'max = 3' w lp ls 1, \
-       'data/'.bin.'_time_med_balanced_m2_i1_jdef_r0.csv' using 1:($2) title 'max = 2' w lp ls 2, \
+  plot 'data/'.bin.'_time_med_balanced_m3_i1_jdef_r0.csv' using 1:($2) title 's.b., M = 3' w lp ls 1, \
+       'data/'.bin.'_time_med_balanced_m2_i1_jdef_r0.csv' using 1:($2) title 's.b., M = 2' w lp ls 2, \
        'data/'.bin.'_time_med_pyramidal_m0_i1_jdef_r0.csv' using 1:($2) title 'pyramidal' w lp ls 4
 }
 
 set output 'build/mlton_time_random_hi.pdf'
-plot 'data/mlton_time_hi_balanced_m4_i1_jdef_r0.csv' using 1:($2) title 'max = 4' w lp ls 1, \
-     'data/mlton_time_hi_balanced_m3_i1_jdef_r0.csv' using 1:($2) title 'max = 3' w lp ls 2, \
+plot 'data/mlton_time_hi_balanced_m4_i1_jdef_r0.csv' using 1:($2) title 's.b., M = 4' w lp ls 1, \
+     'data/mlton_time_hi_balanced_m3_i1_jdef_r0.csv' using 1:($2) title 's.b., M = 3' w lp ls 2, \
      'data/mlton_time_hi_pyramidal_m0_i1_jdef_r0.csv' using 1:($2) title 'pyramidal' w lp ls 4
 

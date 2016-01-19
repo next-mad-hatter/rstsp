@@ -23,15 +23,12 @@
     - sml support: can the pandoc -> rst way be pretty-fixed?
 * Slides:
     - throw out things
-    - add sb ils extension description
     - complete plots & illustrations
     - add overlays
     - rerun tests with proper cooling
-    - gnuplot: better captions, font color (!) + shape?
-    - graphviz font shape?
+    - plots: better captions, font shape?
     - handouts ?
     - second slides set with exact definitions ?
-    - tsplib results: histboxplot with outliers -- matplotlib/bokeh/ggplot/vincent/seaborn ?
     - tug: aspect ratio, vga/dp (,wlan) available ?
 * Research:
     - sb : better permutations?
