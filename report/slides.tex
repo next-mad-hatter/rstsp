@@ -82,7 +82,7 @@
 \definecolor{red}{rgb}{0.6,0.1,0}
 \definecolor{green}{rgb}{0.68,0.74,0.38}
 \def\todo{\color{red}}
-\def\board{{\color{green} [Illustrate/Board?]}}
+\def\board{{\color{green} [Optional: board.]}}
 % FIXME: automate?
 \def\eqitspace{\vspace{-5mm}}
 
@@ -184,14 +184,14 @@
 \begin{slide}{Traveling Salesman Problem}
 \begin{itemize}
   \item
-  Cost matrix: $C = \left(c_{ij}\right) \in~\mathbb{R}^{n \times n},
+  Cost matrix: $C = \left(c_{i,j}\right) \in~\mathbb{R}^{n \times n},
     \quad n \in \mathbb{N} \left(n \geq 2\right)$.
   \item
   Path cost:
   \vspace{-2mm}
   \begin{equation}
     \omega_C: \mathcal{P}_n \to \mathbb{R}, \quad
-    \left(p_1,p_2,\ldots,p_m\right) \mapsto \sum_{k=1}^{m-1} c_{p_k p_{k+1}}.
+    \left(p_1,p_2,\ldots,p_m\right) \mapsto \sum_{k=1}^{m-1} c_{p_k,p_{k+1}}.
   \end{equation}
   \eqitspace%
   \item
@@ -267,7 +267,7 @@
     p_1 & p_2 & \cdots &  p_n
   \end{pmatrix},
   \\
-  & \mathcal{S}_n \ldots \text{symmetric group (on }\mathcal{N} \text{)}.
+  & \mathcal{S}_n \ldots \text{symmetric group (on }\mathcal{N}_n \text{)}.
   \end{split}
   \end{align}
 \eqitspace%
@@ -311,7 +311,7 @@
   q_j > q_{j+1} \; & \forall j \in \mathcal{N}_{m-1}.
   \end{cases}
   \end{align}
-  \eqitspace%
+  %\eqitspace%
   \item
   All pyramidal tours: neighbourhood $\operatorname{Pyr}_n$ of
   $\tau^\ast = \left(1, 2, \ldots, n, 1\right)$.
@@ -390,8 +390,8 @@
 \vspace{-3mm}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.59\textwidth]{../plot/build/trace_apyr.eps}
-  \caption{Pyramidal aTSP: recursion tree.}
+  \includegraphics[width=0.58\textwidth]{../plot/build/trace_apyr.eps}
+  \caption{Pyramidal aTSP: recursion tree ($n = 5$).}
 \end{figure}
 \end{slide}
 
@@ -420,102 +420,139 @@
     \item
     not always feasible (see next section).
   \end{itemize}
+  \item \board
   \end{itemize}
 \end{slide}
 
-\begin{slide}{Strongly Balanced Tours}
+\begin{slide}[toc=Strongly Balanced Tours]{Strongly Balanced Tours: Motivation}
   \begin{itemize}
   \item
-  {\todo TODO:} mention four point conditions, pyramidal and balanced tours.
+  Four-point conditions: restrict set of cost matrices $\left(c_{i,j}\right)$.
   \item
-  Relaxed Supnick TSP: NP-hard.
+    Demidenko condition:
+    \begin{equation}
+      c_{i,j} + c_{k,l} \leq c_{i,k} + c_{j,l} \quad
+      \forall \; 1 \leq i < j < k < l \leq n
+    \end{equation}
+    $\Rightarrow$
+    TSP pyramidally solvable.
   \item
-  Strongly Balanced Tours:
+    Relaxed Supnick TSP:
+    \begin{equation}
+      c_{i,k} + c_{j,l} \leq c_{i,l} + c_{j,k} \quad
+      \forall \; 1 \leq i < j < k < l \leq n
+    \end{equation}
+    NP-hard, symmetric.
+    \item
+    Strongly balanced tours:
     \begin{itemize}
-    \item symmetric TSP;
-    \item exponential subset of RS-TSP;
-    \item polynomially solvable;
-    \item first implementation: herein.
+      \item subset of RS-TSP;
+      \item polynomially solvable;
+      \item first implementation: herein.
     \end{itemize}
   \end{itemize}
 \end{slide}
 
-\begin{slide}[toc=]{S.\ B.\ Tours: Construction}
+\begin{slide}[toc=]{Strongly Balanced Tours: Construction}
   \begin{itemize}
     \item
-    Partial path: set of (unoriented) paths $[a,b] = \left(a,\ldots,b\right)$.
+    Partial path: set of (unoriented) paths $\left[a,b\right] = \left(a,\ldots,b\right)$.
     \item
     Recursive construction:
     \begin{align}
-      \mathcal{B}_1 = & \left\{\left(1\right)\right\};
+      \begin{split}
+      \mathcal{B}_1 = & \left\{ \left\{\left(1\right)\right\} \right\};
       \\
       \mathcal{B}_m = & \bigcup_{\tau \in \mathcal{B}_{m-1}}
         \left(
-        \left\{
-            \operatorname{add}\left(\tau,m\right),
-            \operatorname{append}\left(\tau,m\right)
-        \right\} \cup
+        %\left\{
+        \operatorname{add}\left(\tau,m\right)
+        \cup
+        \operatorname{append}\left(\tau,m\right)
+        %\right\}
+        \cup
         \operatorname{merge}\left(\tau,m\right)
-        \right)
+        \right),
+      \end{split}
     \end{align}
-    %where
-    %\begin{align}
-    %  \operatorname{add}\left(\tau,m\right) = & \; \tau \cup \left\{\left(m\right)\right\}; \\
-    %  \operatorname{append}\left(\tau,m\right) = & \;
-    %    \tau \setminus \left\{\left[m_1,m_2\right]\right\}
-    %    \cup \left\{\left(m\right)\oplus\left[m_1,m_2\right]\right\} \\
-    %    & \; \text{for} \; \tau = \left\{ \left[m_i,m_{i+1}\right] \right\}_{i \in I}
-    %    \text{and} \; m_1 = \min_{k \in I \cup 1+I}\left\{m_k\right\}, \\
-    %  \operatorname{merge}\left(\tau,n\right) = & \;
-    %    \left\{
-    %      \tau \setminus \left\{\left[m_1,m_2\right],\left[m_3,m_4\right]\right\}
-    %      \cup \left\{\left[m_2,m_1\right]\oplus\left<n\right>\oplus\left[m_3,m_4\right]\right\}
-    %    \right\} \\
-    %    & \; \text{for} \; \tau, m_1 \; \text{as above,}
-    %      \; m_3 = \min_{\substack{k \in I \cup 1+I\\\ k \neq 1, k \neq 2}}\left\{m_k\right\}.
-    %\end{align}
-    %Here multiple appearances of $[.,.]$ notation with same indexes refer to same paths.
-    %Also note how $\operatorname{merge}\left(\tau,m\right)$ is empty if there is no $m_3$
-    %satisfying the constraints.
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.37\textwidth]{../plot/build/bal.eps}
-    \caption{%
-      {\board TODO:} illustrate.
-    }
-  \end{figure}
+    where for
+        $ \tau = \left\{ \pi_1, \pi_2, \ldots \right\} $
+        with
+        $
+        \pi_i = \left[m_i,m_i^\prime\right], \;
+        m_i \leq m_i^\prime \; \forall i, \;
+        m_1 < m_2 < m_3 < \ldots ,
+        $
+    \begin{align}
+      \begin{split}
+        \operatorname{add}\left(\tau,m\right) & \coloneqq \tau \cup \left\{ \left(m\right) \right\},
+        \\
+        \operatorname{append}\left(\tau,m\right) & \coloneqq \tau \setminus \pi_1 \cup \left\{ \left(m\right) \oplus \pi_1 \right\},
+        \\
+        \operatorname{merge}\left(\tau,m\right) & \coloneqq
+        \begin{cases}
+          \varnothing, & \lvert\tau\rvert < 2,
+          \\
+          \tau \setminus \left\{\pi_1,\pi_2\right\} \cup \left\{ \operatorname{rev}\left(\pi_1\right) \oplus \left(m\right) \oplus \pi_2 \right\} & o.w..
+        \end{cases}
+      \end{split}
+    \end{align}
+    \eqitspace%
+  %\begin{figure}[H]
+  %  \centering
+  %  \includegraphics[width=0.05\textwidth]{../plot/build/bal.eps}
+  %  \caption{ \board }
+  %\end{figure}
+  \item
+    Strongly balanced tours: $\mathcal{T}_n \cap \mathcal{B}_n$.
+  \item
+    Neighbourhood of $\tau^\ast =
+      \left( \ldots \; 5 \; 3 \; 1 \; 2 \; 4 \; \ldots \right).$
+  \item
+    \board
   \end{itemize}
 \end{slide}
 
-\begin{slide}[toc=]{S.B.\ Tours: Time Complexity}
+\begin{slide}[toc=]{S.B.\ Tours: Dynamic Programming}
   \begin{itemize}
   \item
-    S.\ B.\ recursion node $N$:
+    Recursive construction $\rightarrow$ dynamic programming solution (analogous to pyramidal case):
+    \begin{itemize}
+    \item
+      S.\ B.\ recursion tree node:
+      $
+      \left(m \in \mathbb{N}, \;
+      \text{set of (unoriented) pairs} \; \left\{a_i,b_i\right\} \right).
+      $
+      %\eqitspace%
+    \item
+      Yields, for each node,
+      \begin{quote}
+      {\itshape
+        a minimum cost set of paths through cities larger than $m$
+        which, per path concatenation, complements given intervals to a single cycle.
+      }
+      \end{quote}
+    \end{itemize}
+  \item
+    Number of intervals bounded by constant $M$ $\;\Rightarrow\; \mathcal{O}\left(n^{2M}\right)$ time complexity.
+  \item
+    Node type:
     \begin{equation}
-    \left(m \in \mathbb{N}, \;
-      \left\{ \text{(unoriented) pairs} \; [a_i,b_i] \right\} \right).
-    \end{equation}
-    % FIXME
-    \vspace{-5mm}
-  \item
-    Compute, for $N$,
-    \begin{quote}
-    {\small \itshape
-      a minimum cost set of paths through cities larger than $m$
-      which complements given intervals to a single cycle.
-    }
-    \end{quote}
-  \item
-    Number of intervals bounded $\;\Rightarrow\; \mathcal{O}\left(n^d\right)$;
-    conjecture: $\;\mathcal{O}\left(n\right)$. % (stable node set characteristic).
+    \chi : \left(m,\left\{\left\{a_i,b_i\right\}\right\}\right)
+    \mapsto
+     \left\{\left\{m-a_i,m-b_i\right\}\right\};
+   \end{equation}
+   conjecture: number of node types in recursion tree limited
+   $\rightarrow \; \mathcal{O}\left(n\right)$ time.
     {\small
     \begin{table}[htpb]
     \centering
     \begin{tabular}{cSc}
       \toprule
-      {\bfseries Node size, $\leq$ } &
-      {\bfseries Characteristic size, $\leq$} &
-      {\bfseries Depth } \\
+      {\bfseries $M$ } &
+      {\bfseries Node types, $\leq$} &
+      {\bfseries Recursion depth } \\
       \midrule
       %2 &     16 &  7 \\
       3 &    121 & 13 \\
@@ -524,18 +561,17 @@
       6 & 107176 & 37 \\
       \bottomrule
     \end{tabular}
+    \caption{Total number of nodes encountered. \board}
     \end{table}
     }
-  \item
-  Local Search: good extension?
   \end{itemize}
 \end{slide}
 
-\begin{slide}[toc=]{S.\ B.\ Tours: Recursion Graph}
+\begin{slide}[toc=]{Strongly Balanced Tours: Recursion Tree}
   \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{../plot/build/trace_bal.eps}
-    \caption{Strongly balanced (s)TSP: recursion tree.}
+    \caption{Strongly balanced (s)TSP: recursion tree ($M=2,n=8$).}
   \end{figure}
 \end{slide}
 
@@ -578,8 +614,7 @@
       \tau \in F_T\left(\tau\right) \; \forall \tau \in \mathcal{T}_n, \; F_T\left(\tau^\ast\right) = T
     \end{equation*} hold true.
   \item
-  {\todo TODO:} describe solving reordered TSP?
-  \board illustrate?
+    \board
   \end{itemize}
 \end{slide}
 
@@ -612,7 +647,7 @@
     \end{equation}
     better set possible?
   \item
-  {\todo TODO:} illustrate?
+    \board
   \end{itemize}
 \end{slide}
 
@@ -650,45 +685,46 @@
 \end{slide}
 
 % TODO: use onslide?
-\begin{slide}[toc=Measured Time]{Measured Time}
+\begin{slide}[toc=Benchmarks: Time]{Measured Time: Local Search}
   \begin{figure}[H]
     \centering
       \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_steady.ps}
   \end{figure}
 \end{slide}
-\begin{slide}[toc=]{Measured Time}
+\begin{slide}[toc=]{Measured Time: Local Search}
   \begin{figure}[H]
     \centering
       \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_fast.ps}
   \end{figure}
 \end{slide}
-\begin{slide}[toc=]{Pyramidal vs S.\ B.\ Time}
+\begin{slide}[toc=]{Measured Time: Local Search}
   \begin{figure}[H]
     \centering
       \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_low.ps}
   \end{figure}
 \end{slide}
-\begin{slide}[toc=]{Pyramidal vs S.\ B.\ Time}
+\begin{slide}[toc=]{Local Search: Pyramidal vs S.\ B.\ Time}
   \begin{figure}[H]
     \centering
       \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_med.ps}
   \end{figure}
 \end{slide}
-\begin{slide}[toc=]{Pyramidal vs S.\ B.\ Time}
+\begin{slide}[toc=]{Local Search: Pyramidal vs S.\ B.\ Time}
   \begin{figure}[H]
     \centering
       \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_hi.ps}
   \end{figure}
 \end{slide}
 
-\begin{slide}[toc=Tours Computed]{Synthetic Results}
+\begin{slide}[toc=Benchmarks: Solutions]{Tour Quality: Synthetic Results}
   \begin{figure}[H]
     \centering
     \includegraphics[width=0.86\textwidth]{../plot/build/random_val.ps}
+    \caption{Tour Quality: local search and heuristics.}
   \end{figure}
 \end{slide}
 
-\begin{slide}[toc=]{TSPLIB Benchmarks}
+\begin{slide}[toc=]{Tour Quality: TSPLIB Benchmarks}
   \begin{figure}[H]
     \centering
     \includegraphics[width=0.74\textwidth]{../plot/build/tsplib_val.eps}
@@ -696,7 +732,7 @@
   \end{figure}
 \end{slide}
 
-\begin{slide}[toc=]{TSPLIB: Measured Time}
+\begin{slide}[toc=]{Measured Time: TSPLIB Benchmarks}
   \begin{figure}[H]
     \centering
     \includegraphics[width=0.74\textwidth]{../plot/build/tsplib_time.eps}

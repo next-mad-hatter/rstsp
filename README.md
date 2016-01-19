@@ -61,7 +61,7 @@
    ```
           ./bin/plot.sh
    ```
-   will plot results of previous test run (requires `ruby` & `gnuplot`).
+   will plot results of previous test run (requires `ruby`, `gnuplot`, `matplotlib`, `pandas`, `seaborn`, `metapost`, `imagemagick` and probably more).
    Generated plots will be put to `./plot/out` folder.
 
 ### Generating report
