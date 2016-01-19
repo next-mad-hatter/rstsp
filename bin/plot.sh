@@ -21,6 +21,7 @@ mkdir -p build || exit 1
 
 ./mk_csv_tsplib.rb
 ./plot_tsplib.gpi
+./plot_tsplib.py
 
 ../src/rstsp/build/rstsp.mlton -o /dev/null -t p ../test/data/random/random.5 -l ./data/trace_pyr.dot > /dev/null
 ../src/rstsp/build/rstsp.mlton -o /dev/null -t b -m 2 ../test/data/random/random.8 -l ./data/trace_bal.dot > /dev/null
@@ -33,7 +34,7 @@ COLOR=#796045
 #done
 
 cd ./build
-for file in {tsplib,mlton,random_val}*.pdf; do
+for file in {tsplib_time,mlton,random_val}*.pdf; do
   pdf2ps ${file}
 done
 
