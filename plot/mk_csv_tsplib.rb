@@ -99,7 +99,10 @@ end
                               "r#{max_rot||"def"}",
                               "a#{min_rot||"def"}",
                               "f#{flip||"def"}" ].join("_")
-                  File.open(DATA_DIR + "/#{filename}.csv", "w+"){ |f| f.write(csv_str)}
+                  File.open(DATA_DIR + "/#{filename}.csv", "w+"){ |f|
+                    #f.write("case val\n")
+                    f.write(csv_str)
+                  }
                 end
               end
             end

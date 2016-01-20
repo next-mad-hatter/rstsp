@@ -21,6 +21,8 @@ mkdir -p build || exit 1
 
 ./mk_csv_tsplib.rb
 ./plot_tsplib.gpi
+./plot_tsplib.py
+./plot_tsplib_times.py
 
 ../src/rstsp/build/rstsp.mlton -o /dev/null -t p ../test/data/random/random.5 -l ./data/trace_pyr.dot > /dev/null
 ../src/rstsp/build/rstsp.mlton -o /dev/null -t b -m 2 ../test/data/random/random.8 -l ./data/trace_bal.dot > /dev/null
@@ -41,4 +43,7 @@ for file in ../mp/*.mp; do
   mpost ${file}
 done
 # FIXME: ugly
-convert ../data/sketch.png -negate -background ${COLOR} -alpha Shape -density 150 bal.eps
+convert ../data/sketch.png -negate -background ${COLOR} -fill '#FFF3BF' -alpha Shape -density 150 bal.eps
+#convert ../data/sketch.png -negate -background ${COLOR} -alpha Shape bal.bmp
+#mkbitmap -f 2 -s 2 -g -t 0.50 bal.bmp -o bal.pgm
+#potrace bal.bmp -e -o bal.eps

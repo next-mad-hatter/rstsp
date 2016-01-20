@@ -11,6 +11,7 @@
     - complete the source readme
     - wiki / bug tracker ?
     - script via cmake ?
+    - report: "build what" option
 * Report:
     - TUG logo
     - writeup (see FIXMEs)
@@ -22,14 +23,11 @@
     - sml support: can the pandoc -> rst way be pretty-fixed?
 * Slides:
     - throw out things
-    - complete plots & illustrations
+    - complete illustrations
     - rerun tests with proper cooling
-    - gnuplot: better captions
+    - plots: font shapes ?
     - add overlays
-    - graphviz font ?
-    - handouts ?
-    - second slides set with exact definitions ?
-    - tsplib results: histboxplot with outliers -- matplotlib/bokeh/ggplot/vincent/seaborn ?
+    - handouts + notes ?
     - tug: aspect ratio, vga/dp (,wlan) available ?
 * Research:
     - sb : better permutations?
