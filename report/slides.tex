@@ -6,20 +6,20 @@
 %
 
 \documentclass[
-%%  size=10pt,
   size=8pt,
-%%  style=paintings,
   style=klope,
 %%  style=jefka,
-%%  style=aggie,
+%%  style=paintings,
   paper=screen,
 %%  orient=portrait,
+  mode=present,
 %%  mode=handout,
 %%  display=slidesnotes,
+  nohandoutpagebreaks,
   pauseslide,
-  nopagebreaks,
   hlsections,
-  fleqn
+  fleqn,
+%%  clock
 ]{powerdot}
 
 %% paintings palettes: Syndics (the default), Skater , GoldenGate , Lamentation , HolyWood , Europa , Moitessier , MayThird , PearlEarring and Charon
@@ -78,6 +78,8 @@
 \usepackage{booktabs}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
+%\newcommand*{\Cdot}{\raisebox{-0.25ex}{\scalebox{1.2}{$\cdot$}}}
+\newcommand*{\Cdot}{\raisebox{-0.30ex}{\scalebox{1.5}{$\cdot$}}}
 \let\defstyle\itshape%
 \definecolor{red}{rgb}{0.6,0.1,0}
 \definecolor{green}{rgb}{0.68,0.74,0.38}
@@ -169,7 +171,7 @@
       & p \in \mathcal{P}_n, q \notin \mathcal{P}_n;
       \\
       \left\{p^\prime \oplus q^\prime \; \vert \; p^\prime \in p, q^\prime \in q\right\},
-      & p \notin \mathcal{P}_n, q \notin \mathcal{P}_n.
+      & p \notin \mathcal{P}_n, q \notin \mathcal{P}_n
     \end{cases}
     \end{split}
   \end{align}
@@ -180,7 +182,7 @@
       \left(p_1,p_2,\ldots,p_{m-1},p_m\right) \mapsto \left(p_m,p_{m-1},\ldots,p_2,p_1\right).
     \end{equation}
 \end{itemize}
-\board
+%\board
 \end{slide}
 
 \begin{slide}{Traveling Salesman Problem}
@@ -258,7 +260,7 @@
   Associated permutation:
   \begin{align}
   \begin{split}
-    \sigma_\bullet :
+    \sigma_{\Cdot} :
     \mathcal{T}_n \to \; & \mathcal{S}_n, \quad
     \tau = \left(p_1, p_2, \ldots, p_n, p_1 \right)
     \mapsto
@@ -465,6 +467,9 @@
       \mathcal{B}_1 = & \left\{ \left\{\left(1\right)\right\} \right\};
       \\
       \mathcal{B}_m = & \bigcup_{\tau \in \mathcal{B}_{m-1}}
+      %\mathcal{B}_1 = \left\{ \left\{\left(1\right)\right\} \right\};
+      %\qquad
+      %\mathcal{B}_m = \bigcup_{\tau \in \mathcal{B}_{m-1}}
         \left(
         %\left\{
         \operatorname{add}\left(\tau,m\right)
@@ -481,7 +486,8 @@
         with
         $
         \pi_i = \left[m_i,m_i^\prime\right], \;
-        m_i \leq m_i^\prime \; \forall i, \;
+        m_i \leq m_i^\prime%\footnote{reverse where needed}
+        \; \forall i, \;
         m_1 < m_2 < m_3 < \ldots ,
         $
     \begin{align}
@@ -498,35 +504,42 @@
         \end{cases}
       \end{split}
     \end{align}
-    \eqitspace%
-  %\begin{figure}[H]
-  %  \centering
-  %  \includegraphics[width=0.05\textwidth]{../plot/build/bal.eps}
-  %  \caption{ \board }
-  %\end{figure}
+    %\eqitspace%
+    \vspace{-3mm}
   \item
-    Strongly balanced tours: $\mathcal{T}_n \cap \mathcal{B}_n$.
-  \item
-    Neighbourhood of $\tau^\ast =
+    Strongly balanced tours:
+    \begin{equation}
+      \tau \in \mathcal{T}_n : \left\{\tau\right\} \in \mathcal{B}_n,
+    \end{equation}
+    neighbourhood of $\tau^\ast =
       \left( \ldots \; 5 \; 3 \; 1 \; 2 \; 4 \; \ldots \right).$
   \end{itemize}
-  \board
+  %\board
 \end{slide}
 
-\begin{slide}[toc=]{S.B.\ Tours: Dynamic Programming}
+\begin{slide}[toc=]{S.B.\ Tours: Dynamic Programming Solution}
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.69\textwidth]{../plot/build/bal.1}
+      \caption{
+        Strongly balanced path construction options: choose $m$ to be adjacent to $m_1$, both $m_1$ and $m_2$, or none of the two.
+       %For tours, we make the additional requirement for $n$ to be added to single paths only.
+     }
+    \end{figure}
   \begin{itemize}
   \item
-    Recursive construction $\rightarrow$ dynamic programming solution (analogous to pyramidal case):
+    Recursive construction $\rightarrow$ dynamic programming solution (analogous to pyramidal case).
     \begin{itemize}
     \item
       S.\ B.\ recursion tree node:
-      $
-      \left(m \in \mathbb{N}, \;
-      \text{set of (unoriented) pairs} \; \left\{a_i,b_i\right\} \right).
-      $
-      %\eqitspace%
+      \begin{equation}
+      \left(m, \;
+      \left\{\left\{a_i,b_i\right\} \mid i \in I\right\}\right)
+       \in \mathcal{N}_n \times 2^{\mathcal{N}_n}.
+      \end{equation}
+      \eqitspace%
     \item
-      Yields, for each node,
+      Solution yields, for each node,
       \vspace{2mm}
       \begin{quote}
       {\itshape
@@ -539,34 +552,6 @@
     \eqitspace%
   \item
     Number of intervals bounded by constant $M$ $\;\Rightarrow\; \mathcal{O}\left(n^{2M}\right)$ time complexity.
-  \item
-    Node type:
-    \begin{equation}
-    \chi : \left(m,\left\{\left\{a_i,b_i\right\}\right\}\right)
-    \mapsto
-     \left\{\left\{m-a_i,m-b_i\right\}\right\};
-   \end{equation}
-   conjecture: number of node types in recursion tree limited
-   $\rightarrow \; \mathcal{O}\left(n\right)$ time.
-    {\small
-    \begin{table}[htpb]
-    \centering
-    \begin{tabular}{cSc}
-      \toprule
-      {\bfseries $M$ } &
-      {\bfseries Node types, $\leq$} &
-      {\bfseries Recursion depth } \\
-      \midrule
-      %2 &     16 &  7 \\
-      3 &    121 & 13 \\
-      4 &   1074 & 20 \\
-      5 &  10387 & 28 \\
-      6 & 107176 & 37 \\
-      \bottomrule
-    \end{tabular}
-    \caption{Total number of nodes encountered. \board}
-    \end{table}
-    }
   \end{itemize}
 \end{slide}
 
@@ -578,13 +563,49 @@
   \end{figure}
 \end{slide}
 
+\begin{slide}[toc=]{S.B.\ Tours: Linear Time Conjecture}
+  \begin{itemize}
+  \item
+    Node type:
+    \begin{equation}
+    \chi : \left(m,\left\{\left\{a_i,b_i\right\}\right\}\right)
+    \mapsto
+     \left\{\left\{m-a_i,m-b_i\right\}\right\}.
+   \end{equation}
+   \eqitspace%
+   \item
+   Conjecture: number of node types in recursion tree limited
+   $\rightarrow \; \mathcal{O}\left(n\right)$ time.
+    %{\small
+    \begin{table}[htpb]
+    \centering
+    \begin{tabular}{cSc}
+      \toprule
+      {\bfseries $M$ } &
+      {\bfseries Node types} &
+      {\bfseries Recursion depth } \\
+      \midrule
+      2 &     16 &  7 \\
+      3 &    121 & 13 \\
+      4 &   1074 & 20 \\
+      5 &  10387 & 28 \\
+      6 & 107176 & 37 \\
+      \bottomrule
+    \end{tabular}
+    \caption{Total number of nodes encountered by depth first search.}
+    \end{table}
+    %}
+  \end{itemize}
+  \board
+\end{slide}
+
 \begin{slide}{Tours and Permutations: Tour Sets as Neighbourhoods}
   \begin{itemize}
   \item
   Associated permutation:
   \begin{align}
   \begin{split}
-    \sigma_\bullet & :
+    \sigma_{\Cdot} & :
     \mathcal{T}_n \to \; \mathcal{S}_n, \quad
     \tau = \left(p_1, p_2, \ldots, p_n, p_1 \right)
     \mapsto
@@ -594,7 +615,7 @@
     p_1 & p_2 & \cdots &  p_n
   \end{pmatrix},
   \\
-  \pi & \coloneqq \left(\sigma_{\bullet}\right)^{-1}.
+  \pi & \coloneqq \left(\sigma_{\Cdot}\right)^{-1}.
   \end{split}
   \end{align}
   \eqitspace%
@@ -625,9 +646,9 @@
   \item
     Flower: extend set of tours $T$ via permutations in $S \subseteq \mathcal{S}_n$:
     \begin{equation}
-      \mathcal{F}\left(S,T\right) \coloneqq \pi\left(\left\{ s \circ \sigma_\tau \mid s \in S, \tau \in T\right\}\right);
+      \mathcal{F}\left(S,T\right) \coloneqq \pi\left(\left\{ s \circ \sigma_\tau \mid s \in S, \tau \in T\right\}\right) \cup T;
     \end{equation}
-  choose best tour from $\lvert S \rvert$ candidates.
+  choose best tour from $\lvert S \rvert+1$ local search results.
   \item
     Pyramidal ILS:
     \begin{equation}

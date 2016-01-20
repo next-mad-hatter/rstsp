@@ -66,8 +66,8 @@ endfig;
 beginfig(3)
   numeric u;
   u = 1.69mm;
-  dx = 5u;
-  dy = 1.4u;
+  dx = 6u;
+  dy = 1.7u;
   %796045
   drawoptions(withcolor (121/255,96/255,69/255));
   for i = 0 upto 7:
@@ -85,7 +85,7 @@ beginfig(3)
   l[1] = "2";
   l[2] = "4";
   l[3] = "";
-  l[4] = "n";
+  l[4] = "";
   l[5] = "";
   l[6] = "3";
   l[7] = "1";
@@ -94,6 +94,7 @@ beginfig(3)
     draw (x[i],y[i]) withpen pencircle scaled 0.70;
     xdotlabel.top(l[i], z[i]) withpen pencircle scaled 3.14;
   endfor
+  xdotlabel.top(btex $n$ etex, z[4]) withpen pencircle scaled 3.14;
   for i = 0,1,6:
     draw z[i]--z[i+1] withpen pencircle scaled 0.69;
   endfor
