@@ -12,8 +12,8 @@
 %%  style=paintings,
   paper=screen,
 %%  orient=portrait,
-  mode=present,
-%%  mode=handout,
+%%  mode=present,
+  mode=handout,
 %%  display=slidesnotes,
   nohandoutpagebreaks,
   pauseslide,
@@ -316,7 +316,7 @@
   \end{align}
   %\eqitspace%
   \item
-  All pyramidal tours: neighbourhood $\operatorname{Pyr}_n$ of
+  All pyramidal tours: neighbourhood\footnote{justified later} $\operatorname{Pyr}_n$ of
   $\tau^\ast = \left(1, 2, \ldots, n, 1\right)$.
   \begin{figure}[H]
     \centering
@@ -511,7 +511,7 @@
     \begin{equation}
       \tau \in \mathcal{T}_n : \left\{\tau\right\} \in \mathcal{B}_n,
     \end{equation}
-    neighbourhood of $\tau^\ast =
+    neighbourhood\footnote{justified later} of $\tau^\ast =
       \left( \ldots \; 5 \; 3 \; 1 \; 2 \; 4 \; \ldots \right).$
   \end{itemize}
   %\board
@@ -596,7 +596,7 @@
     \end{table}
     %}
   \end{itemize}
-  \board
+  %\board
 \end{slide}
 
 \begin{slide}{Tours and Permutations: Tour Sets as Neighbourhoods}
@@ -632,13 +632,17 @@
         \left\{ \sigma_{\tau} \circ \sigma_{\tau^\ast}^{-1} \circ \sigma_{\tau^\prime} \mid \tau^{\prime} \in T\right\}
       \right);
     \end{equation}
-    i.e.\ $T$ as permutations of $\tau^\ast \; \rightarrow $ permutations of $\tau$;
-    here
-    \begin{equation*}
-      \tau \in F_T\left(\tau\right) \; \forall \tau \in \mathcal{T}_n, \; F_T\left(\tau^\ast\right) = T
-    \end{equation*} hold true.
+    i.e.\ $T$ as permutations of $\tau^\ast \; \rightarrow $ permutations of $\tau$.
   \end{itemize}
-  \board
+  \vspace{-2mm}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{../plot/build/ext.1}
+    \caption{%
+      Tour sets as neighbourhoods:
+      $\tau \in F_T\left(\tau\right) \; \forall \tau \in \mathcal{T}_n, \; F_T\left(\tau^\ast\right) = T$ hold true.
+    }
+  \end{figure}
 \end{slide}
 
 \begin{slide}{Local Search and Flowers}
