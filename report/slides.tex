@@ -324,7 +324,6 @@
     \caption{%
       For a pyramidal tour $\tau$,
       connected plot of $\sigma_\tau$'s
-      (acting on $\tau$)
       graph resembles a pyramid (here: $n = 5$).
     }
   \end{figure}
@@ -543,8 +542,10 @@
       \vspace{2mm}
       \begin{quote}
       {\itshape
-        a minimum cost set of paths through cities larger than $m$
-        which, per path concatenation, complements given intervals to a single cycle.
+        a minimum cost set of paths belonging to a single element of $\mathcal{B}_n$
+        through cities larger than $m$ (and having end points in given intervals)
+        which, per path concatenation, complements said
+        intervals to a single cycle.
       }
       \end{quote}
       \vspace{2mm}
@@ -779,8 +780,9 @@
   \item
   Open Tasks:
     \begin{itemize}
-      \item implement BFS $\rightarrow$ confirm complexity conjecture for small sizes;
-    \item generate \& benchmark RS-TSP instances.
+      \item implement BFS
+      \item generate \& benchmark RS-TSP instances;
+      \item confirm complexity conjecture for larger sizes.
     \end{itemize}
   \item
   Open Questions:

@@ -11,7 +11,7 @@ SUBMISSION=report
 REPORT_DIR=`realpath ${0%/*}`
 trap "exit 1" INT QUIT TERM
 
-cd "${REPORT_DIR}"
+cd "${REPORT_DIR}" || exit 1
 pandoc -f rst -t latex ../doc/sml-support.rst  > sml-support.tex
 ctags -Ra .
 
