@@ -508,7 +508,11 @@
   \item
     Strongly balanced tours:
     \begin{equation}
-      \tau \in \mathcal{T}_n : \left\{\tau\right\} \in \mathcal{B}_n,
+      %\tau \oplus \left(\sigma_\tau\left(1\right)\right) \in \mathcal{T}_n : \left\{\tau\right\} \in \mathcal{B}_n,
+      \overline{\tau} \in \mathcal{T}_n : \left\{\tau\right\} \in \mathcal{B}_n,
+      \qquad
+      \text{where} \;
+      \overline{\tau} \coloneqq \tau \oplus \left(\sigma_\tau\left(1\right)\right);
     \end{equation}
     neighbourhood\footnote{justified later} of $\tau^\ast =
       \left( \ldots \; 5 \; 3 \; 1 \; 2 \; 4 \; \ldots \right).$
@@ -542,11 +546,17 @@
       \vspace{2mm}
       \begin{quote}
       {\itshape
-        a minimum cost set of paths belonging to a single element of $\mathcal{B}_n$
-        through cities larger than $m$
-        (with end points given by the sets $\left\{a_i,b_i\right\}$)
-        which, per path concatenation, complements said
-        sets (seen as paths) to a single cycle.
+        a minimum cost set of paths
+        (through all cities larger than $m$)
+        with end points given by the sets $\left\{a_i,b_i\right\}$
+        %belonging to a single element of $\mathcal{B}_n$
+        %all reachable through a single $\operatorname{add}$, $\operatorname{append},$
+        %or $\operatorname{merge}$ of $m+1$,
+        which, per path concatenation,
+        complements the corresponding element of $B_m$ to a
+        single path element of $B_n$.
+        %complements said sets (seen as paths) to a single cycle
+        %and  subpaths of (can be extended to) a single strongly balanced tour.
       }
       \end{quote}
       \vspace{2mm}
@@ -601,7 +611,7 @@
   %\board
 \end{slide}
 
-\begin{slide}{Tours and Permutations: Tour Sets as Neighbourhoods}
+\begin{slide}[toc=Tour Sets as Neighbourhoods]{Tours and Permutations: Tour Sets as Neighbourhoods}
   \begin{itemize}
   \item
   Associated permutation:
