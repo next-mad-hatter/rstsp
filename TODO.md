@@ -14,20 +14,18 @@
     - report: "build what" option
 * Report:
     - TUG logo
+    - authors check
     - writeup (see FIXMEs)
-    - compute tree width (bfs?) for info
-    - bar plots: combine patterns and color
-    - metapost vs tikz vs asymptote ?
-    - gnuplot vs matplotlib vs pgf ?
-    - dot2tex ?
+    - compute tree width (bfs) for info ?
+    - plots: palette dependant on slides/report inclusion
     - sml support: can the pandoc -> rst way be pretty-fixed?
 * Slides:
-    - throw out things
-    - complete illustrations
-    - rerun tests with proper cooling
+    - throw out things ?
     - plots: font shapes ?
+    - rerun tests with proper cooling
     - add overlays
     - handouts + notes ?
+    - plots: color dependent on handout/present mode
     - tug: aspect ratio, vga/dp (,wlan) available ?
 * Research:
     - sb : better permutations?
