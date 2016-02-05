@@ -35,7 +35,7 @@ COLOR=#796045
 #done
 
 cd ./build
-for file in {tsplib,mlton,random_val}*.pdf; do
+for file in {tsplib*hist*,mlton,random_val}*.pdf; do
   pdf2ps ${file}
 done
 
