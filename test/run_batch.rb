@@ -89,7 +89,8 @@ class Batch
         opts[:data]
       end
     raise FormatError if opts[:timeout] and !(opts[:timeout].is_a? Numeric)
-    cmd
+    # this forces open3 to use the shell, making execs not found result in a stderr message instead of raising an exception here
+    cmd + ";"
   end
 
   def self.run_batch(batch, printer)
