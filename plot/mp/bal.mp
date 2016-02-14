@@ -29,8 +29,10 @@ beginfig(1)
   u = 2.69mm;
   dx = 5u;
   dy = 1.4u;
-  %796045
-  drawoptions(withcolor (121/255,96/255,69/255));
+  if outputformat="eps":
+    %796045
+    drawoptions(withcolor (121/255,96/255,69/255));
+  fi;
   for i = 1 upto 7:
     x[i] = i * dx;
   endfor

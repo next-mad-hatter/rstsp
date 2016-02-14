@@ -17,16 +17,13 @@
     - authors check
     - writeup (see FIXMEs)
     - compute tree width (bfs) for info ?
+    - extend node types info
     - plots: palette dependant on slides/report inclusion
     - sml support: can the pandoc -> rst way be pretty-fixed?
 * Slides:
-    - throw out things ?
-    - plots: font shapes ?
-    - rerun tests with proper cooling
-    - add overlays
-    - handouts + notes ?
+    - persistent handouts/notes build ?
+    - add overlays ?
     - plots: color dependent on handout/present mode
-    - tug: aspect ratio, vga/dp (,wlan) available ?
 * Research:
     - sb : better permutations?
     - study iter convergence
@@ -61,6 +58,7 @@
     - dotlog: invalid dir -> catch exception
     - pyrgraph: test & cleanup symmetric case
     - default searches: cleanup sb permutations
+    - precompute rotations set
     - implement bfs
     - make dotfile optional parameter to simplesearch (=dfs) & bfs
     - rot search: -a = -r -> ?

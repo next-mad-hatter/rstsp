@@ -6,6 +6,7 @@
 # $Rev: 34 $
 #
 
+import sys
 import seaborn as sns
 import pandas as pd
 
@@ -21,7 +22,11 @@ frame = pd.DataFrame()
 for d in data:
   frame[d[0]] = pd.read_csv(d[1], sep=" ", header=None, names=["inst", "time"], usecols = ["time"])
 
-color = '#796045'
+color = '#000000'
+format = 'pdf'
+if sys.argv[1] == "eps":
+  color = '#796045'
+  format = 'eps'
 sns.set(font_scale=1.41)
 sns.set_style("whitegrid",rc={
   "grid.color": color,
@@ -36,5 +41,4 @@ sns.axlabel("time needed", "") #"heuristic")
 ax = sns.boxplot(frame, orient="h")
 ax.get_figure().subplots_adjust(left=0.24)
 ax.set(xscale="log")
-ax.get_figure().savefig('build/tsplib_time.pdf', format='pdf', transparent=True)
-ax.get_figure().savefig('build/tsplib_time.eps', format='eps', transparent=True)
+ax.get_figure().savefig('build/tsplib_time.' + format, format=format, transparent=True)
