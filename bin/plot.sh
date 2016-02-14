@@ -17,8 +17,6 @@ mkdir -p build || exit 1
 
 . "${PROJ_DIR}"/bin/check_ruby.sh
 
-#./plot_num_types.gpi
-
 ./mk_csv_random.rb
 ./plot_random.gpi
 
@@ -51,13 +49,6 @@ cd ./build
 for file in ..//mp/*.mp; do
   mpost -s 'outputformat="eps"' -s 'outputtemplate="%j-%c.eps"' ${file}
   mpost -s 'outputformat="pdf"' -s 'outputtemplate="%j-%c.pdf"' ${file}
-done
-
-
-# TODO: gnuplot esp vs pdf colors
-
-for file in {tsplib*hist*,mlton,random_val}*.pdf; do
-  pdf2ps ${file}
 done
 
 
