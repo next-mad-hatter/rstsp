@@ -46,6 +46,7 @@
 %\usepackage{unicode-math}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{complexity}
 
 \usepackage{commath}
 \usepackage{mathtools}
@@ -179,7 +180,7 @@
 \selectlanguage{english}
 
 \title{Two Exponential Neighbourhoods}
-\subtitle{Pyramidal and strongly balanced traveling salesman problem and heuristics --- theory and implementation}
+\subtitle{Pyramidal and strongly balanced traveling salesman problem and related heuristics --- theory and implementation}
 % FIXME: supervisor format ?
 % FIXME: title pic / multitoc ?
 % FIXME: twosided / book format ?
@@ -193,19 +194,27 @@
 \begin{abstract}
   Pyramidal tours constitute a well known polynomially solvable case of TSP\@.
   In this paper we present a first implementation of a related tours family,
-  show extension of both solutions to local search heuristics and compare results thus obtained.
+  show extension of both solutions to local search heuristics
+  and compare results thus obtained.
 \end{abstract}
 
 \thispagestyle{empty}
 
 %\setlength{\cftbeforetoctitleskip}{-2em}
 \tocloftpagestyle{empty}
+%\afterpage{%
+%  \null
+%  \thispagestyle{empty}
+%  \vspace{\fill}
+%  \newpage
+%}
 \afterpage{\blankpage}
 \clearpage
 \tableofcontents
 
 %\setlength{\parindent}{0cm}
 
+\afterpage{\blankpage}
 \clearpage
 \dictum[Sherlock Holmes]{Nothing clears up a case so much as stating it to another person.}
 \section{Introduction}
@@ -224,12 +233,12 @@ This well studied problem in combinatorial optimization is known to be
 NP-hard \cite{Karp72}; hence, one is interested in efficiently solvable
 cases as well as useful heuristics, of which a good number exists.
 
-In this paper we look at two large sets of feasible solutions over which
-the TSP can be solved in polynomial time and extension of these to
+In this paper we look at two exponential sets of feasible solutions over
+which the TSP can be solved in polynomial time and extension of these to
 iterative heuristics.  For this, we need to establish some basic
 definitions first.
 
-\subsection{Definitions and notation}
+\subsection{Basic definitions and notation}
 
 The TSP, as most mathematical problems, can be modeled in a number of often
 equivalent or similar ways, depending on what aspects of the problem are
@@ -237,50 +246,98 @@ relevant to the task at hand --- which, for a problem as extensively studied
 as this one, results in a great number of common terms which from author to
 author can differ ever so slightly.
 
-Hence we need to establish a set of definitions which we shall try to keep
-precise enough to be able to convey this paper's content clearly,
-while also simple enough so as not to distract from it.
+%Hence we need to establish a set of definitions which we shall try to keep
+%precise enough to be able to convey this paper's content clearly,
+%while also simple enough so as not to distract from it.
+\annotation{TODO: improve description.}
+In what follows, our goal is to establish notation which can be easily
+(whenever possible, directly) interpreted as (functional) computer
+program.
 
-\begin{define}[Cities, paths and tours]
+\begin{define}[cities, paths and tours]
 Given some $n \in \mathbb{N} \left(n \geq 2\right)$,
 let \[\mathcal{N} \coloneqq \mathcal{N}_n \coloneqq \left\{1,\ldots,n\right\}.\]
 We will refer to elements of $\mathcal{N}$ as {\defstyle cities}.
 A non-empty tuple $\left(p_1,p_2,\ldots,p_m\right)$
-of cities is called a {\defstyle path} (of {\defstyle length} $m-1$ {\defstyle over} $\mathcal{N}$);
+of cities is called a {\defstyle path} (of {\defstyle walking length} $m-1$
+{\defstyle over} $\mathcal{N}$);
 it is called {\defstyle simple} if it contains distinct entries only, with
 possible exception of its {\defstyle end points} $p_1$ and $p_m$, i.e. if
 \[\left|\left\{p_1,p_2,\ldots,p_{m-1}\right\}\right| =
 \left|\left\{p_2,p_3,\ldots,p_{m}\right\}\right| = m-1.\]  We shall refer to
-a path with distinct end points as an {\defstyle open} path, one with
-equal end points --- a {\defstyle closed} one, or a {\defstyle cycle}.
-An open path of length $1$ is also called an {\defstyle edge};
+a path of non-zero walking length with distinct end points as an {\defstyle open} path,
+one with equal end points --- a {\defstyle closed} one, or a {\defstyle cycle}.
+A path of walking length $1$ is also called an {\defstyle edge};
 a simple cycle of length $n$ is called a {\defstyle tour}.
-We additionally denote by $\mathcal{T}_n$ set of all tours over $\mathcal{N}_n$.
+We then denote by
+$\mathcal{P}_n \coloneqq \bigcup_{k \in \mathbb{N}}\mathcal{N}_n^k$
+the set of all paths and by
+$\mathcal{T}_n$ --- the set of all tours over $\mathcal{N}_n$.
 \end{define}
 
-\begin{define}[Distances and cost]
+We extend the common notion of path {\defstyle concatenation}
+to perform a single reduction, as well as to allow for convenient notation for
+images under the map defined as infix operator.
+\begin{define}[path operations]
+  Define path {\defstyle concatenation} to be the following map:
+  \[
+  %\begin{align}
+    \begin{split}
+    \oplus \; : & \; {\left( \mathcal{P}_n \cup 2^{\mathcal{P}_n} \right)}^2 \to \mathcal{P}_n \cup 2^{\mathcal{P}_n} \quad \text{(infix)},
+    \\
+    p \oplus q \coloneqq &
+    \begin{cases}
+      \left(p_1,\ldots,p_m,q_1,\ldots,q_k\right),
+      & p = \left(p_1,\ldots,p_m\right) \in \mathcal{P}_n, \\
+      & q = \left(q_1,\ldots,q_k\right) \in \mathcal{P}_n, \\
+      & p_m \neq q_1;
+      \\
+      \left(p_1,\ldots,p_{m-1},q_1,\ldots,q_k\right),
+      & p = \left(p_1,\ldots,p_m\right) \in \mathcal{P}_n, \\
+      & q = \left(q_1,\ldots,q_k\right) \in \mathcal{P}_n, \\
+      & p_m = q_1;
+      \\
+      \left\{p^\prime \oplus q \; \vert \; p^\prime \in p\right\},
+      & p \notin \mathcal{P}_n, q \in \mathcal{P}_n;
+      \\
+      \left\{p \oplus q^\prime \; \vert \; q^\prime \in q\right\},
+      & p \in \mathcal{P}_n, q \notin \mathcal{P}_n;
+      \\
+      \left\{p^\prime \oplus q^\prime \; \vert \; p^\prime \in p, q^\prime \in q\right\},
+      & p \notin \mathcal{P}_n, q \notin \mathcal{P}_n,
+    \end{cases}
+    \end{split}
+  %\end{align}
+  \]
+  and path {\defstyle reversal} as
+  \[
+    \operatorname{rev} : \mathcal{P}_n \to \mathcal{P}_n, \;
+    \left(p_1,p_2,\ldots,p_{m-1},p_m\right) \mapsto \left(p_m,p_{m-1},\ldots,p_2,p_1\right).
+  \]
+\end{define}
+
+\begin{define}[distances, cost matrix and path cost]
 Given a $n \in \mathbb{N} \left(n \geq 2\right)$ and a matrix $C =
-\left(c_{ij}\right) \in ~ \mathbb{R}^{n \times n}$, which we shall call
+\left(c_{i,j}\right) \in ~ \mathbb{R}^{n \times n}$, which we shall call
 {\defstyle cost} (or {\defstyle distance) matrix}, we will refer to its
 elements as {\defstyle distances} or {\defstyle weights}.
 Now let \[
-%  \operatorname{len} A \xrightarrow[\pi \mapsto \operatorname{len}(\pi)]{} B.
-%  \operatorname{len}_C: \bigcup_{k \in \mathbb{N}, k \geq 2}\mathcal{N}^k \to \mathbb{R}, \quad
-  \mathfrak{w}_C: \bigcup_{k \in \mathbb{N}, k \geq 2}\mathcal{N}^k \to \mathbb{R}, \quad
-  \left(p_1,p_2,\ldots,p_m\right) \mapsto \sum_{k=1}^{m-1} c_{p_k p_{k+1}}.
+  \omega_C: \mathcal{P}_n \to \mathbb{R}, \quad
+  \left(p_1,p_2,\ldots,p_m\right) \mapsto \sum_{k=1}^{m-1} c_{p_k,p_{k+1}}.
 \]
-For a path $\pi$ over $\mathcal{N} = \mathcal{N}_n$ we then call $\mathfrak{w}_C\left(\pi\right)$ {\defstyle cost} of $\pi$.
+For a path $\tau$ over $\mathcal{N}_n$ we then call $\omega_C\left(\tau\right)$ {\defstyle cost} of $\tau$.
 An edge's cost is also called its {\defstyle weight} (which agrees with the definition above).
 \end{define}
 
-\begin{define}[Traveling salesman problem]
+\begin{define}[traveling salesman problem]
   Given a $n \in \mathbb{N} \left(n \geq 2\right)$,
   $M \subseteq~\mathbb{R}^{n \times n}$ and
-  $T \subseteq \mathcal{T}_n$, we define {\defstyle traveling salesman problem}
+  $T \subseteq \mathcal{T}_n, \; T \neq \varnothing$,
+  we define {\defstyle traveling salesman problem}
   ({\defstyle over $(M,T)$}, also {\defstyle TSP}) to be the map
 \[
   \operatorname{TSP}_{M,T}: M \to T, \quad
-  C \mapsto \argmin_{\tau \in T} \mathfrak{w}_C\left(\tau\right).
+  C \mapsto \argmin_{\tau \in T} \omega_C\left(\tau\right).
 \]
 We call $n$ the TSP's {\defstyle dimension}.
 If $M$ is a subset of symmetric matrices (over $\mathbb{R}$), the TSP is called {\defstyle symmetric (sTSP)},
@@ -288,8 +345,18 @@ otherwise --- {\defstyle asymmetric (aTSP)}.
 \end{define}
 
 \begin{remark}
+  \annotation{TODO: wording}
+  Since $1 \leq \left|T\right| < \infty$ holds, $\;\omega_C$ assumes a minimum value over $T$.  We assume here that $\argmin$ returns a single element from said value's preimage ---
+  for the function to be well-defined,
+  one could employ some choice of a particular representative from the equivalence class of tours posessing equal cost.
+  Here, we make do with the admittedly somewhat sloppy assumption that
+  we can choose any such section, hence not differentiating between them ---
+  in practice, it is usually defined to be first tour encountered by construction.
+\end{remark}
+
+\begin{remark}
 Frequently, the TSP is defined via a map which provides the sets $M$ and $T$ for every dimension $n$.
-We make no such requirement --- however, such an extension is usually easily established from context.
+We make no such requirement --- however, such an extension is easily established from context, and throughout the rest of this paper we will usually assume that some such dimension is given.
 \end{remark}
 
 \begin{remark}
@@ -299,11 +366,12 @@ transitions between these definitions are usually trivial.
 
 \begin{remark}
 Whenever the sets $M,T$ from above definition are established elsewhere, they are usually omitted from notation.
+The pair $(M,T)$ is called a {\defstyle class} or {\defstyle case} of TSP.
 \end{remark}
 
 \begin{remark}
-Often, the TSP is defined to be the symmetric version
-\annotation{Reduction remark necessary / wording?}
+Often, the convention is to define TSP to be the symmetric version
+\annotation{Reduction remark necessary?}
 (aTSP can also be reduced to sTSP of double dimension).
 We shall make no such assumption without a prior notice.
 \end{remark}
@@ -313,28 +381,98 @@ Since $\operatorname{TSP}_{T,M}\left(C\right) = \operatorname{TSP}_{T,M}\left(C 
 holds true for all $\lambda \in \mathbb{R}$ and $C \in M$,
 where $J$ is matrix of ones (of suitable dimension), we can always assume
 \[
-  c_{ij} \geq 0 \quad \forall i,j \in \mathcal{N}
+  c_{i,j} \geq 0 \quad \forall i,j \in \mathcal{N}
 \]
 and shall do so henceforth.
 \end{remark}
 
-We will make extensive use of path {\defstyle concatenation}, which we define to be the following map (used as infix operator):
-\begin{define}
-\[
-  \oplus: {\left( \bigcup_{k \in \mathbb{N}}\mathbb{N}^k \right)}^2 \to \bigcup_{k \in \mathbb{N}}\mathbb{N}^k,
-  \quad \left(\left(r_1,\ldots,r_l\right), \left(s_1,\ldots,s_m\right)\right) \mapsto \left(r_1,\ldots,r_l,s_1,\ldots,s_m\right).
-\]
+\subsection{Exponential neighbourhoods and local search}
+
+Since the TSP in its general form is NP-hard, one is naturally interested in
+good heuristics and efficiently solvable cases (of which a significant number does
+exist);  this leads us to following general definitions.
+
+\begin{define}[exponential neighbourhood]
+  A {\defstyle neighbourhood} is a map
+  \[
+    F: \mathcal{T}_n \to 2^{\mathcal{T}_n}
+    \quad \text{s.t.}\; \tau \in F\left(\tau\right) \; \forall \tau \in \mathcal{T}_n\right);
+  \]
+  $F(\tau)$ is also called {\defstyle neighbourhood of} $\tau$.
+  As in previous section, $n$ can be seen either as a given dimension or implicit argument to $F$;
+  a neighbourhood $F$ is called {\defstyle exponential} if
+  \annotation{$\Omega$ or $\Theta$?}
+  \[
+    \left\vert F(\tau) \right\vert = \Theta(2^n) \qquad \forall \tau \in \mathcal{T}_n.
+  \]
 \end{define}
 
-We note that there is a natural
-bijection between tours in $\mathcal{T}_n$ and cyclic permutations on
-$\mathcal{N}_n$ (or, by same argument, paths of length $n-1$).
+\begin{define}[local search]
+  Given a neighbourhood $F$ as well as $C \in M \subseteq~\mathbb{R}^{n \times n}$,
+  we define {\defstyle local search}
+  ({\defstyle in} or {\defstyle over $F$}) to be the map
+  %\[
+  %  \left(M,\mathcal{T}_n\right) \to \mathcal{T}_n^2,
+  %  \quad
+  %  \left(C,\tau\right) \mapsto l_C
+  %\]
+  %with
+  \[
+    l_C :
+    \mathcal{T}_n \to \mathcal{T}_n, \quad
+    \tau \mapsto \operatorname{TSP}_{M,F(\tau)}\left(C\right);
+  \]
+  $F$ is said to be {\defstyle polynomially solvable} if $l_{C^\prime} \in \P \; \forall C^\prime \in M$ (where time complexity is measured in relation to $n$).
+\end{define}
 
-We will also sometimes need to view tours as somewhat different maps on
-$\mathcal{N}$ or $\mathbb{R}^{n \times n}$.
+\begin{remark}
+  Note how for any tour $\tau$, local search defines a map on $M$ via $C \mapsto l_C\left(\tau\right)$, which can also be seen as approximation of $\operatorname{TSP}_{M,\mathcal{T}_n}$.
+\end{remark}
+
+\begin{remark}
+  For any tour $\tau$, with $\tau \in F\left(\tau\right)$ we also have
+  \[
+    \omega_C\left(l_C\left(\tau\right)\right) \leq \omega_C\left(\tau\right).
+  \]
+\end{remark}
+
+Combining both preceding remarks naturally yields an iterative improvement heuristic.
+
+\begin{define}[ILS]
+  Given a local search function defined as above and a {\defstyle starting tour} $\tau^\ast$,
+  we define {\defstyle iterative} or {\defstyle iterated local search} ({\defstyle ILS})
+  to be the map assigning to each $C \in M$ the fixed point of
+  \[
+    \tau \mapsto
+    \begin{cases}
+      \tau \quad & \text{if} \; \omega_C\left(l_C\left(\tau\right)\right) = \omega_C\left(\tau\right),
+      \\
+      l_C\left(\tau\right) & \text{otherwise}
+    \end{cases}
+  \]
+  which is reached by iteration from $\tau^\ast$.
+  We shall sometimes call such a fixed point {\defstyle stale iteration}.
+\end{define}
+
+\begin{remark}
+  In practice, termination conditions employed in ILS may vary and commonly include such
+  parameters as number of iterations performed, time elapsed or some cost improvement metric.
+\end{remark}
+
+\annotation{Necessary?}
+\begin{remark}
+  There seems to exist no commonly accepted distinction between local search and iterated local search.
+  Often, the former is not required to solve the problem in $F\left(\tau\right)$ but only
+  in some small subset of it, or to consist of multiple such improvement steps, which is referred to as ,,anytime'' heuristic.
+  Thus, depending on the definition of what constitutes a step, each can potentially be seen as special case of the other.
+\end{remark}
+
+\annotation{TODO FROM HERE}
+\subsection{Tours and permutations, tour sets as neighbourhoods}
+
 \begin{define}
-Given a set $\mathcal{N}$ of $n$ cities, let $\mathcal{S}_n$ be the symmetric group (on $\mathcal{N}$).
-We define $\mathfrak{s}_{\bullet}$ (using argument-in-subscript notation for reasons of legibility) to be the map
+Given the set $\mathcal{N}_n$ of $n$ cities, let $\mathcal{S}_n$ be the symmetric group (on $\mathcal{N}_n$).
+We define $\sigma_{\bullet}$ (using argument-in-subscript notation for better legibility) to be the map
 \[
   \mathcal{T}_n \to \mathcal{S}_n,
   \quad \tau = \left(p_1,p_2,\ldots,p_n,p_1\right) \mapsto
@@ -353,12 +491,10 @@ A tour $\tau = \mathfrak{t}_{\mathfrak{s}_{\tau}}$ and permutation $\mathfrak{s}
   symmetric group, action of $\mathcal{S}_n$ on $\mathbb{R}^{n \times n}$.
 \end{remark}
 
-\subsection{Exponential neighbourhoods and local search heuristics}
-
 \clearpage
 \dictum[L. Peter Deutsch]{To iterate is human, to recurse divine.}
 %\dictum[Honore de Balzac]{To get a traveling salesman drunk is the height of impossibility.}
-\section{Two Neighbourhoods}
+\section{Theory}
 
 \subsection{Pyramidal tours}
 
@@ -641,6 +777,8 @@ Note that to account for strongly balanced tours structure, we have to
 Results of our experiments are presented in next section
 (where {\em adaptive search} \/refers to number of considered permutations growing at stale iterations
 and {\em flipflop search} \/refers to alterating between pyramidal and strongly balanced search in each iteration).
+
+\subsection{Local search and flowers}
 
 \clearpage
 \dictum[Donald Knuth]{You’re bound to be unhappy if you optimize everything.}
