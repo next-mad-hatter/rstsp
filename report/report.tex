@@ -446,13 +446,13 @@ good heuristics and efficiently solvable cases (of which a significant number do
 exist);  this leads us to following general definitions.
 
 \begin{define}[(exponential) neighbourhood]
-  A {\defstyle neighbourhood} ({\defstyle $\mathcal{T}_n$}) is a map
+  A {\defstyle neighbourhood} ({\defstyle in}/{\defstyle over} $\mathcal{T}_n$) is a map
   \[
     F: \mathcal{T}_n \to 2^{\mathcal{T}_n}
     \quad \text{s.t.}\; \tau \in F\left(\tau\right) \ \forall \tau \in \mathcal{T}_n.
   \]
   $F(\tau)$ is also called {\defstyle neighbourhood of} $\tau$.
-  As in previous section, $n$ can be seen either as a given dimension or implicit argument to $F$;
+  Once again, $n$ can be seen either as given dimension or implicit argument to $F$;
   a neighbourhood $F$ is called {\defstyle exponential} if
   \annotation{$\Omega$ or $\Theta$?}
   \[
@@ -461,7 +461,8 @@ exist);  this leads us to following general definitions.
 \end{define}
 
 \begin{define}[local search]
-  Given a neighbourhood $F$ as well as $M \subseteq~\mathbb{R}^{n \times n}$ and $C \in M$,
+  Given a neighbourhood $F$ in $\mathcal{T}_n$
+  as well as $M \subseteq~\mathbb{R}^{n \times n}$ and $C \in M$,
   we define {\defstyle local search}
   ({\defstyle in} or {\defstyle over $F$}) to be the map
   %\[
@@ -491,10 +492,11 @@ exist);  this leads us to following general definitions.
   \]
 \end{remark}
 
-Combining \cref{rem:localappr,rem:nondecr} naturally yields an iterative improvement heuristic.
+Combining \cref{rem:localappr,rem:nondecr} naturally yields an iterative improvement heuristic:
 
 \begin{define}[ILS]
-  Given a local search function defined as above and a {\defstyle starting tour} $\tau^\ast$,
+\label{def:ils}
+  Given a local search function as above and a {\defstyle starting tour} $\tau^\ast$,
   we define {\defstyle iterative} or {\defstyle iterated local search} ({\defstyle ILS})
   to be the map assigning to each $C \in M$ the fixed point of
   \[
@@ -519,7 +521,7 @@ Combining \cref{rem:localappr,rem:nondecr} naturally yields an iterative improve
   There seems to exist no commonly accepted distinction between local search and iterated local search.
   Often, the former is not required to solve the problem in $F\left(\tau\right)$ but only
   in some small subset of it, or to consist of multiple such improvement steps, which is referred to as ,,anytime'' heuristic.
-  Thus, depending on the definition of what constitutes a step, each can potentially be seen as special case of the other.
+  Thus, depending on the definition of what constitutes a step, one can potentially be seen as special case of the other.
 \end{remark}
 
 \subsection{Tours and permutations}
@@ -578,7 +580,7 @@ Similarly, we can use the map $\sigma_{\Cdot}$ for following convenient notation
 \end{define}
 
 If we consider $\rho \, \tau$ to be the tour $\tau$ over reordering of cities corresponding to $\rho$,
-and $\tau \rho$ to be a reordering of the tour $\tau$, following result becomes intuitively agreeable.
+and $\tau \rho$ to be a reordering of the tour $\tau$, following result becomes intuitively agreeable:
 
 \begin{proposition}
 \label{prop:rotinv}
@@ -595,7 +597,7 @@ and $\tau \rho$ to be a reordering of the tour $\tau$, following result becomes 
     d\left(i\right) \coloneqq \left(\left(i-1\right)\operatorname{mod} n\right)+1.
   \]
   We have $d\left(\mathbb{Z}\right) = \mathcal{N}_n$,
-  and $d\restriction_{\mathcal{N}_n} = \operatorname{id}\restriction_{\mathcal{N}_n}$
+  and $d\restriction_{\mathcal{N}_n} = \operatorname{id}_{\mathcal{N}_n}$
   is trivially a bijection (as is $\rho$); further,
   \begin{align}
     \label{eq:add}
@@ -718,14 +720,16 @@ solutions to the TSP.
 
 \subsection{Tour sets as neighbourhoods}
 
-Suppose that we can solve the TSP efficiently over some fixed set of tours $T$ for
-arbitrary cost matrices.
+%Suppose that we can solve the TSP efficiently over some fixed set of tours $T$ for
+%arbitrary cost matrices.
+
 %We have seen how a set of tours $T$ can be seen as a set of permutations of the cities,
 %or permutations of the canonical tour $\pi\left(\operatorname{id}\right)$,
 %which is not necessarily an element of $T$.
 
-If we now choose some (any) element $\tau^\ast \in T$ and consider $T$ to be a set
-of permutations of $\tau^\ast$, its action then defines a neighbourhood over $\mathcal{T}_n$:
+Given a non-empty set of tours $T$, we can choose some (any) element $\tau^\ast \in T$
+and consider $T$ to be a set of permutations of $\tau^\ast$ ---
+its action then defines a neighbourhood in $\mathcal{T}_n$:
 
 \begin{define}[induced neighbourhood]
   \label{def:induced}
@@ -741,7 +745,7 @@ of permutations of $\tau^\ast$, its action then defines a neighbourhood over $\m
     =
       \left(\sigma_{\tau} \circ \sigma_{\tau^\ast}^{-1}\right) T.
   \]
-  We call $F_T$ neighbourhood {\defstyle induced by} $T$ (and $\tau^\ast$).
+  We call $F_T$ {\defstyle neighbourhood induced by} $T$ (and $\tau^\ast$).
 \end{define}
 
 \begin{figure}[bht]
@@ -763,15 +767,15 @@ of permutations of $\tau^\ast$, its action then defines a neighbourhood over $\m
 \end{remark}
 
 \begin{remark}
-  If we now can solve the TSP efficiently over a fixed set $T$,
+  If we now can solve the TSP efficiently over a fixed set of tours $T$ (for arbitrary matrices),
   combining \cref{def:induced} and \cref{cor:reorder} immediately allows us to
   construct local search over $F_T$, namely
   \[
-    l_C\left(\tau\right) = \pi\left(\rho \operatorname{tsp}_{\rho M,T}\left(\rho\, C\right)\right),
+    l_C\left(\tau\right) = \pi\left(\rho \, \operatorname{tsp}_{\rho M,T}\left(\rho\, C\right)\right),
     \quad
     \text{where}\; \rho = \sigma_\tau \sigma_{\tau^\ast}^{-1},
   \]
-  and choosing $\tau^\ast$ to be the starting tour then yields iterated local search.
+  and choosing $\tau^\ast$ to be the starting tour in \cref{def:ils} then yields iterated local search.
   %
   % OUR CODE: see tspsearch/itersearch.sml
   %
