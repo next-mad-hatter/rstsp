@@ -165,12 +165,16 @@
 \hypersetup{pdftitle=Two Exponential Neighbourhoods}
 \usepackage[nameinlink]{cleveref}
 
-\declaretheorem[style=definition,name=Definition,refname={definition,definitions}]{define}
-\declaretheorem[style=plain]{theorem}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+
+\declaretheorem[numberwithin=section,style=definition,name=Definition,refname={definition,definitions}]{define}
+\declaretheorem[numberwithin=section,style=plain]{theorem}
 \declaretheorem[sibling=theorem]{lemma}
 \declaretheorem[sibling=theorem]{proposition}
 \declaretheorem[sibling=theorem]{corollary}
-\declaretheorem[style=remark]{remark}
+\declaretheorem[numberwithin=section,style=remark]{remark}
 %\BeforeBeginEnvironment{theorem}{\begin{adjustwidth}{1cm}{1cm}}
 %\AfterEndEnvironment{theorem}{\endadjustwidth}
 %\AfterEndEnvironment{define}{\noindent\ignorespaces}
@@ -446,7 +450,7 @@ good heuristics and efficiently solvable cases (of which a significant number do
 exist);  this leads us to following general definitions.
 
 \begin{define}[(exponential) neighbourhood]
-  A {\defstyle neighbourhood} ({\defstyle in}/{\defstyle over} $\mathcal{T}_n$) is a map
+  A {\defstyle neighbourhood} ({\defstyle in $\mathcal{T}_n$} or {\defstyle over $\mathcal{N}_n$}) is a map
   \[
     F: \mathcal{T}_n \to 2^{\mathcal{T}_n}
     \quad \text{s.t.}\; \tau \in F\left(\tau\right) \ \forall \tau \in \mathcal{T}_n.
@@ -481,15 +485,17 @@ exist);  this leads us to following general definitions.
 
 \begin{remark}
 \label{rem:localappr}
-  Note how for any tour $\tau$, local search defines a map on $M$ via $C \mapsto l_C\left(\tau\right)$, which can also be seen as approximation of $\operatorname{tsp}_{M,\mathcal{T}_n}$.
+  Note how for any tour $\tau$, local search defines a map on $M$ via $C^\prime \mapsto l_{C^\prime}\left(\tau\right)$, which can also be seen as approximation of $\operatorname{tsp}_{M,\mathcal{T}_n}$.
 \end{remark}
 
 \begin{remark}
 \label{rem:nondecr}
+\annotation{is ,,for any $C$'' necessary here?}
   For any tour $\tau$, with $\tau \in F\left(\tau\right)$ we also have
   \[
     \omega_C\left(l_C\left(\tau\right)\right) \leq \omega_C\left(\tau\right).
   \]
+  %for all cost matrices $C$.
 \end{remark}
 
 Combining \cref{rem:localappr,rem:nondecr} naturally yields an iterative improvement heuristic:
@@ -584,6 +590,7 @@ and $\tau \rho$ to be a reordering of the tour $\tau$, following result becomes 
 
 \begin{proposition}
 \label{prop:rotinv}
+\annotation{Remove ,,circular''?}
   For any {\defstyle circular permutation} $\rho \in \left<\left(1 \; 2 \; \cdots \; n \right)\right>$,
   \[
     \omega_C\left(\tau\right) = \omega_C\left(\tau \rho\right)
@@ -705,7 +712,7 @@ solutions to the TSP.
   Using \cref{lemma:ordermat} and \cref{def:tsp}, we obtain
   \begin{align*}
     \begin{split}
-    \operatorname{tsp}^\ast_{\left\{C\right\},T}\left(\rho\,C\right)
+    \operatorname{tsp}^\ast_{\left\{\rho\,C\right\},T}\left(\rho\,C\right)
     & =
     \argmin_{\tau \in T} \omega_{\rho\,C}\left(\tau\right) =
     \argmin_{\tau \in T} \omega_{C}\left(\rho\,\tau\right) =
@@ -767,7 +774,7 @@ its action then defines a neighbourhood in $\mathcal{T}_n$:
 \end{remark}
 
 \begin{remark}
-  If we now can solve the TSP efficiently over a fixed set of tours $T$ (for arbitrary matrices),
+  If we now can solve the TSP efficiently over a fixed set of tours $T$ (for arbitrary cost matrices),
   combining \cref{def:induced} and \cref{cor:reorder} immediately allows us to
   construct local search over $F_T$, namely
   \[
