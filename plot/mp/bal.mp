@@ -32,6 +32,8 @@ beginfig(1)
   if outputformat="eps":
     %796045
     drawoptions(withcolor (121/255,96/255,69/255));
+  else:
+    outputformat := "eps";
   fi;
   for i = 1 upto 7:
     x[i] = i * dx;

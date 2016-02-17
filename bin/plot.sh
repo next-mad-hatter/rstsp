@@ -48,7 +48,7 @@ done
 cd ./build
 for file in ..//mp/*.mp; do
   mpost -s 'outputformat="eps"' -s 'outputtemplate="%j-%c.eps"' ${file}
-  mpost -s 'outputformat="pdf"' -s 'outputtemplate="%j-%c.pdf"' ${file}
+  mpost -s 'outputformat="mps"' -s 'outputtemplate="%j-%c.mps"' ${file}
 done
 
 

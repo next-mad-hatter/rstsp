@@ -200,10 +200,11 @@
   \eqitspace%
   \item
   Traveling Salesman Problem:
+  given $M \subseteq \mathbb{R}^{n \times n}, T \subseteq \mathcal{T}_n, \; T \neq \varnothing$,
   \begin{equation}
-    \operatorname{TSP}_{M,T} : M \to T, \; C \mapsto \argmin_{\tau \in T} \omega_C\left(\tau\right),
+    \operatorname{TSP}_{M,T} : M \to T, \; C \mapsto \argmin_{\tau \in T} \omega_C\left(\tau\right);
   \end{equation}
-  given $M \subseteq \mathbb{R}^{n \times n}, T \subseteq \mathcal{T}_n, \; T \neq \varnothing$.
+  $\argmin$ tour-valued, well-defined via \emph{some} total order on $\mathcal{T}_n$ (implicit argument).
   \item
   Variations:
   \begin{itemize}
@@ -631,8 +632,6 @@
   \end{split}
   \end{align}
   \eqitspace%
-  \item
-  Tour $\tau^\prime \; \rightarrow$ permutation of cities, acts on tours via $\tau \mapsto \pi\left(\sigma_\tau \circ \sigma_{\tau^\prime}\right)$.
   \item
     Tour sets as neighbourhoods:
     \begin{equation}

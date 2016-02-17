@@ -42,11 +42,13 @@
 \addbibresource{references.bib}
 \usepackage[nottoc]{tocbibind}
 
+\usepackage[basic]{complexity}
+%\usepackage{xfrac}
+%\usepackage{faktor}
 \usepackage{amsmath}
 %\usepackage{unicode-math}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{complexity}
 
 \usepackage{commath}
 \usepackage{mathtools}
@@ -55,17 +57,6 @@
 \usepackage{thmtools}
 \usepackage{etoolbox}
 \usepackage{changepage}
-
-\declaretheorem[style=definition,name=Definition]{define}
-\declaretheorem[style=plain]{theorem}
-\declaretheorem[sibling=theorem]{lemma}
-\declaretheorem[style=remark]{remark}
-%\BeforeBeginEnvironment{theorem}{\begin{adjustwidth}{1cm}{1cm}}
-%\AfterEndEnvironment{theorem}{\endadjustwidth}
-%\AfterEndEnvironment{define}{\noindent\ignorespaces}
-%\makeatletter
-%\def\@endtheorem{\endtrivlist}%
-%\makeatother
 
 \usepackage{caption}
 \usepackage{ragged2e}
@@ -127,7 +118,6 @@
 
 \usepackage[title,page,titletoc]{appendix}
 \newcommand*{\Appendixautorefname}{Appendix}
-\usepackage{cleveref}
 
 \usepackage{verbatim}
 \usepackage{cprotect}
@@ -159,6 +149,8 @@
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
+%\newcommand*{\Cdot}{\raisebox{-0.25ex}{\scalebox{1.2}{$\cdot$}}}
+\newcommand*{\Cdot}{\raisebox{-0.30ex}{\scalebox{1.5}{$\cdot$}}}
 
 \usepackage[pdfauthor={M. Deineko},
             pdfproducer={lualatex},
@@ -171,6 +163,20 @@
             unicode=true
             ]{hyperref}
 \hypersetup{pdftitle=Two Exponential Neighbourhoods}
+\usepackage[nameinlink]{cleveref}
+
+\declaretheorem[style=definition,name=Definition,refname={definition,definitions}]{define}
+\declaretheorem[style=plain]{theorem}
+\declaretheorem[sibling=theorem]{lemma}
+\declaretheorem[sibling=theorem]{proposition}
+\declaretheorem[sibling=theorem]{corollary}
+\declaretheorem[style=remark]{remark}
+%\BeforeBeginEnvironment{theorem}{\begin{adjustwidth}{1cm}{1cm}}
+%\AfterEndEnvironment{theorem}{\endadjustwidth}
+%\AfterEndEnvironment{define}{\noindent\ignorespaces}
+%\makeatletter
+%\def\@endtheorem{\endtrivlist}%
+%\makeatother
 
 \let\defstyle\itshape
 %\def\defstyle{\itshape}
@@ -249,10 +255,9 @@ author can differ ever so slightly.
 %Hence we need to establish a set of definitions which we shall try to keep
 %precise enough to be able to convey this paper's content clearly,
 %while also simple enough so as not to distract from it.
-\annotation{TODO: improve description.}
-In what follows, our goal is to establish notation which can be easily
-(whenever possible, directly) interpreted as (functional) computer
-program.
+\annotation{Improve description of motivation/justification?}
+In what follows, our goal is to establish consistent notation which can be easily
+interpreted as a (functional) computer program.
 
 \begin{define}[cities, paths and tours]
 Given some $n \in \mathbb{N} \left(n \geq 2\right)$,
@@ -268,18 +273,18 @@ possible exception of its {\defstyle end points} $p_1$ and $p_m$, i.e. if
 a path of non-zero walking length with distinct end points as an {\defstyle open} path,
 one with equal end points --- a {\defstyle closed} one, or a {\defstyle cycle}.
 A path of walking length $1$ is also called an {\defstyle edge};
-a simple cycle of length $n$ is called a {\defstyle tour}.
+a simple cycle of walking length $n$ is called a {\defstyle tour}.
 We then denote by
-$\mathcal{P}_n \coloneqq \bigcup_{k \in \mathbb{N}}\mathcal{N}_n^k$
+$\mathcal{P}_n \coloneqq \bigcup_{k \in \mathbb{N}}\mathcal{N}^k$
 the set of all paths and by
-$\mathcal{T}_n$ --- the set of all tours over $\mathcal{N}_n$.
+$\mathcal{T}_n$ --- the set of all tours over $\mathcal{N}$.
 \end{define}
 
 We extend the common notion of path {\defstyle concatenation}
 to perform a single reduction, as well as to allow for convenient notation for
-images under the map defined as infix operator.
+images under said map defined as infix operator:
 \begin{define}[path operations]
-  Define path {\defstyle concatenation} to be the following map:
+  Define {\defstyle path concatenation} to be the following map:
   \[
   %\begin{align}
     \begin{split}
@@ -309,35 +314,67 @@ images under the map defined as infix operator.
     \end{split}
   %\end{align}
   \]
-  and path {\defstyle reversal} as
+  {\defstyle path reversal} as
   \[
     \operatorname{rev} : \mathcal{P}_n \to \mathcal{P}_n, \;
-    \left(p_1,p_2,\ldots,p_{m-1},p_m\right) \mapsto \left(p_m,p_{m-1},\ldots,p_2,p_1\right).
+    \left(p_1,p_2,\ldots,p_{m-1},p_m\right) \mapsto \left(p_m,p_{m-1},\ldots,p_2,p_1\right),
+  \]
+  and {\defstyle path closure} as
+  \[
+    \overline{\Cdot} : \mathcal{P}_n \to \mathcal{P}_n,
+    \quad \left(p_1,\ldots,p_m\right) \mapsto
+    \left(p_1,\ldots,p_m\right) \oplus \left(p_1\right),
+  \]
+  while also allowing for image notation:
+  for $P \subseteq \mathcal{P}_n$, let
+  \[
+    \overline{P} \coloneqq \left\{\overline{p} \mid p \in P\right\}.
   \]
 \end{define}
 
-\begin{define}[distances, cost matrix and path cost]
-Given a $n \in \mathbb{N} \left(n \geq 2\right)$ and a matrix $C =
-\left(c_{i,j}\right) \in ~ \mathbb{R}^{n \times n}$, which we shall call
-{\defstyle cost} (or {\defstyle distance) matrix}, we will refer to its
-elements as {\defstyle distances} or {\defstyle weights}.
-Now let \[
-  \omega_C: \mathcal{P}_n \to \mathbb{R}, \quad
-  \left(p_1,p_2,\ldots,p_m\right) \mapsto \sum_{k=1}^{m-1} c_{p_k,p_{k+1}}.
-\]
-For a path $\tau$ over $\mathcal{N}_n$ we then call $\omega_C\left(\tau\right)$ {\defstyle cost} of $\tau$.
-An edge's cost is also called its {\defstyle weight} (which agrees with the definition above).
+\begin{remark}
+  Note that path closure produces a bijection from the set of all simple open paths
+  of walking length $n-1$ over $\mathcal{N}_n$ onto $\mathcal{T}_n$.
+  Further, $\overline{\mathcal{T}_n} = \mathcal{T}_n$ holds true.
+\end{remark}
+
+\begin{define}[costs and distances]
+\label{def:cost}
+  Given a $n \in \mathbb{N} \left(n \geq 2\right)$ and a matrix $C =
+  \left(c_{i,j}\right) \in ~ \mathbb{R}^{n \times n}$, which we shall call
+  {\defstyle cost} (or {\defstyle distance) matrix}, we will refer to its
+  elements as {\defstyle distances} or {\defstyle weights}.
+  Now let \[
+    \omega_C: \mathcal{P}_n \to \mathbb{R}, \quad
+    \left(p_1,p_2,\ldots,p_m\right) \mapsto \sum_{k=1}^{m-1} c_{p_k,p_{k+1}}.
+  \]
+  For a path $p$ over $\mathcal{N}_n$ we then call $\omega_C\left(p\right)$ {\defstyle cost} of $p$.
+  An edge's cost is also called its {\defstyle weight} (which agrees with the definition above).
 \end{define}
 
-\begin{define}[traveling salesman problem]
+\begin{remark}
+  We would like to stress here that requiring tours to include a city twice
+  explicitly (as end points) allows us to employ same notion of cost for paths and tours,
+  which, in turn, will allow for convenient recursive constructions later on.
+\end{remark}
+
+\begin{define}[TSP]
+\label{def:tsp}
   Given a $n \in \mathbb{N} \left(n \geq 2\right)$,
   $M \subseteq~\mathbb{R}^{n \times n}$ and
   $T \subseteq \mathcal{T}_n, \; T \neq \varnothing$,
+  as well as a total order $L$ on $\mathcal{T}_n$,
   we define {\defstyle traveling salesman problem}
   ({\defstyle over $(M,T)$}, also {\defstyle TSP}) to be the map
 \[
-  \operatorname{TSP}_{M,T}: M \to T, \quad
-  C \mapsto \argmin_{\tau \in T} \omega_C\left(\tau\right).
+  \operatorname{tsp}_{L,M,T}: M \to T, \quad
+  C \mapsto \min_L \operatorname{tsp^\ast}_{M,T}\left(C\right),
+\]
+and
+\[
+  \operatorname{tsp^\ast}_{M,T}: M \to 2^T, \quad
+  C \mapsto \argmin_{\tau \in T} \omega_C\left(\tau\right) =
+  \left({\omega_C\!}\restriction_T\right)^{-1}\left(\left\{\min \omega_C\left(T\right)\right\}\right).
 \]
 We call $n$ the TSP's {\defstyle dimension}.
 If $M$ is a subset of symmetric matrices (over $\mathbb{R}$), the TSP is called {\defstyle symmetric (sTSP)},
@@ -345,23 +382,14 @@ otherwise --- {\defstyle asymmetric (aTSP)}.
 \end{define}
 
 \begin{remark}
-  \annotation{TODO: wording}
-  Since $1 \leq \left|T\right| < \infty$ holds, $\;\omega_C$ assumes a minimum value over $T$.  We assume here that $\argmin$ returns a single element from said value's preimage ---
-  for the function to be well-defined,
-  one could employ some choice of a particular representative from the equivalence class of tours posessing equal cost.
-  Here, we make do with the admittedly somewhat sloppy assumption that
-  we can choose any such section, hence not differentiating between them ---
-  in practice, it is usually defined to be first tour encountered by construction.
+  Both $\operatorname{tsp^\ast}$ and $\operatorname{tsp}$ are well-defined maps:
+  $1 \leq \left|T\right| < \infty$ holds, hence $\;\omega_C$ assumes a minimum value over $T$
+  and $\varnothing \notin \operatorname{tsp^\ast}_{M,T}\left(M\right)$.
 \end{remark}
 
 \begin{remark}
 Frequently, the TSP is defined via a map which provides the sets $M$ and $T$ for every dimension $n$.
 We make no such requirement --- however, such an extension is easily established from context, and throughout the rest of this paper we will usually assume that some such dimension is given.
-\end{remark}
-
-\begin{remark}
-Also not unusual is a variation of TSP which returns the cost of optimal tour along with or instead of such a tour;
-transitions between these definitions are usually trivial.
 \end{remark}
 
 \begin{remark}
@@ -371,19 +399,44 @@ The pair $(M,T)$ is called a {\defstyle class} or {\defstyle case} of TSP.
 
 \begin{remark}
 Often, the convention is to define TSP to be the symmetric version
-\annotation{Reduction remark necessary?}
-(aTSP can also be reduced to sTSP of double dimension).
+\annotation{Reduction remark acceptable without reference?}
+(aTSP can also be reduced to sTSP of twice the dimension).
 We shall make no such assumption without a prior notice.
 \end{remark}
 
 \begin{remark}
-Since $\operatorname{TSP}_{T,M}\left(C\right) = \operatorname{TSP}_{T,M}\left(C + \lambda J\right)$
+It follows from \cref{def:cost,def:tsp} that
+$\operatorname{tsp}_{M,T}^\ast\left(C\right) = \operatorname{tsp}_{M,T}^\ast\left(C + \lambda J\right)$
 holds true for all $\lambda \in \mathbb{R}$ and $C \in M$,
-where $J$ is matrix of ones (of suitable dimension), we can always assume
+where $J$ is matrix of ones (of suitable dimension).
+Hence we can always assume
 \[
   c_{i,j} \geq 0 \quad \forall i,j \in \mathcal{N}
 \]
 and shall do so henceforth.
+\end{remark}
+
+\begin{remark}
+\label{rem:order}
+  Cost equality naturally induces a partition of $\mathcal{T}_n$ (or its subset $T$ above).
+  Usually, we are not interested in all elements of $\operatorname{tsp^\ast}\left(C\right)$
+  or its representative given by a particular order $L$ (as produced by $\operatorname{tsp}_L\left(C\right)$)
+  but rather in any such tour.
+  Hence we make do with the assumption that we may choose any order on $\mathcal{T}_n$ and treat $L$
+  as implicit argument to $\operatorname{tsp}$, omitting it from notation where possible ---
+  in practice, it is usually given implicitly by construction.
+\end{remark}
+
+\begin{remark}
+  \annotation{Wording?}
+  Also not unusual (and useful in time complexity considerations) is a variation of TSP which returns
+  the cost of optimal tour along with or instead of such a tour ---
+  transition between these definitions is usually obvious.
+  While latter makes the distinction between $\operatorname{tsp}$ and $\operatorname{tsp^\ast}$
+  unnecessary and alleviates issues raised in \cref{rem:order},
+  it does not provide an obvious solution to the colloquial form of TSP,
+  and ignoring said issues only conveniently moves them to particular implementation,
+  refusing them proper formal treatment ab ovo.
 \end{remark}
 
 \subsection{Exponential neighbourhoods and local search}
@@ -392,11 +445,11 @@ Since the TSP in its general form is NP-hard, one is naturally interested in
 good heuristics and efficiently solvable cases (of which a significant number does
 exist);  this leads us to following general definitions.
 
-\begin{define}[exponential neighbourhood]
-  A {\defstyle neighbourhood} is a map
+\begin{define}[(exponential) neighbourhood]
+  A {\defstyle neighbourhood} ({\defstyle $\mathcal{T}_n$}) is a map
   \[
     F: \mathcal{T}_n \to 2^{\mathcal{T}_n}
-    \quad \text{s.t.}\; \tau \in F\left(\tau\right) \; \forall \tau \in \mathcal{T}_n\right);
+    \quad \text{s.t.}\; \tau \in F\left(\tau\right) \ \forall \tau \in \mathcal{T}_n.
   \]
   $F(\tau)$ is also called {\defstyle neighbourhood of} $\tau$.
   As in previous section, $n$ can be seen either as a given dimension or implicit argument to $F$;
@@ -408,7 +461,7 @@ exist);  this leads us to following general definitions.
 \end{define}
 
 \begin{define}[local search]
-  Given a neighbourhood $F$ as well as $C \in M \subseteq~\mathbb{R}^{n \times n}$,
+  Given a neighbourhood $F$ as well as $M \subseteq~\mathbb{R}^{n \times n}$ and $C \in M$,
   we define {\defstyle local search}
   ({\defstyle in} or {\defstyle over $F$}) to be the map
   %\[
@@ -420,23 +473,25 @@ exist);  this leads us to following general definitions.
   \[
     l_C :
     \mathcal{T}_n \to \mathcal{T}_n, \quad
-    \tau \mapsto \operatorname{TSP}_{M,F(\tau)}\left(C\right);
+    \tau \mapsto \operatorname{tsp}_{M,F(\tau)}\left(C\right).
   \]
-  $F$ is said to be {\defstyle polynomially solvable} if $l_{C^\prime} \in \P \; \forall C^\prime \in M$ (where time complexity is measured in relation to $n$).
+  $F$ is said to be {\defstyle polynomially solvable} if $l_{C^\prime}\!\in \P \ \forall C^\prime \in M$ (where time complexity is measured in relation to $n$).
 \end{define}
 
 \begin{remark}
-  Note how for any tour $\tau$, local search defines a map on $M$ via $C \mapsto l_C\left(\tau\right)$, which can also be seen as approximation of $\operatorname{TSP}_{M,\mathcal{T}_n}$.
+\label{rem:localappr}
+  Note how for any tour $\tau$, local search defines a map on $M$ via $C \mapsto l_C\left(\tau\right)$, which can also be seen as approximation of $\operatorname{tsp}_{M,\mathcal{T}_n}$.
 \end{remark}
 
 \begin{remark}
+\label{rem:nondecr}
   For any tour $\tau$, with $\tau \in F\left(\tau\right)$ we also have
   \[
     \omega_C\left(l_C\left(\tau\right)\right) \leq \omega_C\left(\tau\right).
   \]
 \end{remark}
 
-Combining both preceding remarks naturally yields an iterative improvement heuristic.
+Combining \cref{rem:localappr,rem:nondecr} naturally yields an iterative improvement heuristic.
 
 \begin{define}[ILS]
   Given a local search function defined as above and a {\defstyle starting tour} $\tau^\ast$,
@@ -467,33 +522,269 @@ Combining both preceding remarks naturally yields an iterative improvement heuri
   Thus, depending on the definition of what constitutes a step, each can potentially be seen as special case of the other.
 \end{remark}
 
-\annotation{TODO FROM HERE}
-\subsection{Tours and permutations, tour sets as neighbourhoods}
+\subsection{Tours and permutations}
 
-\begin{define}
 Given the set $\mathcal{N}_n$ of $n$ cities, let $\mathcal{S}_n$ be the symmetric group (on $\mathcal{N}_n$).
-We define $\sigma_{\bullet}$ (using argument-in-subscript notation for better legibility) to be the map
-\[
-  \mathcal{T}_n \to \mathcal{S}_n,
-  \quad \tau = \left(p_1,p_2,\ldots,p_n,p_1\right) \mapsto
-  \mathfrak{s}_\tau \coloneqq
-  \left( \begin{smallmatrix}
-    1 & 2 & \cdots & n \\
-    p_1 & p_2 & \cdots &  p_n
-  \end{smallmatrix} \right).
-\]
-A tour $\tau = \mathfrak{t}_{\mathfrak{s}_{\tau}}$ and permutation $\mathfrak{s}_{\tau}$ are said to be {\defstyle associated} with each other.
+
+\begin{define}[associated permutation]
+  We define $\sigma_{\Cdot}$ (using argument-in-subscript notation) to be the map
+  \[
+      \sigma_{\Cdot} :
+      \mathcal{T}_n \to \; \mathcal{S}_n, \quad
+      \tau = \left(p_1, p_2, \ldots, p_n, p_1 \right)
+      \mapsto
+    \sigma_\tau \coloneqq
+    \begin{pmatrix}
+      1 & 2 & \cdots & n \\
+      p_1 & p_2 & \cdots &  p_n
+    \end{pmatrix},
+  \]
+  and, seeing how this constitutes a bijection, define $\pi$ to be its inverse,
+  while letting $\sigma_\tau^{-1}$ denote permutation inverse to $\sigma_\tau$.
+  %\[
+  %  \pi & \coloneqq \left(\sigma_{\Cdot}\right)^{-1}.
+  %\]
+  We say then that $\tau$ and $\sigma_\tau$ are {\defstyle associated} with one another.
 \end{define}
 
 \begin{remark}
-  \annotation{TODO}
-  Cost invariance under circular permutations, tour representations vs
-  symmetric group, action of $\mathcal{S}_n$ on $\mathbb{R}^{n \times n}$.
+  We note here that function composition is default group operation on $\mathcal{S}_n$ and
+  therefore can be omitted from notation where it is convenient and does not cause unnecessary ambiguity.
+\end{remark}
+
+The map $\pi$, being a bijection, conveniently provides a natural extension
+of cost to $\mathcal{S}_n$ via $\omega_C \circ \pi$:
+\begin{define}[cost of permutation]
+  For a cost matrix $C$ of dimension $n$, we shall extend $\omega_C$ to $\mathcal{P}_n \cup \mathcal{S}_n$
+  by setting, for any $\rho \in \mathcal{S}_n$,
+  \[
+    \omega_C\left(\rho\right) \coloneqq \omega_C\left(\pi\left(\rho\right)\right).
+  \]
+\end{define}
+
+Similarly, we can use the map $\sigma_{\Cdot}$ for following convenient notation:
+\begin{define}[action of $\mathcal{S}_n$]
+\label{def:actions}
+  For $\tau \in \mathcal{T}_n, \rho \in \mathcal{S}_n,
+       C \in M \subseteq \mathbb{R}^{n \times n}, T \in 2^{\mathcal{T}_n}$,
+  we define
+  \begin{align*}
+    \tau \rho & \coloneqq \sigma_\tau \rho, \\
+    \rho \, \tau & \coloneqq \rho \, \sigma_\tau, \\
+    \rho \, C & \coloneqq \left(c_{\rho\left(i\right),\rho\left(j\right)}\right), \\
+    \rho M & \coloneqq \left\{ \rho \, \widehat{C} \mid \widehat{C} \in M \right\}, \\
+    \rho \, T & \coloneqq \pi\left(\left\{ \rho \, \sigma_\eta \mid \eta \in T \right\}\right).
+  \end{align*}
+\end{define}
+
+If we consider $\rho \, \tau$ to be the tour $\tau$ over reordering of cities corresponding to $\rho$,
+and $\tau \rho$ to be a reordering of the tour $\tau$, following result becomes intuitively agreeable.
+
+\begin{proposition}
+\label{prop:rotinv}
+  For any {\defstyle circular permutation} $\rho \in \left<\left(1 \; 2 \; \cdots \; n \right)\right>$,
+  \[
+    \omega_C\left(\tau\right) = \omega_C\left(\tau \rho\right)
+  \]
+  holds true for all $\tau \in \mathcal{T}_n$ and all $C \in \mathbb{R}^{n \times n}$.
+\end{proposition}
+\begin{proof}
+  Consider following natural isomorphism between $\mathbb{Z}/n\mathbb{Z}$ and $\mathcal{N}_n$:
+  for $i \in \mathbb{Z}$, let
+  \[
+    d\left(i\right) \coloneqq \left(\left(i-1\right)\operatorname{mod} n\right)+1.
+  \]
+  We have $d\left(\mathbb{Z}\right) = \mathcal{N}_n$,
+  and $d\restriction_{\mathcal{N}_n} = \operatorname{id}\restriction_{\mathcal{N}_n}$
+  is trivially a bijection (as is $\rho$); further,
+  \begin{align}
+    \label{eq:add}
+    d\left(x+y\right) =
+    d\left(d\left(x\right) + d\left(y\right)\right)
+    \quad \forall x \in \mathbb{Z} \; \forall y \in \mathbb{Z},
+  \end{align}
+  and with $d\left(n+1\right) = 1$ we can now write the cost function from \cref{def:cost} as
+  \begin{equation}
+  \label{eq:cost}
+    \omega_C\left(\tau\right) =
+    \sum_{i=1}^n c_{\sigma_\tau\left(i\right),\sigma_\tau\left(d\left(i+1\right)\right)}.
+  \end{equation}
+  %i.e.\ $d$ is the natural mapping of addition from %$\faktor{\mathbb{Z}}{n\mathbb{Z}}$ onto $\mathcal{N}_n$.
+  %$\mathbb{Z}/n\mathbb{Z}$ onto $\mathcal{N}_n$.
+  We also note that \exists $K \in \mathcal{N}_n$ s.t.\ 
+  $\rho\left(i\right) = d\left(i+K\right) \; \forall i \in \mathcal{N}_n$,
+  and, using \cref{eq:add}, obtain
+  \begin{align}
+    \label{eq:addadd}
+    \begin{split}
+    \rho \left(d\left(i+1\right)\right)
+    & =
+    d\left(d\left(i+1\right)+K\right) =
+    d\left(d\left(i+1\right)+d\left(K\right)\right) =
+    d\left(i+1+K\right) =
+    \\
+    & =
+    d\left(d\left(i+K\right)+d\left(1\right)\right) =
+    d\left(d\left(i+K\right)+1\right) =
+    %\\
+    %& =
+    d\left(\rho\left(i\right)+1\right)
+    \end{split}
+  \end{align}
+  for any city $i$.
+  It now follows that
+  \begin{align*}
+    \omega_C\left(\tau \rho\right) =
+    \omega_C\left(\pi\left(\sigma_\tau \circ \rho\right)\right)
+    & \stackrel{\eqref{eq:cost}}{=}
+    \sum_{i=1}^n c_{\sigma_\tau\left(\rho\left(i\right)\right),\sigma_\tau\left(\rho\left(d\left(i+1\right)\right)\right)}
+    =
+    \\
+    & \stackrel{\eqref{eq:addadd}}{=}
+    \sum_{k=1}^n c_{\sigma_\tau\left(k\right),\sigma_\tau\left(d\left(k+1\right)\right)}
+    \stackrel{\eqref{eq:cost}}{=}
+    \omega_C\left(\tau\right).
+  \end{align*}
+\end{proof}
+
+%\begin{remark}
+%\label{rem:touract}
+%\annotation{TODO: elaborate both sides, add transformations}
+%  Any tour $\tau^\prime$ can thus be seen as a permutation of cities and act on other tours via
+%  $\tau \mapsto \pi\left(\sigma_\tau \circ \sigma_{\tau^\prime}\right)$.
+%\end{remark}
+
+\begin{remark}
+  \annotation{Wording?}
+  This shows, in particular, how resticting the tour set in the TSP to a fixed starting city
+  does not necessarily signify a qualitative restriction of solutions set.
+\end{remark}
+
+We now want to establish a connection between permutations of cities, reorderings of tours and
+solutions to the TSP.
+
+\begin{lemma}
+\label{lemma:ordermat}
+  For any $\rho \in \mathcal{S}_n, C \in \mathbb{R}^{n \times n}, \tau \in \mathcal{T}_n$,
+  \[
+    \omega_C\left(\rho\,\tau\right) = \omega_{\rho\,C}\left(\tau\right)
+  \]
+  holds true.
+\end{lemma}
+\begin{proof}
+  Borrowing definition of $d$ from the proof of \cref{prop:rotinv},
+  and using \cref{eq:cost} along with \cref{def:actions}, we obtain
+  \begin{align*}
+    \omega_{\rho\,C}\left(\tau\right) =
+    \sum_{i=1}^n c_{\rho\left(\sigma_\tau\left(i\right)\right),\rho\left(\sigma_\tau\left(d\left(i+1\right)\right)\right)} =
+    \omega_C\left(\rho \circ \sigma_\tau\right) =
+    \omega_C\left(\rho\,\tau\right).
+  \end{align*}
+\end{proof}
+
+\begin{corollary}[reordered TSP]
+\label{cor:reorder}
+  For any $\rho \in \mathcal{S}_n, C \in M \subseteq \mathbb{R}^{n \times n}, \tau \in \mathcal{T}_n$,
+  \begin{align*}
+  \begin{split}
+    \operatorname{tsp}^\ast_{M,\rho T}\left(C\right)
+    & =
+    \rho \: \operatorname{tsp}^\ast_{\rho M,T}\left(\rho\,C\right),
+    \\
+    \operatorname{tsp}_{M,\rho T}\left(C\right)
+    & =
+    \pi\big( \rho \: \operatorname{tsp}_{\rho M,T}\left(\rho\,C\right) \big).
+  \end{split}
+  \end{align*}
+  %(the latter for a pair of suitable orderings of tours).
+  %% any pair congruent via \rho
+\end{corollary}
+\begin{proof}
+  Using \cref{lemma:ordermat} and \cref{def:tsp}, we obtain
+  \begin{align*}
+    \begin{split}
+    \operatorname{tsp}^\ast_{\left\{C\right\},T}\left(\rho\,C\right)
+    & =
+    \argmin_{\tau \in T} \omega_{\rho\,C}\left(\tau\right) =
+    \argmin_{\tau \in T} \omega_{C}\left(\rho\,\tau\right) =
+    \\
+    & =
+    \rho^{-1} \: \argmin_{\rho\tau \in \rho T} \omega_{C}\left(\rho\,\tau\right) =
+    \rho^{-1} \: \operatorname{tsp}^\ast_{\left\{C\right\},\rho T}\left(C\right),
+    \end{split}
+  \end{align*}
+  from which the rest follows.
+\end{proof}
+
+\subsection{Tour sets as neighbourhoods}
+
+Suppose that we can solve the TSP efficiently over some fixed set of tours $T$ for
+arbitrary cost matrices.
+%We have seen how a set of tours $T$ can be seen as a set of permutations of the cities,
+%or permutations of the canonical tour $\pi\left(\operatorname{id}\right)$,
+%which is not necessarily an element of $T$.
+
+If we now choose some (any) element $\tau^\ast \in T$ and consider $T$ to be a set
+of permutations of $\tau^\ast$, its action then defines a neighbourhood over $\mathcal{T}_n$:
+
+\begin{define}[induced neighbourhood]
+  \label{def:induced}
+  Given a set of tours $T$ and a tour $\tau^\ast \in T$,
+  define $F_T$ to be the map
+  \[
+    F_T: \mathcal{T}_n \to 2^{\mathcal{T}_n}, \quad
+    \tau \mapsto
+    \pi \left(
+      \left\{ \sigma_{\tau} \circ \sigma_{\tau^\ast}^{-1} \circ \sigma_{\tau^\prime}
+              \mid \tau^{\prime} \in T\right\}
+    \right)
+    =
+      \left(\sigma_{\tau} \circ \sigma_{\tau^\ast}^{-1}\right) T.
+  \]
+  We call $F_T$ neighbourhood {\defstyle induced by} $T$ (and $\tau^\ast$).
+\end{define}
+
+\begin{figure}[bht]
+  \centering
+  \includegraphics[width=0.49\textwidth]{../plot/build/ext-1.mps}
+  \caption{A non-empty set of tours $T$ induces a neighbourhood $F_T$.}
+\end{figure}
+
+\begin{remark}
+  It is quickly verified that
+  $\tau \in F_T\left(\tau\right) \; \forall \tau \in \mathcal{T}_n,$
+  i.e.\ $F_T$ is in fact a neighbourhood according to our definition.
+  We further have $F_T\left(\tau^\ast\right) = T$.
+\end{remark}
+
+\begin{remark}
+  We deliberately omit the choice of $\tau^\ast$ from notation of induced neighbourhood,
+  treating it as implicit parameter --- which is usually established along with the set $T$.
+\end{remark}
+
+\begin{remark}
+  If we now can solve the TSP efficiently over a fixed set $T$,
+  combining \cref{def:induced} and \cref{cor:reorder} immediately allows us to
+  construct local search over $F_T$, namely
+  \[
+    l_C\left(\tau\right) = \pi\left(\rho \operatorname{tsp}_{\rho M,T}\left(\rho\, C\right)\right),
+    \quad
+    \text{where}\; \rho = \sigma_\tau \sigma_{\tau^\ast}^{-1},
+  \]
+  and choosing $\tau^\ast$ to be the starting tour then yields iterated local search.
+  %
+  % OUR CODE: see tspsearch/itersearch.sml
+  %
+  %   inv_order = \sigma_{\tau^\ast}^{-1}
+  %   lookup t = \sigma_t \circ inv_order
+  %   map x y = x o y for permutation y
+  %
 \end{remark}
 
 \clearpage
 \dictum[L. Peter Deutsch]{To iterate is human, to recurse divine.}
 %\dictum[Honore de Balzac]{To get a traveling salesman drunk is the height of impossibility.}
+\annotation{TODO FROM HERE}
 \section{Theory}
 
 \subsection{Pyramidal tours}
@@ -547,7 +838,7 @@ pyramid.
 \caption{A pyramidal tour over $K_5$.}
 \end{figure}
 
-\subsubsection{Pyramidal tours and polynomial time}
+\subsection{Recursion and complexity}
 
 It turns out that for this particular exponential neighbourhood a simple dynamic programming
 scheme delivers a polynomial solution.
@@ -587,8 +878,6 @@ We hence arrive at
 \includegraphics[width=0.59\textwidth]{../plot/build/trace_pyr.pdf}
 \caption{A trace of our implementation's pyramidal search graph traversal over $K_5$.}
 \end{figure}
-
-\subsubsection{Local search heuristics}
 
 \annotation{Demidenko conditions: is a description necessary/interesting?}
 While determining if a given TSP instance is pyramidal is NP-hard \cite{baki},
@@ -683,7 +972,7 @@ let $\left[a,b\right]$ describe a (simple) path $\left<a,\ldots,b\right>$.
   $\left<k_1,\ldots,k_n\right> \in {\mathcal T}_n$.
 \end{define}
 
-\subsubsection{Strongly balanced tours and linear time}
+\subsection{Strongly balanced tours and linear time conjecture}
 
 \annotation{Interesting?}
 It can subsequently be shown that the set of strongly balanced tours contains optimal solution
@@ -759,8 +1048,6 @@ solution for the given exponential neighbourhood.
 }
 \end{figure}
 
-\subsubsection{Local search heuristics}
-
 Having constructed a linear solution to an exponential problem class, quite
 naturally the question arises whether this would constitute a good heuristic
 in general case.
@@ -785,7 +1072,7 @@ and {\em flipflop search} \/refers to alterating between pyramidal and strongly 
 %\dictum[Edward V Berard]{Walking on water and developing software from a specification are easy if both are frozen.}
 \section{Implementation}
 
-\subsection{Brief overview}
+\subsection{Key features}
 \annotation{TODO}
 
 Written in {\ttfamily Standard ML}.
@@ -921,14 +1208,6 @@ Potentially fruitful approaches: tuple spaces, message passing languages, etc
 %\section{Code Index}
 %\lstlistoflistings%
 
-\section{Recursion and Time Complexity}
-
-\section{Sample SML REPL Session}
-
-\section{Compiler Support}
-\label{app:compiler}
-\input{sml-support.tex}
-
 \section{Shared Library Interface}
 \label{app:so}
 
@@ -938,7 +1217,13 @@ Potentially fruitful approaches: tuple spaces, message passing languages, etc
   firstline=8,fontadjust,language=C,
   label=lst:so]{../src/rstsp/librstsp/test.c}
 
+\section{Sample REPL Session}
+
 %\input{testapp.tex}
+
+\section{Compiler Support}
+\label{app:compiler}
+\input{sml-support.tex}
 
 \end{appendices}
 

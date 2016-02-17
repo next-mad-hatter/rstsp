@@ -29,6 +29,8 @@ beginfig(1)
   if outputformat="eps":
     %796045
     drawoptions(withcolor (121/255,96/255,69/255));
+  else:
+    outputformat := "eps";
   fi;
   interim ahlength := 7bp;
   interim ahangle := 30;
@@ -56,6 +58,8 @@ beginfig(2)
   if outputformat="eps":
     %796045
     drawoptions(withcolor (121/255,96/255,69/255));
+  else:
+    outputformat := "eps";
   fi;
 
   z1 = (0,3u); z2 = (8u,6u); z3 = (16u,12u); z4 = (24u,15u); z5 = (32u,9u); z6 = (40u,3u);
@@ -77,6 +81,8 @@ beginfig(3)
   if outputformat="eps":
     %796045
     drawoptions(withcolor (121/255,96/255,69/255));
+  else:
+    outputformat := "eps";
   fi;
   for i = 0 upto 7:
     z[i] = (i * dx, i * dy);

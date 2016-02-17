@@ -32,14 +32,14 @@ makeglossaries "${SUBMISSION}"
 lualatex -shell-escape -interaction=batchmode -file-line-error "${SUBMISSION}".tex
 texfot lualatex -shell-escape "${SUBMISSION}".tex
 
-## SLIDES
-#ERR="$(latex -shell-escape -interaction=nonstopmode -file-line-error slides.tex)"
-#STATUS="$?"
-#echo "${ERR}" | egrep ".*:[0-9]*:.*|Warning:"
-#if [ $STATUS -ne 0 ]; then
-#  exit 1
-#fi
-#latex -shell-escape -interaction=batchmode -file-line-error slides.tex
-#texfot latex -shell-escape slides.tex
-#dvips slides.dvi
-#ps2pdf slides.ps
+# SLIDES
+ERR="$(latex -shell-escape -interaction=nonstopmode -file-line-error slides.tex)"
+STATUS="$?"
+echo "${ERR}" | egrep ".*:[0-9]*:.*|Warning:"
+if [ $STATUS -ne 0 ]; then
+  exit 1
+fi
+latex -shell-escape -interaction=batchmode -file-line-error slides.tex
+texfot latex -shell-escape slides.tex
+dvips slides.dvi
+ps2pdf slides.ps

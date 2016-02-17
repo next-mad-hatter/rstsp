@@ -14,12 +14,15 @@
     - report: "build what" option
 * Report:
     - TUG logo
+    - index
     - authors check
     - writeup (see FIXMEs)
     - compute tree width (bfs) for info ?
     - extend node types info
     - plots: palette dependant on slides/report inclusion
     - sml support: can the pandoc -> rst way be pretty-fixed?
+    - metapost plots: parse outputtemplate instead of fake outputformat
+    - metapost plots: include directly in report?
 * Slides:
     - persistent handouts/notes build ?
     - add overlays ?
