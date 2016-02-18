@@ -26,7 +26,7 @@ enddef;
 
 beginfig(1)
   numeric u;
-  u = 2.69mm;
+  u = 2.81mm;
   dx = 5u;
   dy = 1.4u;
   if outputformat="eps":

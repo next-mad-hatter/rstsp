@@ -149,7 +149,6 @@
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
-%\newcommand*{\Cdot}{\raisebox{-0.25ex}{\scalebox{1.2}{$\cdot$}}}
 \newcommand*{\Cdot}{\raisebox{-0.30ex}{\scalebox{1.5}{$\cdot$}}}
 
 \usepackage[pdfauthor={M. Deineko},
@@ -200,7 +199,7 @@
 % FIXME: titlepage / spacing ?
 \maketitle
 
-% FIXME: better wording / tours family ?
+% FIXME: rewrite
 \begin{abstract}
   Pyramidal tours constitute a well known polynomially solvable case of TSP\@.
   In this paper we present a first implementation of a related tours family,
@@ -226,6 +225,7 @@
 
 \afterpage{\blankpage}
 \clearpage
+
 \dictum[Sherlock Holmes]{Nothing clears up a case so much as stating it to another person.}
 \section{Introduction}
 
@@ -265,11 +265,11 @@ interpreted as a (functional) computer program.
 
 \begin{define}[cities, paths and tours]
 Given some $n \in \mathbb{N} \left(n \geq 2\right)$,
-let \[\mathcal{N} \coloneqq \mathcal{N}_n \coloneqq \left\{1,\ldots,n\right\}.\]
-We will refer to elements of $\mathcal{N}$ as {\defstyle cities}.
+let \[\mathcal{N}_n \coloneqq \left\{1,\ldots,n\right\}.\]
+We will refer to elements of $\mathcal{N}_n$ as {\defstyle cities}.
 A non-empty tuple $\left(p_1,p_2,\ldots,p_m\right)$
 of cities is called a {\defstyle path} (of {\defstyle walking length} $m-1$
-{\defstyle over} $\mathcal{N}$);
+{\defstyle over} $\mathcal{N}_n$);
 it is called {\defstyle simple} if it contains distinct entries only, with
 possible exception of its {\defstyle end points} $p_1$ and $p_m$, i.e. if
 \[\left|\left\{p_1,p_2,\ldots,p_{m-1}\right\}\right| =
@@ -279,9 +279,9 @@ one with equal end points --- a {\defstyle closed} one, or a {\defstyle cycle}.
 A path of walking length $1$ is also called an {\defstyle edge};
 a simple cycle of walking length $n$ is called a {\defstyle tour}.
 We then denote by
-$\mathcal{P}_n \coloneqq \bigcup_{k \in \mathbb{N}}\mathcal{N}^k$
+$\mathcal{P}_n \coloneqq \bigcup_{k \in \mathbb{N}}\mathcal{N}_n^k$
 the set of all paths and by
-$\mathcal{T}_n$ --- the set of all tours over $\mathcal{N}$.
+$\mathcal{T}_n$ --- the set of all tours over $\mathcal{N}_n$.
 \end{define}
 
 We extend the common notion of path {\defstyle concatenation}
@@ -290,7 +290,6 @@ images under said map defined as infix operator:
 \begin{define}[path operations]
   Define {\defstyle path concatenation} to be the following map:
   \[
-  %\begin{align}
     \begin{split}
     \oplus \; : & \; {\left( \mathcal{P}_n \cup 2^{\mathcal{P}_n} \right)}^2 \to \mathcal{P}_n \cup 2^{\mathcal{P}_n} \quad \text{(infix)},
     \\
@@ -316,7 +315,6 @@ images under said map defined as infix operator:
       & p \notin \mathcal{P}_n, q \notin \mathcal{P}_n,
     \end{cases}
     \end{split}
-  %\end{align}
   \]
   {\defstyle path reversal} as
   \[
@@ -415,7 +413,7 @@ holds true for all $\lambda \in \mathbb{R}$ and $C \in M$,
 where $J$ is matrix of ones (of suitable dimension).
 Hence we can always assume
 \[
-  c_{i,j} \geq 0 \quad \forall i,j \in \mathcal{N}
+  c_{i,j} \geq 0 \quad \forall i,j \in \mathcal{N}_n
 \]
 and shall do so henceforth.
 \end{remark}
@@ -426,8 +424,8 @@ and shall do so henceforth.
   Usually, we are not interested in all elements of $\operatorname{tsp^\ast}\left(C\right)$
   or its representative given by a particular order $L$ (as produced by $\operatorname{tsp}_L\left(C\right)$)
   but rather in any such tour.
-  Hence we make do with the assumption that we may choose any order on $\mathcal{T}_n$ and treat $L$
-  as implicit argument to $\operatorname{tsp}$, omitting it from notation where possible ---
+  Hence we make do with the assumption that we may choose any order on $\mathcal{T}_n$
+  and treat $L$ as implicit argument to $\operatorname{tsp}$, omitting it from notation where possible ---
   in practice, it is usually given implicitly by construction.
 \end{remark}
 
@@ -446,14 +444,13 @@ and shall do so henceforth.
 \subsection{Exponential neighbourhoods and local search}
 
 Since the TSP in its general form is NP-hard, one is naturally interested in
-good heuristics and efficiently solvable cases (of which a significant number does
-exist);  this leads us to following general definitions.
+efficiently solvable cases as well as good heuristics; this leads us to following general definitions.
 
 \begin{define}[(exponential) neighbourhood]
   A {\defstyle neighbourhood} ({\defstyle in $\mathcal{T}_n$} or {\defstyle over $\mathcal{N}_n$}) is a map
   \[
     F: \mathcal{T}_n \to 2^{\mathcal{T}_n}
-    \quad \text{s.t.}\; \tau \in F\left(\tau\right) \ \forall \tau \in \mathcal{T}_n.
+    \quad \text{s.t.}\; \tau \in F\left(\tau\right) \ \forall \tau \in \mathcal{T}_n\;\footnote{Not a common demand, this is sensible in context of (iterated) local search, and also makes $F\left(\tau\right)$ a neighbourhood of $\tau$ according to discrete topology on $\mathcal{T}_n$.}.
   \]
   $F(\tau)$ is also called {\defstyle neighbourhood of} $\tau$.
   Once again, $n$ can be seen either as given dimension or implicit argument to $F$;
@@ -469,12 +466,6 @@ exist);  this leads us to following general definitions.
   as well as $M \subseteq~\mathbb{R}^{n \times n}$ and $C \in M$,
   we define {\defstyle local search}
   ({\defstyle in} or {\defstyle over $F$}) to be the map
-  %\[
-  %  \left(M,\mathcal{T}_n\right) \to \mathcal{T}_n^2,
-  %  \quad
-  %  \left(C,\tau\right) \mapsto l_C
-  %\]
-  %with
   \[
     l_C :
     \mathcal{T}_n \to \mathcal{T}_n, \quad
@@ -514,7 +505,7 @@ Combining \cref{rem:localappr,rem:nondecr} naturally yields an iterative improve
     \end{cases}
   \]
   which is reached by iteration from $\tau^\ast$.
-  We shall sometimes call such a fixed point {\defstyle stale iteration}.
+  We shall sometimes refer to such a fixed point as {\defstyle stale iteration}.
 \end{define}
 
 \begin{remark}
@@ -526,7 +517,7 @@ Combining \cref{rem:localappr,rem:nondecr} naturally yields an iterative improve
 \begin{remark}
   There seems to exist no commonly accepted distinction between local search and iterated local search.
   Often, the former is not required to solve the problem in $F\left(\tau\right)$ but only
-  in some small subset of it, or to consist of multiple such improvement steps, which is referred to as ,,anytime'' heuristic.
+  in some small subset of it, or to consist of multiple such improvement steps, which is referred to as {\defstyle anytime} heuristic.
   Thus, depending on the definition of what constitutes a step, one can potentially be seen as special case of the other.
 \end{remark}
 
@@ -579,19 +570,19 @@ Similarly, we can use the map $\sigma_{\Cdot}$ for following convenient notation
   \begin{align*}
     \tau \rho & \coloneqq \sigma_\tau \rho, \\
     \rho \, \tau & \coloneqq \rho \, \sigma_\tau, \\
+    \rho \, T & \coloneqq \pi\left(\left\{ \rho \, \sigma_\eta \mid \eta \in T \right\}\right), \\
     \rho \, C & \coloneqq \left(c_{\rho\left(i\right),\rho\left(j\right)}\right), \\
-    \rho M & \coloneqq \left\{ \rho \, \widehat{C} \mid \widehat{C} \in M \right\}, \\
-    \rho \, T & \coloneqq \pi\left(\left\{ \rho \, \sigma_\eta \mid \eta \in T \right\}\right).
+    \rho M & \coloneqq \left\{ \rho \, \widehat{C} \mid \widehat{C} \in M \right\}.
   \end{align*}
 \end{define}
 
-If we consider $\rho \, \tau$ to be the tour $\tau$ over reordering of cities corresponding to $\rho$,
-and $\tau \rho$ to be a reordering of the tour $\tau$, following result becomes intuitively agreeable:
+We can see that $\rho \, \tau$ is associated with the tour $\tau$ over cities reordered by $\rho$,
+and if we consider $\tau \rho$ to be a reordering of the tour $\tau$, following result becomes intuitively agreeable:
 
 \begin{proposition}
 \label{prop:rotinv}
-\annotation{Remove ,,circular''?}
-  For any {\defstyle circular permutation} $\rho \in \left<\left(1 \; 2 \; \cdots \; n \right)\right>$,
+  For any permutation $\rho \in \left<\left(1 \; 2 \; \cdots \; n \right)\right>
+  = \left\{{\left(1 \; 2 \; \cdots \; n \right)}^m \mid m \in \mathbb{Z} \right\}$,
   \[
     \omega_C\left(\tau\right) = \omega_C\left(\tau \rho\right)
   \]
@@ -618,8 +609,6 @@ and $\tau \rho$ to be a reordering of the tour $\tau$, following result becomes 
     \omega_C\left(\tau\right) =
     \sum_{i=1}^n c_{\sigma_\tau\left(i\right),\sigma_\tau\left(d\left(i+1\right)\right)}.
   \end{equation}
-  %i.e.\ $d$ is the natural mapping of addition from %$\faktor{\mathbb{Z}}{n\mathbb{Z}}$ onto $\mathcal{N}_n$.
-  %$\mathbb{Z}/n\mathbb{Z}$ onto $\mathcal{N}_n$.
   We also note that \exists $K \in \mathcal{N}_n$ s.t.\ 
   $\rho\left(i\right) = d\left(i+K\right) \; \forall i \in \mathcal{N}_n$,
   and, using \cref{eq:add}, obtain
@@ -635,8 +624,6 @@ and $\tau \rho$ to be a reordering of the tour $\tau$, following result becomes 
     & =
     d\left(d\left(i+K\right)+d\left(1\right)\right) =
     d\left(d\left(i+K\right)+1\right) =
-    %\\
-    %& =
     d\left(\rho\left(i\right)+1\right)
     \end{split}
   \end{align}
@@ -655,13 +642,6 @@ and $\tau \rho$ to be a reordering of the tour $\tau$, following result becomes 
     \omega_C\left(\tau\right).
   \end{align*}
 \end{proof}
-
-%\begin{remark}
-%\label{rem:touract}
-%\annotation{TODO: elaborate both sides, add transformations}
-%  Any tour $\tau^\prime$ can thus be seen as a permutation of cities and act on other tours via
-%  $\tau \mapsto \pi\left(\sigma_\tau \circ \sigma_{\tau^\prime}\right)$.
-%\end{remark}
 
 \begin{remark}
   \annotation{Wording?}
@@ -705,8 +685,8 @@ solutions to the TSP.
     \pi\big( \rho \: \operatorname{tsp}_{\rho M,T}\left(\rho\,C\right) \big).
   \end{split}
   \end{align*}
-  %(the latter for a pair of suitable orderings of tours).
-  %% any pair congruent via \rho
+  %% Latter equality holds for any two orderings of tours where one is image of the other under $\rho$.
+  %% (which one exactly?)
 \end{corollary}
 \begin{proof}
   Using \cref{lemma:ordermat} and \cref{def:tsp}, we obtain
@@ -726,13 +706,6 @@ solutions to the TSP.
 \end{proof}
 
 \subsection{Tour sets as neighbourhoods}
-
-%Suppose that we can solve the TSP efficiently over some fixed set of tours $T$ for
-%arbitrary cost matrices.
-
-%We have seen how a set of tours $T$ can be seen as a set of permutations of the cities,
-%or permutations of the canonical tour $\pi\left(\operatorname{id}\right)$,
-%which is not necessarily an element of $T$.
 
 Given a non-empty set of tours $T$, we can choose some (any) element $\tau^\ast \in T$
 and consider $T$ to be a set of permutations of $\tau^\ast$ ---
@@ -775,8 +748,8 @@ its action then defines a neighbourhood in $\mathcal{T}_n$:
 
 \begin{remark}
   If we now can solve the TSP efficiently over a fixed set of tours $T$ (for arbitrary cost matrices),
-  combining \cref{def:induced} and \cref{cor:reorder} immediately allows us to
-  construct local search over $F_T$, namely
+  choosing a $\tau^\ast \in T$ immediately allows us to construct local search over $F_T$ ---
+  applying \cref{cor:reorder} to \cref{def:induced}, we arrive at
   \[
     l_C\left(\tau\right) = \pi\left(\rho \, \operatorname{tsp}_{\rho M,T}\left(\rho\, C\right)\right),
     \quad
@@ -793,8 +766,8 @@ its action then defines a neighbourhood in $\mathcal{T}_n$:
 \end{remark}
 
 \clearpage
+
 \dictum[L. Peter Deutsch]{To iterate is human, to recurse divine.}
-%\dictum[Honore de Balzac]{To get a traveling salesman drunk is the height of impossibility.}
 \annotation{TODO FROM HERE}
 \section{Theory}
 
@@ -805,84 +778,37 @@ Pyramidal tours constitute a classic example of a TSP class where an
 optimum solution for an exponential tours set (also, a neighbourhood) can
 be found in polynomial time \cite{bellman,gilmore}.
 
-\begin{define}
-  A path $\pi = \left( k_1, \ldots, k_m \right)$ is called {\bfseries simple}
-  if it consists only of distinct nodes, except, possibly, end nodes $k_1$ and $k_m$.
-  In case where $k_1 = k_m$ we shall call such a path {\bfseries closed}.
-\end{define}
-\begin{define}[Pyramidal Tour]
-  A simple path $\pi = \left( k_1, \ldots, k_p, l_1, \ldots, l_q \right), \; p+q \geq 1,$
-  is called {\bfseries pyramidal} if
-  $k_i < k_j, l_i > l_j \; \forall i < j$.
-  A (simple) closed path is called a {\bfseries tour}.
-\end{define}
-\noindent
-Since all tours associated with $S_n$ have the form $\left(1, k_1, \ldots,
-k_p, n, l_1, \ldots, l_q, 1 \right)$, it follows that the number of all
-such tours is $2^{n-2}$.  Also note how the graph of such a permutation
-considered a function ${\mathbb Z}_n \rightarrow {\mathbb Z}_n$ resembles a
-pyramid.
+Since all pyramidal tours have the two-monotone-chains form
+$\left(1, k_1, \ldots, k_p, n, l_1, \ldots, l_q, 1 \right)$,
+it follows that the number of all such tours is $2^{n-2}$.
 
-\annotation{Here a nice figure of a pyramidal tour and a pyramid shall be.}
-\begin{figure}[htbp]
-\centering%
-\begin{mplibcode}
-  beginfig(0)
-    pair p[];
-    p1 = (0,0); p2 = (100,0); p3 = (200,0); p4 = (300,0); p5 = (400,0);
-    pair c[];
-    c1 = (50,20); c2 = (210,30); c3 = (250,-10); c4 = (100,-20);
-    path a;
-    a = p1 .. controls c1 ..
-        p2 .. controls c2 ..
-        p4 ..
-        p5 .. controls c3 ..
-        p3 ..  controls c4 ..
-        cycle ;
-    for i = 1 upto length a:
-      dotlabel.top(decimal i, p[i]);
-      drawarrow subpath (i-1,i) of a withcolor 0.2;
-    endfor
-  endfig;
-\end{mplibcode}
-\ 
-\caption{A pyramidal tour over $K_5$.}
-\end{figure}
+%% lualatex+metapost demo:
+%\begin{figure}[htbp]
+%\centering%
+%\begin{mplibcode}
+%  beginfig(0)
+%    pair p[];
+%    p1 = (0,0); p2 = (100,0); p3 = (200,0); p4 = (300,0); p5 = (400,0);
+%    pair c[];
+%    c1 = (50,20); c2 = (210,30); c3 = (250,-10); c4 = (100,-20);
+%    path a;
+%    a = p1 .. controls c1 ..
+%        p2 .. controls c2 ..
+%        p4 ..
+%        p5 .. controls c3 ..
+%        p3 ..  controls c4 ..
+%        cycle ;
+%    for i = 1 upto length a:
+%      dotlabel.top(decimal i, p[i]);
+%      drawarrow subpath (i-1,i) of a withcolor 0.2;
+%    endfor
+%  endfig;
+%\end{mplibcode}
+%\ 
+%\caption{A pyramidal tour over $K_5$.}
+%\end{figure}
 
 \subsection{Recursion and complexity}
-
-It turns out that for this particular exponential neighbourhood a simple dynamic programming
-scheme delivers a polynomial solution.
-\annotation{Is there any difference at all between sTSP and aTSP here?}
-(For simplicity, we shall consider symmetric TSP (sTSP).)
-For a sTSP of size $n$, let
-\begin{align*}
-  \Phi\left(i,j\right) \ldots \; & \text{shortest pyramidal path} \left(i,k_1,\ldots,k_p,j\right) \\
-                      & \text{s.t.} \; \left\{ k_1,\ldots,k_p \right\} = \left\{ k,\ldots,n \right\} \\
-                      & \text{where} \; k = \max\left\{i,j\right\}+1.
-\end{align*}
-One can easily see that $\Phi(1,1)$ is the optimum of all pyramidal tours in $S_n$ (one-based).
-\[
-  \Phi\left(i,n\right) = \left(i,n\right) \; \text{and} \; \Phi\left(n,j\right) = \left(n,j\right).
-\]
-\annotation{A construction illustration would be in order here.}
-Now note that one can build an arbitrary pyramidal path by considering nodes' positions in increasing order:
-given a partial tour (a pyramidal path) $\left(1,\ldots,i,j,\ldots,1\right)$ which increases to $i$ and
-decreases from $j$, the next element ($\max\left\{i,j\right\}+1$) has to lie adjacent to $i$ or $j$.
-Since every pyramidal tour over $K_n$ can be constructed in this manner, it follows that
-\begin{gather*}
-  \Phi\left(i,j\right) = \argmin_{\tau \in T}\mathfrak{w}\left(\tau\right) \\
-  \text{where} \; T = \left\{ \left( i,k \right) \oplus \Phi(k,j), \Phi(i,k) \oplus \left( k,j \right) \right\} \\
-  \text{and} \; \oplus \; \ldots \; \text{path concatenation}.
-\end{gather*}
-We hence arrive at
-\begin{theorem}
-  For $K_n$, amongst $2^{n-3}$ pyramidal tours an optimum can be found in $\mathcal O(n^2)$ steps.
-\end{theorem}
-\begin{proof}
-  For $K_n$, computing the optimum now requires computing not more than $\Phi\left(i,j\right)$
-  for all pairs $\left(i,j\right)$.
-\end{proof}
 
 \begin{figure}[htbp]
 \centering
@@ -919,15 +845,10 @@ holds everywhere.
 In this way, iterating from $\left(1,2,\ldots,n,1\right)$ to a fixed point of $h_C$ yields a
 local search heuristic.
 
-It had been shown \cite{belperm} that we can significantly improve on this by enhancing
-$\operatorname{pyr}$ to choose from $n$ shortest pyramidal tours obtained by applying
-cyclic permutations to initial node ordering.
-
-\subsection{Four point conditions exponential neighbourhoods}
+\subsection{Four point conditions and exponential neighbourhoods}
 
 \subsection{Strongly balanced tours}
 
-\annotation{Balanced tours interesting?}
 Another class of sTSP is the {\em Relaxed Supnick TSP} \/(RS-TSP), which is
 obtained by restricting considered instances via a simple four-point
 condition:
@@ -937,55 +858,10 @@ condition:
 where $\left(c_{ij}\right)$ is the distance matrix.
 
 While it has been shown that RS-TSP is NP-hard, an exponential subset of
-said problem which is polynomially solvable has also been found.  Herein we
-present first implementation of the solution, which bears distinct similarity
-to pyramidal TSP.
-
-\annotation{Add supplementary pictures/explanation.}
-We shall define our neighbourhood through explicit tour construction.  For brevity,
-let $\left[a,b\right]$ describe a (simple) path $\left<a,\ldots,b\right>$.
-\begin{define}[Strongly Balanced Tour]
-  Consider following family of path sets:
-  \begin{itemize}
-    \item $\mathcal T_1 = \left\{\left<1\right>\right\};$
-    \item $\mathcal T_n = \bigcup_{\tau \in \mathcal T_{n-1}}
-      \left(
-      \left\{
-          \operatorname{add}\left(\tau,n\right),
-          \operatorname{app}\left(\tau,n\right)
-      \right\} \cup
-      \operatorname{merge}\left(\tau,n\right)
-      \right)
-    $
-    where
-    \begin{align*}
-      \operatorname{add}\left(\tau,n\right) = & \; \tau \cup \left\{\left<n\right>\right\}; \\
-      \operatorname{app}\left(\tau,n\right) = & \;
-        \tau \setminus \left\{\left[a_1,a_2\right]\right\}
-        \cup \left\{\left<n\right>\oplus\left[a_1,a_2\right]\right\} \\
-        & \; \text{for} \; \tau = \left\{ \left[a_i,a_{i+1}\right] \right\}_{i \in I}
-        \text{and} \; a_1 = \min_{k \in I \cup 1+I}\left\{a_k\right\}, \\
-      \operatorname{merge}\left(\tau,n\right) = & \;
-        \left\{
-          \tau \setminus \left\{\left[a_1,a_2\right],\left[a_3,a_4\right]\right\}
-          \cup \left\{\left[a_2,a_1\right]\oplus\left<n\right>\oplus\left[a_3,a_4\right]\right\}
-        \right\} \\
-        & \; \text{for} \; \tau, a_1 \; \text{as above,}
-          \; a_3 = \min_{\substack{k \in I \cup 1+I\\\ k \neq 1, k \neq 2}}\left\{a_k\right\}.
-    \end{align*}
-    Here multiple appearances of $[.,.]$ notation with same indexes refer to same paths.
-    Also note how $\operatorname{merge}\left(\tau,n\right)$ is empty if there is no $a_3$
-    satisfying the constraints.
-
-  \end{itemize}
-  An element of $\mathcal T_n$ is said to be {\bfseries strongly balanced}.
-  A tour $\left<k_1,\ldots,k_n,k_1\right>$ is said to be {\bfseries strongly balanced} if
-  $\left<k_1,\ldots,k_n\right> \in {\mathcal T}_n$.
-\end{define}
+said problem which is polynomially solvable has also been found.
 
 \subsection{Strongly balanced tours and linear time conjecture}
 
-\annotation{Interesting?}
 It can subsequently be shown that the set of strongly balanced tours contains optimal solution
 to TSP restricted to Relaxed Supnick matrices which additionaly satisfy
 \[
@@ -994,7 +870,6 @@ to TSP restricted to Relaxed Supnick matrices which additionaly satisfy
 \]
 and that this condition can be checked in quadratic time.
 
-\annotation{Details?}
 If we further restrict this set by
 \[
   c_{ji} + c_{kl} \leq c_{jl} + c_{ki} \quad \forall i<j, \; j+h \leq k < l
@@ -1046,7 +921,7 @@ solution for the given exponential neighbourhood.
         %multicolumn names,
       ]{../plot/data/num\string_types.csv}%
     }
-\caption{Number of node types encountered.  This seems to closely reflect the tree width -- and thus runtime -- growth.}%
+\caption{Number of node types encountered.}%
 \label{tbl:nodeTypes}%
 \end{table}
 
@@ -1059,28 +934,13 @@ solution for the given exponential neighbourhood.
 }
 \end{figure}
 
-Having constructed a linear solution to an exponential problem class, quite
-naturally the question arises whether this would constitute a good heuristic
-in general case.
-\annotation{Check: $\mu$ prepended or appended?}
-To try and answer this, we have taken the same path as in pyramidal case.
-Note that to account for strongly balanced tours structure, we have to
-\begin{itemize}
-  \item replace $\sigma_\tau$ by $\sigma_\tau \circ \sigma_\mu$
-        in fixed point iteration, where $\mu = \left<\ldots,5,3,1,2,4,\ldots\right> \in S_n$;
-  \item also apply $\mu$ (we also added $\mu$ mirrored)
-        before considering cyclic permutations while also considering the identity permutation.
-\end{itemize}
-
-Results of our experiments are presented in next section
-(where {\em adaptive search} \/refers to number of considered permutations growing at stale iterations
-and {\em flipflop search} \/refers to alterating between pyramidal and strongly balanced search in each iteration).
-
 \subsection{Local search and flowers}
 
+Pyramidal flower: \cite{belperm}.
+
 \clearpage
+
 \dictum[Donald Knuth]{You’re bound to be unhappy if you optimize everything.}
-%\dictum[Edward V Berard]{Walking on water and developing software from a specification are easy if both are frozen.}
 \section{Implementation}
 
 \subsection{Key features}
@@ -1165,6 +1025,7 @@ than always choosing from $2n+1$ specific permutations.
 \end{figure}
 
 \clearpage
+
 \dictum[Arthur Bloch]{Enough research will tend to support your conclusions.}
 \section{Conclusions}
 

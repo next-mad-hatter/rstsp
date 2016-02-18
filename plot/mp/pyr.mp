@@ -25,7 +25,7 @@ enddef;
 
 beginfig(1)
   numeric u;
-  u = 2.71mm;
+  u = 2.81mm;
   if outputformat="eps":
     %796045
     drawoptions(withcolor (121/255,96/255,69/255));
@@ -54,7 +54,7 @@ endfig;
 
 beginfig(2)
   numeric u;
-  u = 1.69mm;
+  u = 1.83mm;
   if outputformat="eps":
     %796045
     drawoptions(withcolor (121/255,96/255,69/255));
@@ -75,7 +75,7 @@ endfig;
 
 beginfig(3)
   numeric u;
-  u = 1.69mm;
+  u = 1.83mm;
   dx = 6u;
   dy = 1.7u;
   if outputformat="eps":
