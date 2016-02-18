@@ -57,7 +57,7 @@ int main(int argc, const char **argv) {
    * We also want to avoid having to manually manage memory, therefore only
    * basic searches -- not their combinators -- are exposed through the library.
    *
-   * What follows is simple pyramidal search.
+   * This computes optimum pyramidal tour.
    */
   char *dotfilename = NULL;
   int64_t *len;
@@ -75,7 +75,7 @@ int main(int argc, const char **argv) {
   }
 
   /**
-   * Simple balanced search;  max_width : node size limit.
+   * Compute optimum strongly balanced tour;  max_width : node size limit.
    */
   uint32_t max_width = 3;
   result = (Pointer *)rstsp_sb_search(prob_size, *dst, max_width, dotfilename);
@@ -91,8 +91,8 @@ int main(int argc, const char **argv) {
   }
 
   /**
-   * Iterative pyramidal search which considers up to n cyclic permutations in
-   * each iteration and reorders for next.
+   * Iterative pyramidal search which considers up to n cyclic permutations
+   * (flower) in each iteration.
    */
   uint32_t max_iters = 10;
   uint32_t stale_iters = 3;
@@ -110,8 +110,7 @@ int main(int argc, const char **argv) {
   }
 
   /**
-   * Iterative balanced search which, additionally to reordering, considers up to 2*n additional
-   * "balanced shift"-permutations in each iteration.
+   * Iterative strongly balanced search, flower size 1.5*n.
    */
   max_rots = 2*prob_size;
   result = (Pointer *)rstsp_iter_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, max_rots);
@@ -127,8 +126,8 @@ int main(int argc, const char **argv) {
   }
 
   /**
-   *  A variation of the above where number of additional permutations is
-   *  increased at stale iterations.
+   *  A variation of the above where number of considered permutations from the
+   *  flower grows at stale iterations (which we call adaptive).
    */
   uint32_t min_rots = 0;
   result = (Pointer *)rstsp_ad_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, min_rots, max_rots);
@@ -144,7 +143,8 @@ int main(int argc, const char **argv) {
   }
 
   /**
-   *  A combination of adaptive sb & iterative pyramidal searches.
+   *  A variant combining, in alternating, or flipflop, manner, adaptive s.b. &
+   *  iterative pyramidal searches.
    */
   uint32_t max_flips = 0;
   result = (Pointer *)rstsp_ff_search(prob_size, *dst, max_width, max_iters, stale_iters, min_rots, max_rots, max_flips);

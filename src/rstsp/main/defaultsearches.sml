@@ -47,12 +47,8 @@ struct
       structure Search = SBSearch
       fun max_perm size = size + Word.div (size+0w1,0w2)
       fun permute size n =
-      let
-        val r = Word.div (size+0w1,0w2)
-      in
-        if n < r then (cycle size n) o (inter_shuffle size)
-                 else (cycle size (n-r)) o (sb_shuffle size)
-      end
+        if n < size then (cycle size n) o (sb_shuffle size)
+                    else (cycle size (n-size)) o (inter_shuffle size)
     end
   )
 
@@ -95,12 +91,18 @@ struct
       val inv_order = sb_shuffle
       fun max_perm size = size + Word.div (size+0w1,0w2)
       fun permute size n =
+        if n < size then (cycle size n) o (sb_shuffle size)
+                    else (cycle size (n-size)) o (inter_shuffle size)
+      (*
+      fun max_perm size = size + Word.div (size+0w1,0w2)
+      fun permute size n =
       let
         val r = Word.div (size+0w1,0w2)
       in
         if n < r then (cycle size n) o (inter_shuffle size)
                  else (cycle size (n-r)) o (sb_shuffle size)
       end
+      *)
       (*
       fun max_perm size = 0w2*size + Word.div (size+0w1,0w2)
       fun permute size n =
