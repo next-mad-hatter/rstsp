@@ -75,6 +75,7 @@
 \usepackage{subfig}
 \usepackage{sidecap}
 \usepackage[bottom]{footmisc}
+\usepackage{enumerate}
 
 \usepackage{xcolor}
 \definecolor{Gray}{gray}{0.9}
@@ -335,9 +336,12 @@ images under said map defined as infix operator:
   \]
 \end{define}
 
+\begin{remark}
+\annotation{Add an example for concatenation, setup precedence over union.}
 Note that path closure produces a bijection from the set of all simple open
 paths of walking length $n-1$ over $\mathcal{N}_n$ onto $\mathcal{T}_n$.
 Further, $\overline{\mathcal{T}_n} = \mathcal{T}_n$ holds true.
+\end{remark}
 
 \begin{define}[costs and distances]
 \label{def:cost}
@@ -394,10 +398,15 @@ Frequently, the TSP is defined via a map which provides the sets $M$ and
 $T$ for every dimension $n$.  We make no such requirement --- however, such
 an extension is easily established from context, and throughout the rest of
 this paper we will usually assume that some such dimension is given.
-
-Whenever the sets $M,T$ in above definition are established elsewhere,
+Further, whenever the sets $M,T$ in above definition are established elsewhere,
 they are usually omitted from notation.  The pair $(M,T)$ is called a
 {\defstyle class} or {\defstyle (special) case} of TSP.
+\end{remark}
+
+\begin{remark}
+  Also not unusual (and useful in time complexity considerations) is a
+  variation of TSP which returns the cost of optimal tour along with
+  such a tour --- transition between these definitions is usually obvious.
 \end{remark}
 
 \begin{remark}
@@ -405,13 +414,11 @@ Often, the convention is to define TSP to be the symmetric version
 \annotation{Reduction remark acceptable without reference?}
 (aTSP can also be reduced to sTSP of twice the dimension).
 We shall make no such assumption without a prior notice.
-\end{remark}
-
-\begin{remark}
-It follows from \cref{def:cost,def:tsp} that
+On the other hand, following convention is useful:
+observe how it follows from \cref{def:cost,def:tsp} that
 $\operatorname{tsp}_{M,T}^\ast\left(C\right) =
  \operatorname{tsp}_{M,T}^\ast\left(C + \lambda J\right)$
-holds true for all $\lambda \in \mathbb{R}$ and $C \in M$,
+for all $\lambda \in \mathbb{R}$ and $C \in M$,
 where $J$ is matrix of ones (of suitable dimension).
 Hence we can always assume
 \[
@@ -422,28 +429,19 @@ and shall do so henceforth.
 
 \begin{remark}
 \label{rem:order}
-\annotation{Choice of representative important in, say, ILS.}
   Cost equality naturally induces a partition of $\mathcal{T}_n$ (or its
-  subset $T$ above).  Usually, we are not interested in all elements of
+  subset $T$ above).  We are not always interested in all elements of
   $\operatorname{tsp^\ast}\left(C\right)$ or its representative given by a
   particular order $L$ (as produced by $\operatorname{tsp}_L\left(C\right)$)
-  but rather in any such tour.  Hence we make do with the assumption that
-  we may choose any order on $\mathcal{T}_n$ and treat $L$ as implicit argument
+  but rather in any such tour.
+  We hence treat $L$ as implicit argument
   to $\operatorname{tsp}$, omitting it from notation where possible ---
-  in practice, it is usually given implicitly by construction.
-\end{remark}
-
-\begin{remark}
-\annotation{Remove this.}
-  Also not unusual (and useful in time complexity considerations) is a
-  variation of TSP which returns the cost of optimal tour along with or
-  instead of such a tour --- transition between these definitions is
-  usually obvious.  While latter makes the distinction between
-  $\operatorname{tsp}$ and $\operatorname{tsp^\ast}$ unnecessary and
-  alleviates issues raised in \cref{rem:order}, it does not provide an
-  obvious solution to the colloquial form of TSP, and ignoring said issues
-  only conveniently moves them to particular implementation, refusing them
-  proper formal treatment ab ovo.
+  in practice, it is often given implicitly by construction, or may depend
+  on even more arguments (such as some probability distribution) ---
+  still, this choice of representative is something we need to be aware of
+  throughout this paper,
+  as it propagates to any construct using $\operatorname{tsp}$ ---
+  such as iterative methods presented in next section.
 \end{remark}
 
 \subsection{Exponential neighbourhoods and local search}
@@ -481,7 +479,7 @@ following general definitions.
     \mathcal{T}_n \to \mathcal{T}_n, \quad
     \tau \mapsto \operatorname{tsp}_{M,F(\tau)}\left(C\right).
   \]
-  $F$ is said to be {\defstyle polynomially solvable} if
+  $F$ (as well as $l_C$) is said to be {\defstyle polynomially solvable} if
   $l_{C^\prime}\!\in \P \ \forall C^\prime \in M$
   (where time complexity is measured in relation to $n$).
 \end{define}
@@ -771,35 +769,30 @@ $\tau^\ast$ --- its action then defines a neighbourhood in $\mathcal{T}_n$:
   $\tau \in F_T\left(\tau\right) \; \forall \tau \in \mathcal{T}_n,$
   i.e.\ $F_T$ is in fact a neighbourhood according to our definition.
   We further have $F_T\left(\tau^\ast\right) = T$.
-\end{remark}
-
-\begin{remark}
   We deliberately omit the choice of centre from actual notation of induced
   neighbourhood, treating it as implicit parameter --- which is usually
   established along with the set $T$.
 \end{remark}
 
-\begin{remark}
-  If we now can solve the TSP efficiently over a fixed set of tours $T$
-  (for arbitrary cost matrices), choosing a $\tau^\ast \in T$ immediately
-  allows us to construct local search over $F_T$ --- applying
-  \cref{cor:reorder} to \cref{def:induced}, we arrive at
-  \[
-    l_C\left(\tau\right) =
-    \pi\left(\rho\,\operatorname{tsp}_{\rho M,T}\left(\rho\, C\right)\right),
-    \quad
-    \text{where}\; \rho = \sigma_\tau \sigma_{\tau^\ast}^{-1},
-  \]
-  and choosing $\tau^\ast$ to be the starting tour in \cref{def:ils} then
-  yields iterated local search.
-  %
-  % OUR CODE: see tspsearch/itersearch.sml
-  %
-  %   inv_order = \sigma_{\tau^\ast}^{-1}
-  %   lookup t = \sigma_t \circ inv_order
-  %   map x y = x o y for permutation y
-  %
-\end{remark}
+If we now can solve the TSP efficiently over a fixed set of tours $T$
+(for arbitrary cost matrices), choosing a $\tau^\ast \in T$ immediately
+allows us to construct local search over $F_T$ --- applying
+\cref{cor:reorder} to \cref{def:induced}, we arrive at
+\[
+  l_C\left(\tau\right) =
+  \pi\left(\rho\,\operatorname{tsp}_{\rho M,T}\left(\rho\, C\right)\right),
+  \quad
+  \text{where}\; \rho = \sigma_\tau \sigma_{\tau^\ast}^{-1},
+\]
+and choosing $\tau^\ast$ to be the starting tour in \cref{def:ils} then
+yields iterated local search.
+%
+% OUR CODE: see tspsearch/itersearch.sml
+%
+%   inv_order = \sigma_{\tau^\ast}^{-1}
+%   lookup t = \sigma_t \circ inv_order
+%   map x y = x o y for permutation y
+%
 
 \clearpage
 
@@ -848,8 +841,8 @@ $\left(1, 2, \ldots, n, 1\right)$.
   \includegraphics[width=0.49\textwidth]{../plot/build/pyr-2.mps}
   \caption{%
     For a pyramidal tour $\tau$, connected plot of $\sigma_\tau$'s
-    graph resembles a pyramid (here: $n = 5$, wraps horizontally 
-    at $1$ for cosmetic reasons).
+    (function) graph resembles a pyramid (here: $n = 5$, plot repeated at $1$
+    for cosmetic reasons).
   }
 \end{figure}
 
@@ -911,6 +904,7 @@ evident and following construction transparent:
 This translates directly onto a dynamic programming solution to pyramidal TSP:
 \begin{corollary}[dynamic programming solution to pyramidal TSP]
 \label{cor:pyrdp}
+\annotation{better layout via alignedat?}
   For a suitable tour-valued definition of $\argmin^\ast$, the recurrence relation
   \begin{align}
     \label{eq:pyrdp}
@@ -921,14 +915,17 @@ This translates directly onto a dynamic programming solution to pyramidal TSP:
       {\displaystyle \argmin_T}^\ast \omega_C & \text{otherwise},
     \end{cases}
     \\
-      \text{where}\;
-      T & =
-      \left\{
-      \left(i\right) \oplus \Phi_C\left(k,j\right),
-      \Phi_C\left(i,k\right) \oplus \left(j\right)
-      \right\},
-      k = \max\left\{i,j\right\}+1,
-      \nonumber
+    \text{where} & \phantom{\coloneqq}
+    T \coloneqq
+    \left\{
+    \left(i\right) \oplus \Phi_C\left(k,j\right),
+    \Phi_C\left(i,k\right) \oplus \left(j\right)
+    \right\},
+    \nonumber
+    \\
+    & \phantom{\coloneqq}
+    k \coloneqq \max\left\{i,j\right\}+1,
+    \nonumber
   \end{align}
   produces, for arbitrary cost matrices, a well-defined map $\Phi_C$ on $\mathcal{N}_n^2$,
   and via
@@ -938,7 +935,7 @@ This translates directly onto a dynamic programming solution to pyramidal TSP:
   a map on $\mathbb{R}^{n \times n}$.
   For latter,
   \[
-    \phi = \operatorname{TSP_{\mathbb{R}^{n \times n},\operatorname{Pyr}_n}}
+    \phi = \operatorname{tsp}_{\mathbb{R}^{n \times n},\operatorname{Pyr}_n}
   \]
   holds true.
 \end{corollary}
@@ -988,13 +985,167 @@ shows such a graph.
 %\label{fig:pyrtraces}
 %\end{figure}
 
-\annotation{TODO FROM HERE}
-
 \subsection{Recursion and complexity}
 
 While \cref{cor:pyrdp} offers a solution to the pyramidal TSP, the function
 as it is presented in \cref{eq:pyrdp} does not yet necessarily translate
-onto an efficient computer program.  For this,.
+onto an efficient computer program.
+For this, we need to perform the additional step of {\defstyle memoization}.
+
+The term, coined in computing (from {\defstyle memo}), denotes the
+technique of evaluating a function no more than once at any point in its domain,
+storing evaluation results somewhere and retrieving (i.e.\ substituting) them for
+subsequent evaluations.
+Not unnatural to computations by hand, memoization can formally be seen as
+computing, in place of a function over some set, said function's graph over
+the set.
+In what now follows, $X$ can be seen as a memory holding evaluated results.
+
+\begin{proposition}[memoized version of $\Phi_C$]
+\label{prop:pyrmem}
+\annotation{better layout via alignedat?}
+  Given a set of cities $\mathcal{N}_n$, let, for cities $i,j$ and cost matrix $C$,
+  \begin{align}
+    \label{eq:pyrmem}
+    \widehat{\Phi}_C\left((i,j),X\right) & \coloneqq
+    \begin{cases}
+      \left(v^\ast,X\right), & \left((i,j),v^\ast\right) \in X \;\text{for some}\; v^\ast,
+      \\
+      \left((i,j),X \cup \left\{\left((i,j),(i,j)\right)\right\}\right) & \text{otherwise, if}\; n \in \left\{i,j\right\},
+      \\
+      \left(v,X^{\prime\prime} \cup \left\{\left((i,j),v\right)\right\}\right) & \text{otherwise, where}
+    \end{cases}
+    \\
+    v & \coloneqq \argmin \omega_C
+    \;\;\text{over}\;\; {\left\{(i) \oplus v^\prime, v^{\prime\prime} \oplus (j) \right\}},
+    \nonumber
+    \\
+    \left(v^{\prime\prime},X^{\prime\prime}\right) & \coloneqq \widehat{\Phi}_C\left((i,k),X^\prime\right),
+    \nonumber
+    \\
+    \left(v^{\prime},X^{\prime}\right) & \coloneqq \widehat{\Phi}_C\left((k,j),X\right),
+    \nonumber
+    \\
+    k & \coloneqq \max \left\{i,j\right\} + 1.
+    \nonumber
+  \end{align}
+  Then, borrowing definition of $\Phi_C$ from \cref{cor:pyrdp},
+  \[
+    \widehat{\Phi}_C\left((1,1),\varnothing\right) = \left(\Phi_C\left(1,1\right),E\right),
+  \]
+  where $E$ is the graph of $\Phi_C$ over $\mathcal{N}_n^2 \setminus \left\{(n,n)\right\}$.
+\end{proposition}
+\begin{proof}
+  Comparing the construction of $\widehat{\Phi}_C$ in \cref{eq:pyrmem} to 
+  that of $\Phi_C$ in \cref{eq:pyrdp},
+  we see that if $X$ in \eqref{eq:pyrmem} is a subset of $\Phi_C$'s graph,
+  then so is the second element returned by
+  $\widehat{\Phi}_C$, and with this the rest follows.
+\end{proof}
+
+This gives us a viable way of computing $\Phi_C\left(1,1\right)$, and, by extension,
+$\operatorname{tsp}_{\operatorname{Pyr}_n}$ --- in fact, our code, which
+produced \cref{fig:pyrtrace} as its execution trace, closely mirrors this exact
+definition.
+It is also a reasonably efficient implementation:
+evaluating $\widehat{\Phi}_C$ following its definition corresponds to
+depth first search over the recursion tree, which is quadratic in size
+as well as number of edges --- if we now consider memoization to be what
+is usually called edge marking in that it guarantees that every edge
+is visited no more than once, we intuitively arrive at following:
+
+\begin{corollary}
+\label{cor:pyrtime}
+  Pyramidal TSP is polynomially solvable.
+\end{corollary}
+\begin{proof}
+  Consider $\widehat{\Phi}_C\left((i,j),X\right)$ as defined in \cref{prop:pyrmem}.
+  At this point we would like to make several assumptions which we shall address later:
+  \begin{enumerate}[(i)]
+    \item memory access (search for $v^\ast$ in first case of \eqref{eq:pyrmem}, and set union in the other two)
+      can be accomplished in constant time;
+    \item $\argmin \omega_C$ in said definition is computable in constant time;
+    \item tour concatenation in said definition is computable in constant time.
+  \end{enumerate}
+  If, for a bound $M$,
+  we now rewrite the recurrence relation from definition of $\widehat{\Phi}_C$ as
+  \begin{align}
+    \label{eq:pyrtime}
+    R\left((i,j),X\right) & \coloneqq
+    \begin{cases}
+      \left(M,X \cup \left\{(i,j)\right\}\right) & (i,j) \in X \;\text{or}\; n \in \left\{i,j\right\},
+      \\
+      \left(M+t,X^{\prime\prime} \cup \left\{(i,j)\right\}\right) & \text{otherwise, where}
+    \end{cases}
+    \\
+    t & \coloneqq t^{\prime} + t^{\prime\prime},
+    \nonumber
+    \\
+    \left(t^{\prime\prime},X^{\prime\prime}\right) & \coloneqq R\left((i,k),X^\prime\right),
+    \nonumber
+    \\
+    \left(t^{\prime},X^{\prime}\right) & \coloneqq R\left((k,j),X\right),
+    \nonumber
+    \\
+    k & \coloneqq \max \left\{i,j\right\} + 1,
+    \nonumber
+  \end{align}
+  and define $\operatorname{time} \coloneqq (x,y) \mapsto x$,
+  %$\operatorname{mem} \coloneqq (x,y) \mapsto y$ and
+  $T \coloneqq \operatorname{time} \circ R$,
+  then for some such $M$
+  the maximum number of steps in which we can compute
+  $\widehat{\Phi}_C\left((i,j),\varnothing\right)$
+  for any pair of cities is
+  $T\left((i,j),\varnothing\right)$.
+  We now want to show that
+  \[
+    T\left((1,1),\varnothing\right) = \mathcal{O}\left(n^2\right).
+  \]
+  \annotation{alignment}
+  Let us expand
+  \begin{align*}
+    T\left((1,1),\varnothing\right) & =
+    M + T\left((1,2),X_{1,2}^{1,1}\right)
+      + T\left((2,1),X_{2,1}^{1,1}\right) =
+    \\ & = M + 2M + T\left((1,3),X_{1,3}^{1,2}\right)
+                  + T\left((3,2),X_{3,2}^{1,2}\right) +
+             \\ & + T\left((3,1),X_{3,1}^{2,1}\right)
+                  + T\left((2,3),X_{2,3}^{2,1}\right) =
+    \\ & = M + 2M + 2M\cdot 2 +
+    \\ & + T\left((1,4),X_{1,4}^{1,3}\right)
+         + T\left((4,3),X_{4,3}^{1,3}\right)
+    \\ & + T\left((3,4),X_{3,4}^{3,2}\right)
+         + T\left((4,2),X_{4,2}^{3,2}\right)
+    \\ & + T\left((3,4),X_{3,4}^{3,1}\right)
+         + T\left((4,1),X_{4,1}^{3,1}\right)
+    \\ & + T\left((2,4),X_{2,4}^{2,3}\right)
+         + T\left((4,3),X_{4,3}^{2,3}\right) = \ldots
+  \end{align*}
+  where the sets $X_{i,j}^{k,l}$ correspond to evaluation of $R$ as defined.
+  Here we make a critical observation:
+  any two nodes in the recursion tree given by \cref{eq:pyrdp} have a common ancestor,
+  so at any point in our expansion,
+  given a pair $(i,j)$, it must lie in all but last of $X_{i,j}^{k,l}$,
+  hence $T\left((i,j),X_{i,j}^{k,l}\right) = M$ for all but last such contributor to the sum.
+  We thus arrive at
+  \annotation{recheck}
+  \begin{align*}
+    T\left((1,1),\varnothing\right) & \leq
+    M + 2M \left(1 + 2 + \cdots + n\right) +
+        2M \left(1 + 2 + \cdots + (n-2)\right) +
+    \\
+    & + \sum_{i=1}^n \left(
+        T\left((i,n),X_{i,n}\right)
+      + T\left((n,i),X_{n,i}\right)
+    \right)
+    = \mathcal{O}\left(n^2\right).
+  \end{align*}
+\end{proof}
+
+Referential transparency, space complexity\ldots
+
+\annotation{TODO FROM HERE}
 
 \begin{figure}[htbp]
 \centering
