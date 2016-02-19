@@ -86,9 +86,9 @@ signature TSP_GRAPH = sig
   type tour
 
   (**
-   * Type of tour lengths.
+   * Type of tour costs.
    *)
-  structure Len : NUMERIC
+  structure Cost : NUMERIC
 
   structure Node : TSP_NODE where type node = node
   structure Tour : TSP_TOUR where type tour = tour
@@ -99,15 +99,15 @@ signature TSP_GRAPH = sig
    * Given a node, best tour from the set it represents can either be
    *
    *   - computed directly -- for terminal nodes;
-   *     we will return tour length along with (lazily) the tour
+   *     we will return tour cost along with (lazily) the tour
    *     where a solution exists and NONE otherwise;
    *
    *   - chosen from the tours yielded by descendent nodes and then transformed
    *     as necessary -- to allow for such transformations, we will need to pass
    *     distance adjustment and tour construction functions.
    *)
-  datatype descent = TERM of (Len.num * (unit -> tour)) option
-                   | DESC of (node * (Len.num -> Len.num)
+  datatype descent = TERM of (Cost.num * (unit -> tour)) option
+                   | DESC of (node * (Cost.num -> Cost.num)
                                    * ((unit -> tour) -> (unit -> tour))) list
 
   (**
@@ -119,7 +119,7 @@ signature TSP_GRAPH = sig
    * This shall compute the descendants and ascendent transfomations --
    * we will generally want to know problem size and distance function here.
    *)
-  val descendants : word -> (word * word -> Len.num) -> optional_params ->
+  val descendants : word -> (word * word -> Cost.num) -> optional_params ->
                     node -> descent
 
   (**

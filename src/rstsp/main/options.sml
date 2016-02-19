@@ -14,11 +14,11 @@ sig
    *  (  bool               : verbose
    *   * string option      : dot file name
    *   * bool               : pyramidal
-   *   * word option        : interval size limit
+   *   * word option        : node size limit
    *   * IntInf.int option  : iterations limit
    *   * IntInf.int option  : stale iterations limit
-   *   * word option        : if SOME: starting rotations number for adaptive search, in NONE: no adaptive search
-   *   * word option        : rotations limit
+   *   * word option        : if SOME: starting permutations number for adaptive search, in NONE: no adaptive search
+   *   * word option        : permutations limit
    *   * IntInf.int option  : flipflops limit
    *   * string option      : input tour file
    *   * string option      : output tour file
@@ -86,27 +86,27 @@ struct
     print "\n";
     print "    -h|--help      :  print this message and quit\n";
     print "\n";
-    print "    -t|--type p|b  :  pyramidal / balanced search\n";
-    print "                      (default: balanced)\n";
+    print "    -t|--type p|b  :  pyramidal / str. balanced search\n";
+    print "                      (default: str. balanced)\n";
     print "\n";
-    print "    -m|--max width :  maximum number of intervals in a node for balanced search\n";
+    print "    -m|--max width :  maximum node size for str. balanced search\n";
     print "                      (zero for unlimited, default: 4)\n";
     print "\n";
-    print "    -i|--iter num  :  perform local search with given maximum number of iterations\n";
-    print "                      (zero for unlimited, default: 1, i.e. no local search)\n";
+    print "    -i|--iter num  :  perform ILS with given maximum number of iterations\n";
+    print "                      (zero for unlimited, default: 1, i.e. single local search only)\n";
     print "\n";
-    print "    -j|--stale num :  maximum number of stale iterations in local search\n";
+    print "    -j|--stale num :  maximum number of stale iterations in ILS\n";
     print "                      (zero for unlimited, default: 1)\n";
     print "\n";
     print "  -r|--rot all|num :  maximum number of permutations in local search\n";
     print "                      (\"all\" for maximum possible, default: 0)\n";
     print "\n";
-    print "    -a|--adapt num :  perform adaptive search starting at given rotations number\n";
+    print "    -a|--adapt num :  perform adaptive search starting at given number of permutation\n";
     print "\n";
-    print "    -f|--flips num :  combine adaptive balanced search with iterative pyramidal search,\n";
+    print "    -f|--flips num :  combine adaptive s.b. search with iterative pyramidal search,\n";
     print "                      limiting flipflops by given number, zero for unlimited\n";
     print "                      (number of pyramidal iterations will be limited by common limit\n";
-    print "                       as well as balanced permutations limit)\n";
+    print "                       as well as str. balanced permutations limit)\n";
     print "\n";
     print "    -l|--log file  :  if specified, traversal trace (in dot format)\n";
     print "                      will be written to the file -- only valid for single traversals\n";
@@ -161,7 +161,7 @@ struct
             case U.wordFromString (hd args) of
               SOME 0w0 => (verbose, log, pyr, NONE, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files)
             | SOME m => (verbose, log, pyr, SOME m, max_iters, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files)
-            | _ => raise Fail ("invalid maximum intervals number")
+            | _ => raise Fail ("invalid maximum node size")
         in
           read_next ANY new_opts (tl args)
         end
@@ -175,7 +175,7 @@ struct
                     true => (verbose, log, pyr, max_node_size, NONE, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files)
                   | false => (verbose, log, pyr, max_node_size, SOME m, stale_thresh, min_rot, max_rot, max_flips, in_tour, out_tour, files)
                 )
-            | NONE => raise Fail ("invalid maximum intervals number")
+            | NONE => raise Fail ("invalid maximum iterations number")
         in
           read_next ANY new_opts (tl args)
         end
@@ -189,7 +189,7 @@ struct
                     true => (verbose, log, pyr, max_node_size, max_iters, NONE, min_rot, max_rot, max_flips, in_tour, out_tour, files)
                   | false => (verbose, log, pyr, max_node_size, max_iters, SOME m, min_rot, max_rot, max_flips, in_tour, out_tour, files)
                 )
-            | NONE => raise Fail ("invalid stale intervals number")
+            | NONE => raise Fail ("invalid stale iterations number")
         in
           read_next ANY new_opts (tl args)
         end
@@ -198,7 +198,7 @@ struct
           val new_opts =
             case (U.wordFromString o hd) args of
               SOME m => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, SOME m, max_rot, max_flips, in_tour, out_tour, files)
-            | NONE => raise Fail ("invalid adaptive rotations number")
+            | NONE => raise Fail ("invalid number of starting adaptive iterations")
         in
           read_next ANY new_opts (tl args)
         end
@@ -209,7 +209,7 @@ struct
               "all" => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, NONE, max_flips, in_tour, out_tour, files)
             | str => case U.wordFromString str of
                        SOME m => (verbose, log, pyr, max_node_size, max_iters, stale_thresh, min_rot, SOME m, max_flips, in_tour, out_tour, files)
-                     | NONE => raise Fail ("invalid maximum rotations number")
+                     | NONE => raise Fail ("invalid maximum permutations count")
         in
           read_next ANY new_opts (tl args)
         end

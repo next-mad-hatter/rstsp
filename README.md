@@ -65,7 +65,7 @@
    will plot results of previous test run (requires `ruby`, `gnuplot`, `matplotlib`, `pandas`, `seaborn`, `ghostscript`, `metapost`, `imagemagick` and probably more).
    Generated plots will be put to `./plot/build` folder.
 
-### Generating report
+### Generating report and slides
 
    Having created the plots, run
    ```

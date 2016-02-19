@@ -27,7 +27,7 @@ val data = case inst of
              EXPLICIT_INSTANCE v => v
            | EUCLIDEAN_2D_INSTANCE (xs,ys) => raise Fail "not here"
            | EUCLIDEAN_2D_CEIL_INSTANCE (xs,ys) => raise Fail "not here"
-structure LenCheck = TSPLengthFn(Dist)
+structure CostCheck = TSPCostFn(Dist)
 
 fun main () =
 let
@@ -49,12 +49,12 @@ let
   val _ =
     let
       val sol_vec = Search.tourToVector sol
-      val len_val = Dist.Num.compare(sol_len, LenCheck.tourLength data sol_vec) = EQUAL
+      val len_val = Dist.Num.compare(sol_len, CostCheck.tourCost data sol_vec) = EQUAL
       val sol_val = TSPUtils.validTour size sol_vec
     in
       print ("    Solution valid:  " ^ (if sol_val andalso len_val then "yes" else "NO!") ^ "\n")
     end
-  val _ = print ("Tour Length:  " ^ (Dist.Num.toString sol_len) ^ "\n")
+  val _ = print ("  Tour cost:  " ^ (Dist.Num.toString sol_len) ^ "\n")
   val _ = print ("*********************************\n")
 in
   ()

@@ -56,7 +56,7 @@ end
 functor PyrGraph(N : NUMERIC) : TSP_GRAPH =
 struct
 
-  structure Len = N
+  structure Cost = N
   structure Node = PyrNode
   structure Tour = PyrTour
 
@@ -65,8 +65,8 @@ struct
 
   val root = (0w0, 0w0)
 
-  datatype descent = TERM of (Len.num * (unit -> tour)) option
-                   | DESC of (node * (Len.num -> Len.num)
+  datatype descent = TERM of (Cost.num * (unit -> tour)) option
+                   | DESC of (node * (Cost.num -> Cost.num)
                                    * ((unit -> tour) -> (unit -> tour))) list
 
   type optional_params = unit
@@ -84,10 +84,10 @@ struct
           let
             val k = Word.max (i,j) + 0w1
             val kj = ((k,j),
-                      fn d => Len.+ (d, dist (i,k)),
+                      fn d => Cost.+ (d, dist (i,k)),
                       fn t => Lazy.susp (fn () => Vector.concat [Vector.fromList [i], t ()]))
             val ik = ((i,k),
-                      fn d => Len.+ (d, dist (k,j)),
+                      fn d => Cost.+ (d, dist (k,j)),
                       fn t => Lazy.susp (fn () => Vector.concat [t (), Vector.fromList [j]]))
           in
             DESC [ik, kj]
@@ -119,10 +119,10 @@ struct
           let
             val k = j + 0w1
             val kj = ((j,k),
-                      fn d => Len.+ (d, dist (i,k)),
+                      fn d => Cost.+ (d, dist (i,k)),
                       fn t => Lazy.susp (fn () => appToPath (t (), i)))
             val ik = ((i,k),
-                      fn d => Len.+ (d, dist (k,j)),
+                      fn d => Cost.+ (d, dist (k,j)),
                       fn t => Lazy.susp (fn () => appToPath (t (), j)))
           in
             DESC [ik, kj]

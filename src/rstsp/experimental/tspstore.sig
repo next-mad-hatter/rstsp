@@ -14,9 +14,9 @@ sig
   type tour
   structure Node : TSP_NODE where type node = node
   structure Tour : TSP_TOUR where type tour = tour
-  structure Len : NUMERIC
+  structure Cost : NUMERIC
 
-  datatype status = DONE of (Len.num * (unit -> tour)) option
+  datatype status = DONE of (Cost.num * (unit -> tour)) option
                   | PENDING of Thread.ConditionVar.conditionVar
 
   val init : word  -> store

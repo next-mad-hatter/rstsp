@@ -25,7 +25,7 @@ struct
   structure U = Utils
 
   local
-    structure LenCheck = TSPLengthFn(D)
+    structure CostCheck = TSPCostFn(D)
   in
     fun singlerun (data, opts, search, toStr, toVec, method) =
       if D.getDim data < 0w2 then print "Empty problem.\n"
@@ -69,13 +69,13 @@ struct
            | _ =>
              let
                val sol_vec = toVec sol
-               val len_val = D.Num.compare(sol_len, LenCheck.tourLength data sol_vec) = EQUAL
+               val len_val = D.Num.compare(sol_len, CostCheck.tourCost data sol_vec) = EQUAL
                val sol_val = TSPUtils.validTour size sol_vec
              in
                 print ("    Solution valid:  " ^ (if sol_val andalso len_val then "yes" else "NO!") ^ "\n")
              end
           );
-          print ("       Tour Length:  " ^ (D.Num.toString sol_len) ^ "\n");
+          print ("         Tour cost:  " ^ (D.Num.toString sol_len) ^ "\n");
           TextIO.flushOut TextIO.stdOut;
           ()
         end
@@ -103,7 +103,7 @@ struct
                              fn (s,d) => S.SBSearch.search s d log verbose (init_tour, max_node_size),
                              S.SBSearch.tourToString,
                              S.SBSearch.tourToVector,
-                             "single balanced")
+                             "single str. balanced")
         | (true,_,false,_) => singlerun (data, opts,
                                fn (s,d) => S.IterRotPyrSearch.search s d log verbose (init_tour, (max_iters, stale_thresh, (max_rot, 0w0, ()))),
                                S.IterRotPyrSearch.tourToString,
@@ -118,12 +118,12 @@ struct
                                   fn (s,d) => S.IterRotSBSearch.search s d log verbose (init_tour, (max_iters, stale_thresh, (max_rot, 0w0, max_node_size))),
                                   S.IterRotSBSearch.tourToString,
                                   S.IterRotSBSearch.tourToVector,
-                                  "permuting balanced")
+                                  "permuting str. balanced")
         | (_,_,true,true) => singlerun (data, opts,
                                   fn (s,d) => S.AdSBSearch.search s d log verbose (init_tour, (max_iters, stale_thresh, valOf min_rot, max_rot, max_node_size)),
                                   S.AdSBSearch.tourToString,
                                   S.AdSBSearch.tourToVector,
-                                  "adaptive balanced")
+                                  "adaptive str. balanced")
         | (_,_,_,false) => singlerun (data, opts,
                                   fn (s,d) => S.FlipFlopSearch.search s d log verbose (init_tour, (
                                      max_flips, SOME 1,

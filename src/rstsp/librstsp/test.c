@@ -47,7 +47,7 @@ int main(int argc, const char **argv) {
   /**
    * We do not want want to deal with structure alignment for different
    * platforms, hence a call to search function shall yield:
-   *   - a pointer to tour length (int64);
+   *   - a pointer to tour cost (int64);
    *   - a pointer to tour array (zero-based, closed cycle, word32)
    *   all packed in a pointer array.
    */
@@ -57,88 +57,88 @@ int main(int argc, const char **argv) {
    * We also want to avoid having to manually manage memory, therefore only
    * basic searches -- not their combinators -- are exposed through the library.
    *
-   * This computes optimum pyramidal tour.
+   * This computes optimal pyramidal tour.
    */
   char *dotfilename = NULL;
-  int64_t *len;
+  int64_t *cost;
   uint32_t *tour;
   result = (Pointer *)rstsp_pyr_search(prob_size, *dst, dotfilename);
   if(result) {
-    len = (int64_t *)result[0];
+    cost = (int64_t *)result[0];
     tour = (uint32_t *)result[1];
     printf("  > Pyramidal tour: ");
     print_tour(tour, prob_size);
-    printf("  > Tour length: %" PRIi64 "\n", *len);
+    printf("  > Tour cost: %" PRIi64 "\n", *cost);
     free(tour);
-    free(len);
+    free(cost);
     free(result);
   }
 
   /**
-   * Compute optimum strongly balanced tour;  max_width : node size limit.
+   * Optimal strongly balanced tour;  max_width : node size limit.
    */
   uint32_t max_width = 3;
   result = (Pointer *)rstsp_sb_search(prob_size, *dst, max_width, dotfilename);
   if(result) {
-    len = (int64_t *)result[0];
+    cost = (int64_t *)result[0];
     tour = (uint32_t *)result[1];
     printf("  > SB tour: ");
     print_tour(tour, prob_size);
-    printf("  > Tour length: %" PRIi64 "\n", *len);
+    printf("  > Tour cost: %" PRIi64 "\n", *cost);
     free(tour);
-    free(len);
+    free(cost);
     free(result);
   }
 
   /**
-   * Iterative pyramidal search which considers up to n cyclic permutations
-   * (flower) in each iteration.
+   * Iterative pyramidal search which considers up to n rotations in each
+   * iteration.
    */
   uint32_t max_iters = 10;
   uint32_t stale_iters = 3;
   uint32_t max_rots = prob_size-1;
   result = (Pointer *)rstsp_iter_pyr_search(prob_size, *dst, max_iters, stale_iters, max_rots);
   if(result) {
-    len = (int64_t *)result[0];
+    cost = (int64_t *)result[0];
     tour = (uint32_t *)result[1];
     printf("  > Pyramidal/iter/rot tour: ");
     print_tour(tour, prob_size);
-    printf("  > Tour length: %" PRIi64 "\n", *len);
+    printf("  > Tour cost: %" PRIi64 "\n", *cost);
     free(tour);
-    free(len);
+    free(cost);
     free(result);
   }
 
   /**
-   * Iterative strongly balanced search, flower size 1.5*n.
+   * Iterative strongly balanced search, flower size 1.5*n (ceil'ed).
    */
   max_rots = 2*prob_size;
   result = (Pointer *)rstsp_iter_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, max_rots);
   if(result) {
-    len = (int64_t *)result[0];
+    cost = (int64_t *)result[0];
     tour = (uint32_t *)result[1];
     printf("  > SB/iter/rot tour: ");
     print_tour(tour, prob_size);
-    printf("  > Tour length: %" PRIi64 "\n", *len);
+    printf("  > Tour cost: %" PRIi64 "\n", *cost);
     free(tour);
-    free(len);
+    free(cost);
     free(result);
   }
 
   /**
-   *  A variation of the above where number of considered permutations from the
-   *  flower grows at stale iterations (which we call adaptive).
+   *  A variation of the above where number of considered rotations grows at
+   *  stale iterations (which we call adaptive).
    */
   uint32_t min_rots = 0;
   result = (Pointer *)rstsp_ad_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, min_rots, max_rots);
   if(result) {
-    len = (int64_t *)result[0];
+    cost = (int64_t *)result[0];
     tour = (uint32_t *)result[1];
     printf("  > SB/adaptive tour: ");
     print_tour(tour, prob_size);
-    printf("  > Tour length: %" PRIi64 "\n", *len);
+    printf("  > Tour cost: %" PRIi64 "\n", *cost);
     free(tour);
-    free(len);
+    free(cost);
     free(result);
   }
 
@@ -149,13 +149,13 @@ int main(int argc, const char **argv) {
   uint32_t max_flips = 0;
   result = (Pointer *)rstsp_ff_search(prob_size, *dst, max_width, max_iters, stale_iters, min_rots, max_rots, max_flips);
   if(result) {
-    len = (int64_t *)result[0];
+    cost = (int64_t *)result[0];
     tour = (uint32_t *)result[1];
     printf("  > SB/flipflop tour: ");
     print_tour(tour, prob_size);
-    printf("  > Tour length: %" PRIi64 "\n", *len);
+    printf("  > Tour cost: %" PRIi64 "\n", *cost);
     free(tour);
-    free(len);
+    free(cost);
     free(result);
   }
 

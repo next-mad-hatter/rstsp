@@ -13,7 +13,7 @@ struct
   structure Tour = SBTour
   type tour = Tour.tour
   type intsset = SBNode.intsset
-  structure Len = N
+  structure Cost = N
   open Thread
   open SBUtils
   open TSPTypes
@@ -27,7 +27,7 @@ struct
     structure TypeMap = SplayMapFn(WordPairSetKey)
   end
 
-  datatype status = DONE of (Len.num * (unit -> tour)) option
+  datatype status = DONE of (Cost.num * (unit -> tour)) option
                   | PENDING of ConditionVar.conditionVar
 
   (* types store, types store lock, N locks for/and array of N vectors *)

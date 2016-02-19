@@ -335,11 +335,9 @@ images under said map defined as infix operator:
   \]
 \end{define}
 
-\begin{remark}
-  Note that path closure produces a bijection from the set of all simple open paths
-  of walking length $n-1$ over $\mathcal{N}_n$ onto $\mathcal{T}_n$.
-  Further, $\overline{\mathcal{T}_n} = \mathcal{T}_n$ holds true.
-\end{remark}
+Note that path closure produces a bijection from the set of all simple open
+paths of walking length $n-1$ over $\mathcal{N}_n$ onto $\mathcal{T}_n$.
+Further, $\overline{\mathcal{T}_n} = \mathcal{T}_n$ holds true.
 
 \begin{define}[costs and distances]
 \label{def:cost}
@@ -356,12 +354,10 @@ images under said map defined as infix operator:
   (which agrees with the definition above).
 \end{define}
 
-\begin{remark}
-  We would like to stress here that requiring tours to include a city twice
-  explicitly (as end points) allows us to employ same notion of cost for
-  paths and tours, which, in turn, will allow for convenient recursive
-  constructions later on.
-\end{remark}
+We would like to stress here that requiring tours to explicitly include a
+city twice (as end points) allows us to employ same notion of cost for
+paths and tours, which, in turn, will allow for convenient recursive
+constructions later on.
 
 \begin{define}[TSP]
 \label{def:tsp}
@@ -398,10 +394,8 @@ Frequently, the TSP is defined via a map which provides the sets $M$ and
 $T$ for every dimension $n$.  We make no such requirement --- however, such
 an extension is easily established from context, and throughout the rest of
 this paper we will usually assume that some such dimension is given.
-\end{remark}
 
-\begin{remark}
-Whenever the sets $M,T$ from above definition are established elsewhere,
+Whenever the sets $M,T$ in above definition are established elsewhere,
 they are usually omitted from notation.  The pair $(M,T)$ is called a
 {\defstyle class} or {\defstyle (special) case} of TSP.
 \end{remark}
@@ -428,6 +422,7 @@ and shall do so henceforth.
 
 \begin{remark}
 \label{rem:order}
+\annotation{Choice of representative important in, say, ILS.}
   Cost equality naturally induces a partition of $\mathcal{T}_n$ (or its
   subset $T$ above).  Usually, we are not interested in all elements of
   $\operatorname{tsp^\ast}\left(C\right)$ or its representative given by a
@@ -439,7 +434,7 @@ and shall do so henceforth.
 \end{remark}
 
 \begin{remark}
-  \annotation{Wording?}
+\annotation{Remove this.}
   Also not unusual (and useful in time complexity considerations) is a
   variation of TSP which returns the cost of optimal tour along with or
   instead of such a tour --- transition between these definitions is
@@ -709,6 +704,7 @@ reorderings of tours and solutions to the TSP.
 \label{cor:reorder}
   For any $\rho \in \mathcal{S}_n, C \in M \subseteq \mathbb{R}^{n \times n},
   \tau \in \mathcal{T}_n$,
+  \annotation{,,Latter for any pair of compatible orderings $L, \rho L$'' or some such necessary?}
   \begin{align*}
   \begin{split}
     \operatorname{tsp}^\ast_{M,\rho T}\left(C\right)
@@ -748,7 +744,7 @@ $\tau^\ast$ --- its action then defines a neighbourhood in $\mathcal{T}_n$:
 
 \begin{define}[induced neighbourhood]
   \label{def:induced}
-  Given a set of tours $T$ and a tour $\tau^\ast \in T$,
+  Given a set of tours $T \subseteq \mathcal{T}_n$ and a tour $\tau^\ast \in T$,
   define $F_T$ to be the map
   \[
     F_T: \mathcal{T}_n \to 2^{\mathcal{T}_n}, \quad
@@ -760,7 +756,8 @@ $\tau^\ast$ --- its action then defines a neighbourhood in $\mathcal{T}_n$:
     =
       \left(\sigma_{\tau} \circ \sigma_{\tau^\ast}^{-1}\right) T.
   \]
-  We call $F_T$ {\defstyle neighbourhood induced by} $T$ (and $\tau^\ast$).
+  We call $F_T$ {\defstyle neighbourhood induced by} $T$
+  ({\defstyle centred at} or {\defstyle with centre} $\tau^\ast$).
 \end{define}
 
 \begin{figure}[bht]
@@ -777,7 +774,7 @@ $\tau^\ast$ --- its action then defines a neighbourhood in $\mathcal{T}_n$:
 \end{remark}
 
 \begin{remark}
-  We deliberately omit the choice of $\tau^\ast$ from notation of induced
+  We deliberately omit the choice of centre from actual notation of induced
   neighbourhood, treating it as implicit parameter --- which is usually
   established along with the set $T$.
 \end{remark}
@@ -809,7 +806,7 @@ $\tau^\ast$ --- its action then defines a neighbourhood in $\mathcal{T}_n$:
 \dictum[L. Peter Deutsch]{To iterate is human, to recurse divine.}
 \section{Theory}
 
-Dynamic programming is a fruitful approach to solving many problems in
+Dynamic programming is a fruitful approach to tackling many problems in
 combinatorial optimization --- this specifically includes traveling
 salesman problem and a number of its special cases.  Here we want to
 present two exponential neighbourhoods which are polynomially solvable via
@@ -842,8 +839,9 @@ and can be defined as follows:
   $\operatorname{Pyr}_n$ the set of all pyramidal tours in $\mathcal{T}_n$,
   and call TSP restricted to $\operatorname{Pyr}_n$ {\defstyle pyramidal TSP}.
 \end{define}
-We note here that the set $\operatorname{Pyr}_n$, considered neighbourhood of
-$\tau^\ast = \left(1, 2, \ldots, n, 1\right)$, induces a neighbourhood in $\mathcal{T}_n$.
+We note here that the set $\operatorname{Pyr}_n$
+induces a neighbourhood in $\mathcal{T}_n$ with centre
+$\left(1, 2, \ldots, n, 1\right)$.
 
 \begin{figure}[bht]
   \centering
@@ -855,27 +853,27 @@ $\tau^\ast = \left(1, 2, \ldots, n, 1\right)$, induces a neighbourhood in $\math
   }
 \end{figure}
 
-This definition of pyramidal tours, while explaining the name,
-does not offer an obvious solution to the optimization problem.
-To achieve that, first we observe that every pyramidal tour
+This definition of pyramidal tours, while explaining the name, does not
+yet offer an obvious different solution to the corresponding optimization
+problem.  To achieve that, first we observe that every pyramidal tour
 necessarily takes the shape
-  \[
-  \left(1, p_1, \ldots, p_k, n, q_1, \ldots, q_m, 1 \right)
-  \; \text{with} \;
-  \begin{cases}
-    p_i < p_{i+1} \; & \forall i \in \mathcal{N}_{k-1},\\
-    q_j > q_{j+1} \; & \forall j \in \mathcal{N}_{m-1},
-  \end{cases}
-  \]
+\[
+\left(1, p_1, \ldots, p_k, n, q_1, \ldots, q_m, 1 \right)
+\; \text{with} \;
+\begin{cases}
+  p_i < p_{i+1} \; & \forall i \in \mathcal{N}_{k-1},\\
+  q_j > q_{j+1} \; & \forall j \in \mathcal{N}_{m-1},
+\end{cases}
+\]
 and then notice that for any city, we can choose it to be
 either element of $\left\{p_1,\ldots,p_k\right\}$
 or element of $\left\{q_1,\ldots,p_m\right\}$,
 and once we made that that choice, the city in question has unique position in the tour.
-This argument, while also showing that $\left|\operatorname{Pyr}_n\right| =
-\Theta\left(2^n\right)$, makes following construction obvious.
+This argument makes $\left|\operatorname{Pyr}_n\right| = \Theta\left(2^n\right)$
+evident and following construction transparent:
 
 \begin{proposition}[recursive structure of $\operatorname{Pyr}_n$]
-\label{prop:allpyr}
+\label{prop:pyrall}
   For cities $i,j$ in $\mathcal{N}_n$,
   let $V\left(i,j\right)$ denote the set of all pyramidal paths
   $\left(i,p_1,\ldots,p_m,j\right)$
@@ -883,7 +881,7 @@ This argument, while also showing that $\left|\operatorname{Pyr}_n\right| =
   s.t.\ $\left\{p_1,\ldots,p_m\right\} = \left\{k,\ldots,n\right\}$
   with $k = \max\left\{i,j\right\}+1$.  Then
   \begin{align}
-    \label{eq:allpyr}
+    \label{eq:pyrall}
     V\left(i,j\right) & =
     \begin{cases}
       \left\{\left(i,j\right)\right\}, & n \in \left\{i,j\right\},
@@ -897,7 +895,7 @@ This argument, while also showing that $\left|\operatorname{Pyr}_n\right| =
   and $\operatorname{Pyr}_n = V\left(1,1\right)$.
 \end{proposition}
 \begin{proof}
-  The second case in \cref{eq:allpyr} becomes apparent when,
+  The second case in \cref{eq:pyrall} becomes apparent when,
   using preceding argument,
   we choose position for each city one at a time in increasing order.
   The rest follows directly from our definition of $V$.
@@ -906,73 +904,97 @@ This argument, while also showing that $\left|\operatorname{Pyr}_n\right| =
 \begin{figure}[hbt]
   \centering
   \includegraphics[width=0.49\textwidth]{../plot/build/pyr-3.mps}
+  \label{fig:pyrpart}
   \caption{$\operatorname{Pyr}_n$ constructed one city at a time.}
 \end{figure}
 
 This translates directly onto a dynamic programming solution to pyramidal TSP:
-\begin{proposition}[dynamic programming solution to pyramidal TSP]
-\label{prop:pyrdp}
-  Given a cost matrix $C \in \mathbb{R}^{n \times n}$
-  and a linear order $L$ on $\mathcal{P}_n$, define,
-  for cities $i,j$ in $\mathcal{N}_n$,
-  $\Phi_{L,C}\left(i,j\right)$ to be the minimum (according to $L$)
-  lowest cost path in $V\left(i,j\right)$
-  from \cref{prop:allpyr}.
-  Then for some such order $L$ both
-  %FIXME: limits in min, argmin?
-  \begin{align*}
-    \begin{split}
-    \Phi_{L,C}\left(i,j\right) & =
+\begin{corollary}[dynamic programming solution to pyramidal TSP]
+\label{cor:pyrdp}
+  For a suitable tour-valued definition of $\argmin^\ast$, the recurrence relation
+  \begin{align}
+    \label{eq:pyrdp}
+    \Phi_C\left(i,j\right) & \coloneqq
     \begin{cases}
       \left(i,j\right), & n \in \left\{i,j\right\}, \\
-      \min_L \argmin_T \omega_C & \text{otherwise},
+      %\displaystyle \adjustlimits \min_L \argmin_T \omega_C & \text{otherwise},
+      {\displaystyle \argmin_T}^\ast \omega_C & \text{otherwise},
     \end{cases}
     \\
-    \text{with}\;
+      \text{where}\;
       T & =
       \left\{
-      \left(i\right) \oplus \Phi_{L,C}\left(k,j\right),
-      \Phi_{L,C}\left(i,k\right) \oplus \left(j\right)
+      \left(i\right) \oplus \Phi_C\left(k,j\right),
+      \Phi_C\left(i,k\right) \oplus \left(j\right)
       \right\},
-      k \; \text{as above}.
-    \end{split}
-  \end{align*}
-  and
-  $
-    \Phi_{L,C}\left(1,1\right) = \operatorname{TSP_{L,\mathbb{R}^{n \times n},\operatorname{Pyr}_n}}\left(C\right)
-  $
-  both hold.
-\end{proposition}
+      k = \max\left\{i,j\right\}+1,
+      \nonumber
+  \end{align}
+  produces, for arbitrary cost matrices, a well-defined map $\Phi_C$ on $\mathcal{N}_n^2$,
+  and via
+  \[
+    \phi~:~C~\mapsto~\Phi_C\left(1,1\right)
+  \]
+  a map on $\mathbb{R}^{n \times n}$.
+  For latter,
+  \[
+    \phi = \operatorname{TSP_{\mathbb{R}^{n \times n},\operatorname{Pyr}_n}}
+  \]
+  holds true.
+\end{corollary}
+\begin{proof}
+  Borrowing defition of $V$ from \cref{prop:pyrall}, we first note that,
+  per induction over \eqref{eq:pyrall}, $V\left(i,j\right)$ is never empty.
+
+  If we now choose $\argmin^\ast$ to select from two equal cost tours in
+  $T$ one deterministically and independently from $C$ (say, the first of
+  the two options in definition of $T$ above), then this, per construction,
+  produces a linear order on paths in $V\left(\mathcal{N}_n^2\right)$, and
+  hence also on $\operatorname{Pyr}_n$.
+
+  We then see per induction over \cref{eq:pyrall,eq:pyrdp} that for all
+  cities $i,j$ and cost matrices $C$, $\Phi_C\left(i,j\right)$ is the
+  smallest (according to said order) cost minimizing tour in $V\left(i,j\right)$,
+  %\[
+  %  \Phi_C\left(i,j\right) = \argmin^\ast \omega_C V\left(i,j\right)
+  %\]
+  from which the rest follows.
+\end{proof}
+
+Recurrence relation such as the one introduced above are well visualized
+via so called {\defstyle recursion tree}~--- a directed graph in which
+nodes correspond to different arguments to the relation, and edges
+represent recursive dependence.  For pyramidal TSP, \cref{fig:pyrtrace}
+shows such a graph.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{../plot/build/trace_apyr.pdf}
+\caption{Pyramidal (a)TSP recursion tree along with values of $\Phi_C$
+  from \cref{cor:pyrdp} for a sample cost matrix $C$ ($n=5$).}
+\label{fig:pyrtrace}
+\end{figure}
+
+%\begin{figure}[htbp]
+%\null\hfill%
+%\subfloat[aTSP]{%
+%  \includegraphics[width=0.62\textwidth]{../plot/build/trace_apyr.pdf}
+%}\hfill\null
+%\null\hfill%
+%\subfloat[sTSP]{%
+%  \includegraphics[width=0.36\textwidth]{../plot/build/trace_pyr.pdf}
+%}\hfill\null
+%\caption{Pyramidal TSP: recursion tree.}
+%\label{fig:pyrtraces}
+%\end{figure}
 
 \annotation{TODO FROM HERE}
 
-%% lualatex+metapost demo:
-%\begin{figure}[htbp]
-%\centering%
-%\begin{mplibcode}
-%  beginfig(0)
-%    pair p[];
-%    p1 = (0,0); p2 = (100,0); p3 = (200,0); p4 = (300,0); p5 = (400,0);
-%    pair c[];
-%    c1 = (50,20); c2 = (210,30); c3 = (250,-10); c4 = (100,-20);
-%    path a;
-%    a = p1 .. controls c1 ..
-%        p2 .. controls c2 ..
-%        p4 ..
-%        p5 .. controls c3 ..
-%        p3 ..  controls c4 ..
-%        cycle ;
-%    for i = 1 upto length a:
-%      dotlabel.top(decimal i, p[i]);
-%      drawarrow subpath (i-1,i) of a withcolor 0.2;
-%    endfor
-%  endfig;
-%\end{mplibcode}
-%\ 
-%\caption{A pyramidal tour over $K_5$.}
-%\end{figure}
-
 \subsection{Recursion and complexity}
+
+While \cref{cor:pyrdp} offers a solution to the pyramidal TSP, the function
+as it is presented in \cref{eq:pyrdp} does not yet necessarily translate
+onto an efficient computer program.  For this,.
 
 \begin{figure}[htbp]
 \centering
@@ -980,36 +1002,12 @@ This translates directly onto a dynamic programming solution to pyramidal TSP:
 \caption{A trace of our implementation's pyramidal search graph traversal over $K_5$.}
 \end{figure}
 
+\subsection{Four point conditions and exponential neighbourhoods}
+
 \annotation{Demidenko conditions: is a description necessary/interesting?}
 While determining if a given TSP instance is pyramidal is NP-hard \cite{baki},
 a number of polynomially testable classes which are pyramidally solvable exist \cite{baki,gilmore} ---
 still, those are not widely common.
-
-Pyramidal search can also be extended to a local search heuristic:
-note first how the tour obtained depends on node numbering.
-Now let $\operatorname{pyr}(C)$ denote best pyramidal tour given a distance matrix $C$
-and, given a tour $\tau$, $\sigma_\tau \left(C\right)$ be the permutation associated with $\tau$
-applied to rows and columns of $C$ (i.e. renumbering of nodes).
-Let
-\[
-  h_C \; : \;
-    \tau \mapsto \left(
-      \sigma_{\tau}^{-1} \circ
-      \operatorname{pyr} \circ
-      \sigma_{\tau}
-    \right)
-    \left( C \right).
-\]
-Then $h_C\left(\left(1,2,\ldots,n,1\right)\right) = \operatorname{pyr}\left(C\right)$.
-Since $\left(1,2,\ldots,n,1\right)$ is a pyramidal tour,
-\[
-  \operatorname{len} \circ h_C \leq \operatorname{len}
-\]
-holds everywhere.
-In this way, iterating from $\left(1,2,\ldots,n,1\right)$ to a fixed point of $h_C$ yields a
-local search heuristic.
-
-\subsection{Four point conditions and exponential neighbourhoods}
 
 \subsection{Strongly balanced tours}
 
@@ -1223,6 +1221,32 @@ Dedicated implementations (pyramidal: bottom up easy) fast, but not always feasi
 Naive concurrency (see the {\ttfamily experimental} code) not easily applicable in general case (dense search tree).
 Potentially fruitful approaches: tuple spaces, message passing languages, etc
 (PolyML/Linda?, manticore, jocaml, mythryl, aliceml, clojure/clotilde, scala/akka, $\ldots$).
+
+%% lualatex+metapost demo:
+%\begin{figure}[htbp]
+%\centering%
+%\begin{mplibcode}
+%  beginfig(0)
+%    pair p[];
+%    p1 = (0,0); p2 = (100,0); p3 = (200,0); p4 = (300,0); p5 = (400,0);
+%    pair c[];
+%    c1 = (50,20); c2 = (210,30); c3 = (250,-10); c4 = (100,-20);
+%    path a;
+%    a = p1 .. controls c1 ..
+%        p2 .. controls c2 ..
+%        p4 ..
+%        p5 .. controls c3 ..
+%        p3 ..  controls c4 ..
+%        cycle ;
+%    for i = 1 upto length a:
+%      dotlabel.top(decimal i, p[i]);
+%      drawarrow subpath (i-1,i) of a withcolor 0.2;
+%    endfor
+%  endfig;
+%\end{mplibcode}
+%\ 
+%\caption{A pyramidal tour over $K_5$.}
+%\end{figure}
 
 %\input{problem1.tex}
 

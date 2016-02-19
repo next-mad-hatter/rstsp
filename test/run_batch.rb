@@ -107,7 +107,7 @@ class Batch
             #res[:out] =~ /Real time:\s+(\d+)\s+ms/
             #res[:time] = $1
             res[:real_time] = Time.now - t0
-            mtch = res[:out].match(/Tour Length:\s*(\d+(.\d+)*)/)
+            mtch = res[:out].match(/Tour cost:\s*(\d+(.\d+)*)/)
             res[:val] =
               if mtch then
                 (BigDecimal.new(mtch[1]).frac == 0) and mtch[1].to_i or mtch[1].to_f

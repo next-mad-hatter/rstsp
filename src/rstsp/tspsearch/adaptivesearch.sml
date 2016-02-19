@@ -9,7 +9,7 @@
  * A combination of iterative & rot searches where number of rotations
  * increases with stale iterations according to rate given by the `increase` function.
  *
- * TODO: return iterations results instead of flushing them to stdout.
+ * TODO: return iterations' results instead of flushing them to stdout.
  *)
 functor AdSearchFn(
   P: sig
@@ -31,7 +31,7 @@ struct
     end
   )
 
-  structure Len = S.Len
+  structure Cost = S.Cost
 
   type tour = word vector
 
@@ -48,41 +48,41 @@ struct
 
     fun find offset rot d' = #1 ((S.search size d' NONE false (SOME rot,offset,opts)) ())
 
-    fun loop (d', sol, iter, iter_limit, old_len, stale_count, stale_thresh, rot, offset, max_rot) =
+    fun loop (d', sol, iter, iter_limit, old_cost, stale_count, stale_thresh, rot, offset, max_rot) =
       case (isSome iter_limit andalso iter > valOf iter_limit, sol) of
         (true, NONE) => NONE
-      | (true, SOME t) => SOME (valOf old_len, fn () => t)
+      | (true, SOME t) => SOME (valOf old_cost, fn () => t)
       | (_, _) =>
           let
             val res = find offset rot d'
           in
             case res of
-              NONE => loop (d', sol, iter+1, SOME (IntInf.fromInt 0), old_len, stale_count, stale_thresh, rot, offset, max_rot)
-            | SOME (new_len,r) =>
+              NONE => loop (d', sol, iter+1, SOME (IntInf.fromInt 0), old_cost, stale_count, stale_thresh, rot, offset, max_rot)
+            | SOME (new_cost,r) =>
                 let
                   val t = S.tourToVector (r ())
                   val _ = U.printErr ("Iteration:  ")
-                  val _ = U.printErr (Len.toString new_len)
+                  val _ = U.printErr (Cost.toString new_cost)
                   val _ = U.printErr "\n"
                   val lu = lookup t
                   val d'' = fn (x,y) => d' (lu x, lu y)
                   val ts = case sol of
                              NONE => SOME t
                            | SOME t' => SOME (Vector.map (lookup t') t)
-                  val rot' = if isSome old_len andalso Len.compare (new_len,valOf old_len) = EQUAL then
+                  val rot' = if isSome old_cost andalso Cost.compare (new_cost,valOf old_cost) = EQUAL then
                              Word.min (P.increase rot,max_rot) else rot
                   val offset' = if rot' > rot then rot else 0w0
-                  val stale_count' = if isSome old_len andalso Len.compare (new_len,valOf old_len) = EQUAL andalso rot >= rot' then
+                  val stale_count' = if isSome old_cost andalso Cost.compare (new_cost,valOf old_cost) = EQUAL andalso rot >= rot' then
                                      stale_count + 1 else IntInf.fromInt 0
                 in
                   if isSome stale_thresh andalso stale_count' >= valOf stale_thresh then
-                    loop (d'', ts, iter+1, SOME (IntInf.fromInt 0), SOME new_len, stale_count', stale_thresh, rot', offset', max_rot)
-                  else if isSome old_len andalso Len.compare (new_len,valOf old_len) = GREATER then (
+                    loop (d'', ts, iter+1, SOME (IntInf.fromInt 0), SOME new_cost, stale_count', stale_thresh, rot', offset', max_rot)
+                  else if isSome old_cost andalso Cost.compare (new_cost,valOf old_cost) = GREATER then (
                     U.printErr "WARNING: target increase detected.\n";
-                    loop (d', sol, iter+1, SOME (IntInf.fromInt 0), old_len, stale_count', stale_thresh, rot', offset', max_rot)
+                    loop (d', sol, iter+1, SOME (IntInf.fromInt 0), old_cost, stale_count', stale_thresh, rot', offset', max_rot)
                     )
                   else
-                    loop (d'', ts, iter+1, iter_limit, SOME new_len, stale_count', stale_thresh, rot', offset', max_rot)
+                    loop (d'', ts, iter+1, iter_limit, SOME new_cost, stale_count', stale_thresh, rot', offset', max_rot)
                 end
           end
 
