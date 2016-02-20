@@ -775,14 +775,15 @@ $\tau^\ast$ --- its action then defines a neighbourhood in $\mathcal{T}_n$:
 
 If we now can solve the TSP efficiently over a fixed set of tours $T$
 (for arbitrary cost matrices), choosing a $\tau^\ast \in T$ immediately
-allows us to construct local search over $F_T$ --- applying
-\cref{cor:reorder} to \cref{def:induced}, we arrive at
+allows us to construct local search over $F_T$:
+applying \cref{cor:reorder} to \cref{def:induced}, we arrive at
 \[
   l_C\left(\tau\right) =
   \pi\left(\rho\,\operatorname{tsp}_{\rho M,T}\left(\rho\, C\right)\right),
   \quad
   \text{where}\; \rho = \sigma_\tau \sigma_{\tau^\ast}^{-1},
 \]
+(which indeed mirrors our implementation exactly),
 and choosing $\tau^\ast$ to be the starting tour in \cref{def:ils} then
 yields iterated local search.
 %
@@ -798,6 +799,7 @@ yields iterated local search.
 \dictum[L. Peter Deutsch]{To iterate is human, to recurse divine.}
 \section{Theory}
 
+\annotation{Move some of this to abstract?}
 Dynamic programming is a fruitful approach to tackling many problems in
 combinatorial optimization --- this specifically includes traveling
 salesman problem and a number of its special cases.  Here we want to
@@ -806,10 +808,10 @@ dynamic programming solutions.
 
 While the first one --- {\defstyle pyramidal tours} --- can be considered
 widely known, less so is its extension to a viable local search heuristic
-we will present herein.  The second --- {\defstyle strongly balanced tours}
---- is somewhat more involved in its construction and so had yet to see an
-implementation until now, which can be seen as essential motivation behind
-this project.
+which we will present herein.  The second --- {\defstyle strongly balanced
+  tours} --- is somewhat more involved in its construction and so had yet
+to see an implementation until now, which can be seen as essential
+motivation behind this project.
 
 \subsection{Pyramidal tours}
 
@@ -1046,7 +1048,7 @@ In what now follows, $X$ can thus be seen as a memory holding evaluation results
 \label{rem:timeass}
 This gives us a viable way of computing $\Phi_C\left(1,1\right)$, and, by extension,
 $\operatorname{tsp}_{\operatorname{Pyr}_n}$ --- in fact, our code, which
-produced \cref{fig:pyratrace} as its execution trace, closely mirrors this exact
+generated \cref{fig:pyratrace} as its execution trace, closely mirrors this exact
 definition.
 It is also a reasonably efficient implementation, provided that we are
 allowed following assumptions:
@@ -1203,9 +1205,9 @@ Also: what was the pyramidal vs k-opt coverage?
 
 Before we turn our attention to the next neighbourhood, there is one last
 point that we feel needs to be addressed: while we have discussed
-depth-first search and mentioned breadth-first search computation of
-pyramidal TSP, we have not yet considered the bottom-up approach
-widely used in imperative programming.
+depth-first search and mentioned breadth-first search computation over the
+recursion tree, we have not yet considered the bottom-up approach widely
+used in imperative programming.
 
 While its merits and caveats compared to the functional approach are
 manyfold, there is one important requirement said technique impedes on the
@@ -1215,9 +1217,12 @@ for pyramidal TSP, this is much less the case for the neighbourhood we are
 about to see --- which made bottom-up approach ultimately unsuitable for
 this project.
 
+\clearpage
+
 \subsection{Strongly balanced tours}
 
 \annotation{TODO FROM HERE}
+\clearpage
 
 \annotation{Treatment of four point conditions needed here?}
 Another class of sTSP is the {\em Relaxed Supnick TSP} \/(RS-TSP), which is
@@ -1403,6 +1408,7 @@ than always choosing from $2n+1$ specific permutations.
 \subsection{Results obtained}
 \annotation{TODO}
 First implementation of str.~balanced search.
+Other dyn.pr.\ cases easy to plug in.
 Some benchmarks.
 Preprocessing offers no gain.
 
@@ -1422,8 +1428,8 @@ Untested: other metrics or higher dimensions, dedicated implementations' perform
 Further heuristics combinations.
 Branch cutting.
 Different permutations set for str.~balanced tours?
+Concurrency.
 
-\subsection{Dynamic programming algorithms and concurrency}
 \annotation{TODO}
 
 Dedicated implementations (pyramidal: bottom up easy) fast, but not always feasible (str.~balanced: machine-generated).
