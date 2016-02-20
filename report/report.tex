@@ -1525,24 +1525,33 @@ on that, we introduce the simple concept of flowers:
 \end{define}
 
 TSP over such a flower is then trivially computable via choosing the best
-from $\left|S\right|+1$ local search results.
+from $\left|S\right|+1$ local search results.  Also we note that whenever
+$T$ induces a neighbourhood, flower of $T$ can induce one with same centre.
+
 While, as seen in \cite{belperm}, a good extension of pyramidal local
 search can be achieved via
 \[
-  S = \left<\left( 1\;2\;\cdots\;n\right)\right>,
+  \mathcal{F}\left(
+    \left<\left( 1\;2\;\cdots\;n\right)\right>,
+    \operatorname{Pyr}_n
+  \right)
 \]
 for strongly balanced tours such a set is not so easy to find.
 In our tests we have used
 \[
-  S = \left<\left( 1\;2\;\cdots\;n\right)\right>
-    \begin{pmatrix}
-      1 & \cdots & n \\
-      \ldots & \; 5 \; 3 \; 1 \; 2 \; 4 \; & \ldots
-    \end{pmatrix}.
+  \mathcal{F}\left(
+  \left<\left( 1\;2\;\cdots\;n\right)\right>
+    %\begin{pmatrix}
+    %  1 & \cdots & n \\
+    %  \ldots & \; 5 \; 3 \; 1 \; 2 \; 4 \; & \ldots
+    %\end{pmatrix},
+    \left(\ldots &, 5, 3, 1, 2, 4, \ldots)\right,
+    \operatorname{SBal_n^M}
+  \right).
 \]
 
 In our implementation we sometimes refer to permutations from the set $S$ above
-as {\defstyle rotations} of the tour set.
+as {\defstyle rotations} of set $T$.
 We also define therein a version of iterated local search which we call
 {\defstyle adaptive}, where we increase the number of considered permutations
 from $S$ whenever a stale iteration is reached.
