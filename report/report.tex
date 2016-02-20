@@ -175,6 +175,7 @@
 \declaretheorem[sibling=theorem]{proposition}
 \declaretheorem[sibling=theorem]{corollary}
 \declaretheorem[numberwithin=section,style=remark]{remark}
+\declaretheorem[numberwithin=section,style=exstyle]{example}
 %\BeforeBeginEnvironment{theorem}{\begin{adjustwidth}{1cm}{1cm}}
 %\AfterEndEnvironment{theorem}{\endadjustwidth}
 %\AfterEndEnvironment{define}{\noindent\ignorespaces}
@@ -257,12 +258,10 @@ relevant to the task at hand --- which, for a problem as extensively studied
 as this one, results in a great number of common terms which from author to
 author can differ ever so slightly.
 
-%Hence we need to establish a set of definitions which we shall try to keep
-%precise enough to be able to convey this paper's content clearly,
-%while also simple enough so as not to distract from it.
-\annotation{Improve description of motivation/justification?}
-In what follows, our goal is to establish consistent notation which can be easily
-interpreted as a (functional) computer program.
+\annotation{Description/motivation: TODO throughout document + abstract}
+In what follows, our goal is to establish notation which can be easily
+interpreted as a (functional) computer program and thus help illustrate
+the internals of our code.
 
 \begin{define}[cities, paths and tours]
 Given some $n \in \mathbb{N} \left(n \geq 2\right)$,
@@ -334,11 +333,24 @@ images under said map defined as infix operator:
   \[
     \overline{P} \coloneqq \left\{\overline{p} \mid p \in P\right\}.
   \]
+  We choose the concatenation operator to take precedence over set union.
 \end{define}
 
+\begin{example}
+  With above definition, following holds for paths over $\mathcal{P}_n$ (for $n \geq 3$):
+  \begin{align*}
+    (1,2) \oplus (3,2) & = (1,2,3,2),
+    \\
+    (3,1) \oplus (1,1) & = (3,1,1),
+    \\
+    \left\{(2),(1)\right\} \oplus (1) & = \left\{(2,1),(1)\right\},
+    \\
+    \left\{(1)\right\} \oplus \left\{(1),(2)\right\} \cup \left\{(3)\right\} & = \left\{(1),(1,2),(3)\right\}.
+  \end{align*}
+\end{example}
+
 \begin{remark}
-\annotation{Add an example for concatenation, setup precedence over union.}
-Note that path closure produces a bijection from the set of all simple open
+Also note that path closure produces a bijection from the set of all simple open
 paths of walking length $n-1$ over $\mathcal{N}_n$ onto $\mathcal{T}_n$.
 Further, $\overline{\mathcal{T}_n} = \mathcal{T}_n$ holds true.
 \end{remark}
@@ -411,12 +423,10 @@ they are usually omitted from notation.  The pair $(M,T)$ is called a
 
 \begin{remark}
 Often, the convention is to define TSP to be the symmetric version
-\annotation{Reduction remark acceptable without reference?}
-(aTSP can also be reduced to sTSP of twice the dimension).
-We shall make no such assumption without a prior notice.
+--- we shall make no such assumption without a prior notice.
 On the other hand, following convention is useful:
 observe how it follows from \cref{def:cost,def:tsp} that
-$\operatorname{tsp}_{M,T}^\ast\left(C\right) =
+$\operatorname{tsp}_{M,T}^\ast\left(C\right) ~ = ~
  \operatorname{tsp}_{M,T}^\ast\left(C + \lambda J\right)$
 for all $\lambda \in \mathbb{R}$ and $C \in M$,
 where $J$ is matrix of ones (of suitable dimension).
@@ -439,9 +449,8 @@ and shall do so henceforth.
   in practice, it is often given implicitly by construction, or may depend
   on even more arguments (such as some probability distribution) ---
   still, this choice of representative is something we need to be aware of
-  throughout this paper,
-  as it propagates to any construct using $\operatorname{tsp}$ ---
-  such as iterative methods presented in next section.
+  throughout, as it propagates to any construct using $\operatorname{tsp}$ ---
+  such as iterative methods presented herein.
 \end{remark}
 
 \subsection{Exponential neighbourhoods and local search}
@@ -455,10 +464,11 @@ following general definitions.
   ({\defstyle in $\mathcal{T}_n$} or {\defstyle over $\mathcal{N}_n$}) is a map
   \[
     F: \mathcal{T}_n \to 2^{\mathcal{T}_n}
-    \quad \text{s.t.}\; \tau \in F\left(\tau\right) \ \forall \tau \in \mathcal{T}_n\;\footnote{%
-      Not a common demand, this is sensible in context of (iterated) local search,
-      and also makes $F\left(\tau\right)$ a neighbourhood of $\tau$
-      according to discrete topology on $\mathcal{T}_n$.}.
+    \quad \text{s.t.}\; \tau \in F\left(\tau\right) \ \forall \tau \in \mathcal{T}_n\;
+    %\footnote{%
+    %  Not a common demand, this is sensible in context of (iterated) local search,
+    %  and also makes $F\left(\tau\right)$ a neighbourhood of $\tau$
+    %  according to discrete topology on $\mathcal{T}_n$.}.
   \]
   $F(\tau)$ is also called {\defstyle neighbourhood of} $\tau$.
   Once again, $n$ can be seen either as given dimension or implicit
@@ -485,24 +495,18 @@ following general definitions.
 \end{define}
 
 \begin{remark}
-\label{rem:localappr}
-  Note how for any tour $\tau$, local search defines a map on $M$ via
-  $C^\prime \mapsto l_{C^\prime}\left(\tau\right)$, which can also be seen
-  as approximation of $\operatorname{tsp}_{M,\mathcal{T}_n}$.
-\end{remark}
-
-\begin{remark}
-\label{rem:nondecr}
-\annotation{is ,,for any $C$'' necessary here?}
-  For any tour $\tau$, with $\tau \in F\left(\tau\right)$ we also have
+  Not a universally common requirement, our reason to demand that
+  $F\left(\tau\right)$ include $\tau$ per definition
+  is to guarantee that for any tour $\tau$ and any cost matrix $C$,
   \[
     \omega_C\left(l_C\left(\tau\right)\right) \leq \omega_C\left(\tau\right).
   \]
-  %for all cost matrices $C$.
 \end{remark}
 
-Combining \cref{rem:localappr,rem:nondecr} naturally yields an iterative
-improvement heuristic:
+Also note how for any tour $\tau$ local search defines a map on $M$ via
+$C^\prime \mapsto l_{C^\prime}\left(\tau\right)$, which can also be seen as
+approximation of $\operatorname{tsp}_{M,\mathcal{T}_n}$.  This naturally
+yields an iterative improvement heuristic:
 
 \begin{define}[ILS]
 \label{def:ils}
@@ -523,11 +527,9 @@ improvement heuristic:
   We shall sometimes refer to such a fixed point as {\defstyle stale iteration}.
 \end{define}
 
-\begin{remark}
-  In practice, termination conditions employed in ILS may vary and commonly
-  include such parameters as number of iterations performed, time elapsed
-  or some cost improvement metric.
-\end{remark}
+In practice, termination conditions employed in ILS may vary and commonly
+include such parameters as number of iterations performed, time elapsed
+or some cost improvement metric.
 
 \annotation{Necessary?}
 \begin{remark}
@@ -592,7 +594,7 @@ Similarly, we can use the map $\sigma_{\Cdot}$ for following convenient notation
     \tau \rho & \coloneqq \sigma_\tau \rho, \\
     \rho \, \tau & \coloneqq \rho \, \sigma_\tau, \\
     \rho \, T & \coloneqq \pi\left(\left\{ \rho \, \sigma_\eta \mid \eta \in T \right\}\right), \\
-    \rho \, C & \coloneqq \left(c_{\rho\left(i\right),\rho\left(j\right)}\right), \\
+    \rho \, C & \coloneqq \left(c_{\rho\left(i\right),\rho\left(j\right)}\right)_{i,j \in \mathcal{N}_n}, \\
     \rho M & \coloneqq \left\{ \rho \, \widehat{C} \mid \widehat{C} \in M \right\}.
   \end{align*}
 \end{define}
@@ -668,15 +670,12 @@ agreeable:
   \end{align*}
 \end{proof}
 
-\begin{remark}
-  \annotation{Wording?}
-  This shows, in particular, how resticting the tour set in the TSP to a
-  fixed starting city does not necessarily signify a qualitative
-  restriction of solutions set.
-\end{remark}
+This shows, in particular, how restricting the tour set in the TSP to a
+fixed starting city does not necessarily signify a qualitative restriction
+of solutions set.
 
 We now want to establish a connection between permutations of cities,
-reorderings of tours and solutions to the TSP.
+reordered tours and solutions to the TSP.
 
 \begin{lemma}
 \label{lemma:ordermat}
@@ -769,9 +768,9 @@ $\tau^\ast$ --- its action then defines a neighbourhood in $\mathcal{T}_n$:
   $\tau \in F_T\left(\tau\right) \; \forall \tau \in \mathcal{T}_n,$
   i.e.\ $F_T$ is in fact a neighbourhood according to our definition.
   We further have $F_T\left(\tau^\ast\right) = T$.
-  We deliberately omit the choice of centre from actual notation of induced
-  neighbourhood, treating it as implicit parameter --- which is usually
-  established along with the set $T$.
+  We deliberately omit the choice of centre from notation of induced
+  neighbourhood, treating it as implicit parameter which is usually
+  to be established along with the set $T$.
 \end{remark}
 
 If we now can solve the TSP efficiently over a fixed set of tours $T$
@@ -814,7 +813,7 @@ this project.
 
 \subsection{Pyramidal tours}
 
-\annotation{Who was first?  BIBLIOGRAPHY!}
+\annotation{Who was first?  Bibliography: TODO throughout.}
 Pyramidal TSP was first described by (whom? \cite{bellman,gilmore}?)
 and can be defined as follows:
 
@@ -904,7 +903,7 @@ evident and following construction transparent:
 This translates directly onto a dynamic programming solution to pyramidal TSP:
 \begin{corollary}[dynamic programming solution to pyramidal TSP]
 \label{cor:pyrdp}
-\annotation{better layout via alignedat?}
+\annotation{improve layout}
   For a suitable tour-valued definition of $\argmin^\ast$, the recurrence relation
   \begin{align}
     \label{eq:pyrdp}
@@ -961,7 +960,7 @@ This translates directly onto a dynamic programming solution to pyramidal TSP:
 Recurrence relation such as the one introduced above are well visualized
 via so called {\defstyle recursion tree}~--- a directed graph in which
 nodes correspond to different arguments to the relation, and edges
-represent recursive dependence.  For pyramidal TSP, \cref{fig:pyrtrace}
+represent recursive dependence.  For pyramidal TSP, \cref{fig:pyratrace}
 shows such a graph.
 
 \begin{figure}[htbp]
@@ -969,7 +968,7 @@ shows such a graph.
   \includegraphics[width=0.92\textwidth]{../plot/build/trace_apyr.pdf}
 \caption{Pyramidal (a)TSP recursion tree along with values of $\Phi_C$
   from \cref{cor:pyrdp} for a sample cost matrix $C$ ($n=5$).}
-\label{fig:pyrtrace}
+\label{fig:pyratrace}
 \end{figure}
 
 %\begin{figure}[htbp]
@@ -997,11 +996,11 @@ technique of evaluating a function no more than once at any point in its domain,
 storing evaluation results somewhere and retrieving (i.e.\ substituting) them for
 subsequent evaluations.
 Not unnatural to computations by hand, memoization can formally be seen as
-computing, in place of a function over some set, said function's graph over
+evaluation, in place of a function over some set, said function's graph over
 the set.
-In what now follows, $X$ can be seen as a memory holding evaluated results.
+In what now follows, $X$ can thus be seen as a memory holding evaluation results:
 
-\begin{proposition}[memoized version of $\Phi_C$]
+\begin{proposition}[memoized solution to pyramidal TSP]
 \label{prop:pyrmem}
 \annotation{better layout via alignedat?}
   Given a set of cities $\mathcal{N}_n$, let, for cities $i,j$ and cost matrix $C$,
@@ -1043,30 +1042,46 @@ In what now follows, $X$ can be seen as a memory holding evaluated results.
   $\widehat{\Phi}_C$, and with this the rest follows.
 \end{proof}
 
+\begin{remark}
+\label{rem:timeass}
 This gives us a viable way of computing $\Phi_C\left(1,1\right)$, and, by extension,
 $\operatorname{tsp}_{\operatorname{Pyr}_n}$ --- in fact, our code, which
-produced \cref{fig:pyrtrace} as its execution trace, closely mirrors this exact
+produced \cref{fig:pyratrace} as its execution trace, closely mirrors this exact
 definition.
-It is also a reasonably efficient implementation:
-evaluating $\widehat{\Phi}_C$ following its definition corresponds to
-depth first search over the recursion tree, which is quadratic in size
+It is also a reasonably efficient implementation, provided that we are
+allowed following assumptions:
+  \begin{enumerate}[(i)]
+    \item
+      $\argmin \omega_C$ in definition of $\Phi_C$ above is computable in constant time:
+      this is usually achieved by returning tour cost along with the
+      tour\footnote{%
+        It should be noted, without too much detail, that this also spares
+        us the need to construct all but the optimum tour.
+      };
+    \item
+      tour concatenation in said definition is computable in constant time:
+      in this case, an obviously reasonable assumption;
+    \item
+      memory access (search for $v^\ast$ in first case of \eqref{eq:pyrmem},
+      and set union in the other two) can be accomplished in constant time:
+      sometimes overlooked, this is equivalent to existence of efficient hashing
+      function on the domain of the map which is to be memoized ---
+      in this case, $(i,j) \mapsto (n+1)\times i + j$ is one such function.
+  \end{enumerate}
+\end{remark}
+
+Note that evaluating $\widehat{\Phi}_C$ following its definition corresponds to
+depth first search over the recursion tree, which is quadratic in number of nodes
 as well as number of edges --- if we now consider memoization to be what
 is usually called edge marking in that it guarantees that every edge
-is visited no more than once, we intuitively arrive at following:
+is visited no more than once, we intuitively arrive at following result:
 
 \begin{corollary}
 \label{cor:pyrtime}
-  Pyramidal TSP is polynomially solvable.
+  Pyramidal TSP is polynomially solvable (under assumptions made in \cref{rem:timeass}).
 \end{corollary}
 \begin{proof}
   Consider $\widehat{\Phi}_C\left((i,j),X\right)$ as defined in \cref{prop:pyrmem}.
-  At this point we would like to make several assumptions which we shall address later:
-  \begin{enumerate}[(i)]
-    \item memory access (search for $v^\ast$ in first case of \eqref{eq:pyrmem}, and set union in the other two)
-      can be accomplished in constant time;
-    \item $\argmin \omega_C$ in said definition is computable in constant time;
-    \item tour concatenation in said definition is computable in constant time.
-  \end{enumerate}
   If, for a bound $M$,
   we now rewrite the recurrence relation from definition of $\widehat{\Phi}_C$ as
   \begin{align}
@@ -1096,8 +1111,9 @@ is visited no more than once, we intuitively arrive at following:
   then for some such $M$
   the maximum number of steps in which we can compute
   $\widehat{\Phi}_C\left((i,j),\varnothing\right)$
-  for any pair of cities is
-  $T\left((i,j),\varnothing\right)$.
+  equals to
+  $T\left((i,j),\varnothing\right)$
+  for any pair of cities.
   We now want to show that
   \[
     T\left((1,1),\varnothing\right) = \mathcal{O}\left(n^2\right).
@@ -1135,7 +1151,7 @@ is visited no more than once, we intuitively arrive at following:
     M + 2M \left(1 + 2 + \cdots + n\right) +
         2M \left(1 + 2 + \cdots + (n-2)\right) +
     \\
-    & + \sum_{i=1}^n \left(
+    & + \sum_{i=1}^{n-1} \left(
         T\left((i,n),X_{i,n}\right)
       + T\left((n,i),X_{n,i}\right)
     \right)
@@ -1143,25 +1159,67 @@ is visited no more than once, we intuitively arrive at following:
   \end{align*}
 \end{proof}
 
-Referential transparency, space complexity\ldots
+This illustrates how, given a recurrence relation, memoization technique
+can generally be used to achieve time complexity which is asymptotically no
+worse than the size of the recursion tree --- which we think can be seen as
+the concept behind dynamic programming.
 
-\annotation{TODO FROM HERE}
+In computing, memoization can be applied to any function values of which
+depend only on its arguments --- such a function is also said to be
+{\defstyle referentially transparent} (in mathematics, every well-defined
+map is referentially transparent; in computing, depending on programming
+language, the concept of function may allow for implicit dependency on
+environment --- i.e.\ some mutable state).
 
-\begin{figure}[htbp]
+\begin{remark}
+  The solution presented in \cref{prop:pyrmem} incurs quadratic space
+  overhead.  We would like to mention here that linear space complexity is
+  achievable if we rewrite said solution as a so called {\defstyle
+    tail-recursive} function.  We shall leave out the details at this
+  point, only noting that this is equivalent to breadth-first search over
+  the recursion tree.
+
+  It should also be noted that the tree size can be halved if we
+  restrict ourselves to symmetric matrices --- as can be seen in
+  \cref{fig:pyrstrace}.
+\end{remark}
+
+\begin{figure}[hbt]
 \centering
-\includegraphics[width=0.59\textwidth]{../plot/build/trace_pyr.pdf}
-\caption{A trace of our implementation's pyramidal search graph traversal over $K_5$.}
+\includegraphics[width=0.55\textwidth]{../plot/build/trace_pyr.pdf}
+\caption{A sample trace of our implementation of pyramidal sTSP $(n = 5)$.}
+\label{fig:pyrstrace}
 \end{figure}
 
-\subsection{Four point conditions and exponential neighbourhoods}
+\begin{remark}[TODO]
+\annotation{add this to appropriate places in paper}
+\annotation{Demidenko conditions: interesting?}
+While determining if a given TSP instance is pyramidal is NP-hard
+\cite{baki}, a number of polynomially testable classes which are
+pyramidally solvable exist \cite{baki,gilmore} --- still, those are not
+widely common.
+Also: what was the pyramidal vs k-opt coverage?
+\end{remark}
 
-\annotation{Demidenko conditions: is a description necessary/interesting?}
-While determining if a given TSP instance is pyramidal is NP-hard \cite{baki},
-a number of polynomially testable classes which are pyramidally solvable exist \cite{baki,gilmore} ---
-still, those are not widely common.
+Before we turn our attention to the next neighbourhood, there is one last
+point that we feel needs to be addressed: while we have discussed
+depth-first search and mentioned breadth-first search computation of
+pyramidal TSP, we have not yet considered the bottom-up approach
+widely used in imperative programming.
+
+While its merits and caveats compared to the functional approach are
+manyfold, there is one important requirement said technique impedes on the
+problem: for it to work, terminal nodes (or leafs) of the recursion tree
+have to be feasibly computable beforehand.  While this presents no problem
+for pyramidal TSP, this is much less the case for the neighbourhood we are
+about to see --- which made bottom-up approach ultimately unsuitable for
+this project.
 
 \subsection{Strongly balanced tours}
 
+\annotation{TODO FROM HERE}
+
+\annotation{Treatment of four point conditions needed here?}
 Another class of sTSP is the {\em Relaxed Supnick TSP} \/(RS-TSP), which is
 obtained by restricting considered instances via a simple four-point
 condition:
