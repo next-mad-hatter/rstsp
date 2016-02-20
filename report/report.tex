@@ -817,7 +817,7 @@ motivation behind this project.
 \subsection{Pyramidal tours}
 
 \annotation{Who was first?  Bibliography: TODO throughout.}
-Pyramidal TSP, first described by (whom? \cite{bellman,gilmore}?), yields a
+Pyramidal TSP, as seen in, e.g.\ \cite{bellman,gilmore}?, yields a
 classic example of application of dynamic programming and can be defined as
 follows:
 
@@ -1310,7 +1310,7 @@ pyramidal tours, the neighbourhood they represent is certainly no less
 interesting.
 
 \begin{define}
-For $M \in \mathbb{R}$, we define $\operatorname{SBal}_n^M$ to be the set of all
+For $M \in \mathbb{N}$, we define $\operatorname{SBal}_n^M$ to be the set of all
 strongly balanced tours obtained by restricting each $\mathcal{B}_m$ in \cref{def:sbtour}
 to contain only elements of size no higher than $M$.
 \end{define}
@@ -1383,7 +1383,7 @@ Following the same procedure we have seen in pyramidal case, we obtain:
   \]
 \end{proposition}
 \begin{proof}
-  Analogous to \cref{prop:pyrall}, this follows directly from \cref{def:sbtour}.
+  This follows directly from \cref{def:sbtour}.
 \end{proof}
 
 This defines a recurrence relation to which we can apply the very same
@@ -1407,6 +1407,7 @@ those raised in
     produces a collision free solution,
     in practice we were able to achieve best results 
     with polynomial hash function
+    \annotation{check implementation}
     \begin{align*}
       \left(m,N\right) \mapsto & mX^{2k+1}
         + \sum_{i=1}^k\left((m-a_i)X^{2k-i+1} + (m-b_i)X^{2k-i}\right),
@@ -1545,7 +1546,7 @@ In our tests we have used
     %  1 & \cdots & n \\
     %  \ldots & \; 5 \; 3 \; 1 \; 2 \; 4 \; & \ldots
     %\end{pmatrix},
-    \left(\ldots &, 5, 3, 1, 2, 4, \ldots)\right,
+    \left(\ldots , 5, 3, 1, 2, 4, \ldots\right),
     \operatorname{SBal_n^M}
   \right).
 \]
@@ -1657,6 +1658,9 @@ First implementation of str.~balanced search.
 Other dyn.pr.\ cases easy to plug in.
 Some benchmarks.
 Preprocessing offers no gain.
+
+Include things from TODOs.
+Splay trees ......
 
 \begin{figure}[htbp]
 %\begin{wrapfigure}{r}{0.5\textwidth}
