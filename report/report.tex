@@ -1150,7 +1150,8 @@ is visited no more than once, we intuitively arrive at following result:
   %\annotation{is the ancestor argument clear?}
   any two nodes in the recursion tree given by \cref{eq:pyrdp} have a common ancestor,
   so at any point in our expansion,
-  given a pair $(i,j)$, it must lie in all but the very last of $X_{i,j}^{k,l}$,
+  given a pair $(i,j)$, it must (by construction of $R$)
+  lie in all but the very last of $X_{i,j}^{k,l}$,
   hence $T\left((i,j),X_{i,j}^{k,l}\right) = M$ for all but last such contributor to the sum.
   We thus arrive at
   \annotation{recheck!}
@@ -1354,7 +1355,8 @@ the set of cities it contains (which is necessarily $\left\{1,\ldots,m\right\}$)
   which, per path concatenation,
   complement the set of
   non-singleton elements of $N$ seen as paths $(a_i,b_i)$ to a single cycle,
-  while also complementing some element of $\mathcal{B}_n$ to a strongly balanced tour.
+  therefore also complementing corresponding (to $N$) element of $\mathcal{B}_m$
+  to a strongly balanced tour.
   Then
   \[
     \operatorname{SBal}_n^M =
@@ -1468,9 +1470,8 @@ those raised in
     even if we assume $\left|N\right| \leq M$,
     potentially reversing and joining paths
     in this step cannot be considered a constant time operation,
-    but can reasonably be assumed to contribute to time complexity
-    a polynomial factor only
-    (note that we only need to reconstruct the optimum tour);
+    but still can reasonably be assumed to contribute to time complexity
+    a polynomial factor only (note that we only need to reconstruct the optimum tour);
   \item
     ad memory access:
     while enumeration of {\defstyle node types} (introduced below) produces
