@@ -116,6 +116,7 @@
 \usepackage{multirow}
 \usepackage{varwidth}
 \usepackage{pgfplotstable}
+\usepackage{siunitx}
 
 \usepackage[title,page,titletoc]{appendix}
 \newcommand*{\Appendixautorefname}{Appendix}
@@ -175,7 +176,7 @@
 \declaretheorem[sibling=theorem]{proposition}
 \declaretheorem[sibling=theorem]{corollary}
 \declaretheorem[numberwithin=section,style=remark]{remark}
-\declaretheorem[numberwithin=section,style=exstyle]{example}
+\declaretheorem[numberwithin=section,style=remark]{example}
 %\BeforeBeginEnvironment{theorem}{\begin{adjustwidth}{1cm}{1cm}}
 %\AfterEndEnvironment{theorem}{\endadjustwidth}
 %\AfterEndEnvironment{define}{\noindent\ignorespaces}
@@ -532,7 +533,6 @@ In practice, termination conditions employed in ILS may vary and commonly
 include such parameters as number of iterations performed, time elapsed
 or some cost improvement metric.
 
-\annotation{Necessary?}
 \begin{remark}
   There seems to exist no commonly accepted distinction between local
   search and iterated local search.  Often, the former is not required to
@@ -702,7 +702,7 @@ reordered tours and solutions to the TSP.
 \label{cor:reorder}
   For any $\rho \in \mathcal{S}_n, C \in M \subseteq \mathbb{R}^{n \times n},
   \tau \in \mathcal{T}_n$,
-  \annotation{,,Latter for any pair of compatible orderings $L, \rho L$'' or some such necessary?}
+  %\annotation{,,Latter for any pair of compatible orderings $L, \rho L$'' or some such necessary?}
   \begin{align*}
   \begin{split}
     \operatorname{tsp}^\ast_{M,\rho T}\left(C\right)
@@ -816,7 +816,7 @@ motivation behind this project.
 
 \subsection{Pyramidal tours}
 
-\annotation{Who was first?  Bibliography: TODO throughout.}
+\annotation{Bibliography: TODO.}
 Pyramidal TSP, as seen in, e.g.\ \cite{bellman,gilmore}?, yields a
 classic example of application of dynamic programming and can be defined as
 follows:
@@ -907,15 +907,15 @@ evident and following construction transparent:
 This translates directly onto a dynamic programming solution to pyramidal TSP:
 \begin{corollary}[dynamic programming solution to pyramidal TSP]
 \label{cor:pyrdp}
-\annotation{improve layout}
-  For a suitable tour-valued definition of $\argmin^\ast$, the recurrence relation
+\annotation{layout!}
+  For a suitable tour-valued definition of $\argmin^\prime$, the recurrence relation
   \begin{align}
     \label{eq:pyrdp}
     \Phi_C\left(i,j\right) & \coloneqq
     \begin{cases}
       \left(i,j\right), & n \in \left\{i,j\right\}, \\
       %\displaystyle \adjustlimits \min_L \argmin_T \omega_C & \text{otherwise},
-      {\displaystyle \argmin_T}^\ast \omega_C & \text{otherwise},
+      {\displaystyle \argmin_T}^\prime \omega_C & \text{otherwise},
     \end{cases}
     \\
     \text{where} & \phantom{\coloneqq}
@@ -946,7 +946,7 @@ This translates directly onto a dynamic programming solution to pyramidal TSP:
   Borrowing defition of $V$ from \cref{prop:pyrall}, we first note that,
   per induction over \eqref{eq:pyrall}, $V\left(i,j\right)$ is never empty.
 
-  If we now choose $\argmin^\ast$ to select from two equal cost tours in
+  If we now choose $\argmin^\prime$ to select from two equal cost tours in
   $T$ one deterministically and independently from $C$ (say, the first of
   the two options in definition of $T$ above), then this, per construction,
   produces a linear order on paths in $V\left(\mathcal{N}_n^2\right)$, and
@@ -1006,7 +1006,7 @@ In what now follows, $X$ can thus be seen as a memory holding such evaluation re
 
 \begin{proposition}[memoized solution to pyramidal TSP]
 \label{prop:pyrmem}
-\annotation{better layout via alignedat?}
+\annotation{layout!}
   Given a set of cities $\mathcal{N}_n$, let, for cities $i,j$ and cost matrix $C$,
   \begin{align}
     \label{eq:pyrmem}
@@ -1125,17 +1125,16 @@ is visited no more than once, we intuitively arrive at following result:
   \[
     T\left((1,1),\varnothing\right) = \mathcal{O}\left(n^2\right).
   \]
-  \annotation{alignment}
   Let us expand
   \begin{align*}
-    T\left((1,1),\varnothing\right) & =
+    T\left((1,1),\varnothing\right) =\; &
     M + T\left((1,2),X_{1,2}^{1,1}\right)
       + T\left((2,1),X_{2,1}^{1,1}\right) =
-    \\ & = M + 2M + T\left((1,3),X_{1,3}^{1,2}\right)
+    \\ =\; & M + 2M + T\left((1,3),X_{1,3}^{1,2}\right)
                   + T\left((3,2),X_{3,2}^{1,2}\right) +
              \\ & + T\left((3,1),X_{3,1}^{2,1}\right)
                   + T\left((2,3),X_{2,3}^{2,1}\right) =
-    \\ & = M + 2M + 2M\cdot 2 +
+    \\ =\; & M + 2M + 2M\cdot 2 +
     \\ & + T\left((1,4),X_{1,4}^{1,3}\right)
          + T\left((4,3),X_{4,3}^{1,3}\right)
     \\ & + T\left((3,4),X_{3,4}^{3,2}\right)
@@ -1148,12 +1147,13 @@ is visited no more than once, we intuitively arrive at following result:
   where the sets $X_{i,j}^{k,l}$ correspond to evaluation of $R$ as defined ---
   which still can be seen as depth-first search over the recursion tree of $\Phi_C$.
   Here we make a critical observation:
+  %\annotation{is the ancestor argument clear?}
   any two nodes in the recursion tree given by \cref{eq:pyrdp} have a common ancestor,
   so at any point in our expansion,
   given a pair $(i,j)$, it must lie in all but the very last of $X_{i,j}^{k,l}$,
   hence $T\left((i,j),X_{i,j}^{k,l}\right) = M$ for all but last such contributor to the sum.
   We thus arrive at
-  \annotation{recheck}
+  \annotation{recheck!}
   \begin{align*}
     T\left((1,1),\varnothing\right) & \leq
     M + 2M \left(1 + 2 + \cdots + n\right) +
@@ -1201,14 +1201,11 @@ environment --- i.e.\ some mutable state).
 \label{fig:pyrstrace}
 \end{figure}
 
-\begin{remark}[TODO]
-\annotation{add this to appropriate places in paper}
-\annotation{Demidenko conditions: interesting?}
+\begin{remark}
 While determining if a given TSP instance is pyramidal is NP-hard
-\cite{baki}, a number of polynomially testable classes which are
-pyramidally solvable exist \cite{baki,gilmore} --- still, those are not
-widely common.
-Also: what was the pyramidal vs k-opt coverage?
+\cite{baki}, a number of polynomially testable classes which posess
+pyramidal solutions exists \cite{baki,gilmore} ---
+still, those are not widely common.
 \end{remark}
 
 Before we turn our attention to the next neighbourhood, there is one last
@@ -1229,8 +1226,8 @@ this project.
 
 Throughout remainder of this section we shall restrict our considerations,
 unless noted otherwise, to symmetric TSP only --- in particular, we can
-consider paths to be cost equivalent if they are equal under path reversal
-as defined in \cref{def:pathop}.
+consider paths to be cost equivalent whenever they are equal under path
+reversal. % as defined in \cref{def:pathop}.
 
 \begin{define}[strongly balanced tours]
 \label{def:sbtour}
@@ -1277,16 +1274,18 @@ as defined in \cref{def:pathop}.
 Above construction is best visualized per analogy to argument which led us
 to \cref{prop:pyrall}: while in latter, we were appending city at a time to
 a partially constructed tour which consisted of two (or one, if we joined
-them at city $1$) paths, here such a partially constructed tour can consist of
-multiple paths, and for each city $m$ we can choose between two to three
-options ($\operatorname{add}, \operatorname{append}, \operatorname{merge})$
-which are illustrated in \cref{fig:sbopt}.
+them at city $1$) paths, here such a partially constructed tour (such as
+$\tau \in \mathcal{B}_{m-1}$ above) can consist of multiple paths, and for each city
+$m$ we can choose from two to three placement possibilities (according to
+$\operatorname{add}, \operatorname{append}, \operatorname{merge})$ as
+illustrated in \cref{fig:sbopt}.
 
-We can also now see that per above definition, every element of $\mathcal{B}_m$ contains
-simple disjoint paths over $\mathcal{P}_m$ which together
-contain all cities in $\mathcal{N}_m$, thus making evident following:
+We can also now see that per above definition, every element of
+$\mathcal{B}_m$ contains simple disjoint paths over $\mathcal{P}_m$ which
+together contain all cities in $\mathcal{N}_m$, and $m_i = m_i^\prime$ above is
+only possible where $\pi_i = (m_i)$, thus making following evident:
 \begin{remark}
-  Strongly balanced tours, as they are defined in \cref{def:sbtour},
+  Strongly balanced tours, per \cref{def:sbtour},
   are in fact elements of $\mathcal{T}_n$.
 \end{remark}
 
@@ -1294,8 +1293,9 @@ contain all cities in $\mathcal{N}_m$, thus making evident following:
   \centering
   \includegraphics[width=0.69\textwidth]{../plot/build/bal-1.mps}
   \caption{%
-    Construction of a strongly balanced tour:
-    choose $m$ to be adjacent to $m_1$, both $m_1$ and $m_2$, or none of the two.
+    Placement options for a city $m$ during construction of a strongly
+    balanced tour: we can choose $m$ to be adjacent to $m_1$ (via $\operatorname{append}$),
+    both $m_1$ and $m_2$ (via $\operatorname{merge}$), or none of the two ($\operatorname{add}$).
  }
  \label{fig:sbopt}
 \end{figure}
@@ -1303,7 +1303,7 @@ contain all cities in $\mathcal{N}_m$, thus making evident following:
 While the above construction may seem somewhat contrived, strongly balanced tours
 represent a variation on so called {\defstyle balanced tours}, which contain a solution
 to {\defstyle Relaxed Supnick TSP} ({\defstyle RS-TSP}), which had been shown to be NP-hard.
-\annotation{Cite someone!  Adjust description.}
+\annotation{Citation!}
 
 While strongly balanced tours may lack a nice visual property similar to
 pyramidal tours, the neighbourhood they represent is certainly no less
@@ -1318,19 +1318,27 @@ to contain only elements of size no higher than $M$.
 \begin{remark}
   For any $M \geq 2$, at any step of city-at-a-time construction of a
   strongly balanced tour we have a choice between at least two of the three
-  construction options given in \cref{def:sbtour}, which all yield essentially
-  different tours (recall \cref{fig:sbopt}).  This shows that
+  placement options shown above, %
+  which all yield essentially different tours (recall \cref{fig:sbopt}).  This shows that
   \[
     \left|\operatorname{SBal}_n^M\right| = \Omega\left(2^n\right).
   \]
-  Also, the $\operatorname{append}$ option is always available for any $M>0$,
-  hence $\operatorname{SBal}_n^M$ induces an exponential neighbourhood
+  Also, with $M \geq 1$ the $\operatorname{append}$ option is always available,
+  hence for every $M$ $\operatorname{SBal}_n^M$ induces an exponential neighbourhood
   in $\mathcal{T}_n$ with centre $\left(\ldots,5,3,1,2,4,\ldots\right)$.
   We shall call the TSP thus restricted {\defstyle strongly balanced TSP}
   (with {\defstyle maximum node size} $M$).
 \end{remark}
 
-Following the same procedure we have seen in pyramidal case, we obtain:
+Recall how we could uniquely identify a partially constructed pyramidal
+tour using only a pair of cities --- which we then used to describe, in
+\cref{prop:pyrall}, elements which would complete such partially
+constructed tours to elements of $\mathcal{T}_n$.
+
+Equivalently, a partially constructed strongly balanced tour (i.e.\ element
+of $\mathcal{B}_m$) can be described by the end points of its elements and
+the set of cities it contains (which is necessarily $\left\{1,\ldots,m\right\}$).
+
 \begin{proposition}[recursive structure of $\operatorname{SBal}_n^M$]
 \label{prop:sball}
   Given $n \in \mathbb{N}, m \in \mathcal{N}_n$, $M \in \mathcal{N}_n$
@@ -1340,74 +1348,135 @@ Following the same procedure we have seen in pyramidal case, we obtain:
   \]
   with $a_1 < a_2 < \ldots < a_k$, $a_i \leq b_i \; \forall i = 1,\ldots,k$,
   define $W\left(m,N\right)$ to be the set of
-  all sets of paths through all of the cities $\left\{m+1,\ldots,n\right\}$
-  with pairs of their end points corresponding to elements of $N$
+  all sets (none higher than $M$ in size)
+  of simple paths through all of the cities $\left\{m+1,\ldots,n\right\}$
+  as well as all cities contained in $N$,
   which, per path concatenation,
-  complement an element of $\mathcal{B}_{m}$ (of size not higher than $M$)
-  to a strongly balanced tour over $\mathcal{N}_n$.
+  complement the set of
+  non-singleton elements of $N$ seen as paths $(a_i,b_i)$ to a single cycle,
+  while also complementing some element of $\mathcal{B}_n$ to a strongly balanced tour.
   Then
   \[
     \operatorname{SBal}_n^M =
     W\left(0,\varnothing\right) =
-    \overline{W\left(1,\left\{1\right\}\right)}
+    %\overline{
+      W\left(1,\left\{1\right\}\right)
+    %}
   \]
-  \annotation{need rotation?}
   (as quotients under rotation equivalence as per \cref{prop:rotinv}) and
   \begin{align}
     \label{eq:sbdp}
     W\left(m,N\right) =
     \begin{cases}
-      N, & m = n, k = 1, \\
+      \left\{(a_1,b_1)\right\}, & m = n, k = 1, \\
       \varnothing, & m = n, k \neq 1 \\
-      W\left(m+1,\operatorname{add}^\ast\left(N,m+1\right)\right) \cup
-        W\left(m+1,\operatorname{append}^\ast\left(N,m+1\right)\right) \cup \\
-      \quad \quad \quad \cup\; W\left(m+1,\operatorname{merge}^\ast\left(N,m+1\right)\right) & \text{otherwise},
+      W\left(m+1,\operatorname{add}^\prime\left(N,m+1\right)\right) \cup
+      \\ \quad \quad \quad
+      \cup\;  W\left(m+1,\operatorname{append}^\prime\left(N,m+1\right)\right) \cup
+      \\ \quad \quad \quad
+      \cup\; W\left(m+1,\operatorname{merge}^\prime\left(N,m+1\right)\right) & \text{otherwise},
     \end{cases}
   \end{align}
   where
   \[
   \begin{alignedat}{2}
-    \operatorname{add}^\ast\left(N,m\right) & \coloneqq
+    \operatorname{add}^\prime\left(N,m\right) & \coloneqq
     N \cup \left\{m\right\}
     & (\text{or}\; \varnothing \;\text{for}\; \left|N\right| \geq M),
     \\
-    \operatorname{append}^\ast\left(N,m\right) & \coloneqq
+    \operatorname{append}^\prime\left(N,m\right) & \coloneqq
     \left(N \setminus \left\{\left\{a_1,b_1\right\}\right\}\right) \cup \left\{\left\{m,b_1\right\}\right\}
     & (\text{or}\; \varnothing \;\text{for}\; N = \varnothing),
     \\
-    \operatorname{merge}^\ast\left(N,m\right) & \coloneqq
+    \operatorname{merge}^\prime\left(N,m\right) & \coloneqq
     \left(N \setminus \left\{\left\{a_1,b_1\right\},\left\{a_2,b_2\right\}\right\}\right)
       \cup \left\{\left\{b_1,b_2\right\}\right\}
     & (\text{or}\; \varnothing \;\text{for}\; \left|N\right| < 2).
   \end{alignedat}
   \]
 \end{proposition}
+%\annotation{Reverse arguments order in
+%  $\operatorname{add},\operatorname{add}^\prime,\ldots$
+%  for legibility?}
 \begin{proof}
-  This follows directly from \cref{def:sbtour}.
+  Follows from \cref{def:sbtour} per construction.
 \end{proof}
 
-This defines a recurrence relation to which we can apply the very same
-technique we used in pyramidal case (in fact, apart from description of
-recursion tree, counting tour reconstruction rules, our implementation uses
-same code for both) and compute a minimum cost tour in
-$\operatorname{SBal}_n^M$ --- a trace of such computation can be seen in
-\cref{fig:sbtrace}.
+This defines a recurrence relation to which we can again apply memoized
+traversing technique seen in pyramidal case (in fact, apart from
+description of recursion tree, counting tour reconstruction rules, our
+implementation uses same code for both) and compute a minimum total cost
+element in $W\left(m,N\right)$ for each node, and thus a minimum cost tour
+in $\operatorname{SBal}_n^M$ --- sample trace of such computation can be
+seen in \cref{fig:sbtrace} ---
+where the tour reconstruction rules can be deduced directly from given
+relation and are left as exercise to the reader (they amount to inserting
+into the solution, with possible reversal and joining, paths $(m,a_1)$ or $(a_1,m,a_2)$).
+
+\setlength{\aboverulesep}{0pt}
+\setlength{\belowrulesep}{0pt}
+\renewcommand{\tabcolsep}{9pt}
+\setlength{\extrarowheight}{1.1ex}
+\newcolumntype{g}{>{\columncolor{Gray}}c}
+
+\begin{example}
+  The construction above is best illustrated by example: shown in
+  \cref{tbl:sbpath} is one path taken from the root of the recursion tree,
+  along with the strongly balanced tour corresponding to the taken path
+  and sample optimum solution from $W(m,N)$ as it is constructed
+  while returning along the path.
+
+  \begin{table}[htb]
+  \centering
+  \begin{tabular}{gcgrg}
+    \toprule
+    $\tau \in \mathcal{B}_m$ $\sim$ $\left(m,N\right)$ &
+    $m$ &
+    $N$ &
+    optimum in $W\left(m,N\right)$ &
+    path from parent \\
+    \midrule
+    $\left\{(1)\right\}$ & 1 & $\left\{\{1\}\right\}$ & $\left\{(1,4,6,2,5,7,3,1)\right\}$ & \\
+    $\left\{(1),(2)\right\}$ & 2 & $\left\{\{1\},\{2\}\right\}$ & $\left\{(1,4,6,2,5,7,3,1)\right\}$ & $\operatorname{add}^\prime$ \\
+    $\left\{(1,3),(2)\right\}$ & 3 & $\left\{\{1,3\},\{2\}\right\}$ & $\left\{(1,4,6,2,5,7,3)\right\}$ & $\operatorname{append}^\prime$ \\
+    $\left\{(2),(3,1,4)\right\}$ & 4 & $\left\{\{2\},\{3,4\}\right\}$ & $\left\{(3,7,5,2,6,4)\right\}$ & $\operatorname{append}^\prime$ \\
+    $\left\{(2,5),(3,1,4)\right\}$ & 5 & $\left\{\{2,5\},\{3,4\}\right\}$ & $\left\{(3,7,5),(2,6,4)\right\}$ & $\operatorname{append}^\prime$ \\
+    $\left\{(3,1,4),(5,2,6)\right\}$ & 6 & $\left\{\{3,4\},\{5,6\}\right\}$ & $\left\{(3,7,5),(4,6)\right\}$ & $\operatorname{append}^\prime$ \\
+    $\left\{(4,1,3,7,5,2,6)\right\}$ & 7 & $\left\{\{4,6\}\right\}$ & $\left\{(4,6)\right\}$ & $\operatorname{merge}^\prime$ \\
+    \bottomrule
+  \end{tabular}
+  \caption{Sample path taken in the strongly balanced recursion tree along with optimum (for some sample cost matrix) solution for each node.  Elements of $\mathcal{B}_m$ corresponding to the nodes are given as illustration.}
+  \label{tbl:sbpath}
+  \end{table}
+\end{example}
+
+\begin{figure}[hbt]
+  \centering
+  \makebox[\textwidth][c]{%
+    \includegraphics[width=1.21\textwidth]{../plot/build/trace_bal.pdf}
+  }
+  \caption{Strongly balanced TSP recursion tree ($M=2,n=8$).}
+  \label{fig:sbtrace}
+\end{figure}
 
 As to runtime complexity, we first need to address concerns similar to
 those raised in
 \cref{rem:timeass}:
 \begin{enumerate}[(i)]
   \item
-    ad tour reconstruction: potentially reversing and merging of tours
-    should not be considered a constant time operation, but if we only
-    reconstruct the optimum tour, is not a dominant complexity factor;
+    ad tour reconstruction:
+    even if we assume $\left|N\right| \leq M$,
+    potentially reversing and joining paths
+    in this step cannot be considered a constant time operation,
+    but can reasonably be assumed to contribute to time complexity
+    a polynomial factor only
+    (note that we only need to reconstruct the optimum tour);
   \item
     ad memory access:
-    while enumeration of {\defstyle node types} (explained below)
-    produces a collision free solution,
-    in practice we were able to achieve best results 
-    with polynomial hash function
-    \annotation{check implementation}
+    while enumeration of {\defstyle node types} (introduced below) produces
+    a polynomial time collision-free solution to this,
+    in practice we were able to achieve better results with polynomial hash function
+    \annotation{correct this!}
     \begin{align*}
       \left(m,N\right) \mapsto & mX^{2k+1}
         + \sum_{i=1}^k\left((m-a_i)X^{2k-i+1} + (m-b_i)X^{2k-i}\right),
@@ -1415,51 +1484,54 @@ those raised in
       & \quad X = \lceil\log_2 n\rceil \quad (N \text{\ as above}).
     \end{align*}
 \end{enumerate}
-
 We thus arrive at:
 \begin{corollary}
 \label{cor:sbtime}
   Strongly balanced TSP (with maximum node size $M$) is polynomially solvable.
 \end{corollary}
 \begin{proof}
-  Size of recursion tree corresponding to \cref{eq:sbdp} is
+  Note that with $\left|N\right| \leq M$, each of
+  $\operatorname{add}^\prime$, $\operatorname{append}^\prime$,
+  $\operatorname{merge}^\prime$ can be considered constant time
+  operation.
+  Seeing how size of recursion tree corresponding to \cref{eq:sbdp} is
   necessarily limited by $\mathcal{O}\left(n^{2M+1}\right)$,
-  and memoization technique as used in proof of \cref{cor:pyrtime}
-  yields the result.
+  memoized computation technique as seen in proof of \cref{cor:pyrtime}
+  then yields the result.
 \end{proof}
-
-\begin{figure}[htb]
-  \centering
-  \makebox[\textwidth][c]{%
-    \includegraphics[width=1.21\textwidth]{../plot/build/trace_bal.pdf}
-  }
-  \caption{Strongly balanced TSP: recursion tree ($M=2,n=8$).}
-  \label{fig:sbtrace}
-\end{figure}
-
 
 \subsection{Strongly balanced tours and linear time conjecture}
 
 It is not impossible that strongly balanced recursion tree as presented
-here grows in size only linearly with $n$.
+here grows in size only linearly with $n$ --- which, lifting out the tour
+reconstruction step, would make time complexity of our solution to strongly
+balanced TSP linear.
 
-Consider the map
+To arrive at this, consider the map
 \[
   \chi : \left(m,N\right) \mapsto \left\{\left\{m-a_i,m-b_i\right\} \mid i = 1,\ldots,k \right\},
 \]
 where $\left(m,N\right)$ is a node of the recursion tree as defined in \cref{prop:sball}
 (for such a node, we call $\chi\left(m,N\right)$ its {\defstyle type}).
-We recognize two points:
+We recognize following crucial points:
 \begin{itemize}
   \item
-    if number of different node types in the above recursion tree happens
-    to be bound from above by some constant K, then the size of the tree is
-    bound by $nK$ and hence lies in $\mathcal{O}\left(n\right)$;
+    the correspondence between $\left(m,N\right)$ and $(m,\chi\left(m,N)\right)$ is trivial;
+    hence, if the number of different node types in the above recursion tree happens
+    to be bounded from above by some constant K, then the size of the tree is
+    bounded by $nK = \mathcal{O}\left(n\right)$;
   \item
-    \annotation{prove second point}
-    if, for some node size bound $M$, after having added next city in the
+    while descending the recursion tree, we are adding cities in increasing order;
+    therefore (as is quickly verified) each of
+    $\chi \circ \operatorname{add}^\prime$,
+    $\chi \circ \operatorname{append}^\prime$,
+    $\chi \circ \operatorname{merge}^\prime$,
+    evaluated at $\left(N,m\right)$, can be written in terms of $\chi\left(N\right)$ only
+    and does not depend on $m$;
+  \item
+    hence, if, for some node size bound $M$, after adding next city in the
     construction of the tree in question, the number of different node
-    types did not increase, then the set of reachable node types has
+    types did not increase, then the set of node types has
     reached a fixed point relative to expansion through all of
     $\operatorname{add}^*, \operatorname{append}^*,
     \operatorname{merge}^*$, i.e.\ the above holds true for given $M$.
@@ -1467,16 +1539,10 @@ We recognize two points:
 
 While we are not aware of a general proof of above conjecture, we have been
 able to confirm it by having calculated the number of different node types
-for $M$ between $1$ and $6$, which are presented in \cref{tbl:nodeTypes}
+for values of $M$ up to $6$, which are presented in \cref{tbl:nodeTypes}
 --- and while this shows linear growth in size for given values of $M$, the
 growth behaviour of the constant $K$ does seem somewhat intimidating, and
 incidentally also mirrors the exact behaviour we encountered in practice.
-
-\setlength{\aboverulesep}{0pt}
-\setlength{\belowrulesep}{0pt}
-\renewcommand{\tabcolsep}{9pt}
-\setlength{\extrarowheight}{1.1ex}
-\newcolumntype{g}{>{\columncolor{Gray}}c}
 
 \begin{table}[htb]
 \centering
@@ -1490,15 +1556,16 @@ incidentally also mirrors the exact behaviour we encountered in practice.
           after row={\midrule}
         },
         display columns/0/.style={%
-          column name={\bfseries maximum node size},
+          column name={\bfseries node size limit $M$},
           column type={g}
         },
         display columns/1/.style={%
+          string type,
           column name={\bfseries number of node types},
-          column type={r}
+          column type={S}
         },
         display columns/2/.style={%
-          column name={\bfseries fixed point at depth},
+          column name={\bfseries $m$ for which fixed point was reached},
           column type={g}
         },
         every last row/.style={after row=\bottomrule},
@@ -1535,10 +1602,13 @@ search can be achieved via
   \mathcal{F}\left(
     \left<\left( 1\;2\;\cdots\;n\right)\right>,
     \operatorname{Pyr}_n
-  \right)
+  \right),
 \]
+\annotation{Add to implementation description:
+  since we have not yet found good flower, our implementation
+  does not even precompute $ST$ as a set but iterates over elements of $S$.}
 for strongly balanced tours such a set is not so easy to find.
-In our tests we have used
+In our tests we have not been able to improve on
 \[
   \mathcal{F}\left(
   \left<\left( 1\;2\;\cdots\;n\right)\right>
@@ -1548,11 +1618,12 @@ In our tests we have used
     %\end{pmatrix},
     \left(\ldots , 5, 3, 1, 2, 4, \ldots\right),
     \operatorname{SBal_n^M}
-  \right).
+  \right)
 \]
+significantly.
 
 In our implementation we sometimes refer to permutations from the set $S$ above
-as {\defstyle rotations} of set $T$.
+as {\defstyle rotations} of $T$.
 We also define therein a version of iterated local search which we call
 {\defstyle adaptive}, where we increase the number of considered permutations
 from $S$ whenever a stale iteration is reached.

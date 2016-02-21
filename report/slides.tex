@@ -548,8 +548,9 @@
       \begin{quote}
       {\itshape
         a minimum cost set of paths
-        (through all cities larger than $m$)
-        with end points given by the sets $\left\{a_i,b_i\right\}$
+        through all cities larger than $m$ and all cities $a_i$,$b_i$,
+        with end points given by the non-singleton sets
+        $\left\{a_i,b_i\right\}$,
         %belonging to a single element of $\mathcal{B}_n$
         %all reachable through a single $\operatorname{add}$, $\operatorname{append},$
         %or $\operatorname{merge}$ of $m+1$,
@@ -586,7 +587,8 @@
     \mapsto
      \left\{\left\{m-a_i,m-b_i\right\}\right\}.
    \end{equation}
-   \eqitspace%
+   %\eqitspace%
+   when evaluated along recursion tree: not dependent on $m$!
    \item
    Conjecture: number of node types in recursion tree limited
    $\rightarrow \; \mathcal{O}\left(n\right)$ time.
