@@ -1085,7 +1085,7 @@ is visited no more than once, we intuitively arrive at following result:
 \begin{corollary}
 \label{cor:pyrtime}
   Under assumptions made in \cref{rem:timeass},
-  pyramidal TSP is polynomially solvable
+  pyramidal TSP is polynomially solvable.
 \end{corollary}
 \begin{proof}
   Consider $\widehat{\Phi}_C\left((i,j),\cdot\right)$ as defined in \cref{prop:pyrmem}.
@@ -1190,9 +1190,9 @@ environment --- i.e.\ some mutable state).
   point, only noting that this is equivalent to breadth-first search over
   the recursion tree.
 
-  It should also be noted that the tree size can be halved if we
-  restrict ourselves to symmetric matrices in pyramidal TSP ---
-  as can be seen in \cref{fig:pyrstrace}.
+  It should also be noted that the tree size can be halved 
+  (as shown in \cref{fig:pyrstrace})
+  if we restrict ourselves to symmetric matrices in pyramidal TSP.
 \end{remark}
 
 \begin{figure}[hbt]
@@ -1286,7 +1286,7 @@ $\mathcal{B}_m$ contains simple disjoint paths over $\mathcal{P}_m$ which
 together contain all cities in $\mathcal{N}_m$, and $m_i = m_i^\prime$ above is
 only possible where $\pi_i = (m_i)$, thus making following evident:
 \begin{remark}
-  Strongly balanced tours, per \cref{def:sbtour},
+  Strongly balanced tours, as introduced in \cref{def:sbtour},
   are in fact elements of $\mathcal{T}_n$.
 \end{remark}
 
@@ -1301,14 +1301,15 @@ only possible where $\pi_i = (m_i)$, thus making following evident:
  \label{fig:sbopt}
 \end{figure}
 
-While the above construction may seem somewhat contrived, strongly balanced tours
-represent a variation on so called {\defstyle balanced tours}, which contain a solution
-to {\defstyle Relaxed Supnick TSP} ({\defstyle RS-TSP}), which had been shown to be NP-hard.
+Though the above construction may seem somewhat contrived, elements thereby
+created do have roots in combinatorial optimization --- they represent a
+variation on so called {\defstyle balanced tours}, which contain a solution
+to (shown to be NP-hard) {\defstyle Relaxed Supnick TSP} ({\defstyle
+  RS-TSP}).
 \annotation{Citation!}
-
-While strongly balanced tours may lack a nice visual property similar to
-pyramidal tours, the neighbourhood they represent is certainly no less
-interesting.
+And while strongly balanced tours may lack a nice visual description
+comparable to that of pyramidal tours, the neighbourhood they represent is
+certainly no less interesting.
 
 \begin{define}
 For $M \in \mathbb{N}$, we define $\operatorname{SBal}_n^M$ to be the set of all
