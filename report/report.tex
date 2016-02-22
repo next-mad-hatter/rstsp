@@ -21,7 +21,7 @@
 \setsansfont[Numbers=OldStyle]{CMU Sans Serif}
 %\setsansfont{Droid Sans}
 %\setmonofont{CMU Typewriter Text}
-\setmonofont[Scale=0.9]{Droid Sans Mono}
+\setmonofont[Scale=0.8]{Droid Sans Mono}
 %\setmonofont{DejaVu Sans Mono}
 \newfontfamily\CodeFont[Scale=0.85]{DejaVu Sans Mono}
 %\newfontfamily\CodeFont[Scale=0.85]{Consolas}
@@ -198,7 +198,7 @@
 \selectlanguage{english}
 
 \title{Two Exponential Neighbourhoods}
-\subtitle{Pyramidal and strongly balanced traveling salesman problem and related heuristics --- theory and implementation}
+\subtitle{Pyramidal and strongly balanced TSP and related heuristics --- theory and implementation}
 % FIXME: supervisor format ?
 % FIXME: pic / multitoc ?
 % FIXME: twosided ?
@@ -208,11 +208,25 @@
 \maketitle
 
 \begin{abstract}
-  TODO\@.  Also, this is bachelor project.
-  Pyramidal tours constitute a well known polynomially solvable case of TSP\@.
-  In this paper we present a first implementation of a related tours family,
-  show extension of both solutions to local search heuristics
-  and compare results thus obtained.
+
+  Dynamic programming delivers solutions to many problems in combinatorial
+  optimization, and the traveling salesman problem as well as its special
+  cases --- where dynamic programming can often be applied effectively ---
+  are no exception.
+
+  Here we want to describe the general procedure of constructing, given a
+  description of such a solution, a working implementation thereof as well
+  as of a corresponding iterative heuristic.
+
+  We then proceed to provide such implementation for two special cases of
+  the TSP of which the first is widely known, albeit not its use as a
+  heuristic method, and the second had yet at all to see a working
+  implementation --- which could be seen as main incentive behind this
+  project --- and present results thus obtained.
+
+  This work was written as part of a bachelor degree project at Graz
+  University of Technology.
+
 \end{abstract}
 
 \thispagestyle{empty}
@@ -235,7 +249,7 @@
 \clearpage
 
 \section{Introduction}
-\dictum[Sherlock Holmes]{Nothing clears up a case so much as stating it to another person.}
+\dictum[Sherlock Holmes, «The Memoirs of Sherlock Holmes», Arthur Conan Doyle]{Nothing clears up a case so much as stating it to another person.}
 \vspace{0.87em}
 
 The {\defstyle traveling salesman problem (TSP)} can be colloquially stated as follows:
@@ -253,8 +267,8 @@ NP-hard \cite{Karp72}; hence, one is interested in efficiently solvable
 cases as well as useful heuristics, of which a good number exists.
 
 In this paper we look at two exponential sets of feasible solutions over
-which the TSP can be solved in polynomial time and extension of these to
-iterative heuristics.  For this, we need to establish some basic
+which the TSP can be solved in polynomial time as well as at extension
+of these to iterative heuristics.  For this, we need to establish some basic
 definitions first.
 
 \subsection{Basic definitions and notation}
@@ -826,7 +840,6 @@ can be taken to reflect inner workings of our code.
 
 \subsection{Pyramidal tours}
 
-\annotation{Bibliography: TODO.}
 Pyramidal TSP, as seen in, e.g.\ \cite{burkard,gilmore}, yields a
 classic example of application of dynamic programming and can be defined as
 follows:
@@ -1655,7 +1668,7 @@ as well as practical test results.
 \subsection{Key features}
 
 Our choice of programming language fell on Standard ML, which we feel
-strikes the right (for this project) balance between expresiveness and
+strikes the right (for this project) balance between expressiveness and
 convenience and, while being not too low level language, can still offer
 effective execution speed.
 
@@ -1741,8 +1754,8 @@ time was the bottleneck factor in our tests.
 
 \subsection{Tour benchmarks}
 
-Finally we present, in \cref{fig:benchTSPLIB}\footnote{%
-  Here, {\defstyle flipflop} refers to method of alternating,
+Finally, we present, in \cref{fig:benchTSPLIB}\footnote{%
+  Here, {\defstyle flipflop} refers to method of alternating
   between pyramidal (of smaller flower) and strongly balanced search.
 },
 \begin{enumerate}[(i)]
@@ -1758,8 +1771,8 @@ Finally we present, in \cref{fig:benchTSPLIB}\footnote{%
 \end{enumerate}
 From what little testing this represents, we can reasonably conclude that
 \begin{itemize}
-  \item pyramidal ILS indeed represents a viable heuristic for the TSP;
-  \item strongly balanced tours much less do so;
+  \item pyramidal tours yield a viable heuristic for the TSP;
+  \item strongly balanced tours not so readily do so;
     it remains to be seen if a good extension (e.g.\ via a flower)
     or a special case where this neighbourhood yields better results
     exist.
@@ -1768,7 +1781,7 @@ From what little testing this represents, we can reasonably conclude that
 \begin{figure}[htbp]
 \thisfloatpagestyle{empty}
 \null\hfill%
-\subfloat[Tour cost comparison as observed on random instances.
+\subfloat[Tour cost comparison over random instances.
   Here, $r$ denotes maximum number of rotations taken from the
   flower, $i$ --- maximum number of iterations in ILS.
 ]{%
@@ -1792,14 +1805,15 @@ From what little testing this represents, we can reasonably conclude that
 \dictum[Arthur Bloch]{Enough research will tend to support your conclusions.}
 \vspace{0.87em}
 
-\annotation{Bäh. TODO + abstract}
-We have discussed general formal condiderations for application of dynamic
-programming solutions to the traveling salesman problem,
-which we then developed an implementation of.
-
-The latter, as we have successfully demonstrated herein, is general enough
-to be easily extended to other neighbourhoods and efficient enough for
-study of new such neighbourhoods or combinations\footnote{%
+Having described application of dynamic programming solutions to the
+traveling salesman problem and their extension from neighbourhoods to
+iterative heuristics, as well as two such neighbourhoods,
+we have provided, for said two neighbourhoods,
+a working implementation which
+%closely follows our discussion and
+is general enough to be easily
+extended to other neighbourhoods and efficient enough for study of new such
+solutions or combinations\footnote{%
   via shared library interface or standalone executable,
   which provides possibility for choice of starting tour.
 }
@@ -1833,7 +1847,7 @@ explore in more detail:
     such as {\defstyle tuple spaces} or
     lightweight (a)synchronous message passing frameworks
     and their applicability to local search as seen here ---
-    naïve paralellization does not seem to apply well to the
+    naïve parallelization does not seem to apply well to the
     recursion trees we presented;
   \item
     \ldots
