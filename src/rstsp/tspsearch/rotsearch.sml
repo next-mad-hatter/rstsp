@@ -10,6 +10,9 @@
  * up to max_perm(n) permutations of the TSP -- enumerated by the permute function --
  * in addition to canonical ordering.
  *
+ * We shall call the permutations which define the flower "rotations",
+ * hence the functor name.
+ *
  * TODO: return rotations' results instead of flushing them to stdout.
  *)
 functor RotSearchFn(X : sig
@@ -24,7 +27,7 @@ struct
   structure S = X.Search
   structure U = Utils
 
-  structure Len = S.Len
+  structure Cost = S.Cost
 
   type tour = word vector
 
@@ -66,12 +69,12 @@ struct
           let
             val sol' = solve size dist rot opts
             val _ = if rot = 0w0 then U.printErr ("Permuting: ") else ()
-            val _ = U.printErr ((Len.toString o #1 o valOf) sol')
+            val _ = U.printErr ((Cost.toString o #1 o valOf) sol')
             val _ = U.printErr " "
             val sol'' = case (sol, sol') of
                           (NONE, _) => sol'
                         | (_, NONE) => sol
-                        | (SOME (l,_), SOME (l',_)) => if Len.compare(l,l') = LESS then sol else sol'
+                        | (SOME (l,_), SOME (l',_)) => if Cost.compare(l,l') = LESS then sol else sol'
             val rot' = if rot = 0w0 then 0w1+offset else rot+0w1
           in
             iter size dist rot' offset max_rot sol'' opts

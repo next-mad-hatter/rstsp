@@ -39,22 +39,22 @@ struct
 
 end
 
-signature TSP_LENGTH =
+signature TSP_COST =
 sig
 
   structure Dist : DISTANCE
 
-  val tourLength : Dist.dist -> word vector -> Dist.Num.num
+  val tourCost : Dist.dist -> word vector -> Dist.Num.num
 
 end
 
-functor TSPLengthFn(D : DISTANCE) : TSP_LENGTH =
+functor TSPCostFn(D : DISTANCE) : TSP_COST =
 struct
 
   structure Dist = D
 
-  fun tourLength dist v =
-    if Vector.length v < 2 then raise Fail "Trivial paths have no length"
+  fun tourCost dist v =
+    if Vector.length v < 2 then raise Fail "Trivial paths cannot have a cost"
     else
       #2 (Vector.foldl
         (fn (q,(p,s)) =>

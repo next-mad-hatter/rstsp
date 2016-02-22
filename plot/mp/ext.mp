@@ -27,8 +27,10 @@ enddef;
 beginfig(1)
   interim ahlength := 3bp;
   interim ahangle := 50;
-  %796045
-  drawoptions(withcolor (121/255,96/255,69/255));
+  if outputformat = "eps":
+    %796045
+    drawoptions(withcolor (121/255,96/255,69/255));
+  fi;
 
   numeric u;
   u = 2.69mm;

@@ -5,6 +5,14 @@
  * $Revision$
  *)
 
+(**
+ * For SML/NJ, issue
+ *     use "./rstsp/rstsp-smlnj.sml";
+ * first, For Poly/ML:
+ *     use "./rstsp/rstsp-polyml.sml";
+ * .
+ *)
+
 open Utils
 
 structure NSrch : SEARCHES = DefaultSearches(IntNum)
@@ -27,7 +35,7 @@ val data = case inst of
              EXPLICIT_INSTANCE v => v
            | EUCLIDEAN_2D_INSTANCE (xs,ys) => raise Fail "not here"
            | EUCLIDEAN_2D_CEIL_INSTANCE (xs,ys) => raise Fail "not here"
-structure LenCheck = TSPLengthFn(Dist)
+structure CostCheck = TSPCostFn(Dist)
 
 fun main () =
 let
@@ -38,7 +46,7 @@ let
   val (sol_len, sol_fn) = valOf sol'
   val sol = sol_fn ()
   val _ = print ("*********************************\n")
-  val _ = print ("   Solution:  " ^ (Search.tourToString sol) ^ "\n")
+  val _ = print ("  Solution:  " ^ (Search.tourToString sol) ^ "\n")
   val _ = case stats of
             NONE => ()
           | SOME (nn, nk, hs) => (
@@ -49,12 +57,12 @@ let
   val _ =
     let
       val sol_vec = Search.tourToVector sol
-      val len_val = Dist.Num.compare(sol_len, LenCheck.tourLength data sol_vec) = EQUAL
+      val len_val = Dist.Num.compare(sol_len, CostCheck.tourCost data sol_vec) = EQUAL
       val sol_val = TSPUtils.validTour size sol_vec
     in
-      print ("    Solution valid:  " ^ (if sol_val andalso len_val then "yes" else "NO!") ^ "\n")
+      print ("  Solution valid:  " ^ (if sol_val andalso len_val then "yes" else "NO!") ^ "\n")
     end
-  val _ = print ("Tour Length:  " ^ (Dist.Num.toString sol_len) ^ "\n")
+  val _ = print ("  Tour cost:  " ^ (Dist.Num.toString sol_len) ^ "\n")
   val _ = print ("*********************************\n")
 in
   ()

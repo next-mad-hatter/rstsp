@@ -13,9 +13,9 @@ struct
   type node = Node.node
   type tour = Tour.tour
   open Thread
-  structure Len = N
+  structure Cost = N
 
-  datatype status = DONE of (Len.num * (unit -> tour)) option
+  datatype status = DONE of (Cost.num * (unit -> tour)) option
                   | PENDING of ConditionVar.conditionVar
 
   fun flatCoor (row:word,col:word) =

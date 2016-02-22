@@ -11,7 +11,7 @@ struct
   open G
   type node = G.Node.node
   type tour = G.Tour.tour
-  structure Len = G.Len
+  structure Cost = G.Cost
   open Thread
 
   local
@@ -25,7 +25,7 @@ struct
     structure KeySet: ORD_SET = SplaySetFn(MemKey)
   end
 
-  datatype status = DONE of (Len.num * (unit -> tour)) option
+  datatype status = DONE of (Cost.num * (unit -> tour)) option
                   | PENDING of ConditionVar.conditionVar
 
   type store = (Mutex.mutex * status option ref) MemMap.map ref * Mutex.mutex

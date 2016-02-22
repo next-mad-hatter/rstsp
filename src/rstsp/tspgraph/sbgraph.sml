@@ -58,7 +58,8 @@ struct
   let
     val lg = (Real.fromInt o Word.toInt) size;
     val lg' = (Math.ln lg) / (Math.ln 2.0)
-    val base = (Word.fromInt o Real.ceil o Math.pow ) (2.0,Real.realCeil lg')
+    (* val base = (Word.fromInt o Real.ceil o Math.pow ) (2.0,Real.realCeil lg') *)
+    val base = (Word.fromInt o Real.ceil) lg'
     val ps = WordPairSet.listItems ints
     val bs = ListPair.map (fn ((x,y),(x',_)) => (level-x+x',level-y)) (ps, (0w0,0w0)::ps)
     val flat = (foldl (fn ((x,y), l) => y::x::l) []) bs
@@ -197,15 +198,15 @@ struct
 
   structure Node = SBNode
   structure Tour = SBTour
-  structure Len = N
+  structure Cost = N
 
   type node = SBNode.node
   type tour = SBTour.tour
 
   val root = (0w0, HMAP (WordPairSet.empty, WordSet.empty, WordMap.empty))
 
-  datatype descent = TERM of (Len.num * (unit -> tour)) option
-                   | DESC of (node * (Len.num -> Len.num)
+  datatype descent = TERM of (Cost.num * (unit -> tour)) option
+                   | DESC of (node * (Cost.num -> Cost.num)
                                    * ((unit -> tour) -> (unit -> tour))) list
 
   fun threeMins ints = let
@@ -228,7 +229,7 @@ struct
   in (
     (* NB: intervals are sorted *)
     (level+0w1, Node.insertInterval (Node.removeInterval (ints, old), (#2 old, level))),
-    fn d => Len.+ (d, dist (min1, level)),
+    fn d => Cost.+ (d, dist (min1, level)),
     fn t => Lazy.susp (fn () => Tour.insertPath (Vector.fromList [min1,level]) (t ()))
     )
   end
@@ -242,7 +243,7 @@ struct
     val ints' = Node.insertInterval (foldl Node.removeInterval' ints old, orderInterval (a,b))
   in (
     (level+0w1, ints'),
-    fn d => Len.+(d, Len.+(dist (min1,level), dist (level,min2))),
+    fn d => Cost.+(d, Cost.+(dist (min1,level), dist (level,min2))),
     fn t => Lazy.susp (fn () => Tour.insertPath (Vector.fromList [min1, level, min2]) (t ()))
     )
   end

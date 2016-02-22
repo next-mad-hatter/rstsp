@@ -18,7 +18,7 @@ struct
 
   structure S = P.Search
 
-  structure Len = S.Len
+  structure Cost = S.Cost
 
   type tour = word vector
 
@@ -36,7 +36,7 @@ struct
         in
           case res of
             NONE => (fn () => (NONE, stats))
-          | SOME (len,t) => (fn () => (SOME (len, Lazy.susp (fn () => S.tourToVector (t ()))), stats))
+          | SOME (cost,t) => (fn () => (SOME (cost, Lazy.susp (fn () => S.tourToVector (t ()))), stats))
         end
     | SOME tour' =>
         let
@@ -47,7 +47,7 @@ struct
         in
           case res of
             NONE => (fn () => (NONE, stats))
-          | SOME (len,t) => (fn () => (SOME (len, Lazy.susp (fn () => Vector.map lookup (S.tourToVector (t ())))), stats))
+          | SOME (cost,t) => (fn () => (SOME (cost, Lazy.susp (fn () => Vector.map lookup (S.tourToVector (t ())))), stats))
         end
 
 end

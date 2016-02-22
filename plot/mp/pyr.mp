@@ -25,11 +25,14 @@ enddef;
 
 beginfig(1)
   numeric u;
-  u = 2.71mm;
-  %796045
-  drawoptions(withcolor (121/255,96/255,69/255));
+  u = 2.81mm;
+  if outputformat="eps":
+    %796045
+    drawoptions(withcolor (121/255,96/255,69/255));
+  fi;
   interim ahlength := 7bp;
   interim ahangle := 30;
+
   pair p[];
   p1 = (0,0); p2 = (10u,0); p3 = (20u,0); p4 = (30u,0); p5 = (40u,0);
   pair c[];
@@ -49,9 +52,12 @@ endfig;
 
 beginfig(2)
   numeric u;
-  u = 1.69mm;
-  %796045
-  drawoptions(withcolor (121/255,96/255,69/255));
+  u = 1.83mm;
+  if outputformat="eps":
+    %796045
+    drawoptions(withcolor (121/255,96/255,69/255));
+  fi;
+
   z1 = (0,3u); z2 = (8u,6u); z3 = (16u,12u); z4 = (24u,15u); z5 = (32u,9u); z6 = (40u,3u);
   for i = 1 upto 6:
     xdotlabel.top(decimal(y[i]/3u), z[i]) withpen pencircle scaled 3.14;
@@ -65,11 +71,13 @@ endfig;
 
 beginfig(3)
   numeric u;
-  u = 1.69mm;
+  u = 1.83mm;
   dx = 6u;
   dy = 1.7u;
-  %796045
-  drawoptions(withcolor (121/255,96/255,69/255));
+  if outputformat="eps":
+    %796045
+    drawoptions(withcolor (121/255,96/255,69/255));
+  fi;
   for i = 0 upto 7:
     z[i] = (i * dx, i * dy);
   endfor

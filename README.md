@@ -9,14 +9,14 @@
    ```
            ./bin/build.sh
    ```
-   requires a working `mlton` installation.  Built executables and libraries
-   will be put into `./src/rstsp/build/`.
+   requires a working `mlton` installation (as well as a Bourne-Shell compatible interpreter).
+   Built executables and libraries will be put into `./src/rstsp/build/`.
 
    Building mingw binaries requires a suitable (i.e. featuring gmp)
    cross-compiler environment.
 
-   If you don't have `exuberant-ctags` installed, simply ignore the ctags error
-   message.
+   If you don't have `exuberant-ctags` installed,
+   you can simply ignore the ctags error message.
 
    For more details, see `./src/rstsp/build_*.sh` and `./src/rstsp/README.md`.
 
@@ -52,7 +52,9 @@
    During its first run, this script will also generate random test data,
    which needs significant chunk of space -- about 200MB right now.
 
-   Also takes some time (at time of writing, about 50 minutes on our machine)
+   Also takes some time (at time of writing, not counting random data generation,
+   this amounts to about two hours on our machine for both mlton- and polyml-compiled code ---
+   you might want to adjust the value of MAX_PROBS_PER_DATASET in `./test/mk_batches_tsplib_small.rb`)
    and memory (sometimes well over 3GB in our tests).
 
 ### Plotting test results
@@ -61,15 +63,17 @@
    ```
           ./bin/plot.sh
    ```
-   will plot results of previous test run (requires `ruby`, `gnuplot`, `matplotlib`, `pandas`, `seaborn`, `ghostscript`, `metapost`, `imagemagick` and probably more).
+   will plot results of previous test run (requires `ruby`, `gnuplot`, `matplotlib`, `pandas`, `seaborn`, `ghostscript`, `metapost`, `graphviz` and probably more).
    Generated plots will be put to `./plot/build` folder.
 
-### Generating report
+### Generating report and slides
 
    Having created the plots, run
    ```
    ./report/build.sh
    ```
+   , which requires a sufficiently modern (featuring e.g. `lualatex`)
+   LaTeX distribution as well as `ghostscript`.
 
 ### Packaging
 

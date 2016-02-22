@@ -7,7 +7,7 @@
 
 functor ThreadedSearchFn (X: sig
   structure Graph: TSP_GRAPH
-  structure Store: TSP_STORE where type tour = Graph.tour where type node = Graph.node where type Len.num = Graph.Len.num
+  structure Store: TSP_STORE where type tour = Graph.tour where type node = Graph.node where type Cost.num = Graph.Cost.num
 end) : TSP_SEARCH =
 struct
 
@@ -84,7 +84,7 @@ struct
                      let
                        val d'' = dist_fn d
                      in
-                       case Len.compare (d', d'') of
+                       case Cost.compare (d', d'') of
                          GREATER => SOME (d'', tour_fn t)
                        | _ => SOME (d', t')
                      end

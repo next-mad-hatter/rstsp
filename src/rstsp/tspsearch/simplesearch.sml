@@ -18,7 +18,7 @@ struct
   open TSPTypes
   datatype descent = datatype G.descent
 
-  structure Len = G.Len
+  structure Cost = G.Cost
 
   type tour = G.tour
 
@@ -73,7 +73,7 @@ struct
                              let
                                val d'' = dist_fn d
                              in
-                               case Len.compare (d', d'') of
+                               case Cost.compare (d', d'') of
                                  GREATER => SOME (d'', tour_fn t)
                                | _ => old_sol
                              end
@@ -115,7 +115,7 @@ struct
     (
       let
         val hasher = N.toHash size
-        val memo: (N.key, (Len.num * (unit -> T.tour)) option) HashTable.hash_table =
+        val memo: (N.key, (Cost.num * (unit -> T.tour)) option) HashTable.hash_table =
           HashTable.mkTable (hasher, N.eqKeys) (Word.toInt (G.HTSize (size,options)), HTMiss)
         val res = trav memo G.root
         val _ = close_log ()

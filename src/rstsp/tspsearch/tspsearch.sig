@@ -13,7 +13,7 @@
  *)
 signature TSP_SEARCH = sig
 
-  structure Len : NUMERIC
+  structure Cost : NUMERIC
 
   type tour
 
@@ -29,7 +29,7 @@ signature TSP_SEARCH = sig
    * returns the traversal function, which, along the tour, can also return
    * statistics such as number of stored nodes, seen node types & unique hashes count.
    *)
-  val search : word -> (word * word -> Len.num) -> string option -> bool -> optional_params ->
-               unit -> ((Len.num * (unit -> tour)) option * (word * word * word) option)
+  val search : word -> (word * word -> Cost.num) -> string option -> bool -> optional_params ->
+               unit -> ((Cost.num * (unit -> tour)) option * (word * word * word) option)
 
 end

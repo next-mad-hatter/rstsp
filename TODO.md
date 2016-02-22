@@ -13,20 +13,17 @@
     - script via cmake ?
     - report: "build what" option
 * Report:
-    - TUG logo
-    - authors check
-    - writeup (see FIXMEs)
+    - authors format check
+    - TUG logo ?
+    - index ?
     - compute tree width (bfs) for info ?
-    - plots: palette dependant on slides/report inclusion
     - sml support: can the pandoc -> rst way be pretty-fixed?
+    - metapost plots: parse outputtemplate instead of fake outputformat
+    - metapost plots: include directly in report?
 * Slides:
-    - throw out things ?
-    - plots: font shapes ?
-    - rerun tests with proper cooling
-    - add overlays
-    - handouts + notes ?
-    - plots: color dependent on handout/present mode
-    - tug: aspect ratio, vga/dp (,wlan) available ?
+    - plots: make color dependent on handout/present mode
+    - persistent handouts/notes build ?
+    - add overlays ?
 * Research:
     - sb : better permutations?
     - study iter convergence
@@ -36,7 +33,7 @@
     - generator sandbox
 * Testing:
     - test on rs instances
-    - tsplib med/large instances
+    - benchmark more/larger tsplib/vlsi/... instances
     - implement -> test 3d-euclidean/manhattan instances
     - implement -> test atsp instances
     - combine trampoline w/ other heuristics ?
@@ -58,14 +55,11 @@
     - do we need merge xscales script for gnuplot?
     - sometimes: test scripts in fresh clone
 * Source:
-    - dotlog: invalid dir -> catch exception
-    - pyrgraph: test & cleanup symmetric case
-    - default searches: cleanup sb permutations
+    - precompute flowers (rotations set)
     - implement bfs
+    - dotlog: invalid dir -> catch exception
     - make dotfile optional parameter to simplesearch (=dfs) & bfs
     - rot search: -a = -r -> ?
-    - belperm: dedicated implementation ?
-    - balanced: dedicated implementation ?
     - implement atsp ?
     - flip flop search: ad -> ad+full (min_rot option)
     - profile
@@ -81,7 +75,7 @@
     - tsplib input: allow for empty & comment lines in data section
     - branch cutting ?
     - options parser: http://mlton.org/FunctionalRecordUpdate
-    - librstsp: adaptive search rate & permutations as function ptrs ?
+    - librstsp: adaptive search flower growth rate & permutations as function ptrs ?
     - shared lib interface: search transforms worth memory management hassle ?
     - try threaded storage + simplesearch
     - threaded hashtable store
@@ -101,6 +95,8 @@
     - concurrent performance/model ?
     - resurrect CML version ?
     - moscowml support ?
+    - belperm: dedicated implementation ?
+    - balanced: dedicated implementation for each maximum node size M?
 * Other:
     - create better vim sml indent mode ?
     - concurrency: manticore/jocaml/mythryl/aliceml/clojure/akka,

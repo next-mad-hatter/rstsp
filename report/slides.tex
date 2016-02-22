@@ -200,10 +200,11 @@
   \eqitspace%
   \item
   Traveling Salesman Problem:
+  given $M \subseteq \mathbb{R}^{n \times n}, T \subseteq \mathcal{T}_n, \; T \neq \varnothing$,
   \begin{equation}
-    \operatorname{TSP}_{M,T} : M \to T, \; C \mapsto \argmin_{\tau \in T} \omega_C\left(\tau\right),
+    \operatorname{TSP}_{M,T} : M \to T, \; C \mapsto \argmin_{\tau \in T} \omega_C\left(\tau\right);
   \end{equation}
-  given $M \subseteq \mathbb{R}^{n \times n}, T \subseteq \mathcal{T}_n, \; T \neq \varnothing$.
+  $\argmin$ tour-valued, well-defined via \emph{some} total order on $\mathcal{T}_n$ (implicit argument).
   \item
   Variations:
   \begin{itemize}
@@ -320,7 +321,7 @@
   $\tau^\ast = \left(1, 2, \ldots, n, 1\right)$.
   \begin{figure}[H]
     \centering
-    \includegraphics[width=0.48\textwidth]{../plot/build/pyr.2}
+    \includegraphics[width=0.42\textwidth]{../plot/build/pyr-2.eps}
     \caption{%
       For a pyramidal tour $\tau$,
       connected plot of $\sigma_\tau$'s
@@ -333,7 +334,7 @@
 \begin{slide}[toc=]{Pyramidal Tours: Recurse!}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=0.48\textwidth]{../plot/build/pyr.3}
+    \includegraphics[width=0.42\textwidth]{../plot/build/pyr-3.eps}
     \caption{$\operatorname{Pyr}_n$: city-at-a-time construction.}
   \end{figure}
 \begin{itemize}
@@ -523,7 +524,7 @@
 \begin{slide}[toc=]{Strongly Balanced Tours: Dynamic Programming Solution}
     \begin{figure}[H]
       \centering
-      \includegraphics[width=0.69\textwidth]{../plot/build/bal.1}
+      \includegraphics[width=0.63\textwidth]{../plot/build/bal-1.eps}
       \caption{
         Strongly balanced path construction options: choose $m$ to be adjacent to $m_1$, both $m_1$ and $m_2$, or none of the two.
        %For tours, we make the additional requirement for $n$ to be added to single paths only.
@@ -538,7 +539,7 @@
       \begin{equation}
       \left(m, \;
       \left\{\left\{a_i,b_i\right\} \mid i \in I\right\}\right)
-       \in \mathcal{N}_n \times 2^{\mathcal{N}_n}.
+       \in \mathcal{N}_n \times 2^{\mathcal{N}_n^2}.
       \end{equation}
       \eqitspace%
     \item
@@ -547,14 +548,15 @@
       \begin{quote}
       {\itshape
         a minimum cost set of paths
-        (through all cities larger than $m$)
-        with end points given by the sets $\left\{a_i,b_i\right\}$
+        through all cities larger than $m$ and all cities $a_i$,$b_i$,
+        with end points given by the non-singleton sets
+        $\left\{a_i,b_i\right\}$,
         %belonging to a single element of $\mathcal{B}_n$
         %all reachable through a single $\operatorname{add}$, $\operatorname{append},$
         %or $\operatorname{merge}$ of $m+1$,
         which, per path concatenation,
-        complements the corresponding element of $\mathcal{B}_m$ to a
-        single-path element of $\overline{\mathcal{B}_n}$.
+        complements the corresponding element of $\mathcal{B}_m$
+        to a tour corresponding to a singleton element of $\mathcal{B}_n$.
         %complements said sets (seen as paths) to a single cycle
         %and  subpaths of (can be extended to) a single strongly balanced tour.
       }
@@ -563,7 +565,8 @@
     \end{itemize}
     \eqitspace%
   \item
-    Number of intervals bounded by constant $M$ $\;\Rightarrow\; \mathcal{O}\left(n^{2M}\right)$ time complexity.
+    Number of intervals bounded by constant $M$ $\;\Rightarrow\;
+    \mathcal{O}\left(n^{2M+1}\right)$ time complexity.
   \end{itemize}
 \end{slide}
 
@@ -584,7 +587,8 @@
     \mapsto
      \left\{\left\{m-a_i,m-b_i\right\}\right\}.
    \end{equation}
-   \eqitspace%
+   %\eqitspace%
+   when evaluated along recursion tree: does not depend on $m$!
    \item
    Conjecture: number of node types in recursion tree limited
    $\rightarrow \; \mathcal{O}\left(n\right)$ time.
@@ -632,8 +636,6 @@
   \end{align}
   \eqitspace%
   \item
-  Tour $\tau^\prime \; \rightarrow$ permutation of cities, acts on tours via $\tau \mapsto \pi\left(\sigma_\tau \circ \sigma_{\tau^\prime}\right)$.
-  \item
     Tour sets as neighbourhoods:
     \begin{equation}
       \tau^\ast \in T \subseteq \mathcal{T}_n
@@ -649,7 +651,7 @@
   \vspace{-2mm}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\textwidth]{../plot/build/ext.1}
+    \includegraphics[width=0.45\textwidth]{../plot/build/ext-1.eps}
     \caption{%
       Tour sets as neighbourhoods:
       $\tau \in F_T\left(\tau\right) \; \forall \tau \in \mathcal{T}_n, \; F_T\left(\tau^\ast\right) = T$ hold true.
@@ -726,38 +728,38 @@
 \begin{slide}[toc=Benchmarks: Time]{Measured Time: Local Search}
   \begin{figure}[H]
     \centering
-      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_steady.ps}
+      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_steady.eps}
   \end{figure}
 \end{slide}
 \begin{slide}[toc=]{Measured Time: Local Search}
   \begin{figure}[H]
     \centering
-      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_fast.ps}
+      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_fast.eps}
   \end{figure}
 \end{slide}
 \begin{slide}[toc=]{Measured Time: Local Search}
   \begin{figure}[H]
     \centering
-      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_low.ps}
+      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_low.eps}
   \end{figure}
 \end{slide}
 \begin{slide}[toc=]{Local Search: Pyramidal vs S.\ B.\ Time}
   \begin{figure}[H]
     \centering
-      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_med.ps}
+      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_med.eps}
   \end{figure}
 \end{slide}
 \begin{slide}[toc=]{Local Search: Pyramidal vs S.\ B.\ Time}
   \begin{figure}[H]
     \centering
-      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_hi.ps}
+      \includegraphics[width=0.87\textwidth]{../plot/build/mlton_time_random_hi.eps}
   \end{figure}
 \end{slide}
 
 \begin{slide}[toc=Benchmarks: Solutions]{Tour Quality: Synthetic Results}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=0.86\textwidth]{../plot/build/random_val.ps}
+    \includegraphics[width=0.86\textwidth]{../plot/build/random_val.eps}
     \caption{Tour Quality: local search and heuristics.}
   \end{figure}
 \end{slide}
@@ -766,7 +768,7 @@
   \begin{figure}[H]
     \centering
     \includegraphics[width=0.74\textwidth]{../plot/build/tsplib_val.eps}
-    \caption{Benchmark: 14 TSPLIB instances, sizes $\leq 100$.}
+    \caption{Benchmark: 25 TSPLIB instances, sizes $\leq 130$.}
   \end{figure}
 \end{slide}
 
@@ -792,6 +794,7 @@
   Open Tasks:
     \begin{itemize}
       \item implement BFS
+      \item precompute flowers (guarantees uniqueness)
       \item generate \& benchmark RS-TSP instances;
       \item confirm complexity conjecture for larger sizes.
     \end{itemize}
