@@ -72,6 +72,7 @@
 \appto\endmplibcode{\endcenter}
 \usepackage{wrapfig}
 \usepackage{float}
+\usepackage{floatpag}
 \usepackage{subfig}
 \usepackage{sidecap}
 \usepackage[bottom]{footmisc}
@@ -184,8 +185,13 @@
 %\def\@endtheorem{\endtrivlist}%
 %\makeatother
 
+\usepackage{perpage}
+\MakePerPage{footnote}
+
 \let\defstyle\itshape
 %\def\defstyle{\itshape}
+
+\usepackage{pgfornament}
 
 \begin{document}
 
@@ -194,16 +200,15 @@
 \title{Two Exponential Neighbourhoods}
 \subtitle{Pyramidal and strongly balanced traveling salesman problem and related heuristics --- theory and implementation}
 % FIXME: supervisor format ?
-% FIXME: title pic / multitoc ?
-% FIXME: twosided / book format ?
+% FIXME: pic / multitoc ?
+% FIXME: twosided ?
 \input{authors.tex}
 \date{\today}
 
-% FIXME: titlepage / spacing ?
 \maketitle
 
-% FIXME: rewrite
 \begin{abstract}
+  TODO\@.  Also, this is bachelor project.
   Pyramidal tours constitute a well known polynomially solvable case of TSP\@.
   In this paper we present a first implementation of a related tours family,
   show extension of both solutions to local search heuristics
@@ -229,8 +234,9 @@
 \afterpage{\blankpage}
 \clearpage
 
-\dictum[Sherlock Holmes]{Nothing clears up a case so much as stating it to another person.}
 \section{Introduction}
+\dictum[Sherlock Holmes]{Nothing clears up a case so much as stating it to another person.}
+\vspace{0.87em}
 
 The {\defstyle traveling salesman problem (TSP)} can be colloquially stated as follows:
 \index{TSP|see{Traveling Salesman Problem}}
@@ -259,10 +265,10 @@ relevant to the task at hand --- which, for a problem as extensively studied
 as this one, results in a great number of common terms which from author to
 author can differ ever so slightly.
 
-\annotation{Description/motivation: TODO throughout document + abstract}
+%\annotation{Description/motivation: TODO throughout document + abstract}
 In what follows, our goal is to establish notation which can be easily
-interpreted as a (functional) computer program and thus help illustrate
-the internals of our code.
+interpreted as a (functional) computer program.
+%and thus help illustrate the internals of our code.
 
 \begin{define}[cities, paths and tours]
 Given some $n \in \mathbb{N} \left(n \geq 2\right)$,
@@ -452,7 +458,7 @@ and shall do so henceforth.
   on even more arguments (such as some probability distribution) ---
   still, this choice of representative is something we need to be aware of
   throughout, as it propagates to any construct using $\operatorname{tsp}$ ---
-  such as iterative methods we shall present herein.
+  such as iterative methods we shall present here.
 \end{remark}
 
 \subsection{Exponential neighbourhoods and local search}
@@ -496,19 +502,20 @@ following general definitions.
   (where time complexity is measured in relation to $n$).
 \end{define}
 
+Note how for any tour $\tau$ local search defines a map on $M$ via
+$C^\prime \mapsto l_{C^\prime}\left(\tau\right)$, which can also be seen as
+approximation of $\operatorname{tsp}_{M,\mathcal{T}_n}$.
+
 \begin{remark}
-  Not a universally common requirement, our reason to demand that
-  $F\left(\tau\right)$ include $\tau$ per definition
-  is to guarantee that for any tour $\tau$ and any cost matrix $C$,
+  Not a universally common requirement, our reason to demand in the
+  definition above that
+  $F\left(\tau\right)$ include $\tau$ is to guarantee
+  that for any tour $\tau$ and any cost matrix $C$,
   \[
     \omega_C\left(l_C\left(\tau\right)\right) \leq \omega_C\left(\tau\right).
   \]
 \end{remark}
-
-Also note how for any tour $\tau$ local search defines a map on $M$ via
-$C^\prime \mapsto l_{C^\prime}\left(\tau\right)$, which can also be seen as
-approximation of $\operatorname{tsp}_{M,\mathcal{T}_n}$.  This naturally
-yields an iterative improvement heuristic:
+This naturally yields an iterative improvement heuristic:
 
 \begin{define}[ILS]
 \label{def:ils}
@@ -795,12 +802,12 @@ yields iterated local search.
 %   map x y = x o y for permutation y
 %
 
-\clearpage
+%\clearpage
 
-\dictum[L. Peter Deutsch]{To iterate is human, to recurse divine.}
 \section{Theory}
+\dictum[L. Peter Deutsch]{To iterate is human, to recurse divine.}
+\vspace{0.87em}
 
-\annotation{Move some of this to abstract?}
 Dynamic programming is a fruitful approach to tackling many problems in
 combinatorial optimization --- this specifically includes traveling
 salesman problem and a number of its special cases.  Here we want to
@@ -814,10 +821,13 @@ which we will present herein.  The second --- {\defstyle strongly balanced
 to see an implementation until now, which can be seen as essential
 motivation behind this project.
 
+As in preceding section, the solutions as they are presented herein
+can be taken to reflect inner workings of our code.
+
 \subsection{Pyramidal tours}
 
 \annotation{Bibliography: TODO.}
-Pyramidal TSP, as seen in, e.g.\ \cite{bellman,gilmore}?, yields a
+Pyramidal TSP, as seen in, e.g.\ \cite{burkard,gilmore}, yields a
 classic example of application of dynamic programming and can be defined as
 follows:
 
@@ -907,7 +917,7 @@ evident and following construction transparent:
 This translates directly onto a dynamic programming solution to pyramidal TSP:
 \begin{corollary}[dynamic programming solution to pyramidal TSP]
 \label{cor:pyrdp}
-\annotation{layout!}
+%\annotation{layout!}
   For a suitable tour-valued definition of $\argmin^\prime$, the recurrence relation
   \begin{align}
     \label{eq:pyrdp}
@@ -1006,7 +1016,7 @@ In what now follows, $X$ can thus be seen as a memory holding such evaluation re
 
 \begin{proposition}[memoized solution to pyramidal TSP]
 \label{prop:pyrmem}
-\annotation{layout!}
+%\annotation{layout!}
   Given a set of cities $\mathcal{N}_n$, let, for cities $i,j$ and cost matrix $C$,
   \begin{align}
     \label{eq:pyrmem}
@@ -1203,10 +1213,8 @@ environment --- i.e.\ some mutable state).
 \end{figure}
 
 \begin{remark}
-While determining if a given TSP instance is pyramidal is NP-hard
-\cite{baki}, a number of polynomially testable classes which posess
-pyramidal solutions exists \cite{baki,gilmore} ---
-still, those are not widely common.
+While determining if a given TSP instance is pyramidal is NP-hard,
+a number of polynomially testable classes which posess pyramidal solutions exists \cite{baki}.
 \end{remark}
 
 Before we turn our attention to the next neighbourhood, there is one last
@@ -1305,8 +1313,7 @@ Though the above construction may seem somewhat contrived, elements thereby
 created have roots in combinatorial optimization --- they represent a
 variation on so called {\defstyle balanced tours}, which contain a solution
 to (shown to be NP-hard) {\defstyle Relaxed Supnick TSP} ({\defstyle
-  RS-TSP}).
-\annotation{Citation!}
+  RS-TSP}) (see \cite{fpclass,fpneighb}).
 And while strongly balanced tours may lack a nice visual description
 comparable to that of pyramidal tours, the neighbourhood they represent is
 certainly no less interesting.
@@ -1406,15 +1413,16 @@ the set of cities it contains (which is necessarily $\left\{1,\ldots,m\right\}$)
 \end{proof}
 
 This defines a recurrence relation to which we can apply same memoized
-graph traversing technique we demonstrated on pyramidal TSP (in fact,
-apart from description of recursion tree, counting tour reconstruction
-rules, our implementation uses same code for both) and compute a minimum
-total cost element in $W\left(m,N\right)$ for each node, and thus a minimum
-cost tour in $\operatorname{SBal}_n^M$.  Sample trace of such computation
-can be seen in \cref{fig:sbtrace}.  Exact tour reconstruction rules can be
-deduced directly from given relation and are left as exercise to the reader
-(they amount to inserting into the solution, with possible reversal and
-joining, paths $(m,a_1)$ or $(a_1,m,a_2)$).
+graph traversing technique we demonstrated on pyramidal TSP (in fact, apart
+from description of recursion tree, counting tour reconstruction rules, our
+implementation uses same code for both) and compute, for each node
+$\left(m,N\right)$, a minimum total cost element in $W\left(m,N\right)$,
+and thereby a minimum cost tour in $\operatorname{SBal}_n^M$.  Sample trace of
+such computation can be seen in \cref{fig:sbtrace}.  Exact tour
+reconstruction rules can be deduced directly from given relation and are
+left as exercise for the reader (they amount to inserting into the
+solution, with possible reversal and joining, paths $(m,a_1)$ or
+$(a_1,m,a_2)$).
 
 \setlength{\aboverulesep}{0pt}
 \setlength{\belowrulesep}{0pt}
@@ -1449,8 +1457,8 @@ joining, paths $(m,a_1)$ or $(a_1,m,a_2)$).
     $\left\{(4,1,3,7,5,2,6)\right\}$ & 7 & $\left\{\{4,6\}\right\}$ & $\left\{(4,6)\right\}$ & $\operatorname{merge}^\prime$ \\
     \bottomrule
   \end{tabular}
-  \caption{Sample path taken in the strongly balanced recursion tree ($M \geq 2$)
-    along with correspondingly computed optimum. % (for some fixed sample cost matrix).
+  \caption{Sample path taken in the strongly balanced recursion tree ($n = 7,M \geq 2$)
+    along with accordingly computed optimum tour. % (for some fixed sample cost matrix).
     Elements of $\mathcal{B}_m$ corresponding to the nodes are given as illustration.}
   \label{tbl:sbpath}
   \end{table}
@@ -1461,7 +1469,10 @@ joining, paths $(m,a_1)$ or $(a_1,m,a_2)$).
   \makebox[\textwidth][c]{%
     \includegraphics[width=1.21\textwidth]{../plot/build/trace_bal.pdf}
   }
-  \caption{Strongly balanced TSP recursion tree ($M=2,n=8$).}
+  \caption{
+    Strongly balanced TSP recursion tree ($M=2,n=8$).
+    %Nodes show as «$m$~:~$(a_1,b_1) ~ [(a_2,b_2)]$»
+  }
   \label{fig:sbtrace}
 \end{figure}
 
@@ -1480,11 +1491,10 @@ those raised in
     ad memory access:
     while enumeration of {\defstyle node types} (introduced below) produces
     a polynomial time collision-free solution to this,
-    in practice we were able to achieve best results with polynomial hash function
-    \annotation{correct this!}
+    in practice we were able to achieve best results with polynomial hash functions such as
     \begin{align*}
       \left(m,N\right) \mapsto & mX^{2k+1}
-        + \sum_{i=1}^k\left((m-a_i)X^{2k-i+1} + (m-b_i)X^{2k-i}\right),
+        + \sum_{i=1}^k\left((m-a_i)X^{2k-2i+1} + (m-b_i)X^{2k-2i}\right),
       \\
       & \quad X = \lceil\log_2 n\rceil \quad (N \text{\ as above}).
     \end{align*}
@@ -1542,12 +1552,12 @@ We can recognize following crucial points:
     i.e.\ above conjecture holds true for given $M$.
 \end{itemize}
 
-While we are not aware of a general proof, we have been able to confirm
-said conjecture by having calculated the number of different node types for
-values of $M$ up to $6$, which are presented in \cref{tbl:nodeTypes} ---
-and while this proves linear tree size for given values of $M$, the growth
-behaviour of the constant $K$ does seem intimidating --- and incidentally
-mirrors the exact behaviour we encountered in practice.
+While we are not aware of a general proof thereof, we have been able to confirm
+said conjecture (having computed the number of different node types, shown
+in \cref{tbl:nodeTypes}) for values of $M$ up to $6$ --- and while this
+proves linear tree size growth for given values of $M$, the growth behaviour of
+the constant factor $K$ does seem intimidating, reflecting the runtime
+behaviour we encountered in practice.
 
 \begin{table}[htb]
 \centering
@@ -1578,7 +1588,7 @@ mirrors the exact behaviour we encountered in practice.
       ]{../plot/data/num\string_types.csv}%
     }
 \caption{Computed maximum number of node types for values of node size limit $M$ up to $6$,
-  along with the number of cities $m$ after which fixed point was reached.}%
+  along with the number of cities $m$ at which the fixed point was reached.}%
 \label{tbl:nodeTypes}%
 \end{table}
 
@@ -1591,16 +1601,17 @@ introduce the simple concept of flowers:
 
 \begin{define}
   For $T \subseteq \mathcal{T}_n, S \subseteq \mathcal{S}_n$ define
-  {\defstyle flower of $T$ over $S$} to be
+  {\defstyle flower over $T$ by $S$} to be
   \[
     \mathcal{F}\left(S,T\right) \coloneqq
-    \left\{ s \tau \mid s \in S, \tau \in T\right\} \cup T.
+    \left\{ s \tau \mid s \in S, \tau \in T\right\} \cup T
   \]
+  (recall \cref{def:actions}).
 \end{define}
 
-TSP over such set is then trivially computable via choosing best from no
+TSP over such set is then computable via choosing best from no
 more than $\left|S\right|+1$ local search results.  Also note that whenever
-$T$ induces a neighbourhood, flower of $T$ induces one with same centre.
+$T$ induces a neighbourhood, flower over $T$ induces one with same centre.
 
 While, as seen in \cite{belperm}, a good extension of pyramidal local
 search can be achieved via
@@ -1610,11 +1621,9 @@ search can be achieved via
     \operatorname{Pyr}_n
   \right),
 \]
-\annotation{Add to implementation description:
-  since we have not yet found good flower, our implementation
-  does not even precompute $ST$ as a set but iterates over elements of $S$.}
-for strongly balanced tours such a set is not so easy to find.
-In our tests we have not been able to significantly improve on
+for strongly balanced tours such a set is not so easy to find,
+which remains to be seen as an open question ---
+in our tests, we have not been able to significantly improve on
 \[
   \mathcal{F}\left(
   \left<\left( 1\;2\;\cdots\;n\right)\right>
@@ -1624,8 +1633,9 @@ In our tests we have not been able to significantly improve on
     %\end{pmatrix},
     \left(\ldots , 5, 3, 1, 2, 4, \ldots\right),
     \operatorname{SBal_n^M}
-  \right).
+  \right)
 \]
+in this regard.
 
 In our implementation we sometimes refer to permutations from the set $S$ above
 as {\defstyle rotations} of $T$.
@@ -1635,133 +1645,219 @@ from $S$ whenever a stale iteration is reached.
 
 Now we can turn our attention to technical details of our implementation
 as well as practical test results.
-\clearpage
 
-\dictum[Donald Knuth]{You’re bound to be unhappy if you optimize everything.}
+%\clearpage
+
 \section{Implementation}
-
-\annotation{TODO FROM HERE}
+\dictum[Donald Knuth]{You’re bound to be unhappy if you optimize everything.}
+\vspace{0.87em}
 
 \subsection{Key features}
-\annotation{TODO}
 
-Written in {\ttfamily Standard ML}.
-Usable via SML REPL, standalone executable or shared library.
-Tested under multiple software (see \autoref{app:compiler}) and OS/hardware platforms --
-Linux (amd64) and Windows (x86) (MinGW-crosscompiled).
+Our choice of programming language fell on Standard ML, which we feel
+strikes the right (for this project) balance between expresiveness and
+convenience and, while being not too low level language, can still offer
+effective execution speed.
 
-\annotation{Tradeoff illustration: provide LOC count?}
-General dynamic programming results implementation via search graph traversal (simple depth-first search),
-making a tradeoff between performance and extendibility.
-BFS could be somewhat faster, but for our research dfs is enough.
-Memoization via hash tables.
+This particular implementation requires only a Standard ML environment
+which implements the {\ttfamily smlnj-lib}
+(as provided by the widely available {\ttfamily MLton} compiler, or e.g.\ {\ttfamily SML/NJ})
+to work and can be used
+\begin{itemize}
+  \item as standalone executable
+    (compiled via {\ttfamily MLton}, {\ttfamily MLton/MinGW} or {\ttfamily Poly/ML});
+  \item from a REPL environment
+    (such as {\ttfamily SML/NJ} or {\ttfamily Poly/ML})
+    as shown in \autoref{app:repl};
+  \item via shared library interface
+    (builds via {\ttfamily MLton} or {\ttfamily MLton/MinGW})
+    as shown in \autoref{app:so}.
+\end{itemize}
 
-\annotation{Can we rename repo?}
-This project's sources are available
-\href{https://bitbucket.org/mad_hatter/rstsp/}{online}\footnote{\url{https://bitbucket.org/mad_hatter/rstsp/}}.
+All code written for this project
+(along with precompiled Windows/{\ttfamily x86} build)
+is available from \url{https://bitbucket.org/mad_hatter/rstsp/};
+bug reports and pull requests are welcome.
+%\href{https://bitbucket.org/mad_hatter/rstsp/}{online}\footnote{%
+%  from \url{https://bitbucket.org/mad_hatter/rstsp/}.
+%}.
 
 \subsection{Runtime behaviour}
-\annotation{TODO}
-\annotation{Describe \autoref{fig:benchRAND}.}
 
-Clearly pronounced linear runtime for str.~balanced search, apparently heavy overhead penalty.
-Pyramidal faster but str.~balanced eventually takes over.
-See \autoref{fig:benchRAND}.
-Memory usage not seriously measured, since bottleneck here is runtime.
+Measured single local search running times, shown in \cref{fig:benchTIME},
+further confirm our expectations:
+
+\begin{itemize}
+  \item
+    for a fixed maximum node size, strongly balanced search yields runtime
+    behaviour which looks pronouncedly linear, albeit with a heavy constant
+    factor which increases approximately tenfold along with
+    by-one increase in node size limit
+    (see \crefrange{fig:benchtime1}{fig:benchtime3});
+  \item
+    pyramidal search, as can be expected of its quadratic complexity
+    nature, exhibits a decidedly lower growth rate initially, but eventually
+    falls behind strongly balanced local search --- as can be seen
+    in (see \cref{fig:benchtime4,fig:benchtime5}).
+\end{itemize}
+
+All results presented here have been produced on a test machine running
+Linux 3.10.17 ({\ttfamily x86\_64}) @ i5-2520M and 8GB of RAM.
 
 \begin{figure}[htbp]
-\null\hfill%
-\subfloat[higher node sizes]{%
-  \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_low.pdf}
-}\hfill\null
-\null\hfill%
-\subfloat[medium node sizes]{%
-  \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_fast.pdf}
-}\hfill\null\\
-\null\hfill%
-\subfloat[low node sizes]{%
-  \includegraphics[width=0.59\textwidth]{../plot/build/mlton_time_random_steady.pdf}
-}\hfill\null\\
-\null\hfill%
-\subfloat[pyramidal vs str.~balanced/m3]{%
-  \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_med.pdf}
-}\hfill\null
-\null\hfill%
-\subfloat[pyramidal vs str.~balanced/m4]{%
-  \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_hi.pdf}
-}
-\hfill\null
-\caption{Single traversal running times (Linux 3.10.17 ({\ttfamily x86\_64}) @ i5-2520M).}
-\label{fig:benchRAND}
+\centering
+  \null\hfill%
+  \subfloat[strongly balanced, $M = 4,5,6$]{%
+    \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_low.pdf}
+    \label{fig:benchtime1}
+  }\hfill\null
+  \null\hfill%
+  \subfloat[strongly balanced, $M = 2,3,4$]{%
+    \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_fast.pdf}
+    \label{fig:benchtime2}
+  }\hfill\null\\
+  \null\hfill%
+  \subfloat[pyramidal vs.\ str.~balanced with $M = 2,3$]{%
+    \includegraphics[width=0.59\textwidth]{../plot/build/mlton_time_random_steady.pdf}
+    \label{fig:benchtime3}
+  }\hfill\null\\
+  \null\hfill%
+  \subfloat[pyramidal vs.\ str.~balanced ($M=3$)]{%
+    \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_med.pdf}
+    \label{fig:benchtime4}
+  }\hfill\null
+  \null\hfill%
+  \subfloat[pyramidal vs.\ str.~balanced ($M=4$)]{%
+    \includegraphics[width=0.49\textwidth]{../plot/build/mlton_time_random_hi.pdf}
+    \label{fig:benchtime5}
+  }
+  \hfill\null
+\caption{Measured local search running time.}
+\label{fig:benchTIME}
 \end{figure}
+
+We did not systematically measure memory consumption behaviour, as running
+time was the bottleneck factor in our tests.
 
 \subsection{Tour benchmarks}
 
-\annotation{TODO}
-Describe results, add Relaxed Supnick matrices benchmarks (!),
-prettier (also, split) histograms?, plot iterations behavior? -- see \autoref{fig:benchTSPLIB}.
-
-In what limited testing we have done, pyramidal still performs better.
-
-For str.~balanced: adaptive search seems to perform better
-than always choosing from $2n+1$ specific permutations.
+Finally we present, in \cref{fig:benchTSPLIB}\footnote{%
+  Here, {\defstyle flipflop} refers to method of alternating,
+  between pyramidal (of smaller flower) and strongly balanced search.
+},
+\begin{enumerate}[(i)]
+  \item
+    computed tour cost for
+    randomly generated (symmetric) instances,
+    where each matrix entry is sampled independently from
+    (pseudo)uniform distribution on fixed interval;
+  \item computed tour cost (as quotient to optimal solution)
+    as well as running times
+    over a set of TSPLIB instances sized not higher than $130$
+    (sample size $25$, most of them euclidean).
+\end{enumerate}
+From what little testing this represents, we can reasonable summarize that
+\begin{itemize}
+  \item pyramidal ILS indeed represents a viable heuristic for the TSP;
+  \item strongly balanced tours much less do so;
+    it remains to be seen if a good extension (e.g.\ via a flower)
+    or a special case where this neighbourhood yields better results
+    exist.
+\end{itemize}
 
 \begin{figure}[htbp]
+\thisfloatpagestyle{empty}
 \null\hfill%
-\subfloat[random --- tour length]{%
-  \includegraphics[width=0.69\textwidth]{../plot/build/random_val.pdf}
+\subfloat[Tour cost comparison as observed on random instances.
+  Here, $r$ denotes maximum number of rotations taken from the
+  flower, $i$ --- maximum number of iterations in ILS.
+]{%
+  \includegraphics[width=0.64\textwidth]{../plot/build/random_val.pdf}
 }\hfill\null\\
 \null\hfill%
-\subfloat[tsplib \& vlsi --- tour quality]{%
-  \includegraphics[width=0.69\textwidth]{../plot/build/tsplib_val.pdf}
+\subfloat[TSPLIB instances: observed tour quality]{%
+  \includegraphics[width=0.67\textwidth]{../plot/build/tsplib_val.pdf}
 }\hfill\null\\
 \null\hfill%
-\subfloat[tsplib \& vlsi --- time needed]{%
-  \includegraphics[width=0.69\textwidth]{../plot/build/tsplib_time.pdf}
+\subfloat[TSPLIB instances: runtime measured]{%
+  \includegraphics[width=0.67\textwidth]{../plot/build/tsplib_time.pdf}
 }\hfill\null
-\caption{Benchmarks --- small instances.}
+\caption{Benchmark results.}
 \label{fig:benchTSPLIB}
 \end{figure}
 
-\clearpage
+%\clearpage
 
-\dictum[Arthur Bloch]{Enough research will tend to support your conclusions.}
 \section{Conclusions}
+\dictum[Arthur Bloch]{Enough research will tend to support your conclusions.}
+\vspace{0.87em}
 
-\subsection{Results obtained}
-\annotation{TODO}
-First implementation of str.~balanced search.
-Other dyn.pr.\ cases easy to plug in.
-Some benchmarks.
-Preprocessing offers no gain.
+We have identified consistent formal foundation to and then developed an
+implementation of applying dynamic programming solutions to the traveling
+salesman problem.
 
-Include things from TODOs.
-Splay trees ......
+The latter, as we have successfully demonstrated herein, is general enough
+to be easily extended to other neighbourhoods and efficient enough for
+study of new such neighbourhoods or combinations\footnote{%
+  via shared library interface or standalone executable,
+  which provides possibility for choice of starting tour.
+}
+of related heuristics.
 
-\begin{figure}[htbp]
-%\begin{wrapfigure}{r}{0.5\textwidth}
-\centering
-\includegraphics[width=0.54\textwidth]{./tsp.png}
-\caption*{\captionsize Source: \small \url{https://xkcd.com/399/}.}
-%\end{wrapfigure}
-\end{figure}
+For the exponential neighbourhood of strongly balanced tours this
+represents first practical results; in the process, we have further
+confirmed the linear time conjecture for select few node size limits.
 
 \subsection{Areas for further research}
-\annotation{TODO}
 
-Are these heuristics better for aTSP\@?
-Untested: other metrics or higher dimensions, dedicated implementations' performance.
-Further heuristics combinations.
-Branch cutting.
-Different permutations set for str.~balanced tours?
-Concurrency.
+We shall wrap up our discussion by identifying here briefly just some of tasks
+and areas which we could, given unlimited time, turn our attention to or
+explore in more detail:
+\begin{itemize}
+  \item
+    precompute flowers as sets (to guarantee uniqueness);
+  \item
+    implement BFS;
+  \item
+    implement the interface to and test our neighbourhoods on further metrics
+    and TSP instances (such as asymmetric ones for pyramidal search);
+  \item
+    generate and benchmark RS-TSP instances;
+  \item
+    try different flowers for strongly balanced tours;
+  \item
+    provide for possibility of branch cutting in local search;
+  \item
+    explore concurrent computation models
+    such as {\defstyle tuple spaces} or
+    lightweight (a)synchronous message passing frameworks
+    and their applicability to local search as seen here ---
+    naïve paralellization does not seem to apply well to the
+    recursion trees we presented;
+  \item
+    \ldots
+\end{itemize}
+This concludes our report.
 
-\annotation{TODO}
+\begin{center}
+\vspace{2em}
+\pgfornament[anchor=center,scale=0.35]{87}
+\vspace{2em}
+\end{center}
+\clearpage
 
-Dedicated implementations (pyramidal: bottom up easy) fast, but not always feasible (str.~balanced: machine-generated).
-Naive concurrency (see the {\ttfamily experimental} code) not easily applicable in general case (dense search tree).
-Potentially fruitful approaches: tuple spaces, message passing languages, etc
-(PolyML/Linda?, manticore, jocaml, mythryl, aliceml, clojure/clotilde, scala/akka, $\ldots$).
+%\begin{figure}[hbp]
+%%\begin{wrapfigure}{r}{0.5\textwidth}
+%\centering
+%\includegraphics[width=0.54\textwidth]{./tsp.png}
+%\caption*{\captionsize Source:
+%  \small \url{https://xkcd.com/399/},
+%  \href{https://xkcd.com/license.html}{licensed} per
+%  \href{http://creativecommons.org/licenses/by-nc/2.5/}{CC BY-NC 2.5}.
+%}
+%%\end{wrapfigure}
+%\end{figure}
+%\clearpage
 
 %% lualatex+metapost demo:
 %\begin{figure}[htbp]
@@ -1799,7 +1895,7 @@ Potentially fruitful approaches: tuple spaces, message passing languages, etc
 %\chapter{First Appendix}
 %\chapter{Second Appendix}
 
-\clearpage
+%\clearpage
 \begin{appendices}
 
 \makeatletter
@@ -1809,33 +1905,32 @@ Potentially fruitful approaches: tuple spaces, message passing languages, etc
 %\section{Code Index}
 %\lstlistoflistings%
 
-\section{Shared Library Interface}
-\label{app:so}
-
-\needspace{5\baselineskip}
-\mylisting[
-  caption={[FFI usage example]FFI usage example.},
-  firstline=8,fontadjust,language=C,
-  label=lst:so]{../src/rstsp/librstsp/test.c}
-
 \section{Sample REPL Session}
 \label{app:repl}
 
 \needspace{5\baselineskip}
 \mylisting[
-  caption={[Sample SML Session]Sample SML Session.},
+  caption={[Sample SML REPL session code]Sample SML code as it could be used in a REPL session.},
   firstline=8,fontadjust,language=ML,
   label=lst:so]{../src/rstsp/sample-session-1.sml}
 
-%\input{testapp.tex}
+\section{Shared Library Interface}
+\label{app:so}
 
-\section{Compiler Support}
-\label{app:compiler}
-\input{sml-support.tex}
+\needspace{5\baselineskip}
+\mylisting[
+  caption={[FFI usage example]Shown here is code using
+    our implementation via shared library interface ---
+    which can be used to access its functionality
+    from any programming environment equipped with
+    a foreign function interface.},
+  firstline=8,fontadjust,language=C,
+  label=lst:so]{../src/rstsp/librstsp/test.c}
 
 \end{appendices}
 
 %\printindex
+\clearpage
 \printbibliography%
 
 \end{document}

@@ -5,6 +5,14 @@
  * $Revision$
  *)
 
+(**
+ * For SML/NJ, issue
+ *     use "./rstsp/rstsp-smlnj.sml";
+ * first, For Poly/ML:
+ *     use "./rstsp/rstsp-polyml.sml";
+ * .
+ *)
+
 open Utils
 
 structure NSrch : SEARCHES = DefaultSearches(IntNum)
