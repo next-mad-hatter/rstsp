@@ -1531,7 +1531,7 @@ We recognize following crucial points:
     evaluated at $\left(N,m\right)$, can be written in terms of $\chi\left(N\right)$ only
     and hence does not depend on $m$;
   \item
-    hence, if, for some node size bound $M$, after adding next city in the
+    ergo, if, for some node size bound $M$, after adding next city in the
     construction of the tree in question, the number of different node
     types did not increase, then the set of node types has
     reached a fixed point relative to expansion through all of
@@ -1558,7 +1558,7 @@ mirrors the exact behaviour we encountered in practice.
           after row={\midrule}
         },
         display columns/0/.style={%
-          column name={\bfseries node size limit $M$},
+          column name={\bfseries $M$},
           column type={g}
         },
         display columns/1/.style={%
@@ -1567,14 +1567,15 @@ mirrors the exact behaviour we encountered in practice.
           column type={S}
         },
         display columns/2/.style={%
-          column name={\bfseries $m$ for which fixed point was reached},
+          column name={\bfseries $m$},
           column type={g}
         },
         every last row/.style={after row=\bottomrule},
         %multicolumn names,
       ]{../plot/data/num\string_types.csv}%
     }
-\caption{Computed maximum number of node types for node size limits up to $6$.}%
+\caption{Computed maximum number of node types for values of node size limit $M$ up to $6$,
+  along with the number of cities $m$ after which fixed point was reached.}%
 \label{tbl:nodeTypes}%
 \end{table}
 
