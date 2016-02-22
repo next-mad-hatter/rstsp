@@ -38,7 +38,7 @@ let
   val (sol_len, sol_fn) = valOf sol'
   val sol = sol_fn ()
   val _ = print ("*********************************\n")
-  val _ = print ("   Solution:  " ^ (Search.tourToString sol) ^ "\n")
+  val _ = print ("  Solution:  " ^ (Search.tourToString sol) ^ "\n")
   val _ = case stats of
             NONE => ()
           | SOME (nn, nk, hs) => (
@@ -52,7 +52,7 @@ let
       val len_val = Dist.Num.compare(sol_len, CostCheck.tourCost data sol_vec) = EQUAL
       val sol_val = TSPUtils.validTour size sol_vec
     in
-      print ("    Solution valid:  " ^ (if sol_val andalso len_val then "yes" else "NO!") ^ "\n")
+      print ("  Solution valid:  " ^ (if sol_val andalso len_val then "yes" else "NO!") ^ "\n")
     end
   val _ = print ("  Tour cost:  " ^ (Dist.Num.toString sol_len) ^ "\n")
   val _ = print ("*********************************\n")

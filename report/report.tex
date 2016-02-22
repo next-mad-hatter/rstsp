@@ -1169,10 +1169,11 @@ is visited no more than once, we intuitively arrive at following result:
   via first case in \eqref{eq:pyrtime}.
 \end{proof}
 
-This illustrates how, given a recurrence relation, memoization technique
-can generally be used to achieve time complexity which is asymptotically no
-worse than the size of the recursion tree --- which we think can be seen as
-key concept behind dynamic programming.
+This illustrates how, given a recurrence relation, under certain
+circumstances (efficiently computable edges) memoization technique can
+be used to achieve time complexity which is asymptotically no worse than
+size of the recursion tree --- which we think can be seen as key concept
+behind dynamic programming.
 
 In computing, memoization can be applied to any function values of which
 depend only on its arguments --- such a function is also said to be
@@ -1365,7 +1366,7 @@ the set of cities it contains (which is necessarily $\left\{1,\ldots,m\right\}$)
       W\left(1,\left\{1\right\}\right)
     %}
   \]
-  (as quotients under rotation equivalence as per \cref{prop:rotinv}) and
+  (as quotients under rotation equivalence shown in \cref{prop:rotinv}) and
   \begin{align}
     \label{eq:sbdp}
     W\left(m,N\right) =
@@ -1448,7 +1449,9 @@ joining, paths $(m,a_1)$ or $(a_1,m,a_2)$).
     $\left\{(4,1,3,7,5,2,6)\right\}$ & 7 & $\left\{\{4,6\}\right\}$ & $\left\{(4,6)\right\}$ & $\operatorname{merge}^\prime$ \\
     \bottomrule
   \end{tabular}
-  \caption{Sample path taken in the strongly balanced recursion tree ($M \geq 2$) along with optimal (for some fixed sample cost matrix) solution for each node.  Elements of $\mathcal{B}_m$ corresponding to the nodes are given as illustration.}
+  \caption{Sample path taken in the strongly balanced recursion tree ($M \geq 2$)
+    along with correspondingly computed optimum. % (for some fixed sample cost matrix).
+    Elements of $\mathcal{B}_m$ corresponding to the nodes are given as illustration.}
   \label{tbl:sbpath}
   \end{table}
 \end{example}
@@ -1816,6 +1819,13 @@ Potentially fruitful approaches: tuple spaces, message passing languages, etc
   label=lst:so]{../src/rstsp/librstsp/test.c}
 
 \section{Sample REPL Session}
+\label{app:repl}
+
+\needspace{5\baselineskip}
+\mylisting[
+  caption={[Sample SML Session]Sample SML Session.},
+  firstline=8,fontadjust,language=ML,
+  label=lst:so]{../src/rstsp/sample-session-1.sml}
 
 %\input{testapp.tex}
 

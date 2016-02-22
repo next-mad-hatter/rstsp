@@ -35,14 +35,14 @@ let
   val sol = sol_fn ()
 
   val _ = print ("*********************************\n")
-  val _ = print ("   Solution:  " ^ (Search.tourToString sol) ^ "\n")
+  val _ = print ("  Solution:  " ^ (Search.tourToString sol) ^ "\n")
   val _ =
     let
       val sol_vec = Search.tourToVector sol
       val len_val = Dist.Num.compare(sol_len, CostCheck.tourCost data sol_vec) = EQUAL
       val sol_val = TSPUtils.validTour size sol_vec
     in
-      print ("    Solution valid:  " ^ (if sol_val andalso len_val then "yes" else "NO!") ^ "\n")
+      print ("  Solution valid:  " ^ (if sol_val andalso len_val then "yes" else "NO!") ^ "\n")
     end
   val _ = print ("  Tour cost:  " ^ (IntNum.toString sol_len) ^ "\n")
   val _ = print ("*********************************\n")
