@@ -1062,7 +1062,7 @@ allowed following assumptions:
       this is usually achieved by returning tour cost along with the
       tour\footnote{%
         It should be noted, without too much detail, that this also spares
-        us the need to construct all but the optimum tour.
+        us the need to construct all but the optimal tour.
       };
     \item
       tour concatenation in said definition is computable in constant time:
@@ -1154,10 +1154,9 @@ is visited no more than once, we intuitively arrive at following result:
   lie in all but the very last of $X_{i,j}^{k,l}$,
   hence $T\left((i,j),X_{i,j}^{k,l}\right) = M$ for all but last such contributor to the sum.
   We thus arrive at
-  \annotation{recheck!}
   \begin{align*}
     T\left((1,1),\varnothing\right) & \leq
-    M + 2M \left(1 + 2 + \cdots + n\right) +
+    M + 2M \left(1 + 2 + \cdots + (n-3)\right) +
         2M \left(1 + 2 + \cdots + (n-2)\right) +
     \\
     & + \sum_{i=1}^{n-1} \left(
@@ -1302,7 +1301,7 @@ only possible where $\pi_i = (m_i)$, thus making following evident:
 \end{figure}
 
 Though the above construction may seem somewhat contrived, elements thereby
-created do have roots in combinatorial optimization --- they represent a
+created have roots in combinatorial optimization --- they represent a
 variation on so called {\defstyle balanced tours}, which contain a solution
 to (shown to be NP-hard) {\defstyle Relaxed Supnick TSP} ({\defstyle
   RS-TSP}).
@@ -1353,10 +1352,10 @@ the set of cities it contains (which is necessarily $\left\{1,\ldots,m\right\}$)
   all sets (none higher than $M$ in size)
   of simple paths through all of the cities $\left\{m+1,\ldots,n\right\}$
   as well as all cities contained in $N$,
-  which, per path concatenation,
+  which per path concatenation (as defined in \cref{def:pathop})
   complement the set of
   non-singleton elements of $N$ seen as paths $(a_i,b_i)$ to a single cycle,
-  therefore also complementing corresponding (to $N$) element of $\mathcal{B}_m$
+  therefore also complementing corresponding (to $N$\!) element of $\mathcal{B}_m$
   to a strongly balanced tour.
   Then
   \[
@@ -1405,16 +1404,16 @@ the set of cities it contains (which is necessarily $\left\{1,\ldots,m\right\}$)
   Follows from \cref{def:sbtour} per construction.
 \end{proof}
 
-This defines a recurrence relation to which we can again apply memoized
-traversing technique seen in pyramidal case (in fact, apart from
-description of recursion tree, counting tour reconstruction rules, our
-implementation uses same code for both) and compute a minimum total cost
-element in $W\left(m,N\right)$ for each node, and thus a minimum cost tour
-in $\operatorname{SBal}_n^M$ --- sample trace of such computation can be
-seen in \cref{fig:sbtrace} ---
-where the tour reconstruction rules can be deduced directly from given
-relation and are left as exercise to the reader (they amount to inserting
-into the solution, with possible reversal and joining, paths $(m,a_1)$ or $(a_1,m,a_2)$).
+This defines a recurrence relation to which we can apply same memoized
+graph traversing technique we demonstrated on pyramidal TSP (in fact,
+apart from description of recursion tree, counting tour reconstruction
+rules, our implementation uses same code for both) and compute a minimum
+total cost element in $W\left(m,N\right)$ for each node, and thus a minimum
+cost tour in $\operatorname{SBal}_n^M$.  Sample trace of such computation
+can be seen in \cref{fig:sbtrace}.  Exact tour reconstruction rules can be
+deduced directly from given relation and are left as exercise to the reader
+(they amount to inserting into the solution, with possible reversal and
+joining, paths $(m,a_1)$ or $(a_1,m,a_2)$).
 
 \setlength{\aboverulesep}{0pt}
 \setlength{\belowrulesep}{0pt}
@@ -1423,11 +1422,12 @@ into the solution, with possible reversal and joining, paths $(m,a_1)$ or $(a_1,
 \newcolumntype{g}{>{\columncolor{Gray}}c}
 
 \begin{example}
+
   The construction above is best illustrated by example: shown in
   \cref{tbl:sbpath} is one path taken from the root of the recursion tree,
-  along with the strongly balanced tour corresponding to the taken path
-  and sample optimum solution from $W(m,N)$ as it is constructed
-  while returning along the path.
+  along with the strongly balanced tour corresponding to said path as well
+  as sample optimal solution from $W(m,N)$ as it would be constructed
+  returning along the path.
 
   \begin{table}[htb]
   \centering
@@ -1448,7 +1448,7 @@ into the solution, with possible reversal and joining, paths $(m,a_1)$ or $(a_1,
     $\left\{(4,1,3,7,5,2,6)\right\}$ & 7 & $\left\{\{4,6\}\right\}$ & $\left\{(4,6)\right\}$ & $\operatorname{merge}^\prime$ \\
     \bottomrule
   \end{tabular}
-  \caption{Sample path taken in the strongly balanced recursion tree along with optimum (for some sample cost matrix) solution for each node.  Elements of $\mathcal{B}_m$ corresponding to the nodes are given as illustration.}
+  \caption{Sample path taken in the strongly balanced recursion tree along with optimal (for some fixed sample cost matrix) solution for each node.  Elements of $\mathcal{B}_m$ corresponding to the nodes are given as illustration.}
   \label{tbl:sbpath}
   \end{table}
 \end{example}
@@ -1462,7 +1462,7 @@ into the solution, with possible reversal and joining, paths $(m,a_1)$ or $(a_1,
   \label{fig:sbtrace}
 \end{figure}
 
-As to runtime complexity, we first need to address concerns similar to
+Regarding time complexity, we need to address concerns similar to
 those raised in
 \cref{rem:timeass}:
 \begin{enumerate}[(i)]
@@ -1472,12 +1472,12 @@ those raised in
     potentially reversing and joining paths
     in this step cannot be considered a constant time operation,
     but still can reasonably be assumed to contribute to time complexity
-    a polynomial factor only (note that we only need to reconstruct the optimum tour);
+    a polynomial factor only (note that we only need to reconstruct the optimal tour);
   \item
     ad memory access:
     while enumeration of {\defstyle node types} (introduced below) produces
     a polynomial time collision-free solution to this,
-    in practice we were able to achieve better results with polynomial hash function
+    in practice we were able to achieve best results with polynomial hash function
     \annotation{correct this!}
     \begin{align*}
       \left(m,N\right) \mapsto & mX^{2k+1}
@@ -1486,7 +1486,7 @@ those raised in
       & \quad X = \lceil\log_2 n\rceil \quad (N \text{\ as above}).
     \end{align*}
 \end{enumerate}
-We thus arrive at:
+
 \begin{corollary}
 \label{cor:sbtime}
   Strongly balanced TSP (with maximum node size $M$) is polynomially solvable.
@@ -1505,9 +1505,9 @@ We thus arrive at:
 \subsection{Strongly balanced tours and linear time conjecture}
 
 It is not impossible that strongly balanced recursion tree as presented
-here grows in size only linearly with $n$ --- which, lifting out the tour
-reconstruction step, would make time complexity of our solution to strongly
-balanced TSP linear.
+here grows in size only linearly with $n$ --- which, not counting tour
+reconstruction, would make time complexity of our solution to strongly
+balanced TSP linear as well.
 
 To arrive at this, consider the map
 \[
@@ -1529,22 +1529,22 @@ We recognize following crucial points:
     $\chi \circ \operatorname{append}^\prime$,
     $\chi \circ \operatorname{merge}^\prime$,
     evaluated at $\left(N,m\right)$, can be written in terms of $\chi\left(N\right)$ only
-    and does not depend on $m$;
+    and hence does not depend on $m$;
   \item
     hence, if, for some node size bound $M$, after adding next city in the
     construction of the tree in question, the number of different node
     types did not increase, then the set of node types has
     reached a fixed point relative to expansion through all of
-    $\operatorname{add}^*, \operatorname{append}^*,
-    \operatorname{merge}^*$, i.e.\ the above holds true for given $M$.
+    $\operatorname{add}^\prime, \operatorname{append}^\prime, \operatorname{merge}^\prime$,
+    i.e.\ above conjecture holds true for given $M$.
 \end{itemize}
 
-While we are not aware of a general proof of above conjecture, we have been
-able to confirm it by having calculated the number of different node types
-for values of $M$ up to $6$, which are presented in \cref{tbl:nodeTypes}
---- and while this shows linear growth in size for given values of $M$, the
-growth behaviour of the constant $K$ does seem somewhat intimidating, and
-incidentally also mirrors the exact behaviour we encountered in practice.
+While we are not aware of a general proof, we have been able to confirm
+said conjecture by having calculated the number of different node types for
+values of $M$ up to $6$, which are presented in \cref{tbl:nodeTypes} ---
+and while this proves linear tree size for given values of $M$, the growth
+behaviour of the constant $K$ does seem intimidating --- and incidentally
+mirrors the exact behaviour we encountered in practice.
 
 \begin{table}[htb]
 \centering
@@ -1580,10 +1580,10 @@ incidentally also mirrors the exact behaviour we encountered in practice.
 
 \subsection{Local search and flowers}
 
-To conclude our discussion of the theoretical construction of heuristic
-methods, it should be noted that none of the two neighbourhoods as
-presented above achieve outstanding results as local search --- to improve
-on that, we introduce the simple concept of flowers:
+To conclude the discussion of theory behind our implementation, it should
+be noted that none of the two neighbourhoods as presented above achieves
+appreciable results as local search heuristic --- to improve on that, we
+introduce the simple concept of flowers:
 
 \begin{define}
   For $T \subseteq \mathcal{T}_n, S \subseteq \mathcal{S}_n$ define
@@ -1594,9 +1594,9 @@ on that, we introduce the simple concept of flowers:
   \]
 \end{define}
 
-TSP over such a flower is then trivially computable via choosing the best
-from $\left|S\right|+1$ local search results.  Also we note that whenever
-$T$ induces a neighbourhood, flower of $T$ can induce one with same centre.
+TSP over such set is then trivially computable via choosing best from no
+more than $\left|S\right|+1$ local search results.  Also note that whenever
+$T$ induces a neighbourhood, flower of $T$ induces one with same centre.
 
 While, as seen in \cite{belperm}, a good extension of pyramidal local
 search can be achieved via
@@ -1610,7 +1610,7 @@ search can be achieved via
   since we have not yet found good flower, our implementation
   does not even precompute $ST$ as a set but iterates over elements of $S$.}
 for strongly balanced tours such a set is not so easy to find.
-In our tests we have not been able to improve on
+In our tests we have not been able to significantly improve on
 \[
   \mathcal{F}\left(
   \left<\left( 1\;2\;\cdots\;n\right)\right>
@@ -1620,9 +1620,8 @@ In our tests we have not been able to improve on
     %\end{pmatrix},
     \left(\ldots , 5, 3, 1, 2, 4, \ldots\right),
     \operatorname{SBal_n^M}
-  \right)
+  \right).
 \]
-significantly.
 
 In our implementation we sometimes refer to permutations from the set $S$ above
 as {\defstyle rotations} of $T$.
