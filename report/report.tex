@@ -1512,19 +1512,19 @@ here grows in size only linearly with $n$ --- which, not counting tour
 reconstruction, would make time complexity of our solution to strongly
 balanced TSP linear as well.
 
-To arrive at this, consider the map
+To elaborate on this, we consider the map
 \[
   \chi : \left(m,N\right) \mapsto \left\{\left\{m-a_i,m-b_i\right\} \mid i = 1,\ldots,k \right\},
 \]
 where $\left(m,N\right)$ is a node of the recursion tree as defined in \cref{prop:sball}
 (for such a node, we call $\chi\left(m,N\right)$ its {\defstyle type}).
-We recognize following crucial points:
+We can recognize following crucial points:
 \begin{itemize}
   \item
     the correspondence between $\left(m,N\right)$ and $(m,\chi\left(m,N)\right)$ is trivial;
     hence, if the number of different node types in the above recursion tree happens
-    to be bounded from above by some constant K, then the size of the tree is
-    bounded by $nK = \mathcal{O}\left(n\right)$;
+    to be bounded from above by some constant K, then total number of nodes
+    in the tree is bounded by $nK = \mathcal{O}\left(n\right)$;
   \item
     while descending the recursion tree, we are adding cities in increasing order;
     therefore (as is quickly verified) each of
