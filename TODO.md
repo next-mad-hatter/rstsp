@@ -21,6 +21,7 @@
     - metapost plots: parse outputtemplate instead of fake outputformat
     - metapost plots: include directly in report?
 * Slides:
+    - add sample descent along sb tree from report
     - plots: make color dependent on handout/present mode
     - persistent handouts/notes build ?
     - add overlays ?

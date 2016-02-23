@@ -210,19 +210,20 @@
 \begin{abstract}
 
   Dynamic programming delivers solutions to many problems in combinatorial
-  optimization, and the traveling salesman problem as well as its special
+  optimization; to that the traveling salesman problem and its special
   cases --- where dynamic programming can often be applied effectively ---
   are no exception.
 
-  Herein we want to describe the general procedure of constructing, given a
+  Herein we describe the general procedure of constructing, given a
   description of such a solution, a working implementation thereof as well
   as of a corresponding iterative heuristic.
 
   We then proceed to provide such implementation for two special cases of
-  the TSP of which the first is widely known, albeit not its use as a
-  heuristic method, and the second had yet at all to see a working
-  implementation --- which could be seen as main incentive behind this
-  project --- and present results thus obtained.
+  TSP~--- of which the first one (albeit not its extension to the
+  heuristic method) is well known,
+  while the other had yet at all to see a working
+  implementation, which can be seen as a major goal of this
+  effort --- and present results thus obtained.
 
   This work was written as part of a bachelor degree project at Graz
   University of Technology.
@@ -257,7 +258,7 @@ The {\defstyle traveling salesman problem (TSP)} can be colloquially stated as f
 \blockquote{%
   \index{Traveling Salesman Problem|(}
   A traveling merchant (or salesman) wishes to visit each city from a given
-  list exactly once, starting from and returning to a select one of the cities
+  list exactly once, starting from and returning to any select one of the cities
   given.  Assuming that distances between the cities are known and not
   subject to change, what would be the shortest route for him to take?
   \index{Traveling Salesman Problem|)}
@@ -449,9 +450,10 @@ Often, the convention is to define TSP to be the symmetric version
 On the other hand, following convention is useful:
 observe how it follows from \cref{def:cost,def:tsp} that
 $\operatorname{tsp}_{M,T}^\ast\left(C\right) ~ = ~
- \operatorname{tsp}_{M,T}^\ast\left(C + \lambda J\right)$
+ \operatorname{tsp}_{M^\prime,T}^\ast\left(C + \lambda J\right)$
 for all $\lambda \in \mathbb{R}$ and $C \in M$,
-where $J$ is matrix of ones (of suitable dimension).
+where $J$ is matrix of ones (of suitable dimension),
+and we have a bijection from $M$ onto $M^\prime$.
 Hence we can always assume
 \[
   c_{i,j} \geq 0 \quad \forall i,j \in \mathcal{N}_n
@@ -472,7 +474,7 @@ and shall do so henceforth.
   on even more arguments (such as some probability distribution) ---
   still, this choice of representative is something we need to be aware of
   throughout, as it propagates to any construct using $\operatorname{tsp}$ ---
-  such as iterative methods we shall present here.
+  such as iterative methods we shall present herein.
 \end{remark}
 
 \subsection{Exponential neighbourhoods and local search}
@@ -486,7 +488,7 @@ following general definitions.
   ({\defstyle in $\mathcal{T}_n$} or {\defstyle over $\mathcal{N}_n$}) is a map
   \[
     F: \mathcal{T}_n \to 2^{\mathcal{T}_n}
-    \quad \text{s.t.}\; \tau \in F\left(\tau\right) \ \forall \tau \in \mathcal{T}_n\;
+    \quad \text{s.t.}\; \tau \in F\left(\tau\right) \ \forall \tau \in \mathcal{T}_n.
     %\footnote{%
     %  Not a common demand, this is sensible in context of (iterated) local search,
     %  and also makes $F\left(\tau\right)$ a neighbourhood of $\tau$
@@ -566,7 +568,7 @@ or some cost improvement metric.
 
 \subsection{Tours and permutations}
 
-Given the set $\mathcal{N}_n$ of $n$ cities, let $\mathcal{S}_n$ be the symmetric group (on $\mathcal{N}_n$).
+Given the set $\mathcal{N}_n$ of $n$ cities, let $\mathcal{S}_n$ denote the symmetric group (on $\mathcal{N}_n$).
 
 \begin{define}[associated permutation]
   We define $\sigma_{\Cdot}$ (using argument-in-subscript notation) to be the map
@@ -797,7 +799,7 @@ $\tau^\ast$ --- its action then defines a neighbourhood in $\mathcal{T}_n$:
 
 If we now can solve the TSP efficiently over a fixed set of tours $T$
 (for arbitrary cost matrices), choosing a $\tau^\ast \in T$ immediately
-allows us to construct local search over $F_T$:
+allows us to construct a local search over $F_T$:
 applying \cref{cor:reorder} to \cref{def:induced}, we arrive at
 \[
   l_C\left(\tau\right) =
@@ -832,8 +834,8 @@ While the first one --- {\defstyle pyramidal tours} --- can be considered
 widely known, less so is its extension to a viable local search heuristic
 which we will present herein.  The second --- {\defstyle strongly balanced
   tours} --- is somewhat more involved in its construction and so had yet
-to see an implementation until now, which can be seen as essential
-motivation behind this project.
+to see an implementation until now.
+%, which can be seen as essential motivation behind this project.
 
 As in preceding section, the solutions as they are presented herein
 can be taken to reflect inner workings of our code.
@@ -961,7 +963,7 @@ This translates directly onto a dynamic programming solution to pyramidal TSP:
   a map on $\mathbb{R}^{n \times n}$.
   For latter,
   \[
-    \phi = \operatorname{tsp}_{\mathbb{R}^{n \times n},\operatorname{Pyr}_n}
+    \phi \equiv \operatorname{tsp}_{\mathbb{R}^{n \times n},\operatorname{Pyr}_n}
   \]
   holds true.
 \end{corollary}
@@ -972,14 +974,14 @@ This translates directly onto a dynamic programming solution to pyramidal TSP:
   If we now choose $\argmin^\prime$ to select from two equal cost tours in
   $T$ one deterministically and independently from $C$ (say, the first of
   the two options in definition of $T$ above), then this, per construction,
-  produces a linear order on paths in $V\left(\mathcal{N}_n^2\right)$, and
-  hence also on $\operatorname{Pyr}_n$.
+  produces a linear order on paths in $V\left(\mathcal{N}_n^2\right)$ (bar
+  $(n,n)$), and hence also on $\operatorname{Pyr}_n$.
 
   We then see per induction over \cref{eq:pyrall,eq:pyrdp} that for all
-  cities $i,j$ and cost matrices $C$, $\Phi_C\left(i,j\right)$ is the
-  smallest (according to said order) cost minimizing tour in $V\left(i,j\right)$,
+  cities $i$,$j$ and cost matrices $C$, $\Phi_C\left(i,j\right)$ is the
+  smallest (according to said order) cost minimizing path in $V\left(i,j\right)$,
   %\[
-  %  \Phi_C\left(i,j\right) = \argmin^\ast \omega_C V\left(i,j\right)
+  %  \Phi_C\left(i,j\right) = \argmin^\prime \omega_C V\left(i,j\right)
   %\]
   from which the rest follows.
 \end{proof}
@@ -1013,10 +1015,11 @@ shows such a graph.
 
 \subsection{Recursion and complexity}
 
-While \cref{cor:pyrdp} offers a solution to the pyramidal TSP, the function
-as it is presented in \cref{eq:pyrdp} does not yet necessarily translate
-onto an efficient computer program.
-For this, we need to perform the additional step of {\defstyle memoization}.
+While \cref{cor:pyrdp} offers a solution to the pyramidal TSP, the
+%\annotation{wording?}
+function as it is presented in \cref{eq:pyrdp}
+does not yet necessarily translate onto an efficient computer program.
+To this end, we need to perform the additional step of {\defstyle memoization}.
 
 The term, coined in computing (from {\defstyle memo}), denotes the
 technique of evaluating a function no more than once at any point in its domain,
@@ -1025,7 +1028,7 @@ subsequent evaluations.
 Not unnatural to computations by hand, memoization can formally be seen as
 evaluating, in place of a function over some set, said function's graph over
 the set.
-In what now follows, $X$ can thus be seen as a memory holding such evaluation results:
+In what now follows, $X$ can thus be seen as some memory holding such evaluation results:
 
 \begin{proposition}[memoized solution to pyramidal TSP]
 \label{prop:pyrmem}
@@ -1042,7 +1045,7 @@ In what now follows, $X$ can thus be seen as a memory holding such evaluation re
       \left(v,X^{\prime\prime} \cup \left\{\left((i,j),v\right)\right\}\right) & \text{otherwise, where}
     \end{cases}
     \\
-    v & \coloneqq \argmin \omega_C
+    v & \coloneqq {\argmin}^\prime \omega_C
     \;\;\text{over}\;\; {\left\{(i) \oplus v^\prime, v^{\prime\prime} \oplus (j) \right\}},
     \nonumber
     \\
@@ -1081,7 +1084,7 @@ It is also a reasonably efficient implementation, provided that we are
 allowed following assumptions:
   \begin{enumerate}[(i)]
     \item
-      $\argmin \omega_C$ in definition of $\Phi_C$ above is computable in constant time:
+      $\argmin^\prime \omega_C$ in definition of $\Phi_C$ above is computable in constant time:
       this is usually achieved by returning tour cost along with the
       tour\footnote{%
         It should be noted, without too much detail, that this also spares
@@ -1100,8 +1103,8 @@ allowed following assumptions:
 \end{remark}
 
 Note that evaluating $\widehat{\Phi}_C$ following its definition corresponds to
-depth-first search over the recursion tree, size of which is quadratic in number of nodes
-as well as number of edges --- if we now consider memoization to be what
+depth-first search over the recursion tree, size of which is quadratic in number of nodes,
+as it is in the number of edges --- if we now consider memoization to be what
 is usually called edge marking in that it guarantees that every edge
 is visited no more than once, we intuitively arrive at following result:
 
@@ -1111,7 +1114,7 @@ is visited no more than once, we intuitively arrive at following result:
   pyramidal TSP is polynomially solvable.
 \end{corollary}
 \begin{proof}
-  Consider $\widehat{\Phi}_C\left((i,j),\cdot\right)$ as defined in \cref{prop:pyrmem}.
+  Consider $\widehat{\Phi}_C\left((i,j),\cdot\right)$ as it was defined in \cref{prop:pyrmem}.
   If, for a bound $M$,
   we now rewrite the recurrence relation from definition of $\widehat{\Phi}_C$ as
   \begin{align}
@@ -1135,7 +1138,8 @@ is visited no more than once, we intuitively arrive at following result:
     k & \coloneqq \max \left\{i,j\right\} + 1,
     \nonumber
   \end{align}
-  and define $\operatorname{time} \coloneqq (x,y) \mapsto x$,
+  and define (over suitable domain)
+  $\operatorname{time} \coloneqq (x,y) \mapsto x$,
   %$\operatorname{mem} \coloneqq (x,y) \mapsto y$ and
   $T \coloneqq \operatorname{time} \circ R$,
   then for some such $M$
@@ -1183,8 +1187,8 @@ is visited no more than once, we intuitively arrive at following result:
         2M \left(1 + 2 + \cdots + (n-2)\right) +
     \\
     & + \sum_{i=1}^{n-1} \left(
-        T\left((i,n),X_{i,n}\right)
-      + T\left((n,i),X_{n,i}\right)
+        T\left((i,n),X_{i,n}^\prime\right)
+      + T\left((n,i),X_{n,i}^\prime\right)
     \right)
     = \mathcal{O}\left(n^2\right)
   \end{align*}
@@ -1227,17 +1231,19 @@ environment --- i.e.\ some mutable state).
 
 \begin{remark}
 While determining if a given TSP instance is pyramidal is NP-hard,
-a number of polynomially testable classes which posess pyramidal solutions exists \cite{baki}.
+a number of polynomially testable classes which possess
+pyramidal solutions exists \cite{baki}.
 \end{remark}
 
 Before we turn our attention to the next neighbourhood, there is one last
 point that we feel needs to be addressed: while we have discussed
 depth-first search and mentioned breadth-first search computation over the
-recursion tree, we have not yet considered the bottom-up approach widely
+recursion tree, we have not yet considered the bottom-up approach often
 used in imperative programming.
 
-While its merits and caveats compared to the functional approach are
-manyfold, there is one important requirement said technique impedes on the
+While its merits and caveats
+%compared to the functional approach
+are manifold, there is one important requirement said technique impedes on the
 problem: for it to work, terminal nodes (or leafs) of the recursion tree
 have to be feasibly computable beforehand.  While this presents no problem
 for pyramidal TSP, this is much less the case for the neighbourhood we are
@@ -1248,7 +1254,7 @@ this project.
 
 Throughout remainder of this section we shall restrict our considerations,
 unless noted otherwise, to symmetric TSP only --- in particular, we can
-consider paths to be cost equivalent whenever they are equal under path
+consider paths to be equivalent whenever they are equal under path
 reversal. % as defined in \cref{def:pathop}.
 
 \begin{define}[strongly balanced tours]
@@ -1256,7 +1262,7 @@ reversal. % as defined in \cref{def:pathop}.
   Given a set of cities $\mathcal{N}_n$, we define, inductively,
   for every $m \in \mathcal{N}_n$,
   \begin{align*}
-    \mathcal{B}_1 \coloneqq & \left\{ \left\{\left(1\right)\right\} \right\};
+    \mathcal{B}_1 \coloneqq & \left\{ \left\{\left(1\right)\right\} \right\},
     \\
     \mathcal{B}_m \coloneqq & \bigcup_{\tau \in \mathcal{B}_{m-1}}
       \left(
@@ -1278,7 +1284,7 @@ reversal. % as defined in \cref{def:pathop}.
     \operatorname{add}\left(\tau,m\right)
     & \coloneqq \tau \cup \left\{ \left(m\right) \right\},\\
     \operatorname{append}\left(\tau,m\right)
-    & \coloneqq \left( \tau \setminus \pi_1 \right) \cup \left\{ \left(m\right) \oplus \pi_1 \right\},\\
+    & \coloneqq \left( \tau \setminus \pi_1 \right) \cup \left\{ \operatorname{rev}\left(\pi_1\right) \oplus \left(m\right) \right\},\\
     \operatorname{merge}\left(\tau,m\right)
     & \coloneqq
     \begin{cases}
@@ -1304,8 +1310,8 @@ illustrated in \cref{fig:sbopt}.
 
 We can also now see that per above definition, every element of
 $\mathcal{B}_m$ contains simple disjoint paths over $\mathcal{P}_m$ which
-together contain all cities in $\mathcal{N}_m$, and $m_i = m_i^\prime$ above is
-only possible where $\pi_i = (m_i)$, thus making following evident:
+together contain all cities in $\mathcal{N}_m$ (and $m_i = m_i^\prime$ above is
+only possible where $\pi_i = (m_i)$), thus making following evident:
 \begin{remark}
   Strongly balanced tours, as introduced in \cref{def:sbtour},
   are in fact elements of $\mathcal{T}_n$.
@@ -1353,9 +1359,9 @@ to contain only elements of size no higher than $M$.
 \end{remark}
 
 Recall how we could uniquely identify a partially constructed pyramidal
-tour using only a pair of cities --- which we then used to describe, in
-\cref{prop:pyrall}, elements which would complete such partially
-constructed tours to elements of $\mathcal{T}_n$.
+tour using only a pair of cities $(i,j)$ --- which we then used to
+describe, in \cref{prop:pyrall}, elements which would complete such
+partially constructed tours to elements of $\mathcal{T}_n$.
 
 Equivalently, a partially constructed strongly balanced tour (i.e.\ element
 of $\mathcal{B}_m$) can be described by the end points of its elements and
@@ -1372,7 +1378,7 @@ the set of cities it contains (which is necessarily $\left\{1,\ldots,m\right\}$)
   define $W\left(m,N\right)$ to be the set of
   all sets (none higher than $M$ in size)
   of simple paths through all of the cities $\left\{m+1,\ldots,n\right\}$
-  as well as all cities contained in $N$,
+  as well as all cities contained in (elements of) $N$,
   which per path concatenation (as defined in \cref{def:pathop})
   complement the set of
   non-singleton elements of $N$ seen as paths $(a_i,b_i)$ to a single cycle,
@@ -1429,10 +1435,10 @@ This defines a recurrence relation to which we can apply same memoized
 graph traversing technique we demonstrated on pyramidal TSP (in fact, apart
 from description of recursion tree, counting tour reconstruction rules, our
 implementation uses same code for both) and compute, for each node
-$\left(m,N\right)$, a minimum total cost element in $W\left(m,N\right)$,
-and thereby a minimum cost tour in $\operatorname{SBal}_n^M$.  Sample trace of
+$\left(m,N\right)$, a minimum total cost element in $W\left(m,N\right)$ ---
+and thus a minimum cost tour in $\operatorname{SBal}_n^M$.  Sample trace of
 such computation can be seen in \cref{fig:sbtrace}.  Exact tour
-reconstruction rules can be deduced directly from given relation and are
+reconstruction rules can be deduced directly from above relation and are
 left as exercise for the reader (they amount to inserting into the
 solution, with possible reversal and joining, paths $(m,a_1)$ or
 $(a_1,m,a_2)$).
@@ -1634,8 +1640,8 @@ search can be achieved via
     \operatorname{Pyr}_n
   \right),
 \]
-for strongly balanced tours such a set is not so easy to find,
-which remains to be seen as an open question ---
+for strongly balanced tours such an extension is not so easy to find,
+and is left to be seen as an open question ---
 in our tests, we have not been able to significantly improve on
 \[
   \mathcal{F}\left(
@@ -1653,8 +1659,8 @@ in this regard.
 In our implementation we sometimes refer to permutations from the set $S$ above
 as {\defstyle rotations} of $T$.
 We also define therein a version of iterated local search which we call
-{\defstyle adaptive}, where we increase the number of considered permutations
-from $S$ whenever a stale iteration is reached.
+{\defstyle adaptive}, wherein we increase the number of considered rotations
+whenever a stale iteration is reached.
 
 Now we can turn our attention to technical details of our implementation
 as well as practical test results.
@@ -1711,7 +1717,7 @@ further confirm our expectations:
     pyramidal search, as can be expected of its quadratic complexity
     nature, exhibits a decidedly lower growth rate initially, but eventually
     falls behind strongly balanced local search --- as can be seen
-    in (see \cref{fig:benchtime4,fig:benchtime5}).
+    in \cref{fig:benchtime4,fig:benchtime5}.
 \end{itemize}
 
 All results presented here have been produced on a test machine running
@@ -1755,7 +1761,7 @@ time was the bottleneck factor in our tests.
 \subsection{Tour benchmarks}
 
 Finally, we present, in \cref{fig:benchTSPLIB}\footnote{%
-  Here, {\defstyle flipflop} refers to method of alternating
+  Here, {\defstyle flipflop} refers to the method of alternating
   between pyramidal (of smaller flower) and strongly balanced search.
 },
 \begin{enumerate}[(i)]
@@ -1764,10 +1770,10 @@ Finally, we present, in \cref{fig:benchTSPLIB}\footnote{%
     randomly generated (symmetric) instances,
     where each matrix entry is sampled independently from
     (pseudo)uniform distribution on fixed interval;
-  \item computed tour cost (as quotient to optimal solution)
-    as well as running times
-    over a set of TSPLIB instances sized not higher than $130$
-    (sample size $25$, most of them euclidean).
+  \item computed tour cost (as quotient to optimum,
+    named {\defstyle tour quality} below) as well as running times
+    over a set of TSPLIB instances
+    (sample size $25$, instance size under $130$, most of them euclidean).
 \end{enumerate}
 From what little testing this represents, we can reasonably conclude that
 \begin{itemize}
@@ -1788,11 +1794,11 @@ From what little testing this represents, we can reasonably conclude that
   \includegraphics[width=0.64\textwidth]{../plot/build/random_val.pdf}
 }\hfill\null\\
 \null\hfill%
-\subfloat[TSPLIB instances: observed tour quality]{%
+\subfloat[25 TSPLIB instances: observed tour quality]{%
   \includegraphics[width=0.67\textwidth]{../plot/build/tsplib_val.pdf}
 }\hfill\null\\
 \null\hfill%
-\subfloat[TSPLIB instances: runtime measured]{%
+\subfloat[25 TSPLIB instances: runtime measured]{%
   \includegraphics[width=0.67\textwidth]{../plot/build/tsplib_time.pdf}
 }\hfill\null
 \caption{Benchmark results.}
@@ -1805,18 +1811,16 @@ From what little testing this represents, we can reasonably conclude that
 \dictum[Arthur Bloch]{Enough research will tend to support your conclusions.}
 \vspace{0.87em}
 
-Having described application of dynamic programming solutions to
-special cases
-traveling salesman problem and their extension from neighbourhoods to
-iterative heuristics, as well as two such neighbourhoods,
-we have provided, for said two neighbourhoods,
-a working implementation which
+Having described application of dynamic programming solutions to special
+cases of traveling salesman problem and extension of such solutions
+from neighbourhoods to iterative heuristics,
+we have provided for two such neighbourhoods a working implementation which
 %closely follows our discussion and
-is general enough to be easily
-extended to other neighbourhoods and efficient enough for study of new such
-solutions or combinations\footnote{%
-  via shared library interface or standalone executable,
-  which provides possibility for choice of starting tour.
+is general enough to be easily extended to other solutions and
+efficient enough for study of such solutions or combinations\footnote{%
+  Also via the standalone executable, which
+  provides the option of choosing the starting tour
+  (which is automatically transformed to given neighbourhood's centre).
 }
 of related heuristics.
 
