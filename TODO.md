@@ -56,6 +56,7 @@
     - do we need merge xscales script for gnuplot?
     - sometimes: test scripts in fresh clone
 * Source:
+    - rework comments to reflect report terminology
     - precompute flowers (rotations set)
     - implement bfs
     - dotlog: invalid dir -> catch exception

@@ -57,7 +57,7 @@ int main(int argc, const char **argv) {
    * We also want to avoid having to manually manage memory, therefore only
    * basic searches -- not their combinators -- are exposed through the library.
    *
-   * This computes optimal pyramidal tour.
+   * This computes optimal pyramidal tour, writing a dot trace if so desired.
    */
   char *dotfilename = NULL;
   int64_t *cost;
