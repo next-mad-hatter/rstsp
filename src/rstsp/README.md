@@ -11,18 +11,16 @@
 
 ### Source structure
 
-    * `./rstsp/`      : toplevel
-
     * `./common/`     : frequently used bits
-    * `./tspgraph/`   : tsp search graphs
-    * `./tspsearch/`  : tsp search graph traversal implementations
+    * `./tspgraph/`   : tsp search tree descriptions
+    * `./tspsearch/`  : tsp search tree traversal
     * `./main/`       : rstsp utility's common functionality
-
-    * `./threaded/`   : experimental code, not necessarily functional
+    * `./librstsp`    : shared library interface
+    * `./rstsp/`      : toplevel includes
+    * `./experimental/`   : concurrency code, not necessarily functional
+    * `./sample-session-*.sml` : sample code as it could be used in a SML REPL
 
 ### Making smlnj-lib available under Poly/ML
-
-### Loading SML/NJ or Poly/ML repl
 
 ### Crosscompiler setup
 
@@ -32,6 +30,4 @@
         - `libdmp-10.dll` : mingw libgmp dl
         - `include/gmp.h` : mingw libgmp header
         - `pkg/           : mingw libgmp source (see `./build_mingw.sh`)
-
-### Foreign Function Interface
 
