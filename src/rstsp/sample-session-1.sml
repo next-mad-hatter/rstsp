@@ -6,10 +6,11 @@
  *)
 
 (**
- * For SML/NJ, issue
- *     use "./rstsp/rstsp-smlnj.sml";
- * first, For Poly/ML:
- *     use "./rstsp/rstsp-polyml.sml";
+ * Under SML/NJ, issue
+ *   use "./rstsp/rstsp-smlnj.sml";
+ * first.
+ * Under Poly/ML:
+ *   use "./rstsp/rstsp-polyml.sml";
  * .
  *)
 

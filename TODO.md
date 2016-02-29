@@ -26,7 +26,7 @@
     - persistent handouts/notes build ?
     - add overlays ?
 * Research:
-    - sb : better permutations?
+    - sb : better rotations/flowers (depends on node size?) ?
     - study iter convergence
     - preprocessing? (~rs-sort bad)
     - ≥3D euclidean applies?
@@ -59,6 +59,8 @@
     - rework comments to reflect report terminology
     - precompute flowers (rotations set)
     - implement bfs
+    - implement single tour reconstruction & compare vs lazy evaluation
+    - make flower depend on s.b. node size -> experiment ?
     - dotlog: invalid dir -> catch exception
     - make dotfile optional parameter to simplesearch (=dfs) & bfs
     - rot search: -a = -r -> ?
