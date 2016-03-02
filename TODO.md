@@ -33,6 +33,7 @@
     - relaxations
     - generator sandbox
 * Testing:
+    - add a larger tsplib "pyr vs s.b. only" test (and plot)
     - test on rs instances
     - benchmark more/larger tsplib/vlsi/... instances
     - implement -> test 3d-euclidean/manhattan instances
@@ -70,6 +71,7 @@
     - make stats / search return type polymorphic
     - iter searches: implement time limits
     - factor out sb_shuffle, rename to supnick_perm?
+    - update default searches in experimental search
     - factor default+threaded searches?
     - pyrrot + sbrot flip flop
     - add rounding to nearest integer as binarys option (now available only per REPL)

@@ -21,6 +21,15 @@ struct
                             0w0 => Word.div (size-i-0w1,0w2)
                           | _   => Word.div (size+i,0w2)
 
+  fun sb_unshuffle size i =
+  let
+    val m = Word.div (size-0w1,0w2)
+  in
+    case i <= m of
+      true => 0w2*(m-i)
+    | _   => 0w2*(i-m-0w1)+0w1
+  end
+
   (* inverse of "interleaved Supnick" permutation *)
   fun inter_shuffle n i =
   let
@@ -37,7 +46,9 @@ struct
   structure RotPyrSearch = RotSearchFn(
     struct
       structure Search = PyrSearch
-      fun max_perm size = size-0w1
+      (* we only have symmetric instances for now *)
+      (* fun max_perm size = size-0w1 *)
+      fun max_perm size = Word.div (size+0w1,0w2)
       val permute = cycle
     end
   )
@@ -45,10 +56,11 @@ struct
   structure RotSBSearch = RotSearchFn(
     struct
       structure Search = SBSearch
-      fun max_perm size = size + Word.div (size+0w1,0w2)
+      fun max_perm size = 0w2 * Word.div (size+0w1,0w2)
       fun permute size n =
-        if n < size then (cycle size n) o (sb_shuffle size)
-                    else (cycle size (n-size)) o (inter_shuffle size)
+        if n < Word.div(size+0w1,0w2)
+                    then (sb_unshuffle size) o (cycle size n) o (sb_shuffle size)
+                    else (cycle size (n-Word.div (size+0w1,0w2))) o (inter_shuffle size)
       (*
       fun max_perm size = 0w2*size + Word.div (size+0w1,0w2)
       fun permute size n =
@@ -93,7 +105,9 @@ struct
     struct
       structure Search = PyrSearch
       val inv_order = id
-      fun max_perm size = size-0w1
+      (* we only have symmetric instances for now *)
+      (* fun max_perm size = size-0w1 *)
+      fun max_perm size = Word.div(size,0w2)
       val permute = cycle
       fun increase rot = 0w1 + 0w2*rot
     end)
@@ -102,17 +116,11 @@ struct
     struct
       structure Search = SBSearch
       val inv_order = sb_shuffle
-      fun max_perm size = 0w2*size + Word.div (size+0w1,0w2)
+      fun max_perm size = 0w2 * Word.div (size+0w1,0w2)
       fun permute size n =
-        if n < 0w2*size then
-          let
-            val x = Word.mod(n,0w3)
-            val y = Word.div(n,0w3)
-            fun f1 i = if x <> 0w0 then i else size-0w1-i
-          in
-            (cycle size y) o f1 o (sb_shuffle size)
-          end
-        else (cycle size (n-0w2*size)) o (inter_shuffle size)
+        if n < Word.div(size+0w1,0w2)
+                    then (sb_unshuffle size) o (cycle size n) o (sb_shuffle size)
+                    else (cycle size (n-Word.div (size+0w1,0w2))) o (inter_shuffle size)
       fun increase rot = 0w1 + (Word.fromInt o Real.ceil) (((Real.fromInt o Word.toInt) rot) * 1.21)
     end)
 
