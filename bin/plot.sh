@@ -27,8 +27,10 @@ mkdir -p build || exit 1
 # tsplib benchmarks -- boxplots
 
 for FORMAT in pdf eps; do
-  ./plot_tsplib.py $FORMAT
-  ./plot_tsplib_times.py $FORMAT
+  for BATCH in small med; do
+    ./plot_tsplib_${BATCH}.py $FORMAT
+    ./plot_tsplib_${BATCH}_times.py $FORMAT
+  done
 done
 
 

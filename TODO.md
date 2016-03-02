@@ -5,6 +5,7 @@
 [//]: (# $Rev: 34 $)
 
 * Repo:
+    - readme: update test time info
     - rename rstsp -> p4/psb/........tsp
     - docs/src/etc: check balanced/strongly balanced naming
     - automate create-polyml-smlnjlib scripts
@@ -13,6 +14,7 @@
     - script via cmake ?
     - report: "build what" option
 * Report:
+    - if good flower found: reflect in benchmarks/conclusions
     - authors format check
     - TUG logo ?
     - index ?
@@ -33,7 +35,7 @@
     - relaxations
     - generator sandbox
 * Testing:
-    - add a larger tsplib "pyr vs s.b. only" test (and plot)
+    - add a larger "pyr vs s.b. vs flipflop" test -> plot -> report/slides/readme
     - test on rs instances
     - benchmark more/larger tsplib/vlsi/... instances
     - implement -> test 3d-euclidean/manhattan instances

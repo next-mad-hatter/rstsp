@@ -8,8 +8,8 @@
 
 require 'json'
 
-MAX_DIM = 130
-MAX_PROBS_PER_DATASET = 10
+MAX_DIM = 250
+MAX_PROBS_PER_DATASET = 25
 
 files = {}
 ["tsplib", "dimacs","vlsi"].each do |dataset|
@@ -33,27 +33,21 @@ end
 res = []
 files.each_key do |dataset|
   files[dataset].each do |size, tsp, supp|
-    ([[0,8],[0,"all"]]).each do |iters, max_rot|
-      ([[:pyramidal,nil],[:balanced,3]]).each do |algo, max|
-        [[nil,nil],[2,nil],[2,0]].each do |min_rot, flips|
-          next if flips and algo == :pyramidal
-          next if max_rot != "all" and not flips
-          res << {
-            :name => tsp,
-            :bin => :mlton,
-            :algo => algo,
-            :iters => iters,
-            :stale => nil,
-            :max_rot => max_rot,
-            :adapt => min_rot,
-            :flips => flips,
-            :max => max,
-            :data => "#{dataset}/#{tsp}",
-            :size => size,
-            :timeout => 600.0
-          }
-        end
-      end
+    ([[:pyramidal,nil],[:balanced,2],[:balanced,3]]).each do |algo, max|
+      res << {
+        :name => tsp,
+        :bin => :mlton,
+        :algo => algo,
+        :iters => 0,
+        :stale => nil,
+        :max_rot => "all",
+        :adapt => nil,
+        :flips => nil,
+        :max => max,
+        :data => "#{dataset}/#{tsp}",
+        :size => size,
+        :timeout => 600.0
+      }
     end
   end
 end
