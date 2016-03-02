@@ -20,7 +20,7 @@ data = [
 ]
 frame = pd.DataFrame()
 for d in data:
-  frame[d[0]] = pd.read_csv(d[1], sep=" ", header=None, names=["inst", "val"], usecols = ["val"])
+  frame[d[0]] = pd.read_csv(d[1], sep=" ", header=None, names=["inst", "val"], usecols = ["val"], na_values=["t"])
 
 color = '#000000'
 format = 'pdf'
