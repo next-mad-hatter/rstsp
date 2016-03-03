@@ -35,7 +35,7 @@
     - generator sandbox
 * Testing:
     - interleaved supnick: back transform vs none ?
-    - add a larger "pyr vs s.b. vs flipflop" test -> plot -> report/slides/readme
+    - add a larger "pyr vs s.b. m2/3 vs flipflop" test -> plot -> report/slides/readme
     - test on rs instances
     - benchmark more/larger tsplib/vlsi/... instances
     - implement -> test 3d-euclidean/manhattan instances
