@@ -8,8 +8,8 @@
 
 require 'json'
 
-MAX_DIM = 250
-MAX_PROBS_PER_DATASET = 27
+MAX_DIM = 130
+MAX_PROBS_PER_DATASET = 29
 
 files = {}
 ["tsplib", "dimacs","vlsi"].each do |dataset|
