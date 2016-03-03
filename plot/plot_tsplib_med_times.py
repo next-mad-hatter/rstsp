@@ -11,9 +11,9 @@ import seaborn as sns
 import pandas as pd
 
 data = [
-  ["pyr. (flower)", "data/tsplib_med_time_pyramidal_mdef_i0_jdef_rall_adef_fdef.csv"],
-  ["s.b. (M=2,flower)", "data/tsplib_med_time_balanced_m2_i0_jdef_rall_adef_fdef.csv"],
-  ["s.b. (M=3,flower)", "data/tsplib_med_time_balanced_m3_i0_jdef_rall_adef_fdef.csv"],
+  ["pyr. flower", "data/tsplib_med_time_pyramidal_mdef_i0_jdef_rall_adef_fdef.csv"],
+  ["s.b. (M=2) flower", "data/tsplib_med_time_balanced_m2_i0_jdef_rall_adef_fdef.csv"],
+  ["s.b. (M=3) flower", "data/tsplib_med_time_balanced_m3_i0_jdef_rall_adef_fdef.csv"],
 ]
 frame = pd.DataFrame()
 for d in data:
