@@ -1646,7 +1646,10 @@ search can be achieved via
 \]
 for strongly balanced tours such an extension is not so easy to find,
 and is left to be seen as an open question ---
-in our tests, we have not been able to significantly improve on
+in our tests, we have not been able to significantly improve\footnote{%
+  In our tests, we used $\mu$ along with a "interleaved" version of it --- see the code for the exact rotations set.
+}
+on
 \[
   \mathcal{F}\left(
   \mu
@@ -1727,8 +1730,9 @@ further confirm our expectations:
     in \cref{fig:benchtime4,fig:benchtime5}.
 \end{itemize}
 
-All results presented here have been produced on a test machine running
-Linux 3.10.17 ({\ttfamily x86\_64}) @ i5-2520M and 8GB of RAM.
+We would expect breadth-first search or dedicated (possibly
+machine-generated) implementations of above heuristics to bring valuable
+improvement in this regard.
 
 \begin{figure}[htbp]
 \centering
@@ -1762,6 +1766,9 @@ Linux 3.10.17 ({\ttfamily x86\_64}) @ i5-2520M and 8GB of RAM.
 \label{fig:benchTIME}
 \end{figure}
 
+All results presented here have been produced on a test machine running
+Linux 3.10.17 ({\ttfamily x86\_64}) @ i5-2520M and 8GB of RAM.
+
 We did not systematically measure memory consumption behaviour, as running
 time was the bottleneck factor in our tests.
 
@@ -1779,8 +1786,8 @@ Finally, we present, in \cref{fig:benchTSPLIB},%\footnote{%
     (pseudo)uniform distribution on fixed interval;
   \item computed tour cost (as quotient to optimum,
     named {\defstyle tour quality} below) as well as running times
-    over a set of TSPLIB and VLSI instances
-    (sample size $26$, instance size under $250$, most of them euclidean).
+    of ILS over a set of TSPLIB and VLSI instances
+    (sample size $29$, instance size under $250$, most of them euclidean).
 \end{enumerate}
 From what little testing this represents, we can reasonably conclude that
 \begin{itemize}
@@ -1801,11 +1808,11 @@ From what little testing this represents, we can reasonably conclude that
   \includegraphics[width=0.64\textwidth]{../plot/build/random_val.pdf}
 }\hfill\null\\
 \null\hfill%
-\subfloat[26 TSPLIB/VLSI instances: observed tour quality]{%
+\subfloat[29 TSPLIB/VLSI instances: observed tour quality]{%
   \includegraphics[width=0.67\textwidth]{../plot/build/tsplib_med_val.pdf}
 }\hfill\null\\
 \null\hfill%
-\subfloat[26 TSPLIB/VLSI instances: runtime measured]{%
+\subfloat[29 TSPLIB/VLSI instances: runtime measured]{%
   \includegraphics[width=0.67\textwidth]{../plot/build/tsplib_med_time.pdf}
 }\hfill\null
 \caption{Benchmark results.}
@@ -1838,13 +1845,13 @@ we have further confirmed the linear time conjecture for select few node size li
 \subsection{Areas for further research}
 
 We shall wrap up our discussion by identifying here briefly just some of tasks
-and areas which we could, given unlimited time, turn our attention to or
+and areas which one could, given unlimited time, turn our attention to or
 explore in more detail:
 \begin{itemize}
   \item
     precompute flowers as sets (to guarantee uniqueness);
   \item
-    implement breadth first search over recursion tree;
+    implement breadth-first search over recursion tree;
   \item
     study more flowers (e.g. dependent on node size limit) over strongly balanced tours;
   \item
@@ -1853,9 +1860,9 @@ explore in more detail:
   \item
     generate and benchmark RS-TSP instances;
   \item
-    benchmark more node sizes in strongly balanced search;
-  \item
     study in more detail observed convergence behaviour of ILS heuristics;
+  \item
+    benchmark further node sizes in strongly balanced search;
   \item
     provide for possibility of branch cutting in local search;
   \item

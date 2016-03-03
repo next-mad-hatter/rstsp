@@ -12,9 +12,8 @@
     - complete the source readme
     - wiki / bug tracker ?
     - script via cmake ?
-    - report: "build what" option
+    - report: "build report/slides/handouts" option
 * Report:
-    - if good flower found: reflect in benchmarks/conclusions
     - authors format check
     - TUG logo ?
     - index ?
@@ -35,6 +34,7 @@
     - relaxations
     - generator sandbox
 * Testing:
+    - interleaved supnick: back transform vs none ?
     - add a larger "pyr vs s.b. vs flipflop" test -> plot -> report/slides/readme
     - test on rs instances
     - benchmark more/larger tsplib/vlsi/... instances

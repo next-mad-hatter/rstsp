@@ -29,8 +29,8 @@ mkdir -p build || exit 1
 for FORMAT in pdf eps; do
   for BATCH in small med; do
     ./plot_tsplib_${BATCH}.py $FORMAT
-    ./plot_tsplib_${BATCH}_times.py $FORMAT
   done
+  ./plot_tsplib_med_times.py $FORMAT
 done
 
 
