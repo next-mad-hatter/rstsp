@@ -10,6 +10,9 @@ import sys
 import seaborn as sns
 import pandas as pd
 
+#import matplotlib.pyplot as plt
+#plt.figure(figsize=(8,5))
+
 data = [
   ["pyr. (flower)", "data/tsplib_med_val_pyramidal_mdef_i0_jdef_rall_adef_fdef.csv"],
   ["s.b. (M=2,flower)", "data/tsplib_med_val_balanced_m2_i0_jdef_rall_adef_fdef.csv"],
@@ -35,6 +38,6 @@ sns.set_style("whitegrid",rc={
   })
 sns.set_palette("Set1",desat=0.22)
 sns.axlabel("tour quality", "") #"heuristic")
-ax = sns.boxplot(frame, orient="h")
+ax = sns.boxplot(frame, orient="h", width=0.79)
 ax.get_figure().subplots_adjust(left=0.24)
 ax.get_figure().savefig('build/tsplib_med_val.' + format, format=format, transparent=True)

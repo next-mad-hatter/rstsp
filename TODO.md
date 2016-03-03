@@ -14,7 +14,6 @@
     - script via cmake ?
     - report: "build report/slides/handouts" option
 * Report:
-    - authors format check
     - TUG logo ?
     - index ?
     - (also in slides: add a frame to show partial tour in illustration of s.b. options)
@@ -34,7 +33,6 @@
     - relaxations
     - generator sandbox
 * Testing:
-    - interleaved supnick: back transform vs none ?
     - add a larger "pyr vs s.b. m2/3 vs flipflop" test -> plot -> report/slides/readme
     - test on rs instances
     - benchmark more/larger tsplib/vlsi/... instances

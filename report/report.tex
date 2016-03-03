@@ -1344,6 +1344,8 @@ certainly no less interesting.
 For $M \in \mathbb{N}$, we define $\operatorname{SBal}_n^M$ to be the set of all
 strongly balanced tours obtained by restricting each $\mathcal{B}_m$ in \cref{def:sbtour}
 to contain only elements of size no higher than $M$.
+We shall call the TSP restricted to said set
+{\defstyle strongly balanced TSP} (with {\defstyle maximum node size} $M$).
 \end{define}
 
 \begin{remark}
@@ -1357,8 +1359,6 @@ to contain only elements of size no higher than $M$.
   Also, with $M \geq 1$ the $\operatorname{append}$ option is always available,
   hence for every $M$ $\operatorname{SBal}_n^M$ induces an exponential neighbourhood
   in $\mathcal{T}_n$ with centre $\left(\ldots,5,3,1,2,4,\ldots\right)$.
-  We shall call the TSP restricted to said neighbourhood
-  {\defstyle strongly balanced TSP} (with {\defstyle maximum node size} $M$).
 \end{remark}
 
 Recall how we could uniquely identify a partially constructed pyramidal
@@ -1648,7 +1648,7 @@ for strongly balanced tours such an extension is not so easy to find,
 and is left to be seen as an open question ---
 in our tests, we have not been able to significantly improve
 on\footnote{%
-  In our tests, we used $\mu$ along with a "interleaved" version of it --- see the code for the exact rotations set.
+  In our tests, we used $\mu$ alongside an "interleaved" version thereof --- see our code for exact rotations set.
 }
 \[
   \mathcal{F}\left(
@@ -1730,10 +1730,6 @@ further confirm our expectations:
     in \cref{fig:benchtime4,fig:benchtime5}.
 \end{itemize}
 
-We would expect breadth-first search or dedicated (possibly
-machine-generated) implementations of above heuristics to bring
-notable improvement in this regard.
-
 \begin{figure}[htbp]
 \centering
   \null\hfill%
@@ -1762,62 +1758,79 @@ notable improvement in this regard.
     \label{fig:benchtime5}
   }
   \hfill\null
-\caption{Measured local search running time.}
+\caption{%
+  Measured local search running time.
+  Results presented here have been produced on a test machine running
+  Linux 3.10.17 ({\ttfamily x86\_64}) @ i5-2520M and 8GB of RAM.
+}
 \label{fig:benchTIME}
 \end{figure}
 
-All results presented here have been produced on a test machine running
-Linux 3.10.17 ({\ttfamily x86\_64}) @ i5-2520M and 8GB of RAM.
+We would expect breadth-first search or dedicated (possibly
+machine-generated) implementations of above heuristics to bring
+notable improvement in this regard.
 
 We did not systematically measure memory consumption behaviour, as running
 time was the bottleneck factor in our tests.
 
 \subsection{Tour benchmarks}
 
-Finally, we present, in \cref{fig:benchTSPLIB},%\footnote{%
+Finally, we present, in % in \cref{fig:benchTSPLIB},%\footnote{%
 %  Here, {\defstyle flipflop} refers to the method of alternating
 %  between pyramidal (of smaller flower) and strongly balanced search.
 %},
-\begin{enumerate}[(i)]
-  \item
-    computed tour cost for
-    randomly generated (symmetric) instances,
+\begin{itemize}
+  \item \cref{fig:benchRAND}: computed tour cost over
+    randomly generated symmetric instances
     where each matrix entry is sampled independently from
-    (pseudo)uniform distribution on fixed interval;
-  \item computed tour cost (as quotient to optimum,
+    (pseudorandom) uniform distribution on same fixed interval;
+  \item \cref{fig:benchTSPLIB}: computed tour cost (as quotient to optimum,
     named {\defstyle tour quality} below) as well as running times
     of ILS over a set of TSPLIB instances
     (sample size $28$, instance size under $130$, most of them euclidean).
-\end{enumerate}
+\end{itemize}
+
+\begin{figure}[bhtp]
+\centering
+  \includegraphics[width=0.66\textwidth]{../plot/build/random_val.pdf}
+\caption{Tour cost comparison over random instances.
+  Here, $r$ denotes maximum number of rotations considered,
+  $i$ --- maximum number of iterations in ILS.
+}
+\label{fig:benchRAND}
+\end{figure}
+
+\begin{figure}[htbp]
+%\thisfloatpagestyle{empty}
+%\null\hfill%
+%\subfloat[Tour cost comparison over random instances.
+%  Here, $r$ denotes maximum number of rotations taken from the
+%  flower, $i$ --- maximum number of iterations in ILS.
+%]{%
+%  \includegraphics[width=0.64\textwidth]{../plot/build/random_val.pdf}
+%}\hfill\null\\
+\null\hfill%
+\subfloat[observed tour quality]{%
+  \includegraphics[width=0.66\textwidth]{../plot/build/tsplib_med_val.pdf}
+}\hfill\null\\
+\null\hfill%
+\subfloat[measured runtime]{%
+  \includegraphics[width=0.66\textwidth]{../plot/build/tsplib_med_time.pdf}
+}\hfill\null
+\caption{Benchmark results: 28 TSPLIB instances.}
+\label{fig:benchTSPLIB}
+\end{figure}
+
 From what little testing this represents, we can reasonably conclude that
 \begin{itemize}
-  \item pyramidal tours yield a viable local search heuristic for the TSP;
+  \item prior to the flower extension, none of the two neighbourhoods deliver
+    interesting results in general case;
+  \item pyramidal tours, thus extended, yield a viable local search heuristic for the TSP;
   \item strongly balanced tours not so readily do so;
     it remains to be seen if a good extension (e.g.\ via a flower)
     or a special case where this neighbourhood yields better results
     exist.
 \end{itemize}
-
-\begin{figure}[htbp]
-\thisfloatpagestyle{empty}
-\null\hfill%
-\subfloat[Tour cost comparison over random instances.
-  Here, $r$ denotes maximum number of rotations taken from the
-  flower, $i$ --- maximum number of iterations in ILS.
-]{%
-  \includegraphics[width=0.64\textwidth]{../plot/build/random_val.pdf}
-}\hfill\null\\
-\null\hfill%
-\subfloat[28 TSPLIB instances: observed tour quality]{%
-  \includegraphics[width=0.67\textwidth]{../plot/build/tsplib_med_val.pdf}
-}\hfill\null\\
-\null\hfill%
-\subfloat[28 TSPLIB instances: runtime measured]{%
-  \includegraphics[width=0.67\textwidth]{../plot/build/tsplib_med_time.pdf}
-}\hfill\null
-\caption{Benchmark results.}
-\label{fig:benchTSPLIB}
-\end{figure}
 
 %\clearpage
 
@@ -1884,7 +1897,7 @@ This concludes our report.
 \pgfornament[anchor=center,scale=0.35]{87}
 \vspace{2em}
 \end{center}
-\clearpage
+%\clearpage
 
 %\begin{figure}[hbp]
 %%\begin{wrapfigure}{r}{0.5\textwidth}

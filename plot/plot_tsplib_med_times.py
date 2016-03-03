@@ -35,7 +35,7 @@ sns.set_style("whitegrid",rc={
   })
 sns.set_palette("Set1",desat=0.22)
 sns.axlabel("time needed", "") #"heuristic")
-ax = sns.boxplot(frame, orient="h")
+ax = sns.boxplot(frame, orient="h", width=0.79)
 ax.get_figure().subplots_adjust(left=0.24)
 ax.set(xscale="log")
 ax.get_figure().savefig('build/tsplib_med_time.' + format, format=format, transparent=True)
