@@ -11,12 +11,12 @@ import seaborn as sns
 import pandas as pd
 
 data = [
-  ["pyr. (adaptive)", "data/tsplib_small_val_pyramidal_mdef_i0_jdef_rall_a2_fdef.csv"],
-  ["pyr. (flower)", "data/tsplib_small_val_pyramidal_mdef_i0_jdef_rall_adef_fdef.csv"],
-  ["s.b. (M=3,adaptive)", "data/tsplib_small_val_balanced_m3_i0_jdef_rall_a2_fdef.csv"],
-  ["s.b. (M=3,flower)", "data/tsplib_small_val_balanced_m3_i0_jdef_rall_adef_fdef.csv"],
-  ["flipflop (r=8)", "data/tsplib_small_val_balanced_m3_i0_jdef_r8_a2_f0.csv"],
+  ["pyr. adaptive", "data/tsplib_small_val_pyramidal_mdef_i0_jdef_rall_a2_fdef.csv"],
+  ["pyr. rotated", "data/tsplib_small_val_pyramidal_mdef_i0_jdef_rall_adef_fdef.csv"],
+  ["s.b. (M=3) adaptive", "data/tsplib_small_val_balanced_m3_i0_jdef_rall_a2_fdef.csv"],
+  ["s.b. (M=3) rotated", "data/tsplib_small_val_balanced_m3_i0_jdef_rall_adef_fdef.csv"],
   ["flipflop", "data/tsplib_small_val_balanced_m3_i0_jdef_rall_a2_f0.csv"],
+  ["s.b. (M=4) rotated", "data/tsplib_add_val_balanced_m4_i0_jdef_rall_adef_fdef.csv"],
 ]
 frame = pd.DataFrame()
 for d in data:

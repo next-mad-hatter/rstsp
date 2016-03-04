@@ -34,6 +34,7 @@
     - generator sandbox
 * Testing:
     - add a larger "pyr vs s.b. m2/3 vs flipflop" test -> plot -> report/slides/readme
+    - benchmark different interleaved supnick transform directions, back transform etc..
     - test on rs instances
     - benchmark more/larger tsplib/vlsi/... instances
     - implement -> test 3d-euclidean/manhattan instances

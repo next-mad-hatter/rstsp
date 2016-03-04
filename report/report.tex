@@ -1760,7 +1760,7 @@ further confirm our expectations:
   \hfill\null
 \caption{%
   Measured local search running time.
-  Results presented here have been produced on a test machine running
+  Results presented here have been produced on a machine running
   Linux 3.10.17 ({\ttfamily x86\_64}) @ i5-2520M and 8GB of RAM.
 }
 \label{fig:benchTIME}
@@ -1772,6 +1772,11 @@ notable improvement in this regard.
 
 We did not systematically measure memory consumption behaviour, as running
 time was the bottleneck factor in our tests.
+
+Another point we feel needs to be mentioned is that for now, we do not
+compute rotations as a set, rather simply iterating given enumerating map
+--- which we have to consider when evaluating running time measurements in
+ILS.
 
 \subsection{Tour benchmarks}
 
@@ -1787,10 +1792,10 @@ Finally, we present, in % in \cref{fig:benchTSPLIB},%\footnote{%
   \item \cref{fig:benchTSPLIB}: computed tour cost (as quotient to optimum,
     named {\defstyle tour quality} below) as well as running times
     of ILS over a set of TSPLIB instances
-    (sample size $28$, instance size under $130$, most of them euclidean).
+    (sample size $28$, instance size under $130$, many of them euclidean).
 \end{itemize}
 
-\begin{figure}[bhtp]
+\begin{figure}[bp]
 \centering
   \includegraphics[width=0.66\textwidth]{../plot/build/random_val.pdf}
 \caption{Tour cost comparison over random instances.
@@ -1858,24 +1863,24 @@ we have further confirmed the linear time conjecture for select few node size li
 \subsection{Areas for further research}
 
 We shall wrap up our discussion by identifying here briefly just some of tasks
-and areas which one could, given unlimited time, turn our attention to or
+and areas which one could, given time, turn our attention to or
 explore in more detail:
 \begin{itemize}
   \item
-    precompute flowers as sets (to guarantee uniqueness);
+    precompute flowers as sets to guarantee rotations' uniqueness;
   \item
     implement breadth-first search over recursion tree;
   \item
     study more flowers (e.g. dependent on node size limit) over strongly balanced tours;
   \item
     implement the interface to and test our neighbourhoods on further metrics
-    and TSP instances (such as asymmetric ones for pyramidal search);
+    and TSP instances --- such as asymmetric ones for pyramidal search;
   \item
     generate and benchmark RS-TSP instances;
   \item
-    study in more detail observed convergence behaviour of ILS heuristics;
+    benchmark higher node size limits (in strongly balanced search) as well as higher sized instances;
   \item
-    benchmark further node sizes in strongly balanced search;
+    study in more detail observed convergence behaviour of ILS heuristics;
   \item
     provide for possibility of branch cutting in local search;
   \item
@@ -1897,7 +1902,7 @@ This concludes our report.
 \pgfornament[anchor=center,scale=0.35]{87}
 \vspace{2em}
 \end{center}
-%\clearpage
+\clearpage
 
 %\begin{figure}[hbp]
 %%\begin{wrapfigure}{r}{0.5\textwidth}
