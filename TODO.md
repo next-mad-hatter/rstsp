@@ -53,7 +53,7 @@
     - batch runner: failed vs timed out stats
     - batch runner: rename timeout -> time_limit
     - create_random_data (and more?): write <-> rescue unlink
-    - mk_batches & mk_csv : factor out common code
+    - plot_, mk_batches, mk_csv scripts: factor out common code
     - random data: compute hk bounds ?
     - do we need merge xscales script for gnuplot?
     - sometimes: test scripts in fresh clone
@@ -61,8 +61,9 @@
     - rework comments to reflect report terminology
     - precompute flowers (rotations set)
     - implement bfs
+    - implement choice of s.b. interleaved transform direction
     - implement single tour reconstruction & compare vs lazy evaluation
-    - make flower depend on s.b. node size -> experiment ?
+    - make flower dependency on s.b. node size possible ?
     - dotlog: invalid dir -> catch exception
     - make dotfile optional parameter to simplesearch (=dfs) & bfs
     - rot search: -a = -r -> ?

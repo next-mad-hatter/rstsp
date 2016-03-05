@@ -30,7 +30,9 @@ for FORMAT in pdf eps; do
   for BATCH in small med; do
     ./plot_tsplib_${BATCH}.py $FORMAT
   done
-  ./plot_tsplib_med_times.py $FORMAT
+  for BATCH in med; do
+    ./plot_tsplib_${BATCH}_times.py $FORMAT
+  done
 done
 
 

@@ -50,14 +50,15 @@
           ./bin/test.sh
    ```
    , which requires ruby ≥ 1.9.3 & the powerbar gem.
+   If your build works correctly, all tests in
+   random/len and "tsplib/small" batches should pass.
    Test results can then be found under `./test/log/`.
 
    During its first run, this script will also generate random test data,
    which needs significant chunk of space -- about 200MB right now.
 
    Rinning this takes some time (at time of writing, bar random data generation,
-   this amounts to about two hours on our machine for both mlton- and polyml-compiled code ---
-   you might want to adjust the value of MAX_PROBS_PER_DATASET in `./test/mk_batches_tsplib_*.rb`, of which only the "mid" one is used in the report for now)
+   this amounts to about two hours on our machine for both mlton- and polyml-compiled code)
    and memory (sometimes well over 3GB in our tests).
 
 ### Plotting test results

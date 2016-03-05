@@ -64,6 +64,14 @@ struct
     end
   )
 
+  (**
+   * Ad s.b. ILS:
+   *
+   * as of now, normal interleaved supnick transform seems
+   * to perform somewhat better than reversed version,
+   * but, interestingly, larger node sizes yield better results with
+   * inverted transform.
+   *)
   structure RotSBSearch = RotSearchFn(
     struct
       structure Search = SBSearch
@@ -78,7 +86,14 @@ struct
       fun permute size n =
         if n < Word.div(size+0w1,0w2)
                     then (sb_unshuffle size) o (cycle size n) o (sb_shuffle size)
+                    else (inter_shuffle size) o (cycle size (n-Word.div (size+0w1,0w2))) o (inter_unshuffle size)
+      (*
+      fun max_perm size = 0w2 * Word.div (size+0w1,0w2)
+      fun permute size n =
+        if n < Word.div(size+0w1,0w2)
+                    then (sb_unshuffle size) o (cycle size n) o (sb_shuffle size)
                     else (inter_unshuffle size) o (cycle size (n-Word.div (size+0w1,0w2))) o (inter_shuffle size)
+      *)
       (*
       fun max_perm size = Word.div (size+0w1,0w2)
       fun permute size n = (sb_unshuffle size) o (cycle size n) o (sb_shuffle size)
@@ -136,7 +151,14 @@ struct
       fun permute size n =
         if n < Word.div(size+0w1,0w2)
                     then (sb_unshuffle size) o (cycle size n) o (sb_shuffle size)
+                    else (inter_shuffle size) o (cycle size (n-Word.div (size+0w1,0w2))) o (inter_unshuffle size)
+      (*
+      fun max_perm size = 0w2 * Word.div (size+0w1,0w2)
+      fun permute size n =
+        if n < Word.div(size+0w1,0w2)
+                    then (sb_unshuffle size) o (cycle size n) o (sb_shuffle size)
                     else (inter_unshuffle size) o (cycle size (n-Word.div (size+0w1,0w2))) o (inter_shuffle size)
+      *)
       (*
       fun max_perm size = Word.div (size+0w1,0w2)
       fun permute size n = (sb_unshuffle size) o (cycle size n) o (sb_shuffle size)
