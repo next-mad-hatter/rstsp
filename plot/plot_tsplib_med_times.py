@@ -17,7 +17,10 @@ data = [
 ]
 frame = pd.DataFrame()
 for d in data:
-  frame[d[0]] = pd.read_csv(d[1], sep=" ", header=None, names=["inst", "time"], usecols = ["time"], na_values=["t"])
+  try:
+    frame[d[0]] = pd.read_csv(d[1], sep=" ", header=None, names=["inst", "time"], usecols = ["time"], na_values=["t"])
+  except IOError:
+    next
 
 color = '#000000'
 format = 'pdf'
