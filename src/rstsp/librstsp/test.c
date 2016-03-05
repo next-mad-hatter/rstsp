@@ -91,7 +91,7 @@ int main(int argc, const char **argv) {
   }
 
   /**
-   * Iterative pyramidal search which considers up to n rotations in each
+   * Iterative pyramidal search which considers up to ((n+1) div 2) rotations in each
    * iteration.
    */
   uint32_t max_iters = 10;
@@ -110,7 +110,7 @@ int main(int argc, const char **argv) {
   }
 
   /**
-   * Iterative strongly balanced search, flower size 1.5*n (ceil'ed).
+   * Iterative strongly balanced search, flower size 2*((n+1) div 2).
    */
   max_rots = 2*prob_size;
   result = (Pointer *)rstsp_iter_sb_search(prob_size, *dst, max_width, max_iters, stale_iters, max_rots);

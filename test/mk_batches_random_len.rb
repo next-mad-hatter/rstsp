@@ -31,6 +31,7 @@ set.each do |bin,size|
         :max_rot => max_rot,
         :size => size,
         :data => "random/random.#{size}",
+        :verbose => true,
         :timeout => 45.0
       }
     end

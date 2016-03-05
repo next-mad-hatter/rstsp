@@ -5,15 +5,15 @@
 [//]: (# $Rev: 34 $)
 
 * Repo:
+    - readme: update test time info
     - rename rstsp -> p4/psb/........tsp
     - docs/src/etc: check balanced/strongly balanced naming
     - automate create-polyml-smlnjlib scripts
     - complete the source readme
     - wiki / bug tracker ?
     - script via cmake ?
-    - report: "build what" option
+    - report: "build report/slides/handouts" option
 * Report:
-    - authors format check
     - TUG logo ?
     - index ?
     - (also in slides: add a frame to show partial tour in illustration of s.b. options)
@@ -33,6 +33,8 @@
     - relaxations
     - generator sandbox
 * Testing:
+    - add a larger "pyr vs s.b. m2/3 vs flipflop" test -> plot -> report/slides/readme
+    - benchmark different interleaved supnick transform directions, back transform etc..
     - test on rs instances
     - benchmark more/larger tsplib/vlsi/... instances
     - implement -> test 3d-euclidean/manhattan instances
@@ -51,7 +53,7 @@
     - batch runner: failed vs timed out stats
     - batch runner: rename timeout -> time_limit
     - create_random_data (and more?): write <-> rescue unlink
-    - mk_batches & mk_csv : factor out common code
+    - plot_, mk_batches, mk_csv scripts: factor out common code
     - random data: compute hk bounds ?
     - do we need merge xscales script for gnuplot?
     - sometimes: test scripts in fresh clone
@@ -59,8 +61,9 @@
     - rework comments to reflect report terminology
     - precompute flowers (rotations set)
     - implement bfs
+    - implement choice of s.b. interleaved transform direction
     - implement single tour reconstruction & compare vs lazy evaluation
-    - make flower depend on s.b. node size -> experiment ?
+    - make flower dependency on s.b. node size possible ?
     - dotlog: invalid dir -> catch exception
     - make dotfile optional parameter to simplesearch (=dfs) & bfs
     - rot search: -a = -r -> ?
@@ -70,6 +73,7 @@
     - make stats / search return type polymorphic
     - iter searches: implement time limits
     - factor out sb_shuffle, rename to supnick_perm?
+    - update default searches in experimental search
     - factor default+threaded searches?
     - pyrrot + sbrot flip flop
     - add rounding to nearest integer as binarys option (now available only per REPL)

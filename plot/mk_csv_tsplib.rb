@@ -41,7 +41,7 @@ def inst_val(tsp,val)
   if $bounds[tsp] and val then val.to_f / $bounds[tsp] else nil end
 end
 
-["small"].each do |batch|
+["small","med","add","large"].each do |batch|
   begin
     data = JSON.parse(File.read(LOG_DIR + "/tsplib_#{batch}.json"), {:symbolize_names => true})
            .select{|x| not x[:err] =~ /Input Error/}

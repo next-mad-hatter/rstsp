@@ -1,7 +1,9 @@
 
-#                         Pyramidal & Strongly Balanced TSP Traversal
+#                        A TSP Solver
 
-##                                 Quick Start Guide
+##   (an implementation of pyramidal & strongly balanced local search)
+
+##                     Quick Start Guide
 
 ### Building
 
@@ -9,13 +11,13 @@
    ```
            ./bin/build.sh
    ```
-   requires a working `mlton` installation (as well as a Bourne-Shell compatible interpreter).
+   requires a working mlton installation (as well as a Bourne-Shell compatible interpreter).
    Built executables and libraries will be put into `./src/rstsp/build/`.
 
    Building mingw binaries requires a suitable (i.e. featuring gmp)
    cross-compiler environment.
 
-   If you don't have `exuberant-ctags` installed,
+   If you don't have exuberant-ctags installed,
    you can simply ignore the ctags error message.
 
    For more details, see `./src/rstsp/build_*.sh` and `./src/rstsp/README.md`.
@@ -27,11 +29,11 @@
    ```
           ./bin/fetch-data.sh
    ```
-   -- which uses `wget`, `tar`, `gunzip` and `lynx` and takes about 60MB,
+   -- which uses wget, tar, gunzip and lynx and takes about 60MB,
    plus about 20MB in `./tmp/` which can be cleaned afterwards.
 
    `./bin/data_stats.sh` will list present tsp instances sorted by
-   probelm size (uses `ruby`).
+   probelm size (uses ruby).
 
 ### Running tests
 
@@ -47,14 +49,16 @@
    ```
           ./bin/test.sh
    ```
-   , which requires `ruby` ≥ 1.9.3 & `powerbar` gem.
+   , which requires ruby ≥ 1.9.3 & the powerbar gem.
+   If your build works correctly, all tests in
+   random/len and "tsplib/small" batches should pass.
+   Test results can then be found under `./test/log/`.
 
    During its first run, this script will also generate random test data,
    which needs significant chunk of space -- about 200MB right now.
 
-   Also takes some time (at time of writing, not counting random data generation,
-   this amounts to about two hours on our machine for both mlton- and polyml-compiled code ---
-   you might want to adjust the value of MAX_PROBS_PER_DATASET in `./test/mk_batches_tsplib_small.rb`)
+   Rinning this takes some time (at time of writing, bar random data generation,
+   this amounts to about two hours on our machine for both mlton- and polyml-compiled code)
    and memory (sometimes well over 3GB in our tests).
 
 ### Plotting test results
@@ -63,7 +67,8 @@
    ```
           ./bin/plot.sh
    ```
-   will plot results of previous test run (requires `ruby`, `gnuplot`, `matplotlib`, `pandas`, `seaborn`, `ghostscript`, `metapost`, `graphviz` and probably more).
+   will plot results of previous test run
+   (requires ruby, gnuplot, matplotlib, pandas, seaborn, ghostscript, metapost, graphviz and probably more).
    Generated plots will be put to `./plot/build` folder.
 
 ### Generating report and slides
@@ -72,8 +77,8 @@
    ```
    ./report/build.sh
    ```
-   , which requires a sufficiently modern (featuring e.g. `lualatex`)
-   LaTeX distribution as well as `ghostscript`.
+   , which requires a sufficiently modern (featuring e.g. lualatex)
+   LaTeX distribution as well as ghostscript.
 
 ### Packaging
 
