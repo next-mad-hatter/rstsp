@@ -569,8 +569,8 @@ or some cost improvement metric.
 
 \subsection{Tours and permutations}
 
-Given the set $\mathcal{N}_n$ of $n$ cities, let from now on
-$\mathcal{S}_n$ denote the symmetric group (on $\mathcal{N}_n$).
+Given the set $\mathcal{N}_n$ of $n$ cities, let $\mathcal{S}_n$ denote the
+symmetric group (on $\mathcal{N}_n$) from now on.
 
 \begin{define}[associated permutation]
   We define $\sigma_{\Cdot}$ (using argument-in-subscript notation) to be the map
@@ -1035,7 +1035,7 @@ In what now follows, $X$ can thus be seen as some memory holding such evaluation
 \begin{proposition}[memoized solution to pyramidal TSP]
 \label{prop:pyrmem}
 %\annotation{layout!}
-  Given a set of cities $\mathcal{N}_n$, let, for cities $i,j$ and cost matrix $C$,
+  Given a set of cities $\mathcal{N}_n$, let, for cities $i,j$ a cost matrix $C$, and arbitrary set $X$,
   \begin{align}
     \label{eq:pyrmem}
     \widehat{\Phi}_C\left((i,j),X\right) & \coloneqq
@@ -1116,9 +1116,9 @@ is visited no more than once, we intuitively arrive at following result:
   pyramidal TSP is polynomially solvable.
 \end{corollary}
 \begin{proof}
-  Consider $\widehat{\Phi}_C\left((i,j),\cdot\right)$ as it was defined in \cref{prop:pyrmem}.
-  If, for a bound $M$,
-  we now rewrite the recurrence relation from definition of $\widehat{\Phi}_C$ as
+  Consider the map $\widehat{\Phi}_C$ as it was defined in \cref{prop:pyrmem}.
+  If, for a bound $M$, we now rewrite the recurrence relation from
+  said definition of $\widehat{\Phi}_C$ as
   \begin{align}
     \label{eq:pyrtime}
     R\left((i,j),X\right) & \coloneqq
@@ -1247,8 +1247,8 @@ While its merits and caveats
 %compared to the functional approach
 are manifold, there is one important requirement said technique impedes on the
 problem: for it to work, terminal nodes (or leafs) of the recursion tree
-have to be feasibly computable beforehand.  While this presents no problem
-for pyramidal TSP, this is much less the case for the neighbourhood we are
+must be feasibly computable beforehand.  While this presents no problem
+for pyramidal TSP, it is much less the case for the neighbourhood we are
 about to see --- which made bottom-up approach ultimately unsuitable for
 this project.
 
@@ -1667,7 +1667,7 @@ on\footnote{%
 \]
 in this regard.
 
-In our implementation we sometimes refer to permutations from the set $S$ above
+In our implementation we also refer to permutations from the set $S$ above
 as {\defstyle rotations} of $T$.
 We also define therein a version of iterated local search which we call
 {\defstyle adaptive}, wherein we increase the number of considered rotations
