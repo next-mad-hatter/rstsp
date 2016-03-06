@@ -37,6 +37,7 @@
     - benchmark different interleaved supnick transform directions, back transform etc..
     - test on rs instances
     - benchmark more/larger tsplib/vlsi/... instances
+    - script node types count computation
     - implement -> test 3d-euclidean/manhattan instances
     - implement -> test atsp instances
     - combine trampoline w/ other heuristics ?
