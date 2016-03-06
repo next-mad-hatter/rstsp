@@ -26,6 +26,7 @@
     - persistent handouts/notes build ?
     - add overlays ?
 * Research:
+    - node types number: size @ fixed point grows by one ?
     - sb : better rotations/flowers (depends on node size?) ?
     - study iter convergence
     - preprocessing? (~rs-sort bad)
