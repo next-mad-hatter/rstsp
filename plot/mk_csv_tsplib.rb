@@ -59,7 +59,6 @@ end
   min_rots = data.collect{|x| x[:adapt]}.uniq
   flips = data.collect{|x| x[:flips]}.uniq
 
-  log_fields = {:time => :real_time}
   algos.each do |algo|
     maxs.each do |max|
       next if ((max and algo == "pyramidal") or (!max and algo == "balanced"))
@@ -76,12 +75,21 @@ end
                         .select{|x| x[:adapt] == min_rot}
                         .select{|x| x[:max_rot] == max_rot}
                         .select{|x| x[:flips] == flip}
-                [:val, :time].each do |plot|
+                [:val, :time, :conv].each do |plot|
                   csv = instances.collect{|tsp|
                     e = d.find{|x| x[:name] == tsp}
                     #puts e.delete_if{|k| [:err,:out,:cmd].include? k}.inspect
                     f = if e then
-                          if plot == :val then inst_val(inst_name(tsp), e[:val]) else e[log_fields[plot]] end
+                          case plot
+                          when :val
+                            then inst_val(inst_name(tsp), e[:val])
+                          when :time
+                            e[:real_time]
+                          when :conv
+                            e[:err].scan(/Iteration:\s+\d+\n/).length
+                          else
+                            throw "not implemented"
+                          end
                         else
                           nil
                         end
