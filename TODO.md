@@ -26,6 +26,7 @@
     - persistent handouts/notes build ?
     - add overlays ?
 * Research:
+    - node types number: size @ fixed point grows by one ?
     - sb : better rotations/flowers (depends on node size?) ?
     - study iter convergence
     - preprocessing? (~rs-sort bad)
@@ -37,6 +38,7 @@
     - benchmark different interleaved supnick transform directions, back transform etc..
     - test on rs instances
     - benchmark more/larger tsplib/vlsi/... instances
+    - script node types count computation
     - implement -> test 3d-euclidean/manhattan instances
     - implement -> test atsp instances
     - combine trampoline w/ other heuristics ?

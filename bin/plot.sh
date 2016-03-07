@@ -32,6 +32,7 @@ for FORMAT in pdf eps; do
   done
   for BATCH in med; do
     ./plot_tsplib_${BATCH}_times.py $FORMAT
+    ./plot_tsplib_${BATCH}_conv.py $FORMAT
   done
 done
 

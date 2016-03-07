@@ -1780,49 +1780,59 @@ ILS.
 
 \subsection{Tour benchmarks}
 
-Finally, we present, in % in \cref{fig:benchTSPLIB},%\footnote{%
+Finally, we present, in \cref{fig:benchTSPLIB},%\footnote{%
 %  Here, {\defstyle flipflop} refers to the method of alternating
 %  between pyramidal (of smaller flower) and strongly balanced search.
 %},
 \begin{itemize}
-  \item \cref{fig:benchRAND}: computed tour cost over
+  \item %\cref{fig:benchRAND}:
+    computed tour cost over
     randomly generated symmetric instances
     where each matrix entry is sampled independently from
     (pseudorandom) uniform distribution on same fixed interval;
-  \item \cref{fig:benchTSPLIB}: computed tour cost (as quotient to optimum,
+  \item %\cref{fig:benchTSPLIB}:
+    computed tour cost (as quotient to optimum,
     named {\defstyle tour quality} below) as well as running times
     of ILS over a set of TSPLIB instances
     (sample size $28$, instance size under $130$, many of them euclidean).
 \end{itemize}
 
-\begin{figure}[bp]
-\centering
-  \includegraphics[width=0.66\textwidth]{../plot/build/random_val.pdf}
-\caption{Tour cost comparison over random instances.
-  Here, $r$ denotes maximum number of rotations considered,
-  $i$ --- maximum number of iterations in ILS.
-}
-\label{fig:benchRAND}
-\end{figure}
+%\begin{figure}[bp]
+%\centering
+%  \includegraphics[width=0.66\textwidth]{../plot/build/random_val.pdf}
+%\caption{Tour cost comparison over random instances.
+%  Here, $r$ denotes maximum number of rotations considered,
+%  $i$ --- maximum number of iterations in ILS.
+%}
+%\label{fig:benchRAND}
+%\end{figure}
 
 \begin{figure}[htbp]
-%\thisfloatpagestyle{empty}
-%\null\hfill%
-%\subfloat[Tour cost comparison over random instances.
-%  Here, $r$ denotes maximum number of rotations taken from the
-%  flower, $i$ --- maximum number of iterations in ILS.
-%]{%
-%  \includegraphics[width=0.64\textwidth]{../plot/build/random_val.pdf}
-%}\hfill\null\\
-\null\hfill%
-\subfloat[achieved tour quality]{%
-  \includegraphics[width=0.66\textwidth]{../plot/build/tsplib_med_val.pdf}
-}\hfill\null\\
-\null\hfill%
-\subfloat[measured runtime]{%
-  \includegraphics[width=0.66\textwidth]{../plot/build/tsplib_med_time.pdf}
-}\hfill\null
-\caption{Benchmark results: ILS over 28 TSPLIB instances.}
+\thisfloatpagestyle{empty}
+  \centering
+
+    \null\hfill%
+    \subfloat[tour cost comparison over random instances:
+      here, $r$ denotes maximum number of rotations considered,
+      $i$ --- maximum number of iterations in ILS
+    ]{%
+      \includegraphics[width=0.64\textwidth]{../plot/build/random_val.pdf}
+    }\hfill\null\\
+    \null\hfill%
+    \subfloat[ILS over 28 TSPLIB instances: achieved tour quality]{%
+      \includegraphics[width=0.59\textwidth]{../plot/build/tsplib_med_val.pdf}
+    }\hfill\null\\
+    \null\hfill%
+    \makebox[\textwidth][c]{%
+      \subfloat[TSPLIB instances: measured runtime]{%
+        \includegraphics[width=0.59\textwidth]{../plot/build/tsplib_med_time.pdf}
+      }\hfill\null
+      \null\hfill%
+      \subfloat[TSPLIB instances: convergence speed]{%
+        \includegraphics[width=0.59\textwidth]{../plot/build/tsplib_med_conv.pdf}
+      }\hfill\null
+  }
+\caption{Benchmark results.}
 \label{fig:benchTSPLIB}
 \end{figure}
 
