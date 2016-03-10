@@ -1,7 +1,6 @@
 
 #                        A TSP Solver
-
-##   (an implementation of pyramidal & strongly balanced local search)
+##   employing pyramidal & strongly balanced local search
 
 ##                     Quick Start Guide
 
