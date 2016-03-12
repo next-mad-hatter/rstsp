@@ -1035,7 +1035,9 @@ In what now follows, $X$ can thus be seen as some memory holding such evaluation
 \begin{proposition}[memoized solution to pyramidal TSP]
 \label{prop:pyrmem}
 %\annotation{layout!}
-  Given a set of cities $\mathcal{N}_n$, let, for cities $i,j$, a cost matrix $C$, and arbitrary (apart from being a function) set $X$,
+  Given a set of cities $\mathcal{N}_n$, let, for cities $i,j$, a cost matrix $C$, and arbitrary function\footnote{%
+    For above construction to yield a well-defined map $\widehat{\Phi}_C$, $X$ must be a set satisfying at least \\$(x,y) \in X \wedge x \in \mathcal{N}_n^2 \rightarrow z=x \; \forall (z,y) \in X$.
+  } $X$,
   \begin{align}
     \label{eq:pyrmem}
     \widehat{\Phi}_C\left((i,j),X\right) & \coloneqq
