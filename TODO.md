@@ -19,7 +19,7 @@
     - (also in slides: add a frame to show partial tour in illustration of s.b. options)
     - sml support: can the pandoc -> rst way be pretty-fixed?
     - metapost plots: parse outputtemplate instead of fake outputformat
-    - metapost plots: include directly in report?
+    - metapost plots: include directly in report for math font consistency
 * Slides:
     - add sample descent along sb tree from report
     - plots: make color dependent on handout/present mode

@@ -5,27 +5,54 @@
 % $Rev: 34 $
 %
 
-%\documentclass[titlepage,index=totoc,bibliography=totoc]{scrartcl}
-\documentclass[index=totoc,bibliography=totoc]{scrartcl}
+\documentclass[titlepage,twoside,index=totoc,bibliography=totoc]{scrartcl}
 \KOMAoptions{fontsize=11pt}
-%\KOMAoptions{BCOR=0.25mm}
+\KOMAoptions{BCOR=1.5cm}
 %\usepackage[left=3.1cm, right=3.1cm]{geometry}
 
-\usepackage{mathdesign}
-\usepackage[no-math]{fontspec}
+%\usepackage{mathdesign}
+%\usepackage{newpxmath}
+%\usepackage[no-math]{fontspec}
+\usepackage{fontspec}
 \defaultfontfeatures{Ligatures=TeX}
-\setmainfont[Numbers=OldStyle]{Latin Modern Roman}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{commath}
+\usepackage{mathtools}
+
+\usepackage{unicode-math}
+%\setmathfont{TeX Gyre Pagella Math}
+%\setmathfont[range=\mathcal]{Asana Math}
+%\setmathfont[range={\mathcal,\mathbfcal},Scale=1.07,StylisticSet=1]{XITSMath}
+%\setmathfont[Scale=1.07,StylisticSet=1]{XITSMath}
+\setmathfont[StylisticSet=1]{XITSMath}
+%\setmathfont{Lucida Math}
+
+\setmainfont[Numbers=OldStyle]{Linux Libertine O}
+%\setmainfont[Numbers=OldStyle]{TeX Gyre Pagella}
+%\setmainfont[Numbers=OldStyle]{Latin Modern Roman}
 %\setmainfont[Numbers=OldStyle]{CMU Serif}
 %\setmainfont[Numbers=OldStyle]{Gentium}
 %\setmainfont[Numbers=OldStyle]{EB Garamond}
-\setsansfont[Numbers=OldStyle]{CMU Sans Serif}
+%\setsansfont[Numbers=OldStyle]{CMU Sans Serif}
+\setsansfont[Numbers=OldStyle]{Linux Biolinum O}
+%\setsansfont[Numbers=OldStyle]{Tex Gyre Heros}
 %\setsansfont{Droid Sans}
 %\setmonofont{CMU Typewriter Text}
-\setmonofont[Scale=0.8]{Droid Sans Mono}
+%\setmonofont[Scale=0.8]{Droid Sans Mono}
+%\setmonofont{Tex Gyre Cursor}
 %\setmonofont{DejaVu Sans Mono}
+\setmonofont[Scale=0.87]{Linux Libertine Mono O}
 \newfontfamily\CodeFont[Scale=0.85]{DejaVu Sans Mono}
 %\newfontfamily\CodeFont[Scale=0.85]{Consolas}
 %\newfontfamily\CodeFont[Scale=0.85]{Anonymous Pro}
+
+%\usepackage[partial=upright,nabla=upright]{unicode-math}
+%\setmainfont{Linux Libertine O}
+%\setmathfont{TeX Gyre Pagella Math}
+%\setsansfont{Linux Biolinum O}
+%\setmonofont{Linux Libertine Mono O}
+%\setmathfont[range={\mathcal,\mathbfcal},Scale=1.07,StylisticSet=1]{XITSMath}
 
 \usepackage{luatextra}
 
@@ -45,13 +72,12 @@
 \usepackage[basic]{complexity}
 %\usepackage{xfrac}
 %\usepackage{faktor}
-\usepackage{amsmath}
-%\usepackage{unicode-math}
-\usepackage{amsfonts}
-\usepackage{amssymb}
+%\usepackage{amsmath}
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
 
-\usepackage{commath}
-\usepackage{mathtools}
+%\usepackage{commath}
+%\usepackage{mathtools}
 
 \usepackage{amsthm}
 \usepackage{thmtools}
@@ -61,12 +87,14 @@
 \usepackage{caption}
 \usepackage{ragged2e}
 
+\usepackage[final]{pdfpages}
 \usepackage{graphicx}
 %\usepackage[export]{adjustbox}
 %\usepackage{epstopdf}
 %\epstopdfDeclareGraphicsRule{.tif}{png}{.png}{convert #1 \OutputFile}
 %\AppendGraphicsExtensions{.tif}
 \usepackage{luamplib}
+\mplibtextextlabel{enable}
 \usepackage{etoolbox}
 \preto\mplibcode{\center\leavevmode}
 \appto\endmplibcode{\endcenter}
@@ -203,18 +231,21 @@
 % FIXME: pic / multitoc ?
 % FIXME: twosided ?
 \input{authors.tex}
-\date{\today}
+%\date{\today}
 
-\maketitle
-
+%\maketitle
+\setboolean{@twoside}{false}
+\includepdf[pages=-]{cover.pdf}
+\setboolean{@twoside}{true}
+\cleardoublepage
 \begin{abstract}
 
   Dynamic programming delivers solutions to many problems in combinatorial
-  optimization; to that the traveling salesman problem and its special
+  optimization; to this the traveling salesman problem and its special
   cases --- where dynamic programming can often be applied effectively ---
   are no exception.
 
-  Herein we describe the general procedure of constructing, given a
+  Herein we describe a general procedure for constructing, given a
   description of such a solution, a working implementation thereof as well
   as of a corresponding iterative heuristic.
 
@@ -225,8 +256,8 @@
   implementation, which can be seen as a major goal of this
   effort --- and present results thus obtained.
 
-  This work was written as part of a bachelor degree project at Graz
-  University of Technology.
+  %This work was written as part of a bachelor degree project at Graz
+  %University of Technology.
 
 \end{abstract}
 
