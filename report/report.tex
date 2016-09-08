@@ -7,7 +7,7 @@
 
 \documentclass[titlepage,twoside,index=totoc,bibliography=totoc]{scrartcl}
 \KOMAoptions{fontsize=11pt}
-\KOMAoptions{BCOR=1.5cm}
+\KOMAoptions{BCOR=1.4cm}
 %\usepackage[left=3.1cm, right=3.1cm]{geometry}
 
 %\usepackage{mathdesign}
@@ -89,6 +89,14 @@
 
 \usepackage[final]{pdfpages}
 \usepackage{graphicx}
+
+\usepackage{pdftexcmds}
+\makeatletter
+\let\pdfescapename=\pdf@escapename
+\let\pdfstrcmp=\pdf@strcmp
+\makeatother
+\usepackage{pax}
+
 %\usepackage[export]{adjustbox}
 %\usepackage{epstopdf}
 %\epstopdfDeclareGraphicsRule{.tif}{png}{.png}{convert #1 \OutputFile}

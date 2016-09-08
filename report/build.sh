@@ -28,6 +28,7 @@ if [ $STATUS -ne 0 ]; then
 fi
 lualatex -shell-escape -interaction=batchmode -file-line-error cover.tex
 texfot lualatex -shell-escape cover.tex
+pdfannotextractor cover.pdf
 
 ## REPORT
 ERR="$(lualatex -shell-escape -interaction=nonstopmode -file-line-error "${SUBMISSION}".tex)"
