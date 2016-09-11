@@ -325,7 +325,7 @@ interpreted as a (functional) computer program.
 %and thus help illustrate the internals of our code.
 
 \begin{define}[cities, paths and tours]
-Given some $n \in \mathbb{N} \left(n \geq 2\right)$,
+Given $n \in \mathbb{N} \left(n \geq 2\right)$,
 let \[\mathcal{N}_n \coloneqq \left\{1,\ldots,n\right\}.\]
 We will refer to elements of $\mathcal{N}_n$ as {\defstyle cities}.
 A non-empty tuple $\left(p_1,p_2,\ldots,p_m\right)$
@@ -489,10 +489,10 @@ Often, the convention is to define TSP to be the symmetric version
 --- we shall make no such assumption without a prior notice.
 On the other hand, following convention is useful:
 observe how it follows from \cref{def:cost,def:tsp} that
-$\operatorname{tsp}_{M,T}^\ast\left(C\right) ~ = ~
+$\operatorname{tsp}_{M,T}^\ast\left(C\right) =
  \operatorname{tsp}_{M^\prime,T}^\ast\left(C + \lambda J\right)$
 for all $\lambda \in \mathbb{R}$ and $C \in M$,
-where $J$ is matrix of ones (of suitable dimension),
+where $J$ is a matrix of ones (of suitable dimension),
 and we have a bijection from $M$ onto $M^\prime$.
 Hence we can always assume
 \[
@@ -537,10 +537,10 @@ following general definitions.
   $F(\tau)$ is also called {\defstyle neighbourhood of} $\tau$.
   Once again, $n$ can be seen either as given dimension or implicit
   argument to $F$; a neighbourhood $F$ is called {\defstyle exponential} if
+  for some $a \in \mathbb{R}, a > 1,$
   \[
-    \left\vert F(\tau) \right\vert = \Omega(a^n) \qquad \forall \tau \in \mathcal{T}_n
+    \left\vert F(\tau) \right\vert = \Omega(a^n) \qquad \forall \tau \in \mathcal{T}_n.
   \]
-  for some $a \in \mathbb{R}$.
 \end{define}
 
 \begin{define}[local search]
@@ -936,24 +936,24 @@ evident and following construction transparent:
 \begin{proposition}[recursive structure of $\operatorname{Pyr}_n$]
 \label{prop:pyrall}
   For cities $i,j$ in $\mathcal{N}_n$,
-  let $V\left(i,j\right)$ denote the set of all pyramidal paths
+  let $V\!\left(i,j\right)$ denote the set of all pyramidal paths
   $\left(i,p_1,\ldots,p_m,j\right)$
   in $\mathcal{P}_n$
   s.t.\ $\left\{p_1,\ldots,p_m\right\} = \left\{k,\ldots,n\right\}$
   with $k = \max\left\{i,j\right\}+1$.  Then
   \begin{align}
     \label{eq:pyrall}
-    V\left(i,j\right) & =
+    V\!\left(i,j\right) & =
     \begin{cases}
       \left\{\left(i,j\right)\right\}, & n \in \left\{i,j\right\},
       \\
-      \left(i\right) \oplus V\left(k,j\right)
+      \left(i\right) \oplus V\!\left(k,j\right)
       \;\bigcup\;
-      V\left(i,k\right) \oplus \left(j\right)
+      V\!\left(i,k\right) \oplus \left(j\right)
       & \text{otherwise ($k$ as above)},
     \end{cases}
   \end{align}
-  and $\operatorname{Pyr}_n = V\left(1,1\right)$.
+  and $\operatorname{Pyr}_n = V\!\left(1,1\right)$.
 \end{proposition}
 \begin{proof}
   The second case in \cref{eq:pyrall} becomes apparent when, using
@@ -1009,27 +1009,27 @@ This translates directly onto a dynamic programming solution to pyramidal TSP:
 \end{corollary}
 \begin{proof}
   Borrowing definition of $V$ from \cref{prop:pyrall}, we first note that,
-  per induction over \eqref{eq:pyrall}, $V\left(i,j\right)$ is never empty
+  per induction over \eqref{eq:pyrall}, $V\!\left(i,j\right)$ is never empty
   and the two sets under union in \cref{eq:pyrall} are always disjoint.
 
   If we now choose $\argmin^\prime$ to select from two equal cost tours in
   $T$ one deterministically and independently from $C$ (say, the first of
   the two options in definition of $T$ above), then this, per construction,
-  produces a partial order on paths in $V\left(\mathcal{N}_n^2\right)$ (bar
+  produces a partial order on paths in $V\!\left(\mathcal{N}_n^2\right)$ (bar
   $(n,n)$) and a total order on $\operatorname{Pyr}_n$.
 
   We then see per induction over \cref{eq:pyrall,eq:pyrdp} that for all
   cities $i$,$j$ and cost matrices $C$, $\Phi_C\left(i,j\right)$ is the
-  smallest (according to said order) cost minimizing path in $V\left(i,j\right)$,
+  smallest (according to said order) cost minimizing path in $V\!\left(i,j\right)$,
   %\[
-  %  \Phi_C\left(i,j\right) = \argmin^\prime \omega_C V\left(i,j\right)
+  %  \Phi_C\left(i,j\right) = \argmin^\prime \omega_C V\!\left(i,j\right)
   %\]
   from which the rest follows.
 \end{proof}
 
-Recurrence relation such as the one introduced above are well visualized
+A recurrence relation like the one introduced above can be visualized
 via so called {\defstyle recursion tree}~--- a directed graph in which
-nodes correspond to different arguments to the relation, and edges
+nodes correspond to different arguments to the relation and edges
 represent recursive dependence.  For pyramidal TSP, \cref{fig:pyratrace}
 shows such a graph.
 
@@ -1074,7 +1074,7 @@ In what now follows, $X$ can thus be seen as some memory holding such evaluation
 \begin{proposition}[memoized solution to pyramidal TSP]
 \label{prop:pyrmem}
 %\annotation{layout!}
-  Given a set of cities $\mathcal{N}_n$, let, for cities $i,j$, a cost matrix $C$, and arbitrary function\footnote{%
+  Given a set of cities $\mathcal{N}_n$, let, for cities $i,j$, a cost matrix $C$ and arbitrary function\footnote{%
     For above construction to yield a well-defined map $\widehat{\Phi}_C$, $X$ must be a set satisfying at least \\$(x,y) \in X \wedge x \in \mathcal{N}_n^2 \rightarrow z=x \; \forall (z,y) \in X$.
   } $X$,
   \begin{align}
@@ -1119,7 +1119,7 @@ In what now follows, $X$ can thus be seen as some memory holding such evaluation
 
 \begin{remark}
 \label{rem:timeass}
-This gives us a viable way of computing $\Phi_C\left(1,1\right)$, and, by extension,
+This gives us a viable way of computing $\Phi_C\left(1,1\right)$ and, by extension,
 $\operatorname{tsp}_{\operatorname{Pyr}_n}$ --- in fact, our code, which
 generated \cref{fig:pyratrace} as its execution trace, closely mirrors this exact
 definition.
@@ -1619,7 +1619,7 @@ We then recognize following crucial points:
 While we are not aware of a general proof thereof, we have been able to confirm
 said conjecture (having computed the number of different node types, shown
 in \cref{tbl:nodeTypes}) for values of $M$ up to $6$ --- and while this
-proves linear tree size growth for given values of $M$, the growth behaviour of
+confirms linear tree size for given values of $M$, the growth behaviour of
 the constant factor does seem intimidating, reflecting the runtime
 behaviour we encountered in practice.
 
@@ -1660,7 +1660,7 @@ behaviour we encountered in practice.
 \subsection{Local search and flowers}
 
 To conclude the discussion of theory behind our implementation, it should
-be noted that none of the two neighbourhoods as presented above achieves
+be noted that none of the two neighbourhoods as presented above achieve
 appreciable results as local search heuristic --- to improve on that, we
 introduce the simple concept of flowers:
 
@@ -1896,9 +1896,9 @@ From what little testing this represents, we can reasonably conclude that
 \dictum[Arthur Bloch]{Enough research will tend to support your conclusions.}
 \vspace{0.87em}
 
-Having described application of dynamic programming solutions to special
-cases of traveling salesman problem and extension of such solutions
-from neighbourhoods to iterative heuristics,
+Having described extension of dynamic programming solutions to special
+cases of traveling salesman problem from neighbourhoods to iterative
+heuristics,
 we have provided for two such neighbourhoods a working implementation which
 %closely follows our discussion and
 is general enough to be readily extendible to other solutions and
@@ -1916,8 +1916,7 @@ we have further confirmed the linear time conjecture for select few node size li
 \subsection{Areas for further research}
 
 We shall wrap up our discussion by identifying here briefly just some of tasks
-and areas which one could, given time, turn our attention to or
-explore in more detail:
+and areas which one could, given time, explore in more detail:
 \begin{itemize}
   \item
     precompute flowers as sets to guarantee rotations' uniqueness;
