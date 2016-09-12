@@ -1,7 +1,7 @@
 
-#                        A TSP Solver
+#                           RSTSP
 
-##   (an implementation of pyramidal & strongly balanced local search)
+## A TSP solver employing pyramidal & strongly balanced local search
 
 ##                     Quick Start Guide
 
@@ -50,12 +50,10 @@
           ./bin/test.sh
    ```
    , which requires ruby ≥ 1.9.3 & the powerbar gem.
-   If your build works correctly, all tests in
-   random/len and "tsplib/small" batches should pass.
    Test results can then be found under `./test/log/`.
 
    During its first run, this script will also generate random test data,
-   which needs significant chunk of space -- about 200MB right now.
+   which needs significant chunk of space -- about 400MB right now.
 
    Running this takes some time (at time of writing, this amounts to about two
    hours on our machine, bar random data generation) and memory (sometimes well

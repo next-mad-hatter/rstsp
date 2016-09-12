@@ -1,0 +1,126 @@
+%
+% $Id$
+% $Author$
+% $Date$
+% $Rev: 34 $
+%
+
+\documentclass[titlepage]{scrartcl}
+\KOMAoptions{fontsize=12pt}
+
+\usepackage{geometry}
+\geometry{top=2.2cm,bottom=1cm}
+
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+
+\setmainfont[Numbers=OldStyle]{Linux Libertine O}
+\setsansfont[Numbers=OldStyle]{Linux Biolinum O}
+\setmonofont[Scale=0.87]{Linux Libertine Mono O}
+
+\usepackage{luatextra}
+
+\usepackage[english,ngerman,russian]{babel}
+
+\usepackage{graphicx}
+
+\usepackage{xcolor}
+\definecolor{blue}{rgb}{0,0,0.3}
+%\definecolor{brown}{HTML}{796045}
+%\definecolor{brown2}{HTML}{BFAC60}
+%\definecolor{green}{HTML}{AEBF60}
+%\definecolor{yellow}{HTML}{FFF3BF}
+
+\usepackage{siunitx}
+
+\usepackage[pdfauthor={M. Deineko},
+            pdfproducer={lualatex},
+            pdfcreator={LaTeX},
+            colorlinks=true,
+            linkcolor=blue,
+            urlcolor=blue,
+            citecolor=blue,
+            linktoc=section,
+            unicode=true
+            ]{hyperref}
+\hypersetup{pdftitle=Two Exponential Neighbourhoods}
+\usepackage[nameinlink]{cleveref}
+
+\let\defstyle\itshape
+%\def\defstyle{\itshape}
+
+\usepackage{pgfornament}
+
+%\usepackage{eso-pic}
+%\usepackage{calc}
+%
+%\makeatletter
+%\AddToShipoutPicture{%
+%\begingroup
+%\setlength{\@tempdima}{4mm}%
+%\setlength{\@tempdimb}{\paperwidth-\@tempdima-1.9cm}%
+%\setlength{\@tempdimc}{\paperheight-\@tempdima}%
+%\put(\LenToUnit{\@tempdima},\LenToUnit{\@tempdimc}){%
+%\pgfornament[anchor=north west,width=1.9cm,symmetry=h]{79}}
+%\put(\LenToUnit{\@tempdima},\LenToUnit{\@tempdima}){%
+%\pgfornament[anchor=south west,width=1.9cm,symmetry=h]{77}}
+%\put(\LenToUnit{\@tempdimb},\LenToUnit{\@tempdimc}){%
+%\pgfornament[anchor=north east,width=1.9cm,symmetry=v]{77}}
+%\put(\LenToUnit{\@tempdimb},\LenToUnit{\@tempdima}){%
+%\pgfornament[anchor=south east,width=1.9cm,symmetry=v]{79}}
+%\endgroup
+%}
+%\makeatother
+
+\begin{document}
+
+\thispagestyle{empty}
+%\pagecolor{yellow}
+
+\selectlanguage{english}
+
+\hfill\includegraphics[width=36mm]{./tug.png}
+
+\begin{center}
+\vspace{2.4cm}
+
+{\sf {\bfseries {\scshape {\Large
+  Two Exponential Neighbourhoods for the TSP
+  and Related Heuristics
+}}}}
+\\
+\vspace{0.52cm}
+{\sf {\itshape {\large Pyramidal and strongly balanced tours -- theory and implementation}}}
+
+\vspace{1.65cm}
+\pgfornament[anchor=center,scale=0.31]{87}
+\vspace{1.6cm}
+
+{\bfseries Bachelorarbeit}
+
+\vspace{1.6cm}
+Eingereicht für das
+Bachelorstudium
+\\
+Technische Mathematik
+\\
+der Technischen Universität Graz
+
+\vspace{0.8cm}
+Vorgelegt von
+\\
+\href{mailto:deineko@student.tugraz.at}{Maksym Deineko}
+
+\vspace{0.8cm}
+Betreut durch
+\\
+Ao.Univ.-Prof.\ Dipl.-Ing.\ Dr.techn.
+\href{mailto:cela@math.tugraz.at}{Eranda Dragoti-Cela}
+
+\vspace{1.7cm}
+September 2016
+
+\end{center}
+
+\end{document}
+

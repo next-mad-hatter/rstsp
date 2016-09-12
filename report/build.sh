@@ -17,6 +17,18 @@ ctags -Ra .
 
 #cd "${REPORT_DIR}"
 wget -nc https://imgs.xkcd.com/comics/travelling_salesman_problem.png -O tsp.png
+wget -nc https://upload.wikimedia.org/wikipedia/commons/a/ac/Logo_GrazUTech-RGB.png -O tug.png
+
+## COVER
+ERR="$(lualatex -shell-escape -interaction=nonstopmode -file-line-error cover.tex)"
+STATUS="$?"
+echo "${ERR}" | egrep ".*:[0-9]*:.*|Warning:"
+if [ $STATUS -ne 0 ]; then
+  exit 1
+fi
+lualatex -shell-escape -interaction=batchmode -file-line-error cover.tex
+texfot lualatex -shell-escape cover.tex
+pdfannotextractor cover.pdf
 
 ## REPORT
 ERR="$(lualatex -shell-escape -interaction=nonstopmode -file-line-error "${SUBMISSION}".tex)"
