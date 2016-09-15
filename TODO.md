@@ -14,8 +14,8 @@
     - script via cmake ?
     - report: "build report/slides/handouts" option
 * Report:
-    - TUG logo ?
     - index ?
+    - add cloc statistics ?
     - (also in slides: add a frame to show partial tour in illustration of s.b. options)
     - sml support: can the pandoc -> rst way be pretty-fixed?
     - metapost plots: parse outputtemplate instead of fake outputformat

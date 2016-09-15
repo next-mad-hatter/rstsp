@@ -75,7 +75,7 @@
    ```
    ./report/build.sh
    ```
-   , which requires a sufficiently modern (featuring e.g. lualatex)
+   , which requires a sufficiently modern
    LaTeX distribution as well as ghostscript.
 
 ### Packaging

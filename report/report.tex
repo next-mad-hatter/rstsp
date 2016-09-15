@@ -42,7 +42,7 @@
 %\setmonofont[Scale=0.8]{Droid Sans Mono}
 %\setmonofont{Tex Gyre Cursor}
 %\setmonofont{DejaVu Sans Mono}
-\setmonofont[Scale=0.87]{Linux Libertine Mono O}
+\setmonofont[Scale=0.88]{Linux Libertine Mono O}
 \newfontfamily\CodeFont[Scale=0.85]{DejaVu Sans Mono}
 %\newfontfamily\CodeFont[Scale=0.85]{Consolas}
 %\newfontfamily\CodeFont[Scale=0.85]{Anonymous Pro}
@@ -1726,15 +1726,22 @@ as well as practical test results.
 
 \subsection{Key features}
 
-Our choice of programming language fell on Standard ML, which we feel
+Our choice of programming language fell on Standard\ ML, which we feel
 strikes the right (for this project) balance between expressiveness and
 convenience and, while being not too low level a language, can still offer
 effective execution speed.
 
-This particular implementation requires only a Standard ML environment
+The core functionality contained in about 3000 lines of code
+requires only a Standard\ ML environment
 which implements the {\ttfamily smlnj-lib}
-(as provided by the widely available {\ttfamily MLton} compiler, or e.g.\ {\ttfamily SML/NJ})
-to work and can be used
+(as provided by the widely available {\ttfamily MLton} compiler or {\ttfamily SML/NJ})
+to work\footnote{%
+  The housekeeping environment -- i.e.\ build, testing,
+  benchmarking and plotting scripts -- uses a wider set of tools
+  all of which are usually available in any common {\ttfamily GNU/Linux}
+  distribution today.
+}
+and can be used
 \begin{itemize}
   \item as standalone executable
     (compiles via {\ttfamily MLton} or {\ttfamily Poly/ML});
@@ -1747,7 +1754,7 @@ to work and can be used
 
 All code written for this project
 (along with precompiled {\ttfamily MinGW/x86} build)
-is available from \url{https://bitbucket.org/mad_hatter/rstsp/};
+is documented and available from \url{https://bitbucket.org/mad_hatter/rstsp/};
 bug reports and pull requests are welcome.
 %\href{https://bitbucket.org/mad_hatter/rstsp/}{online}\footnote{%
 %  from \url{https://bitbucket.org/mad_hatter/rstsp/}.
