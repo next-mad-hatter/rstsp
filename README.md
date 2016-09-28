@@ -1,7 +1,11 @@
 
 #                           RSTSP
 
-## A TSP solver employing pyramidal & strongly balanced local search
+## A TSP solver
+
+This solver employing local search heuristics is written in Standard ML and
+currently implements search through pyramidal & strongly balanced neighbourhoods.
+For theoretical background please see the downloads section.
 
 ##                     Quick Start Guide
 
