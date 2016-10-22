@@ -5,7 +5,8 @@
 
 This solver employing local search heuristics is written in Standard ML and
 currently implements search through pyramidal & strongly balanced neighbourhoods.
-For theoretical background please see the downloads section.
+For theoretical background and a precompiled MinGW build
+please see the [Downloads](https://bitbucket.org/mad_hatter/rstsp/downloads) section.
 
 ##                     Quick Start Guide
 

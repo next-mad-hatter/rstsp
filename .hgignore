@@ -1,6 +1,7 @@
 syntax: glob
 
 report/report.pdf
+report/cover.pdf
 report/sml-support.tex
 report/tsp.png
 report/tug.png
@@ -46,6 +47,7 @@ tmp
 
 *.mpx
 
+*.pax
 *.bm
 *.aux
 *.dvi
