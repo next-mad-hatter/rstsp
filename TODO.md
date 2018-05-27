@@ -14,6 +14,7 @@
     - script via cmake ?
     - report: "build report/slides/handouts" option
 * Report:
+    - add vectorized tug logo
     - index ?
     - add cloc statistics ?
     - (also in slides: add a frame to show partial tour in illustration of s.b. options)

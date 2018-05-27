@@ -27,7 +27,7 @@
     * `./win32/`   : is used by mlton crosscompiler and should include
 
         - `libgmp.a`      : empty archive
-        - `libdmp-10.dll` : mingw libgmp dl
+        - `libgmp-10.dll` : mingw libgmp dl
         - `include/gmp.h` : mingw libgmp header
         - `pkg/           : mingw libgmp source (see `./build_mingw.sh`)
 
